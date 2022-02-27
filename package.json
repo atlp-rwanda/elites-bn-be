@@ -9,8 +9,31 @@
   "scripts": {
     "build": "babel src -d dist",
     "start": "npm run build && better-npm-run prod",
-    "dev": " nodemon  --exec npx babel-node ./src/app.js",
+    "dev": "better-npm-run dev",
     "test": "better-npm-run test"
+  },
+  "betterScripts": {
+    "dev": {
+      "command": "nodemon  --exec npx babel-node ./src/app.js",
+      "env": {
+        "NODE_ENV": "development",
+        "PORT": 3000
+      }
+    },
+    "test": {
+      "command": "nyc --reporter=html --reporter=text mocha --requre @babel/register ./tests/* --timeout 1000000 --exit || true",
+      "env": {
+        "NODE_ENV": "test",
+        "PORT": 5000
+      }
+    },
+    "prod": {
+      "command": "node ./dist/app.js",
+      "env": {
+        "NODE_ENV": "production",
+        "PORT": 8000
+      }
+    }
   },
   "dependencies": {
     "@babel/cli": "^7.17.6",

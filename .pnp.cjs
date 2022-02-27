@@ -34,6 +34,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",\
           "packageDependencies": [\
             ["babel-cli", "npm:6.26.0"],\
+            ["dotenv", "npm:16.0.0"],\
             ["express", "npm:4.17.3"]\
           ],\
           "linkType": "SOFT"\
@@ -937,6 +938,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["dotenv", [\
+        ["npm:16.0.0", {\
+          "packageLocation": "./.yarn/cache/dotenv-npm-16.0.0-ef4a5ccded-664cebb51f.zip/node_modules/dotenv/",\
+          "packageDependencies": [\
+            ["dotenv", "npm:16.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["ee-first", [\
         ["npm:1.1.1", {\
           "packageLocation": "./.yarn/cache/ee-first-npm-1.1.1-33f8535b39-1b4cac778d.zip/node_modules/ee-first/",\
@@ -952,6 +962,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["elites-bn-be", "workspace:."],\
             ["babel-cli", "npm:6.26.0"],\
+            ["dotenv", "npm:16.0.0"],\
             ["express", "npm:4.17.3"]\
           ],\
           "linkType": "SOFT"\

@@ -1,23 +1,6 @@
 {
   "name": "elites-bn-be",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint:fix":"eslint --fix ./*.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/atlp-rwanda/elites-bn-be.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/atlp-rwanda/elites-bn-be/issues"
-  },
-  "homepage": "https://github.com/atlp-rwanda/elites-bn-be#readme",
+  "packageManager": "yarn@3.2.0",
   "devDependencies": {
     "eslint": "^7.32.0",
     "eslint-config-standard": "^16.0.3",

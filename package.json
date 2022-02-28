@@ -61,7 +61,9 @@
         "express": "^4.17.3",
         "pg": "^8.7.3",
         "pg-hstore": "^2.3.4",
-        "sequelize": "^6.17.0"
+        "sequelize": "^6.17.0",
+        "swagger-ui-express": "^4.3.0",
+        "morgan": "^1.10.0"
     },
     "devDependencies": {
         "eslint": "^8.10.0",

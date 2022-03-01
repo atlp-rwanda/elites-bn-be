@@ -19,6 +19,8 @@ jobs:
       # - run:
       #     name: UPLOAD COVERAGE
       #     command: yarn run coverage
+      # - coveralls/upload
+
 
 workflows:
   test-deploy:

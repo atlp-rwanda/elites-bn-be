@@ -1,6 +1,4 @@
-<<<<<<< HEAD
 node_modules
-=======
 .yarn/*
 !.yarn/patches
 !.yarn/plugins
@@ -12,4 +10,3 @@ node_modules
 # Documentation here: https://yarnpkg.com/features/zero-installs
 !.yarn/cache
 #.pnp.*
->>>>>>> ES Lint configuration

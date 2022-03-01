@@ -27,3 +27,4 @@ docs/swagger-ui/
 ## Contributors
 
 - [Honore IRADUKUNDA](https://github.com/ihonore)
+- [Innocente Gihozo](https://github.com/gihozoinnocente)

@@ -2,6 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/atlp-rwanda/elites-bn-be.svg?style=svg)](https://circleci.com/gh/atlp-rwanda/elites-bn-be)
 [![Coverage Status](https://coveralls.io/repos/github/atlp-rwanda/elites-bn-be/badge.svg)](https://coveralls.io/github/atlp-rwanda/elites-bn-be)
+
 ## Installation
 
 ```bash
@@ -33,8 +34,9 @@ docs/swagger-ui/
 ## Docker-compose
 
 ## Docker installation
+
 ```
-download docker Destop 
+download docker Destop
 - https://docs.docker.com/desktop/windows/install/
 
 or docker toolbox CLI
@@ -53,4 +55,3 @@ $ docker-compose up -d
 - [David NKUNDINEZA](https://github.com/Dev-nkundineza)
 - [Innocente Gihozo](https://github.com/gihozoinnocente)
 - [Aristide NIYONGABO](https://github.com/niyongaboaristide17)
-

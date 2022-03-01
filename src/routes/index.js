@@ -1,8 +1,8 @@
-import express from 'express'
-import welcomeRoutes from './api/welcomeRoutes.js'
+import express from 'express';
+import welcomeRoutes from './api/welcomeRoutes.js';
 
-const routes = express.Router()
+const routes = express.Router();
 
-routes.use('/', welcomeRoutes)
+routes.use('/', welcomeRoutes);
 
-export default routes
+export default routes;

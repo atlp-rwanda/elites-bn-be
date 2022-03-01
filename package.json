@@ -11,7 +11,7 @@
     "start": "npm run build && better-npm-run prod",
     "dev": "better-npm-run dev",
     "test": "better-npm-run test",
-    "lint": "eslint . --fix --ext .js"
+    "lint": "eslint . --fix --ext .json"
   },
   "betterScripts": {
     "dev": {

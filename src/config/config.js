@@ -1,4 +1,4 @@
-import 'dotenv/config'
+import 'dotenv/config';
 
 module.exports = {
   development: {
@@ -36,4 +36,4 @@ module.exports = {
     seederStorage: 'sequelize',
     seederStorageTableName: 'sequelize_data'
   }
-}
+};

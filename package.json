@@ -12,7 +12,13 @@
         "dev": "better-npm-run dev",
         "test": "better-npm-run test",
         "lint": "eslint",
-        "coverage": "yarn run test && better-npm-run cov"
+        "coverage": "yarn run test && better-npm-run cov",
+        "create-db": "npx sequelize-cli db:create",
+        "drop-db": "npx sequelize-cli db:drop",
+        "migrations": "npx sequelize-cli db:migrate",
+        "undo": "npx sequelize-cli db:migrate:undo:all",
+        "seed": "npx sequelize-cli db:seed:all",
+        "undo-seed": "npx sequelize-cli db:seed:undo"
     },
     "betterScripts": {
         "dev": {

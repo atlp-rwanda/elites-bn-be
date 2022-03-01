@@ -14,6 +14,8 @@ $ yarn dev
 $ yarn test
 # production mode
 $ yarn start
+# ESLint Fix
+$ yarn lint
 ```
 
 ## Documentation

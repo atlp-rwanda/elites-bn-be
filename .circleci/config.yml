@@ -16,9 +16,9 @@ jobs:
       - run:
           name: RUN TEST
           command: yarn run test
-      - run:
-          name: UPLOAD COVERAGE
-          command: yarn run coverage
+      # - run:
+      #     name: UPLOAD COVERAGE
+      #     command: yarn run coverage
 
 workflows:
   test-deploy:

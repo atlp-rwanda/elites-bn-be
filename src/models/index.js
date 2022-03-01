@@ -1,3 +1,4 @@
+/* eslint no-use-before-define: 2 */  // --> ON
 'use strict'
 
 const fs = require('fs')

@@ -1,0 +1,45 @@
+version: "3.3"
+services:
+  app:
+    restart: always
+    build: ./
+    depends_on:
+      - postgres
+    environment:
+      # - DATABASE_URL=postgres://postgres:admin123@@127.0.0.1:5432/dev_barefoot_db
+      - NODE_ENV=development
+      - PORT=3000
+    ports:
+      - "3000:3000"
+    command: yarn dev
+    volumes:
+      - .:/elites-bn-be/
+      - /elites-bn-be/node_modules
+
+  
+  postgres:
+    image: postgres:14
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin123@
+      - POSTGRES_DB=dev_barefoot_db
+    
+    env_file:
+     - .env
+
+  # pgadmin:
+  #   image: dpage/pgadmin4
+  #   restart: always
+  #   ports:
+  #     - 5050:3000
+  #   environment:
+  #     - PGADMIN_DEFAULT_EMAIL=niyonzimadeus2002@gmail.com
+  #     - PGADMIN_DEFAULT_PASSWORD=admin123@
+      
+    
+  #   env_file:
+  #    - .env  
+

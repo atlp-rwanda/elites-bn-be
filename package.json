@@ -15,14 +15,14 @@
   },
   "betterScripts": {
     "dev": {
-      "command": "nodemon --exec babel-node ./src/app.js",
+      "command": "nodemon --exec npx babel-node ./src/app.js",
       "env": {
         "NODE_ENV": "development",
         "PORT": 3000
       }
     },
     "test": {
-      "command": "nyc --reporter=html --reporter=text --reporter=lcov --reporter=text-summary --check-coverage=true mocha --require @babel/register ./tests/* --timeout 1000000 --exit || true",
+      "command": "nyc --reporter=html --reporter=text --reporter=text-summary --check-coverage=true mocha --require @babel/register ./tests/* --timeout 1000000 --exit || true",
       "env": {
         "NODE_ENV": "test",
         "PORT": 5000

@@ -3,33 +3,44 @@ services:
   app:
     restart: always
     build: ./
-    depends_on:
+    links:
       - postgres
+
+    # env_file: 
+    #   - .env
     environment:
-      # - DATABASE_URL=postgres://postgres:admin123@@127.0.0.1:5432/dev_barefoot_db
-      - NODE_ENV=development
-      - PORT=3000
+      # - DB_USERNAME_DEV=postgres
+      # - DB_PASSWORD_DEV=admin123@
+      # - DB_DATABASE_DEV=dev_barefoot_db
+      # - DB_HOST_DEV=postgres
+      # - DB_PORT_DEV=3000
+      - DATABASE_URL=postgres://postgres:admin123@@postgres:5432/dev_barefoot_db
+      # - NODE_ENV=development
+      # - PORT=3000
+      - PERSISTENCE_TYPE=postgres
     ports:
-      - "3000:3000"
-    command: yarn dev
+      - "5050:5050"
     volumes:
       - .:/elites-bn-be/
       - /elites-bn-be/node_modules
 
   
   postgres:
-    image: postgres:14
+    image: postgres
     restart: always
     ports:
-      - 5432:5432
+      - "5432:5432"
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=admin123@
-      - POSTGRES_DB=dev_barefoot_db
-    
-    env_file:
-     - .env
-
+      
+       POSTGRES_PASSWORD: 'admin123@'
+       POSTGRES_DB: 'dev_barefoot_db'
+      
+    volumes:
+      - database_data:/var/lib/postgresql/data
+    # env_file: .env
+volumes:
+  database_data:
+    driver: local
   # pgadmin:
   #   image: dpage/pgadmin4
   #   restart: always

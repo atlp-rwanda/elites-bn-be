@@ -49,10 +49,16 @@ try {
   app.use(express.json());
   app.use(morgan("dev"));
   app.use("/api/v1/", routes);
+
   app.use(
     "/docs/swagger-ui/",
     swaggerUi.serve,
-    swaggerUi.setup(swaggerDoc, { explorer: true })
+    swaggerUi.setup(swaggerDoc, {
+      swaggerOptions: {
+        docExpansions: "none",
+        persistAuthorization: true,
+      },
+    })
   );
 
   app.listen(port, () => {

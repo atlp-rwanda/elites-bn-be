@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 node_modules
+=======
+>>>>>>> update changes from gitignore and test welcome update
 # Logs
 logs
 *.log
@@ -43,9 +46,12 @@ build/Release
 node_modules/
 jspm_packages/
 
+<<<<<<< HEAD
 # TypeScript v1 declaration files
 typings/
 
+=======
+>>>>>>> update changes from gitignore and test welcome update
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
 
@@ -120,7 +126,6 @@ dist/
 
 # vuepress build output
 .vuepress/dist
-
 
 # vuepress v2.x temp and cache directory
 .temp

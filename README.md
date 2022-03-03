@@ -19,8 +19,13 @@ $ yarn dev
 $ yarn test
 # production mode
 $ yarn start
+<<<<<<< HEAD
 # ESLint Fix
 $ yarn lint
+=======
+#creating tables in postgresql
+$ yarn create_tables
+>>>>>>> minor changes in Readme file
 ```
 
 ## Documentation
@@ -55,3 +60,4 @@ $ docker-compose up -d
 - [David NKUNDINEZA](https://github.com/Dev-nkundineza)
 - [Innocente Gihozo](https://github.com/gihozoinnocente)
 - [Aristide NIYONGABO](https://github.com/niyongaboaristide17)
+- [Innocente Gihozo](https://github.com/gihozoinnocente)

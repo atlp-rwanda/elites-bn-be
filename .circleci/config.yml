@@ -17,6 +17,12 @@ jobs:
       - run:
           name: "NODE VERSION"
           command: node --version
+      - run:
+          name: "INSTALLING DEPENDENCY"
+          command: yarn install
+      - run:
+          name: "TESTING"
+          command: "yarn run test"
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows

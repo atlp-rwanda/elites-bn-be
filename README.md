@@ -19,17 +19,13 @@ $ yarn dev
 $ yarn test
 # production mode
 $ yarn start
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 # ESLint Fix
 $ yarn lint
-=======
-#creating tables in postgresql
-=======
+
 #creating tables in postgresl
->>>>>>> minor changes in Readme file
+
 $ yarn create_tables
->>>>>>> minor changes in Readme file
 ```
 
 ## Documentation

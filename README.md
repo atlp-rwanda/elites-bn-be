@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/atlp-rwanda/elites-bn-be.svg?style=svg&circle-token=f7c825d627bd711423c163f838796046bbeb5648)](https://circleci.com/gh/atlp-rwanda/elites-bn-be)
+[![CircleCI](https://circleci.com/gh/atlp-rwanda/elites-bn-be.svg?style=svg&circle-token=JW75WkMs1pUJ7pGZsAAHmw4VScwhfnEF)](https://circleci.com/gh/circleci/circleci-docs)
 ## Installation
 
 ```bash

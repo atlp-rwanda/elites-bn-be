@@ -9,14 +9,7 @@ services:
     # env_file: 
     #   - .env
     environment:
-      # - DB_USERNAME_DEV=postgres
-      # - DB_PASSWORD_DEV=admin123@
-      # - DB_DATABASE_DEV=dev_barefoot_db
-      # - DB_HOST_DEV=postgres
-      # - DB_PORT_DEV=3000
       - DATABASE_URL=postgres://postgres:admin123@@postgres:5432/dev_barefoot_db
-      # - NODE_ENV=development
-      # - PORT=3000
       - PERSISTENCE_TYPE=postgres
     ports:
       - "5050:5050"
@@ -41,6 +34,8 @@ services:
 volumes:
   database_data:
     driver: local
+
+    
   # pgadmin:
   #   image: dpage/pgadmin4
   #   restart: always

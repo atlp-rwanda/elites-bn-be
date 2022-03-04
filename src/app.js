@@ -7,6 +7,7 @@ import 'dotenv/config';
 const app = express();
 const port = process.env.PORT || 3000;
 const mode = process.env.NODE_ENV || "development";
+const host = process.env.HOST || "localhost";
 
 try {
 	const { sequelize } = db;
@@ -42,7 +43,7 @@ try {
 			});
 	}
 	app.use("/api/v1", routes);
-	app.listen(port, () => {
+	app.listen(port, host, () => {
 		console.log(`The server is running on port ${port}`);
 	});
 } catch (error) {

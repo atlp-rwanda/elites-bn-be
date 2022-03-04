@@ -42,6 +42,9 @@ try {
 				console.log("Unable to connect to the database: ", err);
 			});
 	}
+	app.get("/", (req, res) => {
+		res.json({ message: "WELCOME TO THE API" });
+	});
 	app.use("/api/v1", routes);
 	app.listen(port, host, () => {
 		console.log(`The server is running on port ${port}`);

@@ -10,8 +10,8 @@
     "build": "babel src -d dist",
     "start": "npm run build && better-npm-run prod",
     "dev": "better-npm-run dev",
-    "test": "better-npm-run test"
-    // "coverage": "yarn run test && better-npm-run cov"
+    "test": "better-npm-run test",
+    "coverage": "yarn run test && better-npm-run cov"
   },
   "betterScripts": {
     "dev": {
@@ -34,11 +34,10 @@
         "NODE_ENV": "production",
         "PORT": 8000
       }
+    },
+    "cov": {
+      "command": "nyc report --reporter=text-lcov | coveralls"
     }
-    // ,
-    // "cov": {
-    //   "command": "nyc report --reporter=text-lcov | coveralls"
-    // }
   },
   "dependencies": {
     "@babel/cli": "^7.17.6",

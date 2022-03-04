@@ -22,7 +22,7 @@ jobs:
           command: node --version
       - run:
           name: "INSTALLING DEPENDENCY"
-          command: yarn install
+          command: yarn
       - run:
           name: "TESTING"
           command: "yarn run test"

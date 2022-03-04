@@ -1,13 +1,14 @@
-FROM node:16
+FROM node:16-alpine
 
-WORKDIR /elites-bn-be
-
+WORKDIR /src/app
+ARG PORT
 COPY ./package.json .
 RUN yarn cache clean --force
 RUN yarn install
+COPY .env.sample .env
 COPY . .
 
-EXPOSE 5050
+EXPOSE ${PORT}
 
 
 

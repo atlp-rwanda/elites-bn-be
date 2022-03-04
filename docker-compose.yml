@@ -1,51 +1,47 @@
 version: "3.3"
 services:
-  app:
+  api:
+    image: elites-bn-be
+    container_name: elites_bn_be
     restart: always
-    build: ./
-    links:
-      - postgres
-
-    # env_file: 
-    #   - .env
+    build: 
+      context: ./
+      args:
+        - PORT=${PORT}
     environment:
-      - DATABASE_URL=postgres://postgres:admin123@@postgres:5432/dev_barefoot_db
-      - PERSISTENCE_TYPE=postgres
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - DB_PORT_DEV=${DB_PORT_DEV}
+      - DB_HOST_DEV=${DB_HOST_DEV}
+      - NODE_ENV=development
+      - DB_URL_DEV=${DB_URL_DEV}
     ports:
-      - "5050:5050"
+      - "3000:3000"
     volumes:
       - .:/elites-bn-be/
-      - /elites-bn-be/node_modules
+      - /elites-bn-be/src
 
   
-  postgres:
-    image: postgres
+  db:
+    image: postgres:14-alpine
     restart: always
+    env_file: 
+      - .env
     ports:
       - "5432:5432"
     environment:
-      
-       POSTGRES_PASSWORD: 'admin123@'
-       POSTGRES_DB: 'dev_barefoot_db'
-      
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_DB=${POSTGRES_DB}
     volumes:
       - database_data:/var/lib/postgresql/data
-    # env_file: .env
+    
+    container_name: elites_db
 volumes:
   database_data:
     driver: local
 
     
-  # pgadmin:
-  #   image: dpage/pgadmin4
-  #   restart: always
-  #   ports:
-  #     - 5050:3000
-  #   environment:
-  #     - PGADMIN_DEFAULT_EMAIL=niyonzimadeus2002@gmail.com
-  #     - PGADMIN_DEFAULT_PASSWORD=admin123@
-      
-    
-  #   env_file:
-  #    - .env  
+ 
 

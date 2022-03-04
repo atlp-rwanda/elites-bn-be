@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/atlp-rwanda/elites-bn-be/tree/circleci-project-setup.svg?style=svg)](https://circleci.com/gh/atlp-rwanda/elites-bn-be/tree/circleci-project-setup)
+[![CircleCI](https://circleci.com/gh/atlp-rwanda/elites-bn-be.svg?style=svg)](https://circleci.com/gh/atlp-rwanda/elites-bn-be)
 [![Coverage Status](https://coveralls.io/repos/github/atlp-rwanda/elites-bn-be/badge.svg?branch=circleci-project-setup)](https://coveralls.io/github/atlp-rwanda/elites-bn-be?branch=circleci-project-setup)
 ## Installation
 

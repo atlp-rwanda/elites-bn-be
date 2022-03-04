@@ -26,9 +26,9 @@ jobs:
       - run:
           name: "TESTING"
           command: "yarn run test"
-      - run:
-          name: coverage
-          command: yarn run coverage
+      # - run:
+      #     name: coverage
+      #     command: yarn run coverage
 
       - coveralls/upload
 

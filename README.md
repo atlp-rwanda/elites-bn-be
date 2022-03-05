@@ -28,3 +28,4 @@ docs/swagger-ui/
 ## Contributors
 
 - [Honore IRADUKUNDA](https://github.com/ihonore)
+- [Aristide NIYONGABO](https://github.com/niyongaboaristide17)

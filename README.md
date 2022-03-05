@@ -1,5 +1,5 @@
 [![CircleCI](https://circleci.com/gh/atlp-rwanda/elites-bn-be.svg?style=svg)](https://circleci.com/gh/atlp-rwanda/elites-bn-be)
-[![Coverage Status](https://coveralls.io/repos/github/atlp-rwanda/elites-bn-be/badge.svg?branch=chore-Integrate-Circle-CI-with-readme-badge-181339561)](https://coveralls.io/github/atlp-rwanda/elites-bn-be?branch=chore-Integrate-Circle-CI-with-readme-badge-181339561)
+[![Coverage Status](https://coveralls.io/repos/github/atlp-rwanda/elites-bn-be/badge.svg)](https://coveralls.io/github/atlp-rwanda/elites-bn-be)
 ## Installation
 
 ```bash

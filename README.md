@@ -33,3 +33,4 @@ docs/swagger-ui/
 
 - [Honore IRADUKUNDA](https://github.com/ihonore)
 - [Innocente Gihozo](https://github.com/gihozoinnocente)
+- [Aristide NIYONGABO](https://github.com/niyongaboaristide17)

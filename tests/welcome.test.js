@@ -9,8 +9,8 @@ describe('WELCOME TEST', function() {
         request(app)
         .get('/api/v1/')
         .end((err, res)=>{
-            expect(res.statusCode).to.equal(200)
-            done()
-        })
+            expect(res.statusCode).to.equal(200);
+            done();
+        });
     });
-})
+});

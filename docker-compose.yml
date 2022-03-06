@@ -38,10 +38,31 @@ services:
       - database_data:/var/lib/postgresql/data
     
     container_name: elites_db
+
+  pgadmin:
+    image: dpage/pgadmin4:4.18
+    restart: always
+  
+    ports:
+      - "8080:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+      - PGADMIN_LISTEN_PORT=${PGADMIN_LISTEN_PORT}
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin4
+    links:
+      - "db:pgsql-server"
+    
+    container_name: pgadmin
+    
 volumes:
   database_data:
     driver: local
-
+  
+  pgadmin-data:
+    driver: local
+  
     
  
 

@@ -1,5 +1,5 @@
 export const welcome = (req, res, next) => {
-	res
-		.status(200)
-		.json({ status: 200, message: "Welcome to barefoot api", payload: "" });
+  res
+    .status(200)
+    .json({ status: 200, message: 'Welcome to barefoot api', payload: '' });
 };

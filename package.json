@@ -10,7 +10,8 @@
     "build": "babel src -d dist",
     "start": "npm run build && better-npm-run prod",
     "dev": "better-npm-run dev",
-    "test": "better-npm-run test"
+    "test": "better-npm-run test",
+    "lint": "eslint"
   },
   "betterScripts": {
     "dev": {
@@ -51,6 +52,14 @@
     "sequelize": "^6.17.0"
   },
   "devDependencies": {
+    "eslint": "^8.10.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.2.0",
     "nodemon": "^2.0.15",
     "sequelize-cli": "^6.4.1"
   }

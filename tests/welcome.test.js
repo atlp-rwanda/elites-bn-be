@@ -1,8 +1,8 @@
-import { expect, request, use } from 'chai'
-import chaiHttp from 'chai-http'
-import app from '../src/app'
+import { expect, request, use } from 'chai';
+import chaiHttp from 'chai-http';
+import app from '../src/app';
 
-use(chaiHttp)
+use(chaiHttp);
 
 describe('WELCOME TEST', function() {
     it('SHOULD RETURN 200', function(done){

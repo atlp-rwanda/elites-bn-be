@@ -1,4 +1,7 @@
 'use strict';
+
+const { sequelize } = require("../models");
+
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Users', {
@@ -20,6 +23,16 @@ module.exports = {
       image: {
         type: Sequelize.STRING
       },
+      role:{
+        type: Sequelize.ENUM( 
+          "SUPER_ADMIN", 
+          "TRAVEL_ADMIN", 
+          "TRAVEL_TEAM_MEMBER", 
+          "MANAGER", 
+          "REQUESTER",
+          "ACCOMMODATION_SUPPLIER"),
+        defaultValue: "REQUESTER"
+      },
       hash: {
         type: Sequelize.STRING
       },
@@ -37,5 +50,4 @@ module.exports = {
     await queryInterface.dropTable('Users');
   }
 };
-
 

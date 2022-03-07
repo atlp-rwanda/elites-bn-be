@@ -20,8 +20,10 @@ export default (sequelize, DataTypes) => {
       }
     },
     image: DataTypes.STRING,
+    role: DataTypes.STRING,
     hash: DataTypes.STRING
-  }, {
+  }, 
+  {
     hooks: {
       beforeCreate: async (user) => {
         user.hash = await bcrypt.hashSync(user.hash, 8);

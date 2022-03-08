@@ -1,0 +1,4 @@
+DB_URL_DEV=postgres://postgres:admin123@@127.0.0.1:5432/dev_barefoot_db
+DB_URL_TEST=postgres://postgres:admin123@@127.0.0.1:5432/test_barefoot_db
+DB_URL_PROD=postgres://postgres:admin123@@127.0.0.1:5432/prod_barefoot_db
+JWT_SECRET_KEY=

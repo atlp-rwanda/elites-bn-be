@@ -11,7 +11,7 @@
         "start": "npm run build && better-npm-run prod",
         "dev": "better-npm-run dev",
         "test": "better-npm-run test",
-        "lint": "eslint --fix",
+        "lint": "eslint \"{src,apps,libs,test}/**/*.js\" --fix",
         "coverage": "yarn run test && better-npm-run cov",
         "create-db": "npx sequelize-cli db:create",
         "drop-db": "npx sequelize-cli db:drop",

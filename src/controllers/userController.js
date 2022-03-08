@@ -20,12 +20,10 @@ export class UserControllers {
       const exist = await userExist(req.body.email);
       console.log("exist");
       if (exist) {
-        res
-          .status(409)
-          .json({
-            status: 409,
-            message: "User with this email already exist.",
-          });
+        res.status(409).json({
+          status: 409,
+          message: "User with this email already exist.",
+        });
       } else {
         const { username, role, email, password, image } = req.body;
 
@@ -40,13 +38,11 @@ export class UserControllers {
 
         const { hash, ...newUser } = createdUser.dataValues;
 
-        res
-          .status(201)
-          .json({
-            status: 201,
-            message: "user registered successfully",
-            user: newUser,
-          });
+        res.status(201).json({
+          status: 201,
+          message: "user registered successfully",
+          user: newUser,
+        });
       }
     } catch (error) {
       console.log(error);

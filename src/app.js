@@ -13,7 +13,6 @@ const mode = process.env.NODE_ENV || 'development';
 
 try {
   const { sequelize } = db;
-  // TESTING DATABASE CONNECTION
   if (mode === 'development') {
     sequelize
       .authenticate()

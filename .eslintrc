@@ -13,6 +13,7 @@
         "consistent-return": 0,
         "no-param-reassign": 0,
         "comma-dangle": 0,
+        "import/extensions":[{ "js": "always", "json": "always" }],
         "curly": [
             "error",
             "multi-line"

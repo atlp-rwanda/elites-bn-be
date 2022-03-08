@@ -26,7 +26,6 @@
     }],
 
     "paths": {
-
         "/api/v1": {
             "get": {
                 "tag": ["Home"],
@@ -38,7 +37,57 @@
                     }
                 }
             }
+        },
+        "/api/v1/users/register": {
+            "post": {
+              "tags": ["Users"],
+              "summary": "This will register a user",
+              "description": " ",
+              "produces": ["application/json"],
+              "parameters": [
+                {
+                "name": "Body",
+                "in": "body",
+                "required": true,
+                "schema": {
+                    "$ref": "#/definitions/Register"
+                  }
+                }
+              ],
+              "responses": {
+                "201": {
+                  "description": "User registered successfully"
+                },
+                "409": {
+                  "description": "User with given email already exists"
+                },
+                "400": {
+                  "description": "Bad request"
+                },
+                "500": {
+                  "description": "Internal server error"
+                }
+              }
+            }
+        }
+    },
+
+    "definitions": {
+        "Register": {
+          "type": "object",
+          "in":"body",
+          "required": ["names", "email", "password"],
+          "properties": {
+                "names":{
+                    "type":"string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
         }
     }
-
 }

@@ -14,7 +14,8 @@ export class UserControllers {
         res.status(201).json({ status: 201, message: USER_REGISTERED, payload: createdUser });
       }
     } catch (error) {
-      res.status(500).json({ message: 'Internal server error! ' });
+      console.log(error);
+      res.status(500).json({ message: 'Internal server error! ' + error.message});
     }
   }
 }

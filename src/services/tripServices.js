@@ -1,24 +1,5 @@
 import models from '../models';
 
-
-export const tripExist = async(userId, id) => {
-
-    const dataExist = await models.tripRequest.findOne({
-        where: {
-            userId: userId,
-            status: 'pending',
-            id: id
-        }
-    });
-
-    if (dataExist) {
-        return dataExist;
-    } else {
-        return null;
-    }
-
-}
-
 export const createTrip = async(userid, data) => {
     const addTrip = await models.tripRequest.create({...data, userId: userid });
     addTrip.save();

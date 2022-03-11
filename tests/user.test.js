@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 // import { expect, request, use } from 'chai';
 // import chaiHttp from 'chai-http';
 // import app from '../src/app.js'
@@ -24,7 +24,7 @@
     
 //   });
 // });
-=======
+
 import { expect, request, use } from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../src/app.js'
@@ -60,5 +60,5 @@ describe('USER END-POINT TESTING', () => {
       });
     
   });
-});
->>>>>>> 72b4048 (added changes on update role functionality)
+
+})

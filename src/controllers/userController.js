@@ -9,6 +9,7 @@ import { ConflictsError } from '../httpErrors/conflictError';
 import { UnauthorizedError } from '../httpErrors/unauthorizedError';
 
 // eslint-disable-next-line import/prefer-default-export
+
 export class UserControllers {
   // eslint-disable-next-line class-methods-use-this
   async registerUser(req, res, next) {
@@ -94,6 +95,27 @@ export class UserControllers {
       return res.status(200).json({ status: 200, message: 'Access token created sussccefully', payload: { accessToken, refreshToken: refToken } });
     } catch (err) {
       next(err);
+    }
+  }
+  
+
+
+  async updateRole(req, res) {
+    try {
+      const email = req.body.email;
+      const role = req.body.role;
+      const user = await userExist(email);
+
+      if (user == null) {
+        res.status(400).json({ message: "User does not exist! " });
+        return false;
+      } else {
+        const updatedUser = await updatedRole(role, email)
+        return res.status(200).json({ message:updatedUser})
+        }
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: error });
     }
   }
 }

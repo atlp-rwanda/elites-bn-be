@@ -9,7 +9,11 @@ const userControllers = new UserControllers();
 
 router.post('/register', userControllers.registerUser);
 router.patch(
+<<<<<<< HEAD
     '/updateRole/:id',roleValidate,
+=======
+    '/updateRole',roleValidate,
+>>>>>>> 54dcd28 (added update role)
     userControllers.updateRole
 )
 

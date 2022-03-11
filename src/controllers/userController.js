@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* eslint-disable consistent-return */
 import { USER_REGISTERED, USER_LOGIN } from '../constants/user-constants';
 import { hashPassword, comparePassword } from '../helpers/passwordSecurity';
@@ -16,6 +17,15 @@ import { ConflictsError } from '../httpErrors/conflictError';
 import { UnauthorizedError } from '../httpErrors/unauthorizedError';
 
 // eslint-disable-next-line import/prefer-default-export
+=======
+
+
+import { USER_EXIST, USER_REGISTERED, USER_NOT_EXIST} from '../constants/user-constants';
+
+
+import { hashPassword } from '../helpers/passwordSecurity';
+import { userExist, createUser,updatedRole } from '../services/userServices.js';
+>>>>>>> 0b8f6b3 (added update role)
 export class UserControllers {
   // eslint-disable-next-line class-methods-use-this
   async registerUser(req, res, next) {
@@ -38,6 +48,7 @@ export class UserControllers {
           payload: { accessToken: token, refleshToken: refreshToken },
         });
       }
+<<<<<<< HEAD
     } catch (err) {
       next(err);
     }
@@ -66,6 +77,14 @@ export class UserControllers {
       next(err);
     }
   }
+=======
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ message: 'Internal server error! ' });
+    }
+  }
+  
+>>>>>>> 0b8f6b3 (added update role)
 
 <<<<<<< HEAD
 
@@ -130,12 +149,17 @@ export class UserControllers {
   async updateRole(req, res) {
     try {
       const email = req.body.email;
+<<<<<<< HEAD
+=======
+      const role = req.body.role;
+>>>>>>> 0b8f6b3 (added update role)
       const user = await userExist(email);
 
       if (user == null) {
         res.status(400).json({ message: "User does not exist! " });
         return false;
       } else {
+<<<<<<< HEAD
         const updatedUser = await updatedRole(req.params.id, email)
         
         if(updatedUser == null){
@@ -163,3 +187,14 @@ export class UserControllers {
     }
   }
 }
+=======
+        const updatedUser = await updatedRole(role, email)
+        return res.status(200).json({ message:updatedUser})
+        }
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: error });
+    }
+  }
+}
+>>>>>>> 0b8f6b3 (added update role)

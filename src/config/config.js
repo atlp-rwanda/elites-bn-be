@@ -11,7 +11,6 @@ module.exports = {
     dialect: 'postgres',
     seederStorage: 'sequelize',
     seederStorageTableName: 'sequelize_data',
-   
   },
   test: {
     use_env_variable: 'DB_URL_TEST',

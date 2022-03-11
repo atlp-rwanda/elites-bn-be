@@ -69,6 +69,32 @@
                 }
               }
             }
+        },
+        "/api/v1/auth/logout": {
+            "get": {
+                "tag": ["AUTHENTICATION"],
+                "description": "This will signout a user",
+                "produces": ["application/json"],
+                "parameters":[
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "205": {
+                        "description": "success"
+                    },
+                    "500":{
+                        "description": "Internal server error"
+                    },
+                    "401":{
+                        "description": "Bad request"
+                    }
+                }
+            }
         }
     },
 

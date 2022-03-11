@@ -107,13 +107,19 @@
 				}
 			}
 		},
-		"/api/v1/users/updateRole": {
+        "/api/v1/users/updateRole/{id}": {
             "patch": {
               "tags": ["Users"],
               "summary": "This will update a role of the user",
               "description": " ",
               "produces": ["application/json"],
               "parameters": [
+                {
+                  "name": "id",
+                  "in": "path",
+                  "description": "id",
+                  "required": true
+                },
                 {
                 "name": "Body",
                 "in": "body",
@@ -884,10 +890,8 @@
             "properties": {
                   "email": {
                       "type": "string"
-                  },
-                  "role": {
-                      "type": "string"
                   }
+                 
               }
           },
 		"refreshToken": {

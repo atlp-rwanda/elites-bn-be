@@ -64,21 +64,25 @@ export class UserControllers {
   async updateRole(req, res) {
     try {
       const email = req.body.email;
+
+
       const user = await userExist(email);
 
       if (user == null) {
         res.status(400).json({ message: "User does not exist! " });
         return false;
       } else {
+
         const updatedUser = await updatedRole(req.params.id, email)
         
         if(updatedUser == null){
           return res.status(400).json({ message: "this role does not exist" });
         }
+
         return res.status(200).json({ message:updatedUser})
         }
-    } catch (error) {
-      return res.status(500).json({ message: error });
+    } catch (err) {
+      next(err)
     }
   }
 
@@ -97,3 +101,4 @@ export class UserControllers {
     }
   }
 }
+

@@ -1,14 +1,11 @@
-import joi from 'joi'
+import joi from "joi";
 
 export const tripSchema = joi.object({
-
-
     managerId: joi.number().integer().required().empty().messages({
         "number.base": "managerId must be valid",
         "number.empty": "managerId is not allowed to be empty",
         "any.required": "managerId is required",
     }),
-
 
     departLocation: joi.number().integer().required().empty().messages({
         "number.base": "departLocation must be valid",
@@ -28,7 +25,6 @@ export const tripSchema = joi.object({
         "any.required": "tripReason is required",
     }),
 
-
     departDate: joi.date().iso().required().empty().messages({
         "date.base": "departDate must be valid date",
         "date.empty": "departDate is not allowed to be empty",
@@ -36,11 +32,9 @@ export const tripSchema = joi.object({
         "any.required": "departDate is required",
     }),
 
-    returnDate: joi.date().iso().empty().messages({
+    returnDate: joi.date().iso().messages({
         "date.base": "returnDate must be valid date",
-        "date.empty": "returnDate is not allowed to be empty",
         "date.format": "date format is not correct ISO standard ",
-        "any.required": "returnDate is required",
     }),
 
     travelId: joi.number().integer().required().empty().messages({
@@ -49,18 +43,14 @@ export const tripSchema = joi.object({
         "any.required": "travelId is required",
     }),
 
-
     accomodationId: joi.number().integer().required().empty().messages({
         "number.base": "accomodationId must be valid",
         "number.empty": "accomodationId is not allowed to be empty",
         "any.required": "accomodationId is required",
     }),
 
-    status: joi.string().required().empty().messages({
+    status: joi.string().messages({
         "string.base": " status must be valid",
-        "string.empty": " status is not allowed to be empty",
-        "any.required": " status is required",
+
     }),
-
-
-})
+});

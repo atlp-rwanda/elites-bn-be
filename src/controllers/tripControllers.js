@@ -11,7 +11,7 @@ export class TripControllers {
                 const newTrip = await createTrip(req.params.userId, req.body);
                 res.status(201).json({ status: 201, message: TRIP_CREATED, payload: newTrip });
             } else {
-                res.status(400).json({ status: 400, message: "dates:validation error" })
+                res.status(400).json({ status: 400, message: "departure date is greater than return date" })
             }
         } catch (error) {
             console.log(error)
@@ -26,7 +26,7 @@ export class TripControllers {
     async updateRequest(req, res) {
         try {
             const updated = await updateRequest(req.params.userId, req.params.id, req.body);
-            res.status(201).json({ status: 201, message: REQUEST_UPDATED, payload: updated });
+            res.status(200).json({ status: 200, message: REQUEST_UPDATED, payload: updated });
         } catch (error) {
             res.status(500).json({
                 status: 500,
@@ -54,7 +54,7 @@ export class TripControllers {
         } catch (error) {
             res.status(500).json({
                 status: 500,
-                message: "Trip request failed"
+                message: "NOT FOUND"
             })
         }
     }

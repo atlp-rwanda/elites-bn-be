@@ -26,18 +26,27 @@ export const updateRequest = async(
     userId,
     id,
     data) => {
-
-    const findData = await models.tripRequest.findOne({
+    const exist = await models.tripRequest.findOne({
         where: {
             userId: userId,
             status: "pending",
             id: id
         }
-    })
-
-    if (findData) {
-        const updated = await models.tripRequest.update(data);
-        return updated;
+    });
+    if (exist) {
+        exist.managerId = data.managerId ? data.managerId : exist.managerId;
+        exist.departLocation = data.departLocation ?
+            data.departLocation :
+            exist.departLocation;
+        exist.arrivalLocation = data.arrivalLocation ? data.arrivalLocation : exist.arrivalLocation;
+        exist.tripReason = data.tripReason ? data.tripReason : exist.tripReason;
+        exist.departDate = data.departDate ? data.departDate : exist.departDate;
+        exist.returnDate = data.returnDate ? data.returnDate : exist.returnDate;
+        exist.travelId = data.travelId ? data.travelId : exist.travelId;
+        exist.accomodationId = data.accomodationId ? data.accomodationId : exist.accomodationId;
+        exist.status = data.status ? data.status : exist.status;
+        const updatedArticle = await exist.save();
+        return updatedArticle;
     } else {
         return false;
     }

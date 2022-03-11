@@ -1,6 +1,10 @@
-import { USER_EXIST, USER_REGISTERED } from '../constants/user-constants';
+
+
+import { USER_EXIST, USER_REGISTERED, USER_NOT_EXIST} from '../constants/user-constants';
+
+
 import { hashPassword } from '../helpers/passwordSecurity';
-import { userExist, createUser } from '../services/userServices.js';
+import { userExist, createUser,updatedRole } from '../services/userServices.js';
 export class UserControllers {
   async registerUser(req, res) {
     try {
@@ -14,7 +18,29 @@ export class UserControllers {
         res.status(201).json({ status: 201, message: USER_REGISTERED, payload: createdUser });
       }
     } catch (error) {
+      console.log(error)
       res.status(500).json({ message: 'Internal server error! ' });
+    }
+  }
+  
+
+
+  async updateRole(req, res) {
+    try {
+      const email = req.body.email;
+      const role = req.body.role;
+      const user = await userExist(email);
+
+      if (user == null) {
+        res.status(400).json({ message: "User does not exist! " });
+        return false;
+      } else {
+        const updatedUser = await updatedRole(role, email)
+        return res.status(200).json({ message:updatedUser})
+        }
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: error });
     }
   }
 }

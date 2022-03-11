@@ -20,12 +20,9 @@ export const createUser = async (user) => {
   return userCreated;
 };
 
-export const updatedRole = async (newRoleId, email) => {
+export const updatedRole = async (role, email) => {
   const user = await models.User.findOne({where:{email}})
-  const newRole = await Role.findOne({where:{id:newRoleId}})
-  if(newRole ==null){
-    return null
-  }
+  const newRole = await Role.findOne({where:{name:role}})
   
  
   user.roleId = newRole.id;

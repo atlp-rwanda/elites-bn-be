@@ -1,6 +1,7 @@
 import 'dotenv/config';
 
 module.exports = {
+  
 	development: {
 		use_env_variable: 'DB_URL_DEV',
 		username: process.env.DB_USERNAME_DEV,
@@ -46,5 +47,5 @@ module.exports = {
 				rejectUnauthorized: false,
 			},
 		},
-	},
-};
+	}
+}

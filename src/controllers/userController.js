@@ -101,9 +101,12 @@ export class UserControllers {
     try {
       const email = req.body.email;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       const role = req.body.role;
 >>>>>>> 0b8f6b3 (added update role)
+=======
+>>>>>>> 72b4048 (added changes on update role functionality)
       const user = await userExist(email);
 
       if (user == null) {
@@ -111,11 +114,15 @@ export class UserControllers {
         return false;
       } else {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 72b4048 (added changes on update role functionality)
         const updatedUser = await updatedRole(req.params.id, email)
         
         if(updatedUser == null){
           return res.status(400).json({ message: "this role does not exist" });
         }
+<<<<<<< HEAD
         return res.status(200).json({ message:updatedUser})
         }
     } catch (err) {
@@ -238,10 +245,11 @@ export class UserControllers {
 }
 =======
         const updatedUser = await updatedRole(role, email)
+=======
+>>>>>>> 72b4048 (added changes on update role functionality)
         return res.status(200).json({ message:updatedUser})
         }
     } catch (error) {
-      console.log(error);
       return res.status(500).json({ message: error });
     }
   }

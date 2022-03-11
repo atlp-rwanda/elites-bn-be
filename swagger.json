@@ -17,7 +17,14 @@
             "type": "apiKey",
             "name": "Authorization",
             "in": "header"
-        }
+          
+        },
+        "ApiKeyAuth": {
+          "type": "apiKey",
+          "name": "refreshToken",
+          "in": "header"
+        
+      }
     },
 
     "servers": [{
@@ -69,8 +76,89 @@
                 }
               }
             }
+        },
+    
+
+        "/api/v1/users/login": {
+        "post": {
+          "tags": ["Users"],
+          "summary": "This will login a user",
+          "description": " ",
+          "produces": ["application/json"],
+          "parameters": [
+            {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+                "$ref": "#/definitions/Login"
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "User Loged in successfully"
+            },
+           
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
         }
-    },
+        },
+        "/api/v1/users/{userEmail}": {
+            "patch": {
+              "tags": ["Users"],
+              "summary": "This will update user profile information",
+              "description": " ",
+              "consumes": ["application/json"],
+              "produces": ["application/json"],
+              "parameters": [
+              
+                {
+                  "name": "email",
+                  "in": "path",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "User Update section",
+                  "in": "body",
+                  "description": "Update user info",
+                  "required": true,
+                  "schema": {
+                    "$ref": "#/definitions/Register"
+                  }
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "successfully updated user with given id"
+                },
+                "409": {
+                  "description": "please fill in all fields"
+                },
+                "404": {
+                  "description": "user you want to update does not exist"
+                }
+              },
+              "security": [
+                {
+                  "Bearer": []
+                },
+                {
+                  "ApiKeyAuth":[]
+                }
+              ]
+            }
+         
+          }
+        
+
+},
 
     "definitions": {
         "Register": {
@@ -88,6 +176,19 @@
                     "type": "string"
                 }
             }
-        }
+        },
+        "Login": {
+            "type": "object",
+            "in":"body",
+            "required": ["email", "password"],
+            "properties": {
+                  "email": {
+                      "type": "string"
+                  },
+                  "password": {
+                      "type": "string"
+                  }
+              }
+          }
     }
 }

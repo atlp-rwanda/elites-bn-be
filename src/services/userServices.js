@@ -1,7 +1,5 @@
 import models from '../models';
 
-// const { Users } = model;
-// console.log(Users)
 export const userExist = async (email) => {
   const User = await models.User.findOne({ where: { email: email } });
   if (User) {
@@ -16,3 +14,10 @@ export const createUser = async (user) => {
   userCreated.save();
   return userCreated;
 };
+
+export const updateUser = async (email,updates) =>{
+  const user = await models.User.update({where:{ email: email }}, updates, { new: true });
+
+  return ({name:user.name})
+}
+

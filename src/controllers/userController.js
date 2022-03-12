@@ -3,23 +3,24 @@ import { hashPassword, comparePassword } from '../helpers/passwordSecurity';
 import { generateToken, generateRefreshToken, verifyRefreshTokens } from '../helpers/jwtFunction'
 import { userExist, createUser, updateUser, createArticles } from '../services/userServices.js';
 import  models  from '../models'
+import { ConflictsError } from '../httpErrors/conflictError';
 
 export class UserControllers {
   //register a user
-  async registerUser(req, res) {
+  async registerUser(req, res, next) {
     try {
       // Check if user exists
       const exist = await userExist(req.body.email);
       if (exist) {
-        res.status(409).json({ status: 409, message: USER_EXIST, payload: '' });
+        throw new ConflictsError(`User with this email: "${req.body.email}" already exist please a different email`)
       } else {
         req.body.password = await hashPassword(req.body.password)
         const createdUser = await createUser(req.body);
-        res.status(201).json({ status: 201, message: USER_REGISTERED, payload: createdUser });
+        const token = await generateToken({ id: createdUser.id })
+        res.status(201).json({ status: 201, message: USER_REGISTERED, payload: {accessToken: token , user:createdUser} });
       }
-    } catch (error) {
-      console.log(error)
-      res.status(500).json({ message: 'Internal server error! ' });
+    } catch (err) {
+      next(err)
     }
   }
 
@@ -42,12 +43,12 @@ export class UserControllers {
         return res.status(403).json({ status: 403, message: INVALID_LOGIN });
       }
     } catch (error) {
-      return res.status(500).json({ status: 500, message: SERVER_ERROR });
+      next(err)
     }
 
   }
 
-  async createArticle(req, res) {
+  async createArticle(req, res, next) {
     //using post end point to check authentication
      try{
       const article = {
@@ -57,7 +58,7 @@ export class UserControllers {
             const newArticle = await createArticles(article)
             res.status(201).json({ status: 201, message: "Article created successfully", newArticle })
      } catch(error){
-      res.status(500).json({ message: "Internal server error!" })
+        next(err)
      }
   }
 
@@ -75,8 +76,8 @@ export class UserControllers {
     const refToken = await  generateRefreshToken(userId)
     res.send({ accessToken: accessToken, refreshToken: refToken })
 
-  } catch (error) {
-    next(error)
+  } catch (err) {
+    next(err)
   }
 }
 }

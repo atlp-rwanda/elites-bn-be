@@ -77,8 +77,6 @@
               }
             }
         },
-    
-
         "/api/v1/users/login": {
         "post": {
           "tags": ["Users"],

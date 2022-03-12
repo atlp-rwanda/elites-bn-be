@@ -26,12 +26,6 @@ module.exports = (sequelize, DataTypes) => {
           foreignKey: 'managerId'
       })
       
-      // User.belongsTo(models.refreshToken,{
-      //   foreignKey:'refreshtokenId',
-      //   onDelete: 'CASCADE',
-      //   onUpdate: 'CASCADE'
-
-      // })
     }
   }
   User.init({

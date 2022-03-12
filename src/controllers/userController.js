@@ -1,7 +1,7 @@
 import { USER_EXIST, USER_REGISTERED, USER_LOGIN, INVALID_LOGIN, SERVER_ERROR } from '../constants/user-constants';
 import { hashPassword, comparePassword } from '../helpers/passwordSecurity';
-import { generateToken, generateRefreshToken, verifyRefreshToken ,decodegenerateRefreshToken } from '../helpers/jwtFunction'
-import { userExist, createUser, updateUser } from '../services/userServices.js';
+import { generateToken, generateRefreshToken, verifyRefreshTokens } from '../helpers/jwtFunction'
+import { userExist, createUser, updateUser, createArticles } from '../services/userServices.js';
 import  models  from '../models'
 
 export class UserControllers {
@@ -36,44 +36,50 @@ export class UserControllers {
         const token = await generateToken({ id: exist.id })
         const refreshToken = await generateRefreshToken({ id: exist.id })
         const userCreated = await models.refreshTokenTable.create({refreshToken});
-       
-
         return res.status(201).json({ status: 201, message: USER_LOGIN, payload: { accesstoken: token, refreshToken } });
       }
       else {
         return res.status(403).json({ status: 403, message: INVALID_LOGIN });
       }
-
     } catch (error) {
-      console.log(error)
       return res.status(500).json({ status: 500, message: SERVER_ERROR });
     }
 
-
   }
 
-  //update a user 
-
-  async updateUserInfo(req, res) {
-    try {
-
-
-      if (req.body.password) {
-        var hashP = hashPassword(req.body.password)
-      }
-      const user = {
-        name: req.body.username,
-        email: req.body.email,
-        password: hashP,
-
-      }
-
-      const updatedUser = await updateUser(req.params.email, user)
-      res.status(201).json({ status: 201, message: "user info updated successfully", user: updatedUser })
-
-    }
-    catch (error) {
+  async createArticle(req, res) {
+    //using post end point to check authentication
+     try{
+      const article = {
+              title: req.body.title,
+              content: req.body.content,
+            }
+            const newArticle = await createArticles(article)
+            res.status(201).json({ status: 201, message: "Article created successfully", newArticle })
+     } catch(error){
       res.status(500).json({ message: "Internal server error!" })
-    }
+     }
+  }
+
+
+
+  async refreshTokens (req, res, next){
+  try {
+    const { refreshToken } = req.body
+    if (!refreshToken) 
+    return res.status(403).json({ status: 403, message: "Bad request" })
+    
+    const userId = await verifyRefreshTokens(refreshToken)
+
+    const accessToken = await generateToken(userId)
+    const refToken = await  generateRefreshToken(userId)
+    res.send({ accessToken: accessToken, refreshToken: refToken })
+
+  } catch (error) {
+    next(error)
   }
 }
+}
+
+
+

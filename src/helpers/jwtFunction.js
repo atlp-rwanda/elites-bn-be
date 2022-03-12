@@ -5,7 +5,7 @@ dotenv.config()
 const secret = process.env.JWT_SECRETE_KEY;
 const secrets = process.env.JWT_SECRETE_REFRESH_KEY;
 
-export const generateToken = (payload, expiresIn = '15s') => {
+export const generateToken = (payload, expiresIn = '1d') => {
   const token = jwt.sign({ ...payload }, secret, { expiresIn });
   return token;
 };
@@ -20,21 +20,7 @@ export const decodeToken = async (token) => {
   return decoded;
 };
 
-// export const decodegenerateRefreshToken = async (refreshToken) => {
-//   const decode = await jwt.verify(refreshToken, secrets);
-//   return decode;
-// };
 
-export const verifyRefreshToken= async (refreshToken)=>{
-  return new Promise((resolve,reject)=>{
-    jwt.verify(refreshToken.process.env.JWT_SECRETE_REFRESH_KEY,(error,payload)=>{
-      if(error) return reject (createError.Unauthorized());
-      const id = payload.exist
-      // console.log(id)
-      resolve(id)
-    })
-  })
-}
 
 export const decodegenerateRefreshToken = async (refreshToken) => {  
 try {
@@ -47,4 +33,25 @@ try {
 
 };
 
+export const verifyRefreshTokens=async (refreshToken) => {
+  return new Promise((resolve, reject) => {
+    jwt.verify(
+      refreshToken,
+      process.env.JWT_SECRETE_REFRESH_KEY,
+      (err, payload) => {
+        if (err) return reject(createError.Unauthorized())
+        const userId = payload.aud
+        client.GET(userId, (err, result) => {
+          if (err) {
+            console.log(err.message)
+            reject(createError.InternalServerError())
+            return
+          }
+          if (refreshToken === result) return resolve(userId)
+          reject(createError.Unauthorized())
+        })
+      }
+    )
+  })
+}
 

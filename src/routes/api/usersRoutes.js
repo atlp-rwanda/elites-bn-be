@@ -7,6 +7,7 @@ const userControllers = new UserControllers();
 
 router.post('/register', userControllers.registerUser);
 router.post('/login', userControllers.login);
-router.patch('/:email',authenticate, userControllers.updateUserInfo)
+router.post('/article',authenticate, userControllers.createArticle);
+router.post('/refresh-token', userControllers.refreshTokens)
 
 export default router;

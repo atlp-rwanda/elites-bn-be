@@ -1,12 +1,27 @@
+<<<<<<< HEAD
 /* eslint-disable consistent-return */
 import { USER_REGISTERED, USER_LOGIN } from '../constants/user-constants';
+=======
+<<<<<<< HEAD
+import {
+  USER_EXIST, USER_REGISTERED, USER_LOGIN, INVALID_LOGIN, SERVER_ERROR
+} from '../constants/user-constants';
+>>>>>>> some changes on linting
 import { hashPassword, comparePassword } from '../helpers/passwordSecurity';
 import { generateAccessToken, generateRefreshToken, decodeRefreshToken } from '../helpers/jwtFunction';
 import { userExist, createUser } from '../services/userServices';
 import models from '../models';
 
 import { ConflictsError } from '../httpErrors/conflictError';
+<<<<<<< HEAD
 import { UnauthorizedError } from '../httpErrors/unauthorizedError';
+=======
+=======
+import { USER_EXIST, USER_REGISTERED } from '../constants/user-constants';
+import { hashPassword } from '../helpers/passwordSecurity';
+import { userExist, createUser } from '../services/userServices.js';
+>>>>>>> some changes on linting
+>>>>>>> some changes on linting
 
 // eslint-disable-next-line import/prefer-default-export
 export class UserControllers {

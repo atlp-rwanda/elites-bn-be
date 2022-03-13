@@ -26,6 +26,7 @@ export class TripControllers {
             });
         }
     }
+  
 
     async updateRequest(req, res) {
         try {
@@ -46,6 +47,7 @@ export class TripControllers {
             });
         }
     }
+  
 
     async getAllRequests(req, res) {
         try {
@@ -58,6 +60,7 @@ export class TripControllers {
             });
         }
     }
+  
 
     async getRequests(req, res) {
         try {
@@ -70,6 +73,7 @@ export class TripControllers {
             });
         }
     }
+  
 
     async deleteRequests(req, res) {
         try {
@@ -82,4 +86,6 @@ export class TripControllers {
             });
         }
     }
+  }
 }
+

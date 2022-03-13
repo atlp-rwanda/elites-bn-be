@@ -12,7 +12,7 @@ module.exports = {
       travelId: 1,
       accomodationId: 1,
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     }, {
       id: 2,
       userId: 2,
@@ -25,7 +25,7 @@ module.exports = {
       travelId: 1,
       accomodationId: 1,
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     }], {});
   },
 

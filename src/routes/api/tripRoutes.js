@@ -8,7 +8,7 @@ const tripControllers = new TripControllers();
 router.post(
   '/request/:userId',
   requestValidation,
-  tripControllers.createController
+  tripControllers.createController,
 );
 router.patch('/request/:userId/:id', tripControllers.updateRequest);
 router.get('/allrequest/:userId', tripControllers.getAllRequests);

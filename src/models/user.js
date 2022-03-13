@@ -21,25 +21,26 @@ module.exports = (sequelize, DataTypes) => {
 				constraints: false,
 			});
 
-			User.hasMany(User, {
-				foreignKey: 'managerId',
-			});
-		}
-	}
-	User.init(
-		{
-			names: DataTypes.STRING,
-			email: DataTypes.STRING,
-			password: DataTypes.STRING,
-			roleId: DataTypes.INTEGER,
-			managerId: DataTypes.INTEGER,
-			isActive: DataTypes.BOOLEAN,
-			verified: DataTypes.BOOLEAN,
-		},
-		{
-			sequelize,
-			modelName: 'User',
-		}
-	);
-	return User;
+      User.hasMany(User, {
+        foreignKey: 'managerId',
+      });
+
+      User.hasMany(models.tripRequest, {
+        foreignKey: 'userId',
+      });
+    }
+  }
+  User.init({
+    names: DataTypes.STRING,
+    email: DataTypes.STRING,
+    password: DataTypes.STRING,
+    roleId: DataTypes.INTEGER,
+    managerId: DataTypes.INTEGER,
+    isActive: DataTypes.BOOLEAN,
+    verified: DataTypes.BOOLEAN,
+  }, {
+    sequelize,
+    modelName: 'User',
+  });
+  return User;
 };

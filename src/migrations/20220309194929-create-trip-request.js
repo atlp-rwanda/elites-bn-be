@@ -1,66 +1,66 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('tripRequests', {
+    await queryInterface.createTable("tripRequests", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       userId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: 'Users',
-          key: 'id',
-          as: 'userId',
-        }
+          model: "Users",
+          key: "id",
+          as: "userId",
+        },
       },
       managerId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       departLocation: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       arrivalLocation: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       tripReason: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       departDate: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       returnDate: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       travelId: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       accomodationId: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       status: {
         type: Sequelize.STRING,
-        defaultValue: 'pending'
+        defaultValue: "pending",
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('tripRequests');
-  }
+    await queryInterface.dropTable("tripRequests");
+  },
 };

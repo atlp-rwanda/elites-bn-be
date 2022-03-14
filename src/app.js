@@ -7,6 +7,7 @@ import db from './models/index';
 import swaggerDoc from '../swagger.json';
 import 'dotenv/config';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { PageNotFoundError } from './httpErrors/pageNotFoundError';
 =======
 import { PageNotFoundError } from './httpErrors/pageNotFoundError.js';
@@ -18,6 +19,11 @@ import passport from './middlewares/auth'
 =======
 import passport from './middlewares/auth.js';
 >>>>>>> ec439fb (updated fb and google login)
+=======
+import passport from './middlewares/auth'
+
+
+>>>>>>> c663a64 (login with google and fb)
 
 const app = express();
 const port = process.env.PORT || 3009;
@@ -59,7 +65,11 @@ try {
   app.use(cors());
   app.use(express.json());
   app.use(morgan('dev'));
+<<<<<<< HEAD
   app.use(passport.initialize());
+=======
+  app.use(passport.initialize())
+>>>>>>> c663a64 (login with google and fb)
   app.use('/api/v1/', routes);
   app.use(
     '/docs/swagger-ui/',

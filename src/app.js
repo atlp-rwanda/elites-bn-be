@@ -7,6 +7,9 @@ import db from './models/index.js';
 import swaggerDoc from '../swagger.json';
 import 'dotenv/config';
 import { PageNotFoundError } from './httpErrors/pageNotFoundError.js';
+import passport from './middlewares/auth'
+
+
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -48,6 +51,7 @@ try {
   app.use(cors());
   app.use(express.json());
   app.use(morgan('dev'));
+  app.use(passport.initialize())
   app.use('/api/v1/', routes);
   app.use(
     '/docs/swagger-ui/',

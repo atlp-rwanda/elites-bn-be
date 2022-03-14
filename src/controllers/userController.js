@@ -17,4 +17,19 @@ export class UserControllers {
       res.status(500).json({ message: 'Internal server error! ' });
     }
   }
+
+  async authGoogleLogin(req,res) {
+  try {
+    res.status(201).json({status:201, message:'Succesfully logged in with Google!',token:req.user})
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error! ' });
+  }
+  }
+  async authFacebookLogin(req,res) {
+    try {
+      res.status(201).json({status:201, message:'Succesfully logged in with Facebook!',token:req.user})
+    } catch (error) {
+      res.status(500).json({ message: 'Internal server error! ' });
+    }
+    }
 }

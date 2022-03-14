@@ -69,6 +69,19 @@
                 }
               }
             }
+        },
+        "/api/v1/users/auth/google": {
+            "get": {
+                "tags": ["Users"],
+                "summary": "This will login a user",
+                "description": " ",
+                "operationId": "getHome",
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    }
+                }
+            }
         }
     },
 

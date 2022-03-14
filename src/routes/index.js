@@ -5,6 +5,7 @@ import authRoutes from './api/authRoutes';
 import accommodationsRoutes from './api/accommodationsRoutes.js';
 import roomRoutes from './api/roomsRoutes.js';
 import locationsRoutes from './api/locationsRoutes.js';
+import tripRoutes from './api/tripRoutes';
 
 const routes = express.Router();
 

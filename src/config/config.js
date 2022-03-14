@@ -8,10 +8,10 @@ module.exports = {
     database: process.env.DB_DATABASE_DEV,
     host: process.env.DB_HOST_DEV,
     port: process.env.DB_PORT_DEV,
-    dialect: 'postgres',
-    seederStorage: 'sequelize',
-    seederStorageTableName: 'sequelize_data',
+    dialect: "postgres",
     dialectOptions: {},
+    seederStorage: "sequelize",
+    seederStorageTableName: "sequelize_data",
   },
   test: {
     use_env_variable: 'DB_URL_TEST',

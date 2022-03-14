@@ -1,13 +1,14 @@
-import { TRIP_CREATED, REQUEST_UPDATED, FAILED_TRIP } from '../constants/tripConstants';
+import { TRIP_CREATED, REQUEST_UPDATED, FAILED_TRIP } from '../constants/tripConstants.js';
 import {
-    createTrip,
-    getPending,
-    updateRequest,
-    deleteRequest,
-    getAllRequests
-} from '../services/tripServices';
-import { validateDate } from '../helpers/dateComparison';
+  createTrip,
+  getPending,
+  updateRequest,
+  deleteRequest,
+  getAllRequests
+} from '../services/tripServices.js';
+import { validateDate } from '../helpers/dateComparison.js';
 
+// eslint-disable-next-line import/prefer-default-export
 export class TripControllers {
     async createController(req, res) {
         try {
@@ -36,14 +37,13 @@ export class TripControllers {
             } else {
                 res.status(200).json({
                     status: 404,
-                    message: "Oops,No such trip request found! "
+                    message: 'Oops,No such trip request found! '
                 });
             }
-
         } catch (error) {
             res.status(500).json({
                 status: 500,
-                message: "Oops,No such trip request found! "
+                message: 'Oops,No such trip request found! '
             });
         }
     }
@@ -82,9 +82,8 @@ export class TripControllers {
         } catch (error) {
             res.status(404).json({
                 status: 404,
-                message: NO_TRIP_FOUND
-            });
-        }
+        message: NO_TRIP_FOUND
+      });
     }
   }
 }

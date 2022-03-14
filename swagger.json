@@ -117,12 +117,15 @@
                 }],
                 "responses": {
                     "201": {
-                        "description": "Trip request successfull"
+                        "description": "Trip request created successfull"
                     },
                     "400": {
                         "description": "Bad Request"
                     }
-                }
+                },
+                "security": [{
+                    "Bearer": []
+                }]
             }
         },
 
@@ -147,7 +150,10 @@
                     "400": {
                         "description": "Bad Request"
                     }
-                }
+                },
+                "security": [{
+                    "Bearer": []
+                }]
             }
         },
 
@@ -172,7 +178,10 @@
                     "400": {
                         "description": "Bad Request"
                     }
-                }
+                },
+                "security": [{
+                    "Bearer": []
+                }]
             }
         },
 
@@ -205,7 +214,10 @@
                     "404": {
                         "description": "NOT FOUND"
                     }
-                }
+                },
+                "security": [{
+                    "Bearer": []
+                }]
             },
             "patch": {
                 "tags": ["Trip Request"],

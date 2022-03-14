@@ -6,10 +6,10 @@ import routes from './routes/index';
 import db from './models/index';
 import swaggerDoc from '../swagger.json';
 import 'dotenv/config';
+
 import { PageNotFoundError } from './httpErrors/pageNotFoundError.js';
 
 import passport from './middlewares/auth.js';
-
 
 const app = express();
 const port = process.env.PORT || 3009;
@@ -78,11 +78,7 @@ try {
       message: err.message,
       path: req.path,
       error: err.description,
-<<<<<<< HEAD
       stack: err.stack,
-=======
-      stack: err.stack
->>>>>>> 2518aab (changes on social auth)
     });
     next(err);
   });

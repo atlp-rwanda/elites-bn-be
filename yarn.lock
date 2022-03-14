@@ -5760,11 +5760,14 @@ typedarray-to-buffer@^3.1.5:
     is-typedarray "^1.0.0"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 =======
+=======
+>>>>>>> c663a64 (login with google and fb)
 uid-safe@~2.1.5:
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/uid-safe/-/uid-safe-2.1.5.tgz#2b3d5c7240e8fc2e58f8aa269e5ee49c0857bd3a"
@@ -5776,7 +5779,10 @@ uid2@0.0.x:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/uid2/-/uid2-0.0.4.tgz#033f3b1d5d32505f5ce5f888b9f3b667123c0a44"
   integrity sha512-IevTus0SbGwQzYh3+fRsAMTVVPOoIVufzacXcHPmdlle1jUpq7BRL+mw3dgeLanvGZdwwbWhRV6XrcFNdBmjWA==
+<<<<<<< HEAD
 >>>>>>> 986dac3 (login with google and fb)
+=======
+>>>>>>> c663a64 (login with google and fb)
 
 umzug@^2.3.0:
   version "2.3.0"

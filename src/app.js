@@ -10,7 +10,7 @@ import { PageNotFoundError } from './httpErrors/pageNotFoundError.js';
 import passport from './middlewares/auth.js';
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3009;
 const mode = process.env.NODE_ENV || 'development';
 
 try {
@@ -70,7 +70,12 @@ try {
     const statusCode = err.statusCode || 500;
     console.log(err);
     res.status(statusCode).json({
-      statusCode, name: err.name, message: err.message, path: req.path, error: err.description, stack: err.stack
+      statusCode,
+      name: err.name,
+      message: err.message,
+      path: req.path,
+      error: err.description,
+      stack: err.stack
     });
     next(err);
   });

@@ -1,7 +1,7 @@
 import express from 'express';
-import { UserControllers } from '../../controllers/userController';
-import { authenticate } from '../../middlewares/authenticate';
-import passport from '../../middlewares/auth';
+import { UserControllers } from '../../controllers/userController.js';
+import { authenticate } from '../../middlewares/authenticate.js';
+import passport from '../../middlewares/auth.js';
 
 const router = express.Router();
 const userControllers = new UserControllers();
@@ -15,7 +15,7 @@ router.get('/auth/google', passport.authenticate('google', { session: false, sco
 
 router.get('/auth/google/login', passport.authenticate('google', { session: false, failureRedirect: 'auth/google/failed' }), userControllers.authGoogleLogin);
 
-router.get('/auth/google/failed', (req, res, next) => {
+router.get('/auth/google/failed', (req, res) => {
   res.send('oops!failed to login with Google');
 });
 
@@ -28,8 +28,6 @@ router.get(
   }),
   userControllers.authFacebookLogin
 );
-
-// router.get('/auth/facebook/login',passport.authenticate('facebook',{ session:false ,failureRedirect:'auth/facebook/failed'}),userControllers.authFacebookLogin)
 
 router.get('/auth/facebook/failed', (req, res, next) => {
   res.send('oops!failed to login with Facebook');

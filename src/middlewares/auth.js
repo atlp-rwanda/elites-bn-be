@@ -22,7 +22,10 @@ passport.use(new GoogleStrategy(
     }
     const role = await models.Role.findOne({ where: { name: 'requester' } });
     const newUser = await models.User.create({
-      email: profile.email, names: profile.displayName, roleId: role.dataValues.id, verified: profile.email_verified
+      email: profile.email,
+      names: profile.displayName,
+      roleId: role.dataValues.id,
+      verified: profile.email_verified
     });
     jwt.sign({ newUser }, 'noSecrets', (err, token) => {
       if (err) {
@@ -55,7 +58,9 @@ passport.use(new FacebookStrategy(
     } else {
       const role = await models.Role.findOne({ where: { name: 'requester' } });
       const newUser = await models.User.create({
-        email: profile.emails[0].value, names: profile.displayName, roleId: role.dataValues.id, verified: true
+        email: profile.emails[0].value,
+        names: profile.displayName,
+        roleId: role.dataValues.id
       });
       jwt.sign({ newUser }, 'noSecrets', (err, token) => {
         if (err) {

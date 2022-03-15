@@ -1,20 +1,11 @@
 import models from '../models';
 
-
-export const tripExist = async(userId, id) => {
-
-    const dataExist = await models.tripRequest.findOne({
-        where: {
-            userId: userId,
-            status: 'pending',
-            id: id
-        }
-    });
-
-    if (dataExist) {
-        return dataExist;
-    } else {
-        return null;
+export const tripExist = async (userId, id) => {
+  const dataExist = await models.tripRequest.findOne({
+    where: {
+      userId,
+      status: 'pending',
+      id
     }
   });
 
@@ -24,18 +15,18 @@ export const tripExist = async(userId, id) => {
   return null;
 };
 
-export const deleteRequest = async(userId, id) => {
-    const Data = await models.tripRequest.destroy({
-        where: {
-            status: 'pending',
-            userId,
-            id
-        },
-    });
-
-    return Data;
+export const createTrip = async (userid, data) => {
+  const addTrip = await models.tripRequest.create({ ...data, userId: userid });
+  addTrip.save();
+  return addTrip;
 };
 
+export const getAllRequests = async (userId) => {
+  const Data = await models.tripRequest.findAll({
+    where: { userId },
+  });
+  return Data;
+};
 
 export const getPending = async (userId) => {
   const Data = await models.tripRequest.findAll({
@@ -58,20 +49,37 @@ export const updateRequest = async (userId, id, data) => {
     exist.travelId = data.travelId ? data.travelId : exist.travelId;
     exist.accomodationId = data.accomodationId ? data.accomodationId : exist.accomodationId;
     exist.status = data.status ? data.status : exist.status;
-    const updatedArticle = await exist.save();
-    return updatedArticle;
+    const updatedTrip = await exist.save();
+    return updatedTrip;
   }
   return null;
 };
 
 export const deleteRequest = async (userId, id) => {
-  const Data = await models.tripRequest.destroy({
-    where: {
-      status: 'pending',
-      userId,
-      id
-    },
-  });
+  const checkExist = await tripExist(userId, id);
 
-  return Data;
+  if (checkExist) {
+    const Data = await models.tripRequest.destroy({
+      where: {
+        status: 'pending',
+        userId,
+        id
+      },
+    });
+    return true;
+  }
+
+  return null;
+};
+
+export const fetchAllRequests = async (managerId) => {
+  const data = await models.tripRequest.findAll({
+    where: {
+      managerId
+    }
+  });
+  if (data) {
+    return data;
+  }
+  return null;
 };

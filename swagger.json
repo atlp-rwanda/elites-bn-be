@@ -185,6 +185,35 @@
             }
         },
 
+
+        "/api/v1/trip/requests/all/{managerId}": {
+            "get": {
+                "tags": ["Trip Request"],
+                "summary": "This endPoint will retrieve the requests sent to manager",
+                "description": "This endPoint will retrieve the requests sent by requesters to manager",
+                "operationId": "get requests sent to manager",
+                "parameters": [{
+                    "name": "managerId",
+                    "in": "path",
+                    "description": "Trip request manager id",
+                    "required": true,
+                    "type": "integer"
+                }],
+
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                },
+                "security": [{
+                    "Bearer": []
+                }]
+            }
+        },
+
         "/api/v1/trip/request/{userId}/{id}": {
             "delete": {
                 "tags": ["Trip Request"],

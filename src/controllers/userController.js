@@ -1,13 +1,11 @@
-import {
-  USER_EXIST, USER_REGISTERED, USER_LOGIN, INVALID_LOGIN, SERVER_ERROR
-} from '../constants/user-constants';
-import { hashPassword, comparePassword } from '../helpers/passwordSecurity';
-import { generateAccessToken, generateRefreshToken, decodeRefreshToken } from '../helpers/jwtFunction';
+import { USER_REGISTERED, USER_LOGIN } from '../constants/user-constants.js';
+import { hashPassword, comparePassword } from '../helpers/passwordSecurity.js';
+import { generateAccessToken, generateRefreshToken, decodeRefreshToken } from '../helpers/jwtFunction.js';
 import { userExist, createUser, createArticles } from '../services/userServices.js';
 import models from '../models';
 
-import { ConflictsError } from '../httpErrors/conflictError';
-import { UnauthorizedError } from '../httpErrors/unauthorizedError';
+import { ConflictsError } from '../httpErrors/conflictError.js';
+import { UnauthorizedError } from '../httpErrors/unauthorizedError.js';
 
 export class UserControllers {
   // register a user
@@ -21,7 +19,11 @@ export class UserControllers {
         req.body.password = await hashPassword(req.body.password);
         const createdUser = await createUser(req.body);
         const token = await generateAccessToken({ id: createdUser.id });
-        res.status(201).json({ status: 201, message: USER_REGISTERED, payload: { accessToken: token, user: createdUser } });
+        res.status(201).json({
+          status: 201,
+          message: USER_REGISTERED,
+          payload: { accessToken: token, user: createdUser }
+        });
       }
     } catch (err) {
       next(err);
@@ -65,12 +67,11 @@ export class UserControllers {
     }
   }
 
-  // using access token to generate refresh token
   async refreshTokens(req, res, next) {
+    // using access token to generate refresh token
     try {
       const { refreshToken } = req.body;
-      if (!refreshToken) 
-      return res.status(400).json({ status: 400, message: 'Bad request' });
+      if (!refreshToken) return res.status(400).json({ status: 400, message: 'Bad request' });
       const payloadToken = await decodeRefreshToken(refreshToken);
       const { iat, exp, ...newPayloadToken } = payloadToken;
       // console.log(payloadToken)

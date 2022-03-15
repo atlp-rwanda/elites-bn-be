@@ -1,13 +1,5 @@
 import models from '../models';
 
-// export const userExist = async (email) => {
-//   const User = await models.User.findOne({ where: { email } });
-//   if (User) {
-//     return User;
-//   }
-//   return null;
-// };
-
 export const userExist = async (email) => {
   const User = await models.User.findOne({
     where: { email },

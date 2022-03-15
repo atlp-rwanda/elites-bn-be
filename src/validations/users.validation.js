@@ -14,7 +14,7 @@ export const userValidation = (req, res, next) => {
         'string.pattern.base':
             '{{#label}} must contain at least a number, upper-case letter and longer than 8 characters'
       }),
-    
+
     email: Joi.string().required().email(),
 
   });

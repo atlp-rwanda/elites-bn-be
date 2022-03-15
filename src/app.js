@@ -7,8 +7,8 @@ import db from './models/index';
 import swaggerDoc from '../swagger.json';
 import 'dotenv/config';
 import { PageNotFoundError } from './httpErrors/pageNotFoundError.js';
-import passport from './middlewares/auth'
 
+import passport from './middlewares/auth.js';
 
 
 const app = express();
@@ -51,7 +51,7 @@ try {
   app.use(cors());
   app.use(express.json());
   app.use(morgan('dev'));
-  app.use(passport.initialize())
+  app.use(passport.initialize());
   app.use('/api/v1/', routes);
   app.use(
     '/docs/swagger-ui/',

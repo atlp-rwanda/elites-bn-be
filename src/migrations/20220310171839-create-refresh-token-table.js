@@ -8,7 +8,11 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       refreshToken: {
+<<<<<<< HEAD
         type: Sequelize.STRING,
+=======
+        type: Sequelize.TEXT
+>>>>>>> ec439fb (updated fb and google login)
       },
       createdAt: {
         allowNull: false,

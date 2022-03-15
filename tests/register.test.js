@@ -11,17 +11,36 @@ describe('USER REGISTER A USER', () => {
  })
     it('it should register the user', async () => {
       const res = await request(app).post('/api/v1/users/register').send({
+<<<<<<< HEAD
         email: 'elites@gmail.com',
         password: 'Pass12515858'
+=======
+        names:"MAGNUS",
+        email: 'LeGrand@gmail.com',
+        password: 'Pass@125'
+>>>>>>> ec439fb (updated fb and google login)
       })
       expect(res).to.have.status([200]);
       expect(res.body).to.have.property('message');
       expect(res.body).to.have.property('status');
       expect(res.body).haveOwnProperty('payload');
     });
+<<<<<<< HEAD
 
     it('should not register a user when already existing', async () => {
       const res = await request(app).post('/api/v1/users/register')
+=======
+  
+    it('it should not register a user with existing email ', async () => {
+      const res = await request(app).post('/api/v1/users/register').send({
+        names:'YANGENEYE Patrick',
+        email: 'yangeney@gmail.com',
+        password: 'password'
+      });
+    
+      expect(res.body).to.have.property('message');
+      expect(res.body).to.have.property('statusCode');
+>>>>>>> ec439fb (updated fb and google login)
       
         .send({
           names: 'Gihozo Innocente',

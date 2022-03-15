@@ -10,10 +10,14 @@ import 'dotenv/config';
 import { PageNotFoundError } from './httpErrors/pageNotFoundError';
 =======
 import { PageNotFoundError } from './httpErrors/pageNotFoundError.js';
+<<<<<<< HEAD
 import passport from './middlewares/auth'
 
 
 >>>>>>> 986dac3 (login with google and fb)
+=======
+import passport from './middlewares/auth.js';
+>>>>>>> ec439fb (updated fb and google login)
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -55,7 +59,7 @@ try {
   app.use(cors());
   app.use(express.json());
   app.use(morgan('dev'));
-  app.use(passport.initialize())
+  app.use(passport.initialize());
   app.use('/api/v1/', routes);
   app.use(
     '/docs/swagger-ui/',

@@ -1,5 +1,5 @@
 import { StatusCodes, getReasonPhrase, ReasonPhrases } from 'http-status-codes';
-import { BaseError } from './baseError';
+import { BaseError } from './baseError.js';
 
 export class InternalServerError extends BaseError {
   constructor(

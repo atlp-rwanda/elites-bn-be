@@ -12,8 +12,7 @@ router.post('/login', userControllers.login);
 router.post('/article', authenticate, userControllers.createArticle);
 router.post('/refresh-token', userControllers.refreshTokens);
 
-router.get('/auth/google',
-passport.authenticate('google',{ session:false ,scope:['email','profile'],prompt: 'select_account',
+router.get('/auth/google',passport.authenticate('google',{ session:false ,scope:['email','profile'],prompt: 'select_account',
 }))
 
 router.get('/auth/google/login',passport.authenticate('google',{ session:false ,failureRedirect:'auth/google/failed'}),userControllers.authGoogleLogin)

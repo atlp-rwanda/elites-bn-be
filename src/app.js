@@ -59,7 +59,7 @@ try {
       },
     })
   );
-  
+
   // catch all 404 errors
   app.all('*', (req, res, next) => {
     const err = new PageNotFoundError();

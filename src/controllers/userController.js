@@ -12,17 +12,21 @@ export class UserControllers {
   async registerUser(req, res, next) {
     try {
       // Check if user exists
-      const exist = await userExist(req.body.email);
-      if (exist) {
+      
+      const userEmailExist = await userExist(req.body.email);
+      if (userEmailExist) {
         throw new ConflictsError(`User with this email: "${req.body.email}" already exist please a different email`);
       } else {
         req.body.password = await hashPassword(req.body.password);
         const createdUser = await createUser(req.body);
-        const token = await generateAccessToken({ id: createdUser.id });
-        res.status(201).json({
-          status: 201,
+        const {
+          password, createdAt, updatedAt, ...newcreatedUser
+        } = createdUser;
+        const token = await generateAccessToken({ newcreatedUser});
+        res.status(200).json({
+          status: 200,
           message: USER_REGISTERED,
-          payload: { accessToken: token, user: createdUser }
+          payload: { accessToken: token }
         });
       }
     } catch (err) {

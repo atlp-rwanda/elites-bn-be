@@ -180,7 +180,7 @@
           "in":"body",
           "required": ["names", "email", "password"],
           "properties": {
-                "names":{
+                "username":{
                     "type":"string"
                 },
                 "email": {

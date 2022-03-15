@@ -12,8 +12,14 @@ describe('USER REGISTER A USER', () => {
     it('it should register the user', async () => {
       const res = await request(app).post('/api/v1/users/register').send({
 <<<<<<< HEAD
+<<<<<<< HEAD
         email: 'elites@gmail.com',
         password: 'Pass12515858'
+=======
+        names:"MAGNUS",
+        email: 'LeGrand@gmail.com',
+        password: 'Pass@125'
+>>>>>>> ec439fb (updated fb and google login)
 =======
         names:"MAGNUS",
         email: 'LeGrand@gmail.com',
@@ -40,6 +46,9 @@ describe('USER REGISTER A USER', () => {
     
       expect(res.body).to.have.property('message');
       expect(res.body).to.have.property('statusCode');
+<<<<<<< HEAD
+>>>>>>> ec439fb (updated fb and google login)
+=======
 >>>>>>> ec439fb (updated fb and google login)
       
         .send({

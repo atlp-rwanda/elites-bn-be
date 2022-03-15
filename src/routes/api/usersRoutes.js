@@ -38,28 +38,28 @@ router.get('/auth/facebook/failed', (req, res, next) => {
   res.send('oops!failed to login with Facebook');
 });
 
-router.get('/auth/google',passport.authenticate('google',{ session:false ,scope:['email','profile'],prompt: 'select_account',
-}))
+router.get('/auth/google', passport.authenticate('google', { session: false, scope: ['email', 'profile'], prompt: 'select_account', }));
 
-router.get('/auth/google/login',passport.authenticate('google',{ session:false ,failureRedirect:'auth/google/failed'}),userControllers.authGoogleLogin)
+router.get('/auth/google/login', passport.authenticate('google', { session: false, failureRedirect: 'auth/google/failed' }), userControllers.authGoogleLogin);
 
+router.get('/auth/google/failed', (req, res, next) => {
+  res.send('oops!failed to login with Google');
+});
 
-router.get('/auth/google/failed',(req,res,next)=>{
-    res.send('oops!failed to login with Google')
-})
+router.get(
+  '/auth/facebook',
+  passport.authenticate('facebook', {
+    session: false,
+    scope: ['email', 'public_profile']
 
-
-router.get('/auth/facebook',
-passport.authenticate('facebook',{ session: false,
-     scope: ['email', 'public_profile']
-
-}),userControllers.authFacebookLogin)
+  }),
+  userControllers.authFacebookLogin
+);
 
 // router.get('/auth/facebook/login',passport.authenticate('facebook',{ session:false ,failureRedirect:'auth/facebook/failed'}),userControllers.authFacebookLogin)
 
-router.get('/auth/facebook/failed',(req,res,next)=>{
-    res.send('oops!failed to login with Facebook')
-})
-
+router.get('/auth/facebook/failed', (req, res, next) => {
+  res.send('oops!failed to login with Facebook');
+});
 
 export default router;

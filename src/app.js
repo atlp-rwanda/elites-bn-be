@@ -8,9 +8,7 @@ import swaggerDoc from '../swagger.json';
 import 'dotenv/config';
 
 import { PageNotFoundError } from './httpErrors/pageNotFoundError.js';
-import passport from './middlewares/auth'
-
-
+import passport from './middlewares/auth.js';
 
 import passport from './middlewares/auth.js';
 

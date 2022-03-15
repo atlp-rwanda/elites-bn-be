@@ -59,7 +59,6 @@ export class UserControllers {
     } catch (err) {
       next(err);
     }
-
   }
 
 
@@ -126,7 +125,9 @@ export class UserControllers {
     } catch (err) {
       next(err);
     }
-    }
+  }
+
+  
 }
   
 

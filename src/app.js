@@ -6,6 +6,9 @@ import routes from './routes/index.js';
 import db from './models';
 import swaggerDoc from '../swagger.json';
 import 'dotenv/config';
+import path from 'path'
+
+
 
 
 const app = express();
@@ -45,10 +48,15 @@ try {
       });
   }
 
+  app.set('views', path.join(__dirname,'template'))
+  app.set('view engine', 'ejs')
   app.use(cors());
   app.use(express.json());
   app.use(morgan('dev'));
   app.use('/api/v1/', routes);
+  app.get('/verify',(req, res)=>{
+    res.render(`index`)
+})
 
   app.use(
     '/docs/swagger-ui/',

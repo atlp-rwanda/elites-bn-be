@@ -1,3 +1,7 @@
+import 'dotenv/config';
+
+const port =  process.env.APP_URL;
+
 export const verificationEmail = async (verificationLink)=>{
  return `
  <!DOCTYPE html>
@@ -132,7 +136,7 @@ export const verificationEmail = async (verificationLink)=>{
         <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
           <tr>
             <td align="center" valign="top" style="padding: 36px 24px;">
-              <a href="https://sendgrid.com" target="_blank" style="display: inline-block;">
+              <a href="mailto:https://sendgrid.com" target="_blank" style="display: inline-block;">
                 <img class="logo" src="https://cdn.pixabay.com/photo/2018/02/04/09/03/migration-3129340_960_720.jpg" alt="Logo" border="0" width="150" style="display: block; width: 150px; max-width: 150px; min-width: 150px;">
               </a>
             </td>
@@ -184,7 +188,7 @@ export const verificationEmail = async (verificationLink)=>{
           <!-- start copy -->
           <tr>
             <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
-              <p style="margin: 0;">Tap the button below to confirm your email address. For any support find us <a href="${verificationLink}">Barefoot Nomad</a>.</p>
+              <p style="margin: 0;">Tap the button below to confirm your email address. For any support find contact us <a href="mailto:info@barefoot-nomad.com?subject=request&cc=technical@barefoot-nomad.com"">Barefoot Nomad</a>.</p>
             </td>
           </tr>
           <!-- end copy -->
@@ -198,7 +202,7 @@ export const verificationEmail = async (verificationLink)=>{
                     <table border="0" cellpadding="0" cellspacing="0">
                       <tr>
                         <td align="center" bgcolor="#1a82e2" style="border-radius: 6px;">
-                          <a href="${verificationLink}" target="_blank" style="display: inline-block; padding: 16px 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px;">Verify  your account</a>
+                          <a href="http://${port}/verify" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 16px 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px;">Verify  your account</a>
                         </td>
                       </tr>
                     </table>
@@ -213,7 +217,7 @@ export const verificationEmail = async (verificationLink)=>{
           <tr>
             <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
               <p style="margin: 0;">If that doesn't work, copy and paste the following link in your browser:</p>
-              <p style="margin: 0;"><a href="${verificationLink}" target="_blank">www.barefoot-nomad.com/email-confirmation</a></p>
+              <p style="margin: 0;"><a href="http://${port}/verify" target="_blank" rel="noopener noreferrer">www.barefoot-nomad.com/email-confirmation</a></p>
             </td>
           </tr>
           <!-- end copy -->
@@ -257,7 +261,7 @@ export const verificationEmail = async (verificationLink)=>{
           <!-- start unsubscribe -->
           <tr>
             <td align="center" bgcolor="#e9ecef" style="padding: 12px 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; color: #666;">
-              <p style="margin: 0;">To stop receiving these emails, you can <a href="${verificationLink}" target="_blank">Unsubscribe</a> at any time.</p>
+              <p style="margin: 0;">To stop receiving these emails, you can <a href="https://examplesite.com" target="_blank" rel="noopener noreferrer">Unsubscribe</a> at any time.</p>
               <p style="margin: 0;">Kigali, Rwanda</p>
             </td>
           </tr>

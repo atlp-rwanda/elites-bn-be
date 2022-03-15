@@ -61,7 +61,7 @@ export class UserControllers {
         content: req.body.content,
       };
       const newArticle = await createArticles(article);
-      res.status(200).json({ status: 200, message: 'Article created successfully', payload:{newArticle}`` });
+      res.status(200).json({ status: 200, message: 'Article created successfully', payload:{newArticle} });
     } catch (err) {
       next(err);
     }

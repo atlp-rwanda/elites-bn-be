@@ -88,12 +88,12 @@
             }
           ],
           "responses": {
-            "201": {
+            "200": {
               "description": "User Loged in successfully"
             },
            
-            "400": {
-              "description": "Bad request"
+            "401": {
+              "description": "Unauthorized access"
             },
             "500": {
               "description": "Internal server error"
@@ -122,13 +122,10 @@
               ],
               "responses": {
                 "200": {
-                  "description": "successfully updated user with given id"
+                  "description": "successfully created"
                 },
-                "409": {
-                  "description": "please fill in all fields"
-                },
-                "404": {
-                  "description": "user you want to update does not exist"
+                "401": {
+                  "description": "unauthorized access"
                 }
               },
               "security": [
@@ -160,13 +157,13 @@
               ],
               "responses": {
                 "200": {
-                  "description": "successfully updated user with given id"
+                  "description": "Access token created successfuly"
                 },
-                "409": {
-                  "description": "please fill in all fields"
+                "400": {
+                  "description": "Bad request"
                 },
-                "404": {
-                  "description": "user you want to update does not exist"
+                "500": {
+                  "description": "INternal server error"
                 }
               }
             }

@@ -10,8 +10,8 @@ chai.use(chaiHttp)
 describe('USER LOGIN', () => {
   it('it should login the user', async () => {
     const res = await request(app).post('/api/v1/users/login').send({
-      email: 'gihozo@gmail.com',
-      password: 'Pass@12345'
+      email: 'gihozo97@gmail.com',
+       password: 'Pass12345678'
     });
     
     expect(res).to.have.status([200]);
@@ -27,7 +27,7 @@ describe('USER LOGIN', () => {
     });
     expect(res).to.have.status([401]);
     expect(res.body).to.have.property('message');
-    expect(res.body).to.have.property('status');
+    expect(res.body).to.have.property('statusCode');
     
   });
 
@@ -36,7 +36,7 @@ describe('USER LOGIN', () => {
 
 
 describe('USER CREATE AN ARTICLE', () => {
-  let token= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzMsIm5hbWVzIjpudWxsLCJlbWFpbCI6ImJyaWFuMzEyQGdtYWlsLmNvbSIsInJvbGVJZCI6NSwibWFuYWdlcklkIjpudWxsLCJpc0FjdGl2ZSI6bnVsbCwidmVyaWZpZWQiOm51bGwsIlJvbGUuaWQiOjUsIlJvbGUubmFtZSI6InJlcXVlc3RlciIsImlhdCI6MTY0NzI0OTQ1MSwiZXhwIjoxNjQ3MzM1ODUxfQ.qTQ7UwdCli9oBfykw8dBu_bnXytbPBY6rL4xNriG30o";
+  let token= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZXMiOiJHaWhvem8gSW5ub2NlbnRlIiwiZW1haWwiOiJnaWhvem85N0BnbWFpbC5jb20iLCJyb2xlSWQiOm51bGwsIm1hbmFnZXJJZCI6bnVsbCwiaXNBY3RpdmUiOm51bGwsInZlcmlmaWVkIjpudWxsLCJSb2xlLmlkIjpudWxsLCJSb2xlLm5hbWUiOm51bGwsImlhdCI6MTY0NzM1NTU3NywiZXhwIjoxNjQ3NDQxOTc3fQ.e9YfoCflGuDrsWZvQDd3xI5Rp-v0g0l8Ao43Hz5fMuY";
   
   it("When logged in Should post the Articles",(done) => {
     chai
@@ -77,6 +77,6 @@ describe('USING REFRESH TOKEN TO CREATE AN ACCESS TOKEN', () => {
     
     expect(res).to.have.status([500]);
     expect(res.body).to.have.property('message');
-    expect(res.body).to.have.property('status');
+    expect(res.body).to.have.property('statusCode');
   });
 })

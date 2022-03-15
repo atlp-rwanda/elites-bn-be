@@ -8,8 +8,8 @@ use(chaiHttp);
 describe('USER REGISTER A USER', () => {
     it('it should register the user', async () => {
       const res = await request(app).post('/api/v1/users/register').send({
-        email: 'giho174@gmail.com',
-        password: 'Pass@12515858'
+        email: 'giho22@gmail.com',
+        password: 'Pass12515858'
       })
       expect(res).to.have.status([201]);
       expect(res.body).to.have.property('message');

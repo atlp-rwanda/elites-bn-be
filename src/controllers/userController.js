@@ -61,7 +61,7 @@ export class UserControllers {
         content: req.body.content,
       };
       const newArticle = await createArticles(article);
-      res.status(200).json({ status: 200, message: 'Article created successfully', newArticle });
+      res.status(200).json({ status: 200, message: 'Article created successfully', payload:{newArticle}`` });
     } catch (err) {
       next(err);
     }
@@ -71,7 +71,8 @@ export class UserControllers {
     // using access token to generate refresh token
     try {
       const { refreshToken } = req.body;
-      if (!refreshToken) return res.status(400).json({ status: 400, message: 'Bad request' });
+      if (!refreshToken) 
+      return res.status(400).json({ status: 400, message: 'Bad request' });
       const payloadToken = await decodeRefreshToken(refreshToken);
       const { iat, exp, ...newPayloadToken } = payloadToken;
       // console.log(payloadToken)

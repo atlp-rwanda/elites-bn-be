@@ -18,8 +18,7 @@ router.patch(
     userControllers.updateRole
 )
 
-router.get('/auth/google',
-passport.authenticate('google',{ session:false ,scope:['email','profile'],prompt: 'select_account',
+router.get('/auth/google',passport.authenticate('google',{ session:false ,scope:['email','profile'],prompt: 'select_account',
 }))
 
 router.get('/auth/google/login',passport.authenticate('google',{ session:false ,failureRedirect:'auth/google/failed'}),userControllers.authGoogleLogin)

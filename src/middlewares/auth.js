@@ -17,12 +17,8 @@ passport.use(new GoogleStrategy({
     console.log(profile)
         const user = await models.User.findOne({ where: { email: profile.email } });
         if (user) {
-          jwt.sign({user},'noSecrets', (err,token) =>{
-            if(err){
-              return err
-            }
-            return done(null,token)
-          })
+          
+          return done(null,user)
           
         }else{
             const role = await models.Role.findOne({where: {name: 'requester'}})

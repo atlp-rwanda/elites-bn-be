@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   refreshTokenTable.init({
-    refreshToken: DataTypes.STRING
+    refreshToken: DataTypes.TEXT
   }, {
     sequelize,
     modelName: 'refreshTokenTable',

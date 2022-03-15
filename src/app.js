@@ -20,7 +20,7 @@ import passport from './middlewares/auth.js';
 >>>>>>> ec439fb (updated fb and google login)
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3009;
 const mode = process.env.NODE_ENV || 'development';
 
 try {
@@ -86,7 +86,11 @@ try {
       message: err.message,
       path: req.path,
       error: err.description,
+<<<<<<< HEAD
       stack: err.stack,
+=======
+      stack: err.stack
+>>>>>>> 2518aab (changes on social auth)
     });
     next(err);
   });

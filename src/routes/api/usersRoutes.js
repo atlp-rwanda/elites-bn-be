@@ -42,7 +42,7 @@ router.get('/auth/google', passport.authenticate('google', { session: false, sco
 
 router.get('/auth/google/login', passport.authenticate('google', { session: false, failureRedirect: 'auth/google/failed' }), userControllers.authGoogleLogin);
 
-router.get('/auth/google/failed', (req, res, next) => {
+router.get('/auth/google/failed', (req, res) => {
   res.send('oops!failed to login with Google');
 });
 
@@ -55,8 +55,6 @@ router.get(
   }),
   userControllers.authFacebookLogin
 );
-
-// router.get('/auth/facebook/login',passport.authenticate('facebook',{ session:false ,failureRedirect:'auth/facebook/failed'}),userControllers.authFacebookLogin)
 
 router.get('/auth/facebook/failed', (req, res, next) => {
   res.send('oops!failed to login with Facebook');

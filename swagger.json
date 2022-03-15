@@ -18,13 +18,7 @@
             "name": "Authorization",
             "in": "header"
           
-        },
-        "ApiKeyAuth": {
-          "type": "apiKey",
-          "name": "refreshToken",
-          "in": "header"
-        
-      }
+        }
     },
 
     "servers": [{
@@ -107,28 +101,22 @@
           }
         }
         },
-        "/api/v1/users/{userEmail}": {
-            "patch": {
+        "/api/v1/users/article": {
+            "post": {
               "tags": ["Users"],
-              "summary": "This will update user profile information",
+              "summary": "This will create an article to check authentication",
               "description": " ",
               "consumes": ["application/json"],
               "produces": ["application/json"],
               "parameters": [
               
                 {
-                  "name": "email",
-                  "in": "path",
-                  "type": "string",
-                  "required": true
-                },
-                {
                   "name": "User Update section",
                   "in": "body",
                   "description": "Update user info",
                   "required": true,
                   "schema": {
-                    "$ref": "#/definitions/Register"
+                    "$ref": "#/definitions/Article"
                   }
                 }
               ],
@@ -146,14 +134,45 @@
               "security": [
                 {
                   "Bearer": []
-                },
-                {
-                  "ApiKeyAuth":[]
                 }
               ]
             }
          
+          },
+          "/api/v1/users/refreshToken": {
+            "post": {
+              "tags": ["Users"],
+              "summary": "This is to use refresh token in order to create a new access token",
+              "description": " ",
+              "consumes": ["application/json"],
+              "produces": ["application/json"],
+              "parameters": [
+              
+                {
+                  "name": "User Update section",
+                  "in": "body",
+                  "description": "Update user info",
+                  "required": true,
+                  "schema": {
+                    "$ref": "#/definitions/refreshToken"
+                  }
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "successfully updated user with given id"
+                },
+                "409": {
+                  "description": "please fill in all fields"
+                },
+                "404": {
+                  "description": "user you want to update does not exist"
+                }
+              }
+            }
+         
           }
+          
         
 
 },
@@ -186,6 +205,30 @@
                   "password": {
                       "type": "string"
                   }
+              }
+          },
+          "Article": {
+            "type": "object",
+            "in":"body",
+            "required": ["title", "content"],
+            "properties": {
+                  "title": {
+                      "type": "string"
+                  },
+                  "content": {
+                      "type": "string"
+                  }
+              }
+          },
+          "refreshToken":{
+            "type": "object",
+            "in":"body",
+            "required": ["refreshToken"],
+            "properties": {
+                  "refreshToken": {
+                      "type": "string"
+                  }
+                
               }
           }
     }

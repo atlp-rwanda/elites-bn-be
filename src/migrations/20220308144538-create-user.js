@@ -5,7 +5,7 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       names: {
         type: Sequelize.STRING,
@@ -28,7 +28,7 @@ module.exports = {
           model: 'Roles',
           key: 'id',
           as: 'roleId',
-        }
+        },
       },
       managerId: {
         type: Sequelize.INTEGER,
@@ -37,7 +37,7 @@ module.exports = {
           model: 'Users',
           key: 'id',
           as: 'managerId',
-        }
+        },
       },
       isActive: {
         type: Sequelize.BOOLEAN,
@@ -49,15 +49,15 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Users');
-  }
+  },
 };

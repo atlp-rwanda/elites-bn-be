@@ -12,7 +12,7 @@ export const userValidation = (req, res, next) => {
         'string.base': '{{#label}} must be of type string',
         'string.empty': '{{#label}} can not be empty',
         'string.pattern.base':
-            '{{#label}} must contain at least a number, upper-case letter and longer than 8 characters'
+            '{{#label}} must contain at least a number, upper-case letter and longer than 8 characters',
       }),
 
     email: Joi.string().required().email(),
@@ -22,7 +22,7 @@ export const userValidation = (req, res, next) => {
   const result = userSchema.validate(req.body);
   if (result.error) {
     res.status(400).json({
-      message: result.error.details[0].message.replace(/["'`]+/g, '')
+      message: result.error.details[0].message.replace(/["'`]+/g, ''),
     });
   } else {
     next();

@@ -12,7 +12,7 @@ export class UserControllers {
   async registerUser(req, res, next) {
     try {
       // Check if user exists
-      
+
       const userEmailExist = await userExist(req.body.email);
       if (userEmailExist) {
         throw new ConflictsError(`User with this email: "${req.body.email}" already exist please a different email`);
@@ -22,11 +22,11 @@ export class UserControllers {
         const {
           password, createdAt, updatedAt, ...newcreatedUser
         } = createdUser;
-        const token = await generateAccessToken({ newcreatedUser});
+        const token = await generateAccessToken({ newcreatedUser });
         res.status(200).json({
           status: 200,
           message: USER_REGISTERED,
-          payload: { accessToken: token }
+          payload: { accessToken: token },
         });
       }
     } catch (err) {
@@ -45,7 +45,7 @@ export class UserControllers {
       if (!valid) {
         throw new UnauthorizedError();
       }
-      const userPayload = {id:userInfo.id};
+      const userPayload = { id: userInfo.id };
       const token = await generateAccessToken(userPayload);
       const refreshToken = await generateRefreshToken(userPayload);
       await models.refreshTokenTable.create({ refreshToken });
@@ -55,15 +55,13 @@ export class UserControllers {
     }
   }
 
-
   async refreshTokens(req, res, next) {
     // using access token to generate refresh token
     try {
       const { refreshToken } = req.body;
-      if (!refreshToken) 
-      return res.status(400).json({ status: 400, message: 'Bad request' });
+      if (!refreshToken) return res.status(400).json({ status: 400, message: 'Bad request' });
       const payloadToken = await decodeRefreshToken(refreshToken);
-      const  newPayloadToken={ id:payloadToken.id}
+      const newPayloadToken = { id: payloadToken.id };
       const accessToken = await generateAccessToken(newPayloadToken);
       const refToken = await generateRefreshToken(newPayloadToken);
       res.status(200).json({ status: 200, message: 'Access token created sussccefully', payload: { accessToken, refreshToken: refToken } });

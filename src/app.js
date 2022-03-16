@@ -57,7 +57,7 @@ try {
         docExpansions: 'none',
         persistAuthorization: true,
       },
-    })
+    }),
   );
 
   // catch all 404 errors
@@ -69,7 +69,7 @@ try {
     const statusCode = err.statusCode || 500;
     console.log(err);
     res.status(statusCode).json({
-      statusCode, name: err.name, message: err.message, path: req.path, error: err.description, stack: err.stack
+      statusCode, name: err.name, message: err.message, path: req.path, error: err.description, stack: err.stack,
     });
     next(err);
   });

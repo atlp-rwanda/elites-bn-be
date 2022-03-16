@@ -1,5 +1,5 @@
 const {
-  Model
+  Model,
 } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   refreshTokenTable.init({
-    refreshToken: DataTypes.TEXT
+    refreshToken: DataTypes.TEXT,
   }, {
     sequelize,
     modelName: 'refreshTokenTable',

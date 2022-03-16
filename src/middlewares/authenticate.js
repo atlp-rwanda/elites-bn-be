@@ -9,7 +9,7 @@ export const authenticate = async (req, res, next) => {
   } catch (error) {
     return res.status(401).json({
       status: 401,
-      error: 'You are not authorized, Please login'
+      error: 'You are not authorized, Please login',
     });
   }
 };

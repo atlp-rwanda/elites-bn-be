@@ -1,5 +1,5 @@
 const {
-  Model
+  Model,
 } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   article.init({
     title: DataTypes.STRING,
-    content: DataTypes.STRING
+    content: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'article',

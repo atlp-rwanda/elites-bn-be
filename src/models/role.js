@@ -1,5 +1,5 @@
 const {
-  Model
+  Model,
 } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
@@ -14,13 +14,13 @@ module.exports = (sequelize, DataTypes) => {
       Role.hasMany(
         models.User,
         {
-          foreignKey: 'roleId'
-        }
+          foreignKey: 'roleId',
+        },
       );
     }
   }
   Role.init({
-    name: DataTypes.STRING
+    name: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Role',

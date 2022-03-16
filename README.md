@@ -60,5 +60,4 @@ $ docker-compose up -d
 - [David NKUNDINEZA](https://github.com/Dev-nkundineza)
 - [Innocente Gihozo](https://github.com/gihozoinnocente)
 - [Aristide NIYONGABO](https://github.com/niyongaboaristide17)
-- [Innocente Gihozo](https://github.com/gihozoinnocente)
 - [Eric Maniraguha](https://github.com/ericmaniraguha)

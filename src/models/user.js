@@ -1,5 +1,5 @@
 const {
-  Model
+  Model,
 } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
@@ -14,16 +14,16 @@ module.exports = (sequelize, DataTypes) => {
       User.belongsTo(models.Role, {
         foreignKey: 'roleId',
         onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
+        onUpdate: 'CASCADE',
       });
       User.belongsTo(User, {
         foreignKey: 'managerId',
         onDelete: 'SET NULL',
-        onUpdate: 'CASCADE'
+        onUpdate: 'CASCADE',
       });
 
       User.hasMany(User, {
-        foreignKey: 'managerId'
+        foreignKey: 'managerId',
       });
     }
   }

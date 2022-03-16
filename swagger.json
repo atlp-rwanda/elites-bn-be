@@ -18,13 +18,7 @@
             "name": "Authorization",
             "in": "header"
           
-        },
-        "ApiKeyAuth": {
-          "type": "apiKey",
-          "name": "refreshToken",
-          "in": "header"
-        
-      }
+        }
     },
 
     "servers": [{
@@ -94,12 +88,12 @@
             }
           ],
           "responses": {
-            "201": {
+            "200": {
               "description": "User Loged in successfully"
             },
            
-            "400": {
-              "description": "Bad request"
+            "401": {
+              "description": "Unauthorized access"
             },
             "500": {
               "description": "Internal server error"
@@ -107,53 +101,75 @@
           }
         }
         },
-        "/api/v1/users/{userEmail}": {
-            "patch": {
+        "/api/v1/users/article": {
+            "post": {
               "tags": ["Users"],
-              "summary": "This will update user profile information",
+              "summary": "This will create an article to check authentication",
               "description": " ",
               "consumes": ["application/json"],
               "produces": ["application/json"],
               "parameters": [
               
                 {
-                  "name": "email",
-                  "in": "path",
-                  "type": "string",
-                  "required": true
+                  "name": "User Update section",
+                  "in": "body",
+                  "description": "Update user info",
+                  "required": true,
+                  "schema": {
+                    "$ref": "#/definitions/Article"
+                  }
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "successfully created"
                 },
+                "401": {
+                  "description": "unauthorized access"
+                }
+              },
+              "security": [
+                {
+                  "Bearer": []
+                }
+              ]
+            }
+         
+          },
+          "/api/v1/users/refreshToken": {
+            "post": {
+              "tags": ["Users"],
+              "summary": "This is to use refresh token in order to create a new access token",
+              "description": " ",
+              "consumes": ["application/json"],
+              "produces": ["application/json"],
+              "parameters": [
+              
                 {
                   "name": "User Update section",
                   "in": "body",
                   "description": "Update user info",
                   "required": true,
                   "schema": {
-                    "$ref": "#/definitions/Register"
+                    "$ref": "#/definitions/refreshToken"
                   }
                 }
               ],
               "responses": {
                 "200": {
-                  "description": "successfully updated user with given id"
+                  "description": "Access token created successfuly"
                 },
-                "409": {
-                  "description": "please fill in all fields"
+                "400": {
+                  "description": "Bad request"
                 },
-                "404": {
-                  "description": "user you want to update does not exist"
+                "500": {
+                  "description": "INternal server error"
                 }
-              },
-              "security": [
-                {
-                  "Bearer": []
-                },
-                {
-                  "ApiKeyAuth":[]
-                }
-              ]
+              }
             }
          
           }
+          
         
 
 },
@@ -164,7 +180,7 @@
           "in":"body",
           "required": ["names", "email", "password"],
           "properties": {
-                "names":{
+                "username":{
                     "type":"string"
                 },
                 "email": {
@@ -186,6 +202,30 @@
                   "password": {
                       "type": "string"
                   }
+              }
+          },
+          "Article": {
+            "type": "object",
+            "in":"body",
+            "required": ["title", "content"],
+            "properties": {
+                  "title": {
+                      "type": "string"
+                  },
+                  "content": {
+                      "type": "string"
+                  }
+              }
+          },
+          "refreshToken":{
+            "type": "object",
+            "in":"body",
+            "required": ["refreshToken"],
+            "properties": {
+                  "refreshToken": {
+                      "type": "string"
+                  }
+                
               }
           }
     }

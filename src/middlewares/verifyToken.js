@@ -8,7 +8,7 @@ export const verifyToken = async (req, res, next) => {
   if (isTokenInvalid) {
     return res.status(401).json({
       status: 401,
-      error: 'You are not authorized, Please login'
+      error: 'You are not authorized, Please login',
     });
   }
   next();

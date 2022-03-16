@@ -2,11 +2,11 @@ import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
 import morgan from 'morgan';
-import routes from './routes/index.js';
-import db from './models/index.js';
+import routes from './routes/index';
+import db from './models/index';
 import swaggerDoc from '../swagger.json';
 import 'dotenv/config';
-import { PageNotFoundError } from './httpErrors/pageNotFoundError.js';
+import { PageNotFoundError } from './httpErrors/pageNotFoundError';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -69,7 +69,12 @@ try {
     const statusCode = err.statusCode || 500;
     console.log(err);
     res.status(statusCode).json({
-      statusCode, name: err.name, message: err.message, path: req.path, error: err.description, stack: err.stack,
+      statusCode,
+      name: err.name,
+      message: err.message,
+      path: req.path,
+      error: err.description,
+      stack: err.stack,
     });
     next(err);
   });

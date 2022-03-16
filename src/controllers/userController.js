@@ -1,18 +1,19 @@
-import { USER_REGISTERED, USER_LOGIN } from '../constants/user-constants.js';
-import { hashPassword, comparePassword } from '../helpers/passwordSecurity.js';
-import { generateAccessToken, generateRefreshToken, decodeRefreshToken } from '../helpers/jwtFunction.js';
-import { userExist, createUser, createArticles } from '../services/userServices.js';
+/* eslint-disable consistent-return */
+import { USER_REGISTERED, USER_LOGIN } from '../constants/user-constants';
+import { hashPassword, comparePassword } from '../helpers/passwordSecurity';
+import { generateAccessToken, generateRefreshToken, decodeRefreshToken } from '../helpers/jwtFunction';
+import { userExist, createUser } from '../services/userServices';
 import models from '../models';
 
-import { ConflictsError } from '../httpErrors/conflictError.js';
-import { UnauthorizedError } from '../httpErrors/unauthorizedError.js';
+import { ConflictsError } from '../httpErrors/conflictError';
+import { UnauthorizedError } from '../httpErrors/unauthorizedError';
 
+// eslint-disable-next-line import/prefer-default-export
 export class UserControllers {
-  // register a user
+  // eslint-disable-next-line class-methods-use-this
   async registerUser(req, res, next) {
     try {
       // Check if user exists
-
       const userEmailExist = await userExist(req.body.email);
       if (userEmailExist) {
         throw new ConflictsError(`User with this email: "${req.body.email}" already exist please a different email`);
@@ -22,11 +23,12 @@ export class UserControllers {
         const {
           password, createdAt, updatedAt, ...newcreatedUser
         } = createdUser;
-        const token = await generateAccessToken({ newcreatedUser });
+        const token = await generateAccessToken({ id: newcreatedUser.id });
+        const refreshToken = await generateRefreshToken({ id: newcreatedUser.id });
         res.status(200).json({
           status: 200,
           message: USER_REGISTERED,
-          payload: { accessToken: token },
+          payload: { accessToken: token, refleshToken: refreshToken },
         });
       }
     } catch (err) {
@@ -34,6 +36,7 @@ export class UserControllers {
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
   async login(req, res, next) {
     // login a user
     try {
@@ -49,14 +52,16 @@ export class UserControllers {
       const token = await generateAccessToken(userPayload);
       const refreshToken = await generateRefreshToken(userPayload);
       await models.refreshTokenTable.create({ refreshToken });
-      return res.status(200).json({ status: 200, message: USER_LOGIN, payload: { accesstoken: token, refreshToken } });
+      return res.status(200).json({
+        status: 200, message: USER_LOGIN, payload: { accesstoken: token, refreshToken },
+      });
     } catch (err) {
       next(err);
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
   async refreshTokens(req, res, next) {
-    // using access token to generate refresh token
     try {
       const { refreshToken } = req.body;
       if (!refreshToken) return res.status(400).json({ status: 400, message: 'Bad request' });
@@ -64,7 +69,7 @@ export class UserControllers {
       const newPayloadToken = { id: payloadToken.id };
       const accessToken = await generateAccessToken(newPayloadToken);
       const refToken = await generateRefreshToken(newPayloadToken);
-      res.status(200).json({ status: 200, message: 'Access token created sussccefully', payload: { accessToken, refreshToken: refToken } });
+      return res.status(200).json({ status: 200, message: 'Access token created sussccefully', payload: { accessToken, refreshToken: refToken } });
     } catch (err) {
       next(err);
     }

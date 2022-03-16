@@ -1,232 +1,205 @@
 {
-    "swagger": "2.0",
-    "info": {
-        "title": "BAREFOOT NOMAD API",
-        "description": "This is team project,Elites team",
-        "version": "1.0.0",
-        "contact": {
-            "name": "Developers",
-            "email": "niyonzimadeus2002@gmail.com"
-        }
-    },
+	"swagger": "2.0",
+	"info": {
+		"title": "BAREFOOT NOMAD API",
+		"description": "This is team project,Elites team",
+		"version": "1.0.0",
+		"contact": {
+			"name": "Developers",
+			"email": "niyonzimadeus2002@gmail.com"
+		}
+	},
 
-    "schemes": ["HTTP", "HTTPS"],
+	"schemes": ["HTTP", "HTTPS"],
 
-    "securityDefinitions": {
-        "Bearer": {
-            "type": "apiKey",
-            "name": "Authorization",
-            "in": "header"
-          
-        }
-    },
+	"securityDefinitions": {
+		"Bearer": {
+			"type": "apiKey",
+			"name": "Authorization",
+			"in": "header"
+		}
+	},
 
-    "servers": [{
-        "url": "http://localhost:3000",
-        "name": "DEV"
-    }],
+	"servers": [
+		{
+			"url": "http://localhost:3000",
+			"name": "DEV"
+		}
+	],
 
-    "paths": {
-        "/api/v1": {
-            "get": {
-                "tag": ["Home"],
-                "description": "welcome page",
-                "operationId": "getHome",
-                "responses": {
-                    "200": {
-                        "description": "success"
-                    }
-                }
-            }
-        },
-        "/api/v1/users/register": {
-            "post": {
-              "tags": ["Users"],
-              "summary": "This will register a user",
-              "description": " ",
-              "produces": ["application/json"],
-              "parameters": [
-                {
-                "name": "Body",
-                "in": "body",
-                "required": true,
-                "schema": {
-                    "$ref": "#/definitions/Register"
-                  }
-                }
-              ],
-              "responses": {
-                "201": {
-                  "description": "User registered successfully"
-                },
-                "409": {
-                  "description": "User with given email already exists"
-                },
-                "400": {
-                  "description": "Bad request"
-                },
-                "500": {
-                  "description": "Internal server error"
-                }
-              }
-            }
-        },
-        "/api/v1/users/login": {
-        "post": {
-          "tags": ["Users"],
-          "summary": "This will login a user",
-          "description": " ",
-          "produces": ["application/json"],
-          "parameters": [
-            {
-            "name": "Body",
-            "in": "body",
-            "required": true,
-            "schema": {
-                "$ref": "#/definitions/Login"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "User Loged in successfully"
-            },
-           
-            "401": {
-              "description": "Unauthorized access"
-            },
-            "500": {
-              "description": "Internal server error"
-            }
-          }
-        }
-        },
-        "/api/v1/users/article": {
-            "post": {
-              "tags": ["Users"],
-              "summary": "This will create an article to check authentication",
-              "description": " ",
-              "consumes": ["application/json"],
-              "produces": ["application/json"],
-              "parameters": [
-              
-                {
-                  "name": "User Update section",
-                  "in": "body",
-                  "description": "Update user info",
-                  "required": true,
-                  "schema": {
-                    "$ref": "#/definitions/Article"
-                  }
-                }
-              ],
-              "responses": {
-                "200": {
-                  "description": "successfully created"
-                },
-                "401": {
-                  "description": "unauthorized access"
-                }
-              },
-              "security": [
-                {
-                  "Bearer": []
-                }
-              ]
-            }
-         
-          },
-          "/api/v1/users/refreshToken": {
-            "post": {
-              "tags": ["Users"],
-              "summary": "This is to use refresh token in order to create a new access token",
-              "description": " ",
-              "consumes": ["application/json"],
-              "produces": ["application/json"],
-              "parameters": [
-              
-                {
-                  "name": "User Update section",
-                  "in": "body",
-                  "description": "Update user info",
-                  "required": true,
-                  "schema": {
-                    "$ref": "#/definitions/refreshToken"
-                  }
-                }
-              ],
-              "responses": {
-                "200": {
-                  "description": "Access token created successfuly"
-                },
-                "400": {
-                  "description": "Bad request"
-                },
-                "500": {
-                  "description": "INternal server error"
-                }
-              }
-            }
-         
-          }
-          
-        
+	"paths": {
+		"/api/v1": {
+			"get": {
+				"tag": ["Home"],
+				"description": "welcome page",
+				"operationId": "getHome",
+				"responses": {
+					"200": {
+						"description": "success"
+					}
+				}
+			}
+		},
+		"/api/v1/users/register": {
+			"post": {
+				"tags": ["Authentication"],
+				"summary": "This will register a user",
+				"description": " ",
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"name": "Body",
+						"in": "body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Register"
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "User registered successfully"
+					},
+					"409": {
+						"description": "User with given email already exists"
+					},
+					"400": {
+						"description": "Bad request"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/api/v1/users/login": {
+			"post": {
+				"tags": ["Authentication"],
+				"summary": "This will login a user",
+				"description": " ",
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"name": "Body",
+						"in": "body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Login"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "User Loged in successfully"
+					},
 
-},
+					"401": {
+						"description": "Unauthorized access"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/api/v1/auth/logout": {
+			"post": {
+				"tag": ["Authentication"],
+				"description": "This will signout a user",
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "Authorization",
+						"required": true
+					}
+				],
+				"responses": {
+					"205": {
+						"description": "success"
+					},
+					"500": {
+						"description": "Internal server error"
+					},
+					"401": {
+						"description": "Bad request"
+					}
+				}
+			}
+		},
+		"/api/v1/users/refreshToken": {
+			"post": {
+				"tags": ["Authentication"],
+				"summary": "This is to use refresh token in order to create a new access token",
+				"description": " ",
+				"consumes": ["application/json"],
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"name": "User Update section",
+						"in": "body",
+						"description": "Update user info",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/refreshToken"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Access token created successfuly"
+					},
+					"400": {
+						"description": "Bad request"
+					},
+					"500": {
+						"description": "INternal server error"
+					}
+				}
+			}
+		}
+	},
 
-    "definitions": {
-        "Register": {
-          "type": "object",
-          "in":"body",
-          "required": ["names", "email", "password"],
-          "properties": {
-                "username":{
-                    "type":"string"
-                },
-                "email": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                }
-            }
-        },
-        "Login": {
-            "type": "object",
-            "in":"body",
-            "required": ["email", "password"],
-            "properties": {
-                  "email": {
-                      "type": "string"
-                  },
-                  "password": {
-                      "type": "string"
-                  }
-              }
-          },
-          "Article": {
-            "type": "object",
-            "in":"body",
-            "required": ["title", "content"],
-            "properties": {
-                  "title": {
-                      "type": "string"
-                  },
-                  "content": {
-                      "type": "string"
-                  }
-              }
-          },
-          "refreshToken":{
-            "type": "object",
-            "in":"body",
-            "required": ["refreshToken"],
-            "properties": {
-                  "refreshToken": {
-                      "type": "string"
-                  }
-                
-              }
-          }
-    }
+	"definitions": {
+		"Register": {
+			"type": "object",
+			"in": "body",
+			"required": ["names", "email", "password"],
+			"properties": {
+				"names": {
+					"type": "string"
+				},
+				"email": {
+					"type": "string"
+				},
+				"password": {
+					"type": "string"
+				}
+			}
+		},
+		"Login": {
+			"type": "object",
+			"in": "body",
+			"required": ["email", "password"],
+			"properties": {
+				"email": {
+					"type": "string"
+				},
+				"password": {
+					"type": "string"
+				}
+			}
+		},
+		"refreshToken": {
+			"type": "object",
+			"in": "body",
+			"required": ["refreshToken"],
+			"properties": {
+				"refreshToken": {
+					"type": "string"
+				}
+			}
+		}
+	}
 }

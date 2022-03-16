@@ -2,7 +2,7 @@ import Joi from '@hapi/joi';
 
 export const userValidation = (req, res, next) => {
   const userSchema = Joi.object({
-    username: Joi.string().empty(),
+    names: Joi.string().empty(),
     password: Joi.string()
       .required()
       .empty()

@@ -38,10 +38,6 @@ module.exports = {
       returnDate: {
         type: Sequelize.DATE,
       },
-      travelId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-      },
       accomodationId: {
         allowNull: false,
         type: Sequelize.INTEGER,

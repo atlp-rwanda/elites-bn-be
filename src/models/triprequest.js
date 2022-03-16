@@ -26,7 +26,6 @@ module.exports = (sequelize, DataTypes) => {
     tripReason: DataTypes.STRING,
     departDate: DataTypes.DATE,
     returnDate: DataTypes.DATE,
-    travelId: DataTypes.INTEGER,
     accomodationId: DataTypes.INTEGER,
     status: DataTypes.STRING
   }, {

@@ -1,12 +1,6 @@
 import joi from 'joi';
 
 export const tripSchema = joi.object({
-  managerId: joi.number().integer().required().empty()
-    .messages({
-      'number.base': 'managerId must be valid',
-      'number.empty': 'managerId is not allowed to be empty',
-      'any.required': 'managerId is required',
-    }),
 
   departLocation: joi.number().integer().required().empty()
     .messages({
@@ -41,22 +35,11 @@ export const tripSchema = joi.object({
     'date.format': 'date format is not correct ISO standard ',
   }),
 
-  travelId: joi.number().integer().required().empty()
-    .messages({
-      'number.base': 'travelId must be valid',
-      'number.empty': 'travelId is not allowed to be empty',
-      'any.required': 'travelId is required',
-    }),
-
   accomodationId: joi.number().integer().required().empty()
     .messages({
       'number.base': 'accomodationId must be valid',
       'number.empty': 'accomodationId is not allowed to be empty',
       'any.required': 'accomodationId is required',
-    }),
+    })
 
-  status: joi.string().messages({
-    'string.base': ' status must be valid',
-
-  }),
 });

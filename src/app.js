@@ -10,58 +10,58 @@ import { PageNotFoundError } from './httpErrors/pageNotFoundError';
 
 const app = express();
 const port = process.env.PORT || 3000;
-const mode = process.env.NODE_ENV || 'development';
+const mode = process.env.NODE_ENV || "development";
 
 try {
   const { sequelize } = db;
-  if (mode === 'development') {
+  if (mode === "development") {
     sequelize
       .authenticate()
       .then(() => {
-        console.log('DEV DB CONNECTED...');
+        console.log("DEV DB CONNECTED...");
       })
       .catch((err) => {
-        console.log('Unable to connect to the database: ', err);
+        console.log("Unable to connect to the database: ", err);
       });
   }
-  if (mode === 'test') {
+  if (mode === "test") {
     sequelize
       .authenticate()
       .then(() => {
-        console.log('TEST DB CONNECTED...');
+        console.log("TEST DB CONNECTED...");
       })
       .catch((err) => {
-        console.log('Unable to connect to the database: ', err);
+        console.log("Unable to connect to the database: ", err);
       });
   }
-  if (mode === 'production') {
+  if (mode === "production") {
     sequelize
       .authenticate()
       .then(() => {
-        console.log('PRODUCTION DB CONNECTED...');
+        console.log("PRODUCTION DB CONNECTED...");
       })
       .catch((err) => {
-        console.log('Unable to connect to the database: ', err);
+        console.log("Unable to connect to the database: ", err);
       });
   }
 
   app.use(cors());
   app.use(express.json());
-  app.use(morgan('dev'));
-  app.use('/api/v1/', routes);
+  app.use(morgan("dev"));
+  app.use("/api/v1/", routes);
   app.use(
-    '/docs/swagger-ui/',
+    "/docs/swagger-ui/",
     swaggerUi.serve,
     swaggerUi.setup(swaggerDoc, {
       swaggerOptions: {
-        docExpansions: 'none',
+        docExpansions: "none",
         persistAuthorization: true,
       },
     }),
   );
 
   // catch all 404 errors
-  app.all('*', (req, res, next) => {
+  app.all("*", (req, res, next) => {
     const err = new PageNotFoundError();
     next(err);
   });

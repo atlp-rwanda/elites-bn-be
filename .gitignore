@@ -1,7 +1,10 @@
-<<<<<<< HEAD
+
 node_modules
-=======
->>>>>>> some changes on linting
+
+
+
+node_modules
+.env
 # Logs
 logs
 *.log
@@ -46,12 +49,11 @@ build/Release
 node_modules/
 jspm_packages/
 
-<<<<<<< HEAD
 # TypeScript v1 declaration files
 typings/
 
-=======
->>>>>>> initial commit ,working on trip request
+
+
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
 

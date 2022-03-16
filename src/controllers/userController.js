@@ -45,9 +45,7 @@ export class UserControllers {
       if (!valid) {
         throw new UnauthorizedError();
       }
-      const {
-        password, createdAt, updatedAt, ...userPayload
-      } = userInfo;
+      const userPayload = {id:userInfo.id};
       const token = await generateAccessToken(userPayload);
       const refreshToken = await generateRefreshToken(userPayload);
       await models.refreshTokenTable.create({ refreshToken });
@@ -57,19 +55,6 @@ export class UserControllers {
     }
   }
 
-  async createArticle(req, res, next) {
-    // using post end point to check authentication
-    try {
-      const article = {
-        title: req.body.title,
-        content: req.body.content,
-      };
-      const newArticle = await createArticles(article);
-      res.status(200).json({ status: 200, message: 'Article created successfully', payload:{newArticle} });
-    } catch (err) {
-      next(err);
-    }
-  }
 
   async refreshTokens(req, res, next) {
     // using access token to generate refresh token
@@ -78,8 +63,7 @@ export class UserControllers {
       if (!refreshToken) 
       return res.status(400).json({ status: 400, message: 'Bad request' });
       const payloadToken = await decodeRefreshToken(refreshToken);
-      const { iat, exp, ...newPayloadToken } = payloadToken;
-      // console.log(payloadToken)
+      const  newPayloadToken={ id:payloadToken.id}
       const accessToken = await generateAccessToken(newPayloadToken);
       const refToken = await generateRefreshToken(newPayloadToken);
       res.status(200).json({ status: 200, message: 'Access token created sussccefully', payload: { accessToken, refreshToken: refToken } });

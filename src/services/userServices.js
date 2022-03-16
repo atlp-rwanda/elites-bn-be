@@ -19,8 +19,3 @@ export const createUser = async (user) => {
   return userCreated;
 };
 
-export const createArticles = async (article) => {
-  const articleCreated = await models.article.create(article);
-  articleCreated.save();
-  return articleCreated;
-};

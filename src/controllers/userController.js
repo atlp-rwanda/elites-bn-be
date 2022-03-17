@@ -3,14 +3,12 @@ import { USER_REGISTERED, USER_LOGIN } from '../constants/user-constants';
 import { hashPassword, comparePassword } from '../helpers/passwordSecurity';
 import { generateAccessToken, generateRefreshToken, decodeRefreshToken } from '../helpers/jwtFunction';
 import { userExist, createUser,updatedRole } from '../services/userServices';
-
 import models from '../models';
 
 import { ConflictsError } from '../httpErrors/conflictError';
 import { UnauthorizedError } from '../httpErrors/unauthorizedError';
 
 // eslint-disable-next-line import/prefer-default-export
-
 export class UserControllers {
   // eslint-disable-next-line class-methods-use-this
   async registerUser(req, res, next) {
@@ -62,22 +60,6 @@ export class UserControllers {
     }
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  async refreshTokens(req, res, next) {
-    try {
-      const { refreshToken } = req.body;
-      if (!refreshToken) return res.status(400).json({ status: 400, message: 'Bad request' });
-      const payloadToken = await decodeRefreshToken(refreshToken);
-      const newPayloadToken = { id: payloadToken.id };
-      const accessToken = await generateAccessToken(newPayloadToken);
-      const refToken = await generateRefreshToken(newPayloadToken);
-      return res.status(200).json({ status: 200, message: 'Access token created sussccefully', payload: { accessToken, refreshToken: refToken } });
-    } catch (err) {
-      next(err);
-    }
-  }
-  
-
 
   async updateRole(req, res) {
     try {
@@ -97,6 +79,21 @@ export class UserControllers {
         }
     } catch (error) {
       return res.status(500).json({ message: error });
+    }
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  async refreshTokens(req, res, next) {
+    try {
+      const { refreshToken } = req.body;
+      if (!refreshToken) return res.status(400).json({ status: 400, message: 'Bad request' });
+      const payloadToken = await decodeRefreshToken(refreshToken);
+      const newPayloadToken = { id: payloadToken.id };
+      const accessToken = await generateAccessToken(newPayloadToken);
+      const refToken = await generateRefreshToken(newPayloadToken);
+      return res.status(200).json({ status: 200, message: 'Access token created sussccefully', payload: { accessToken, refreshToken: refToken } });
+    } catch (err) {
+      next(err);
     }
   }
 }

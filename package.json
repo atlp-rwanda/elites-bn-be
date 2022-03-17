@@ -17,7 +17,7 @@
         "migrate:undo": "sequelize-cli db:migrate:undo:all",
         "seed": "npx sequelize-cli db:seed:all",
         "seed:undo": "npx sequelize-cli db:seed:undo",
-        "dbmigrate:all":"npx sequelize-cli db:migrate:undo:all && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all"
+        "dbmigrate:all": "npx sequelize-cli db:migrate:undo:all && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all"
     },
     "betterScripts": {
         "dev": {
@@ -53,6 +53,7 @@
         "@babel/plugin-transform-runtime": "^7.17.0",
         "@babel/preset-env": "^7.16.11",
         "@babel/register": "^7.17.0",
+        "@hapi/joi": "^17.1.1",
         "@sendgrid/mail": "^7.6.1",
         "bcrypt": "^5.0.1",
         "bcryptjs": "^2.4.3",
@@ -61,11 +62,13 @@
         "date-fns": "^2.28.0",
         "dotenv": "^16.0.0",
         "express": "^4.17.3",
+        "http-status-codes": "^2.2.0",
         "joi": "^17.6.0",
         "jsonwebtoken": "^8.5.1",
         "morgan": "^1.10.0",
         "pg": "^8.7.3",
         "pg-hstore": "^2.3.4",
+        "redis": "^4.0.4",
         "sequelize": "^6.17.0",
         "swagger-ui-express": "^4.3.0"
     },

@@ -210,22 +210,9 @@
 						"required": true
 					},
 					{
-						"name": "approvalStatus",
-						"in": "formData",
-						"description": "pending,accepted or rejected",
-						"type": "string"
-					},
-					{
 						"name": "locationId",
 						"in": "formData",
 						"description": "location where accomodation is",
-						"type": "integer",
-						"required": true
-					},
-					{
-						"name": "userId",
-						"in": "formData",
-						"description": "Accommodation created by:",
 						"type": "integer",
 						"required": true
 					}
@@ -237,7 +224,12 @@
 					"500": {
 						"description": "Server error"
 					}
-				}
+				},
+				"security": [
+					{
+					  "Bearer": []
+					}
+				  ]
 			},
 			"get": {
 				"tags": ["Accommodations CRUD Operations"],
@@ -362,7 +354,12 @@
 					"404": {
 						"description": "accomodation with that ID not found"
 					}
-				}
+				},
+				"security": [
+					{
+					  "Bearer": []
+					}
+				  ]
 			},
 			"delete": {
 				"tags": ["Accommodations CRUD Operations"],
@@ -385,7 +382,12 @@
 					"404": {
 						"description": "Accomodation not found"
 					}
-				}
+				},
+				"security": [
+					{
+					  "Bearer": []
+					}
+				  ]
 			}
 		},
 		"/api/v1/rooms": {
@@ -411,7 +413,12 @@
 					"500": {
 						"description": "Server error!"
 					}
-				}
+				},
+				"security": [
+					{
+					  "Bearer": []
+					}
+				  ]
 			}
 		},
 		"/api/v1/accommodations/{accommodationId}/rooms": {
@@ -489,7 +496,12 @@
 					"500": {
 						"description": "Server error!"
 					}
-				}
+				},
+				"security": [
+					{
+					  "Bearer": []
+					}
+				  ]
 			},
 			"delete": {
 				"tags": ["Rooms CRUD Operations"],
@@ -512,7 +524,12 @@
 					"404": {
 						"description": "Room not found"
 					}
-				}
+				},
+				"security": [
+					{
+					  "Bearer": []
+					}
+				  ]
 			}
 		},
 		"/api/v1/locations": {
@@ -538,7 +555,12 @@
 					"500": {
 						"description": "Server error!"
 					}
-				}
+				},
+				"security": [
+					{
+					  "Bearer": []
+					}
+				  ]
 			}
 		},
 		"/api/v1/locations/{locationId}": {
@@ -594,7 +616,12 @@
 					"500": {
 						"description": "Server error!"
 					}
-				}
+				},
+				"security": [
+					{
+					  "Bearer": []
+					}
+				  ]
 			},
 			"delete": {
 				"tags": ["Locations"],
@@ -617,7 +644,12 @@
 					"404": {
 						"description": "Location not found"
 					}
-				}
+				},
+				"security": [
+					{
+					  "Bearer": []
+					}
+				  ]
 			}
 		}
 	},

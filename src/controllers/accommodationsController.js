@@ -1,10 +1,17 @@
-import cloudinary from "../config/cloudinary";
-import accommodationServices from "../services/accommodationServices";
+import cloudinary from '../config/cloudinary';
+import accommodationServices from '../services/accommodationServices';
+import { decodeAcessToken } from '../helpers/jwtFunction';
+import { decode } from 'jsonwebtoken';
 const AccommodationServices = new accommodationServices();
 
 class AccommodationController {
 	createAccommodation = async (req, res, next) => {
 		try {
+			//getting user ID from access Token
+			const token = req.headers.authorization.split(' ')[1];
+			const decoded = await decodeAcessToken(token);
+			req.body.userId = decoded.id;
+
 			const geoCoordinates = [];
 			const amenities = [];
 			if (!Array.isArray(req.body.geoCoordinates)) {
@@ -18,16 +25,16 @@ class AccommodationController {
 			const pictures = req.files;
 			const urls = [];
 			if (!pictures || pictures === undefined)
-				return res.status(422).json({ message: "no images to upload" });
+				return res.status(422).json({ message: 'no images to upload' });
 			const uploadImages = pictures.map((image) =>
-				cloudinary.uploader.upload(image.path, { folder: "barefoot_api" })
+				cloudinary.uploader.upload(image.path, { folder: 'barefoot_api' })
 			);
 			const imageResponse = await Promise.all(uploadImages);
 			for (const file of imageResponse) {
 				urls.push(file.url);
 			}
 			if (!pictures)
-				return res.status(400).json({ message: "no picture uploaded" });
+				return res.status(400).json({ message: 'no picture uploaded' });
 
 			const data = {
 				...req.body,
@@ -37,8 +44,8 @@ class AccommodationController {
 			const createdAccommodation =
 				await AccommodationServices.createAccommodation(data);
 			return res.status(201).json({
-				status: "201",
-				message: "Accommodation added successfully",
+				status: '201',
+				message: 'Accommodation added successfully',
 				payload: createdAccommodation,
 			});
 		} catch (err) {
@@ -53,7 +60,7 @@ class AccommodationController {
 			);
 			res.status(200).json({
 				status: 200,
-				message: "accommodation found",
+				message: 'accommodation found',
 				payload: accommodation,
 			});
 		} catch (err) {
@@ -68,7 +75,7 @@ class AccommodationController {
 				);
 			res.status(200).json({
 				status: 200,
-				message: "These are the accommodations in specified location",
+				message: 'These are the accommodations in specified location',
 				payload: accommodations,
 			});
 		} catch (err) {
@@ -81,7 +88,7 @@ class AccommodationController {
 			const accommodations = await AccommodationServices.getAllAccommodations();
 			res.status(200).json({
 				status: 200,
-				message: "These are all the accommodations",
+				message: 'These are all the accommodations',
 				payload: accommodations,
 			});
 		} catch (err) {
@@ -110,7 +117,7 @@ class AccommodationController {
 			const imagesURLs = [];
 			if (pictures || pictures !== undefined) {
 				const uploadImages = pictures.map((image) =>
-					cloudinary.uploader.upload(image.path, { folder: "barefoot_api" })
+					cloudinary.uploader.upload(image.path, { folder: 'barefoot_api' })
 				);
 				const imageResponse = await Promise.all(uploadImages);
 				for (const file of imageResponse) {
@@ -121,6 +128,14 @@ class AccommodationController {
 				await AccommodationServices.getOneAccommodation(
 					req.params.accommodationId
 				);
+			console.log(amenities);
+			console.log(geoCoordinates);
+			if (geoCoordinates == undefined) {
+				req.body.geoCoordinates = accommodationToUpdate.geoCoordinates;
+			}
+			if (amenities == undefined) {
+				req.body.amenities = accommodationToUpdate.amenities;
+			}
 
 			const accommodationUpdates = {
 				...req.body,
@@ -134,7 +149,7 @@ class AccommodationController {
 				);
 			res.status(200).json({
 				status: 200,
-				message: "accommodation updated successfully",
+				message: 'accommodation updated successfully',
 				payload: updatedAccommodation,
 			});
 		} catch (err) {

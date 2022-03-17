@@ -68,100 +68,45 @@
                 }
             }
         },
-        "/api/v1/users/login": {
-			"post": {
-				"tags": ["Authentication"],
-				"summary": "This will login a user",
-				"description": " ",
-				"produces": ["application/json"],
-				"parameters": [
-					{
-						"name": "Body",
-						"in": "body",
-						"required": true,
-						"schema": {
-							"$ref": "#/definitions/Login"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "User Loged in successfully"
-					},
 
-					"401": {
-						"description": "Unauthorized access"
-					},
-					"500": {
-						"description": "Internal server error"
-					}
-				}
-			}
-		},
-		"/api/v1/auth/logout": {
-			"post": {
-				"tag": ["Authentication"],
-				"description": "This will signout a user",
-				"produces": ["application/json"],
-				"parameters": [
-					{
-						"name": "Authorization",
-						"in": "header",
-						"description": "Authorization",
-						"required": true
-					}
-				],
-				"responses": {
-					"205": {
-						"description": "success"
-					},
-					"500": {
-						"description": "Internal server error"
-					},
-					"401": {
-						"description": "Bad request"
-					}
-				}
-			}
-		},
-		"/api/v1/users/refreshToken": {
-			"post": {
-				"tags": ["Authentication"],
-				"summary": "This is to use refresh token in order to create a new access token",
-				"description": " ",
-				"consumes": ["application/json"],
-				"produces": ["application/json"],
-				"parameters": [
-					{
-						"name": "User Update section",
-						"in": "body",
-						"description": "Update user info",
-						"required": true,
-						"schema": {
-							"$ref": "#/definitions/refreshToken"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Access token created successfuly"
-					},
-					"400": {
-						"description": "Bad request"
-					},
-					"500": {
-						"description": "INternal server error"
-					}
-				}
-			}
-		},
-        "/api/v1/trip/request/": {
+        "/api/v1/trip/requests/all/{managerId}": {
+            "get": {
+                "tags": ["Trip Request"],
+                "summary": "This endPoint will retrieve the requests sent by requester to manager",
+                "description": "This endPoint will retrieve the requests sent by requester,either pending,rejected or approved",
+                "operationId": "requestToManager",
+                "parameters": [{
+                    "name": "managerId",
+                    "in": "path",
+                    "description": "Manager id",
+                    "required": true,
+                    "type": "integer"
+                }],
+
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved"
+                    },
+                    "404": {
+                        "description": "NOT FOUND"
+                    }
+                }
+            }
+        },
+
+        "/api/v1/trip/request/{userId}": {
             "post": {
                 "tags": ["Trip Request"],
                 "summary": "This is the endpoint to request a trip by user",
                 "description": "This is the endpoint to request trip by user",
-                "operationId": "Addt tripRequest",
-                "parameters": [ {
+                "operationId": "Add tripRequest",
+                "parameters": [{
+                    "name": "userId",
+                    "in": "path",
+                    "description": "Trip request user id",
+                    "required": true,
+                    "type": "integer"
+                }, {
                     "name": "body",
                     "in": "body",
                     "description": "Trip request",
@@ -172,24 +117,28 @@
                 }],
                 "responses": {
                     "201": {
-                        "description": "Trip request created successfull"
+                        "description": "Trip request successfull"
                     },
                     "400": {
                         "description": "Bad Request"
                     }
-                },
-                "security": [{
-                    "Bearer": []
-                }]
+                }
             }
         },
 
-        "/api/v1/trip/allrequests/": {
+        "/api/v1/trip/allrequest/{userId}": {
             "get": {
                 "tags": ["Trip Request"],
-                "summary": "This endPoint will retrieve the requests sent by requester pending,rejected or approved",
+                "summary": "This endPoint will retrieve the requests sent by requester",
                 "description": "This endPoint will retrieve the requests sent by requester,either pending,rejected or approved",
                 "operationId": "getAllRequest",
+                "parameters": [{
+                    "name": "userId",
+                    "in": "path",
+                    "description": "Trip request user id",
+                    "required": true,
+                    "type": "integer"
+                }],
 
                 "responses": {
                     "200": {
@@ -198,19 +147,23 @@
                     "400": {
                         "description": "Bad Request"
                     }
-                },
-                "security": [{
-                    "Bearer": []
-                }]
+                }
             }
         },
 
-        "/api/v1/trip/requests/": {
+        "/api/v1/trip/requests/{userId}": {
             "get": {
                 "tags": ["Trip Request"],
                 "summary": "This endPoint will retrieve the pending requests sent by requester",
                 "description": "This endPoint will retrieve the pending requests sent by requester",
                 "operationId": "getRequest",
+                "parameters": [{
+                    "name": "userId",
+                    "in": "path",
+                    "description": "Trip request user id",
+                    "required": true,
+                    "type": "integer"
+                }],
 
                 "responses": {
                     "200": {
@@ -219,41 +172,23 @@
                     "400": {
                         "description": "Bad Request"
                     }
-                },
-                "security": [{
-                    "Bearer": []
-                }]
+                }
             }
         },
 
-
-        "/api/v1/trip/requests/all": {
-            "get": {
-                "tags": ["Trip Request"],
-                "summary": "This endPoint will retrieve the requests sent to manager",
-                "description": "This endPoint will retrieve the requests sent by requesters to manager",
-                "operationId": "get requests sent to manager",
-                "responses": {
-                    "200": {
-                        "description": "Successfully retrieved"
-                    },
-                    "400": {
-                        "description": "Bad Request"
-                    }
-                },
-                "security": [{
-                    "Bearer": []
-                }]
-            }
-        },
-
-        "/api/v1/trip/requests/{id}": {
+        "/api/v1/trip/request/{userId}/{id}": {
             "delete": {
                 "tags": ["Trip Request"],
                 "summary": "This end Point will delete the pending request sent by requester",
                 "description": "This end Point will delete the pending request sent by requester",
                 "operationId": "delete Request",
-                "parameters": [
+                "parameters": [{
+                        "name": "userId",
+                        "in": "path",
+                        "description": "Trip request user id",
+                        "required": true,
+                        "type": "integer"
+                    },
                     {
                         "name": "id",
                         "in": "path",
@@ -270,10 +205,7 @@
                     "404": {
                         "description": "NOT FOUND"
                     }
-                },
-                "security": [{
-                    "Bearer": []
-                }]
+                }
             },
             "patch": {
                 "tags": ["Trip Request"],
@@ -281,7 +213,12 @@
                 "description": " update request with pending status",
                 "operationId": "updateRequest",
                 "produces": ["application/json"],
-                "parameters": [ {
+                "parameters": [{
+                        "name": "userId",
+                        "in": "path",
+                        "type": "integer",
+                        "required": true
+                    }, {
                         "name": "id",
                         "in": "path",
                         "type": "integer"
@@ -333,33 +270,13 @@
                 }
             }
         },
-        "Login": {
-            "type": "object",
-            "in":"body",
-            "required": ["email", "password"],
-            "properties": {
-                  "email": {
-                      "type": "string"
-                  },
-                  "password": {
-                      "type": "string"
-                  }
-              }
-          },
-        "refreshToken": {
-			"type": "object",
-			"in": "body",
-			"required": ["refreshToken"],
-			"properties": {
-				"refreshToken": {
-					"type": "string"
-				}
-			}
-		},  
         "trip": {
             "type": "object",
             "in": "body",
             "properties": {
+                "managerId": {
+                    "type": "integer"
+                },
                 "departLocation": {
                     "type": "integer"
                 },
@@ -375,10 +292,15 @@
                 "returnDate": {
                     "type": "string"
                 },
+                "travelId": {
+                    "type": "integer"
+                },
                 "accomodationId": {
                     "type": "integer"
+                },
+                "status": {
+                    "type": "string"
                 }
-                
             }
         }
     }

@@ -9,7 +9,6 @@ import { ConflictsError } from '../httpErrors/conflictError';
 import { UnauthorizedError } from '../httpErrors/unauthorizedError';
 
 // eslint-disable-next-line import/prefer-default-export
-
 export class UserControllers {
   // eslint-disable-next-line class-methods-use-this
   async registerUser(req, res, next) {
@@ -100,24 +99,19 @@ export class UserControllers {
   
 
 
-  async updateRole(req, res) {
+  
+  // eslint-disable-next-line class-methods-use-this
+  async refreshTokens(req, res, next) {
     try {
-      const email = req.body.email;
-      const user = await userExist(email);
-
-      if (user == null) {
-        res.status(400).json({ message: "User does not exist! " });
-        return false;
-      } else {
-        const updatedUser = await updatedRole(req.params.id, email)
-        
-        if(updatedUser == null){
-          return res.status(400).json({ message: "this role does not exist" });
-        }
-        return res.status(200).json({ message:updatedUser})
-        }
-    } catch (error) {
-      return res.status(500).json({ message: error });
+      const { refreshToken } = req.body;
+      if (!refreshToken) return res.status(400).json({ status: 400, message: 'Bad request' });
+      const payloadToken = await decodeRefreshToken(refreshToken);
+      const newPayloadToken = { id: payloadToken.id };
+      const accessToken = await generateAccessToken(newPayloadToken);
+      const refToken = await generateRefreshToken(newPayloadToken);
+      return res.status(200).json({ status: 200, message: 'Access token created sussccefully', payload: { accessToken, refreshToken: refToken } });
+    } catch (err) {
+      next(err);
     }
   }
 }

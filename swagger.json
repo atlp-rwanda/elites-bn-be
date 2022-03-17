@@ -1,112 +1,177 @@
 {
-    "swagger": "2.0",
-    "info": {
-        "title": "BAREFOOT NOMAD API",
-        "description": "This is team project,Elites team",
-        "version": "1.0.0",
-        "contact": {
-            "name": "Developers",
-            "email": "niyonzimadeus2002@gmail.com"
-        }
-    },
+	"swagger": "2.0",
+	"info": {
+		"title": "BAREFOOT NOMAD API",
+		"description": "This is team project,Elites team",
+		"version": "1.0.0",
+		"contact": {
+			"name": "Developers",
+			"email": "niyonzimadeus2002@gmail.com"
+		}
+	},
 
-    "schemes": ["HTTP", "HTTPS"],
+	"schemes": ["HTTP", "HTTPS"],
 
-    "securityDefinitions": {
-        "Bearer": {
-            "type": "apiKey",
-            "name": "Authorization",
-            "in": "header"
-        }
-    },
+	"securityDefinitions": {
+		"Bearer": {
+			"type": "apiKey",
+			"name": "Authorization",
+			"in": "header"
+		},
+		"ApiKeyAuth": {
+			"type": "apiKey",
+			"name": "refreshToken",
+			"in": "header"
+		}
+	},
 
-    "servers": [{
-        "url": "http://localhost:3000",
-        "name": "DEV"
-    }],
+	"servers": [
+		{
+			"url": "http://localhost:3000",
+			"name": "DEV"
+		}
+	],
 
-    "paths": {
-        "/api/v1": {
-            "get": {
-                "tag": ["Home"],
-                "description": "welcome page",
-                "operationId": "getHome",
-                "responses": {
-                    "200": {
-                        "description": "success"
-                    }
-                }
-            }
-        },
-        "/api/v1/users/register": {
-            "post": {
-                "tags": ["Users"],
-                "summary": "This will register a user",
-                "description": " ",
-                "produces": ["application/json"],
-                "parameters": [{
-                    "name": "Body",
-                    "in": "body",
-                    "required": true,
-                    "schema": {
-                        "$ref": "#/definitions/Register"
-                    }
-                }],
-                "responses": {
-                    "201": {
-                        "description": "User registered successfully"
-                    },
-                    "409": {
-                        "description": "User with given email already exists"
-                    },
-                    "400": {
-                        "description": "Bad request"
-                    },
-                    "500": {
-                        "description": "Internal server error"
-                    }
-                }
-            }
-        },
+	"paths": {
+		"/api/v1": {
+			"get": {
+				"tag": ["Home"],
+				"description": "welcome page",
+				"operationId": "getHome",
+				"responses": {
+					"200": {
+						"description": "success"
+					}
+				}
+			}
+		},
+		"/api/v1/users/register": {
+			"post": {
+				"tags": ["Authentication"],
+				"summary": "This will register a user",
+				"description": " ",
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"name": "Body",
+						"in": "body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Register"
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "User registered successfully"
+					},
+					"409": {
+						"description": "User with given email already exists"
+					},
+					"400": {
+						"description": "Bad request"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/api/v1/users/login": {
+			"post": {
+				"tags": ["Authentication"],
+				"summary": "This will login a user",
+				"description": " ",
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"name": "Body",
+						"in": "body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Login"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "User Loged in successfully"
+					},
 
-        "/api/v1/trip/requests/all/{managerId}": {
-            "get": {
-                "tags": ["Trip Request"],
-                "summary": "This endPoint will retrieve the requests sent by requester to manager",
-                "description": "This endPoint will retrieve the requests sent by requester,either pending,rejected or approved",
-                "operationId": "requestToManager",
-                "parameters": [{
-                    "name": "managerId",
-                    "in": "path",
-                    "description": "Manager id",
-                    "required": true,
-                    "type": "integer"
-                }],
+					"401": {
+						"description": "Unauthorized access"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/api/v1/auth/logout": {
+			"post": {
+				"tag": ["Authentication"],
+				"description": "This will signout a user",
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "Authorization",
+						"required": true
+					}
+				],
+				"responses": {
+					"205": {
+						"description": "success"
+					},
+					"500": {
+						"description": "Internal server error"
+					},
+					"401": {
+						"description": "Bad request"
+					}
+				}
+			}
+		},
+		"/api/v1/users/refreshToken": {
+			"post": {
+				"tags": ["Authentication"],
+				"summary": "This is to use refresh token in order to create a new access token",
+				"description": " ",
+				"consumes": ["application/json"],
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"name": "User Update section",
+						"in": "body",
+						"description": "Update user info",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/refreshToken"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Access token created successfuly"
+					},
+					"400": {
+						"description": "Bad request"
+					},
+					"500": {
+						"description": "INternal server error"
+					}
+				}
+			}
+		},
 
-                "responses": {
-                    "200": {
-                        "description": "Successfully retrieved"
-                    },
-                    "404": {
-                        "description": "NOT FOUND"
-                    }
-                }
-            }
-        },
-
-        "/api/v1/trip/request/{userId}": {
+		"/api/v1/trip/request/": {
             "post": {
                 "tags": ["Trip Request"],
                 "summary": "This is the endpoint to request a trip by user",
                 "description": "This is the endpoint to request trip by user",
-                "operationId": "Add tripRequest",
-                "parameters": [{
-                    "name": "userId",
-                    "in": "path",
-                    "description": "Trip request user id",
-                    "required": true,
-                    "type": "integer"
-                }, {
+                "operationId": "Addt tripRequest",
+                "parameters": [ {
                     "name": "body",
                     "in": "body",
                     "description": "Trip request",
@@ -117,28 +182,24 @@
                 }],
                 "responses": {
                     "201": {
-                        "description": "Trip request successfull"
+                        "description": "Trip request created successfull"
                     },
                     "400": {
                         "description": "Bad Request"
                     }
-                }
+                },
+                "security": [{
+                    "Bearer": []
+                }]
             }
         },
 
-        "/api/v1/trip/allrequest/{userId}": {
+        "/api/v1/trip/allrequests/": {
             "get": {
                 "tags": ["Trip Request"],
-                "summary": "This endPoint will retrieve the requests sent by requester",
+                "summary": "This endPoint will retrieve the requests sent by requester pending,rejected or approved",
                 "description": "This endPoint will retrieve the requests sent by requester,either pending,rejected or approved",
                 "operationId": "getAllRequest",
-                "parameters": [{
-                    "name": "userId",
-                    "in": "path",
-                    "description": "Trip request user id",
-                    "required": true,
-                    "type": "integer"
-                }],
 
                 "responses": {
                     "200": {
@@ -147,23 +208,19 @@
                     "400": {
                         "description": "Bad Request"
                     }
-                }
+                },
+                "security": [{
+                    "Bearer": []
+                }]
             }
         },
 
-        "/api/v1/trip/requests/{userId}": {
+        "/api/v1/trip/requests/": {
             "get": {
                 "tags": ["Trip Request"],
                 "summary": "This endPoint will retrieve the pending requests sent by requester",
                 "description": "This endPoint will retrieve the pending requests sent by requester",
                 "operationId": "getRequest",
-                "parameters": [{
-                    "name": "userId",
-                    "in": "path",
-                    "description": "Trip request user id",
-                    "required": true,
-                    "type": "integer"
-                }],
 
                 "responses": {
                     "200": {
@@ -172,23 +229,41 @@
                     "400": {
                         "description": "Bad Request"
                     }
-                }
+                },
+                "security": [{
+                    "Bearer": []
+                }]
             }
         },
 
-        "/api/v1/trip/request/{userId}/{id}": {
+
+        "/api/v1/trip/requests/all": {
+            "get": {
+                "tags": ["Trip Request"],
+                "summary": "This endPoint will retrieve the requests sent to manager",
+                "description": "This endPoint will retrieve the requests sent by requesters to manager",
+                "operationId": "get requests sent to manager",
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                },
+                "security": [{
+                    "Bearer": []
+                }]
+            }
+        },
+
+        "/api/v1/trip/requests/{id}": {
             "delete": {
                 "tags": ["Trip Request"],
                 "summary": "This end Point will delete the pending request sent by requester",
                 "description": "This end Point will delete the pending request sent by requester",
                 "operationId": "delete Request",
-                "parameters": [{
-                        "name": "userId",
-                        "in": "path",
-                        "description": "Trip request user id",
-                        "required": true,
-                        "type": "integer"
-                    },
+                "parameters": [
                     {
                         "name": "id",
                         "in": "path",
@@ -205,7 +280,10 @@
                     "404": {
                         "description": "NOT FOUND"
                     }
-                }
+                },
+                "security": [{
+                    "Bearer": []
+                }]
             },
             "patch": {
                 "tags": ["Trip Request"],
@@ -213,21 +291,17 @@
                 "description": " update request with pending status",
                 "operationId": "updateRequest",
                 "produces": ["application/json"],
-                "parameters": [{
-                        "name": "userId",
-                        "in": "path",
-                        "type": "integer",
-                        "required": true
-                    }, {
+                "parameters": [ {
                         "name": "id",
                         "in": "path",
+						"required":true,
                         "type": "integer"
 
                     }, {
                         "name": "body",
                         "in": "body",
+						"required":true,
                         "description": "Trip request",
-                        "required": true,
                         "schema": {
                             "$ref": "#/definitions/trip"
                         }
@@ -250,33 +324,541 @@
                     "Bearer": []
                 }]
             }
-        }
-    },
-
-    "definitions": {
-        "Register": {
-            "type": "object",
-            "in": "body",
-            "required": ["names", "email", "password"],
-            "properties": {
-                "names": {
-                    "type": "string"
-                },
-                "email": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                }
-            }
         },
-        "trip": {
+
+		"/api/v1/accommodations": {
+			"post": {
+				"tags": ["Accommodations CRUD Operations"],
+				"summary": "Create an accomodation",
+				"description": "Create an accomodation",
+				"parameters": [
+					{
+						"name": "accommodationName",
+						"in": "formData",
+						"description": "Accomodation Name",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "description",
+						"in": "formData",
+						"description": "Accomodation description",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "images",
+						"in": "formData",
+						"description": "Accomodation images",
+						"type": "file"
+					},
+					{
+						"name": "amenities",
+						"in": "formData",
+						"description": "Accomodation amenities",
+						"type": "array"
+					},
+					{
+						"name": "geoCoordinates",
+						"in": "formData",
+						"description": "Longitute and latitude coordinates of accommodation",
+						"type": "array"
+					},
+					{
+						"name": "streetAddress",
+						"in": "formData",
+						"description": "street number",
+						"type": "string",
+						"required": true
+					},
+					{
+						"name": "locationId",
+						"in": "formData",
+						"description": "location where accomodation is",
+						"type": "integer",
+						"required": true
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "Accomodation created successfuly!"
+					},
+					"500": {
+						"description": "Server error"
+					}
+				},
+				"security": [
+					{
+					  "Bearer": []
+					}
+				  ]
+			},
+			"get": {
+				"tags": ["Accommodations CRUD Operations"],
+				"summary": "Get all accommodations",
+				"description": "Get all accommodations",
+				"responses": {
+					"200": {
+						"description": "All accommodations retrieved successfuly!"
+					}
+				}
+			}
+		},
+		"/api/v1/accommodations/in/{locationId}": {
+			"get": {
+				"tags": ["Accommodations CRUD Operations"],
+				"summary": "This will retrieve accomodations in given location",
+				"description": " ",
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"name": "locationId",
+						"in": "path",
+						"description": " Enter the location ID",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Accomodations retrieved successfully!"
+					},
+					"404": {
+						"description": "no accomodation found with that ID"
+					}
+				}
+			}
+		},
+		"/api/v1/accommodations/{accommodationId}": {
+			"get": {
+				"tags": ["Accommodations CRUD Operations"],
+				"summary": "This will retrieve accomodation by ID",
+				"description": " ",
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"name": "accommodationId",
+						"in": "path",
+						"description": " Enter the accomodation ID",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Accomodation retrieved successfully!"
+					},
+					"404": {
+						"description": "no accomodation found with that ID"
+					}
+				}
+			},
+			"patch": {
+				"tags": ["Accommodations CRUD Operations"],
+				"summary": "This will update the accomodation with given ID",
+				"description": " ",
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"name": "accommodationId",
+						"in": "path",
+						"description": " Enter accomodation ID in the path",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "accommodationName",
+						"in": "formData",
+						"description": "Accomodation Name",
+						"type": "string"
+					},
+					{
+						"name": "description",
+						"in": "formData",
+						"description": "Accomodation description",
+						"type": "string"
+					},
+					{
+						"name": "images",
+						"in": "formData",
+						"description": "Accomodation images",
+						"type": "file"
+					},
+					{
+						"name": "amenities",
+						"in": "formData",
+						"description": "Accomodation amenities",
+						"type": "array"
+					},
+					{
+						"name": "geoCoordinates",
+						"in": "formData",
+						"description": "Longitute and latitude coordinates of accommodation",
+						"type": "array"
+					},
+					{
+						"name": "streetAddress",
+						"in": "formData",
+						"description": "street number",
+						"type": "string"
+					},
+					{
+						"name": "approvalStatus",
+						"in": "formData",
+						"description": "pending,accepted or rejected",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Accomodation updated successfully!"
+					},
+					"404": {
+						"description": "accomodation with that ID not found"
+					}
+				},
+				"security": [
+					{
+					  "Bearer": []
+					}
+				  ]
+			},
+			"delete": {
+				"tags": ["Accommodations CRUD Operations"],
+				"summary": "This will delete an accomodation with given ID",
+				"description": " ",
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"name": "accommodationId",
+						"in": "path",
+						"descrpition": "Please enter accomodation ID here",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Accomodation deleted Successfuly"
+					},
+					"404": {
+						"description": "Accomodation not found"
+					}
+				},
+				"security": [
+					{
+					  "Bearer": []
+					}
+				  ]
+			}
+		},
+		"/api/v1/rooms": {
+			"post": {
+				"tags": ["Rooms CRUD Operations"],
+				"summary": "Add a room",
+				"description": "add a room to accommodation",
+				"parameters": [
+					{
+						"name": "body",
+						"in": "body",
+						"description": "Send a message",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Room"
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "Room added to accommodation successfuly!"
+					},
+					"500": {
+						"description": "Server error!"
+					}
+				},
+				"security": [
+					{
+					  "Bearer": []
+					}
+				  ]
+			}
+		},
+		"/api/v1/accommodations/{accommodationId}/rooms": {
+			"get": {
+				"tags": ["Rooms CRUD Operations"],
+				"summary": "Get all rooms of an accammodation",
+				"description": "get all rooms in a single accommodation",
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"name": "accommodationId",
+						"in": "path",
+						"description": " Enter accommodation ID",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "All rooms retrieved successfuly!"
+					}
+				}
+			}
+		},
+		"/api/v1/rooms/{roomId}": {
+			"get": {
+				"tags": ["Rooms CRUD Operations"],
+				"summary": "This will retrieve a room with given ID",
+				"description": "retrieve a single room ",
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"name": "roomId",
+						"in": "path",
+						"description": " Enter a room ID",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "room retrieved successfully!"
+					},
+					"404": {
+						"description": "no room found with that ID"
+					}
+				}
+			},
+			"patch": {
+				"tags": ["Rooms CRUD Operations"],
+				"summary": "uptade a room",
+				"description": "update a room",
+				"parameters": [
+					{
+						"name": "roomId",
+						"in": "path",
+						"description": " Enter a room ID",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "body",
+						"in": "body",
+						"description": "Enter the updates",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Room"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Room updated successfuly!"
+					},
+					"500": {
+						"description": "Server error!"
+					}
+				},
+				"security": [
+					{
+					  "Bearer": []
+					}
+				  ]
+			},
+			"delete": {
+				"tags": ["Rooms CRUD Operations"],
+				"summary": "This will delete a room with given ID",
+				"description": "Delete a room",
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"name": "roomId",
+						"in": "path",
+						"descrpition": "Please enter a room ID here",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Room deleted Successfuly"
+					},
+					"404": {
+						"description": "Room not found"
+					}
+				},
+				"security": [
+					{
+					  "Bearer": []
+					}
+				  ]
+			}
+		},
+		"/api/v1/locations": {
+			"post": {
+				"tags": ["Locations"],
+				"summary": "Add a location",
+				"description": "add a location ",
+				"parameters": [
+					{
+						"name": "body",
+						"in": "body",
+						"description": "add a location",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Location"
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "Location added successfuly!"
+					},
+					"500": {
+						"description": "Server error!"
+					}
+				},
+				"security": [
+					{
+					  "Bearer": []
+					}
+				  ]
+			}
+		},
+		"/api/v1/locations/{locationId}": {
+			"get": {
+				"tags": ["Locations"],
+				"summary": "This will retrieve a location with given ID",
+				"description": "retrieve a single location ",
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"name": "locationId",
+						"in": "path",
+						"description": " Enter a location ID",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "location retrieved successfully!"
+					},
+					"404": {
+						"description": "no location found with that ID"
+					}
+				}
+			},
+			"patch": {
+				"tags": ["Locations"],
+				"summary": "uptade a location",
+				"description": "update a location",
+				"parameters": [
+					{
+						"name": "locationId",
+						"in": "path",
+						"description": " Enter a location ID",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "body",
+						"in": "body",
+						"description": "Enter the location updates",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Location"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Location updated successfuly!"
+					},
+					"500": {
+						"description": "Server error!"
+					}
+				},
+				"security": [
+					{
+					  "Bearer": []
+					}
+				  ]
+			},
+			"delete": {
+				"tags": ["Locations"],
+				"summary": "This will delete a location with given ID",
+				"description": "Delete a location",
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"name": "locationId",
+						"in": "path",
+						"descrpition": "Please enter a location ID here",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Location deleted Successfuly"
+					},
+					"404": {
+						"description": "Location not found"
+					}
+				},
+				"security": [
+					{
+					  "Bearer": []
+					}
+				  ]
+			}
+		}
+	},
+
+	"definitions": {
+		"Register": {
+			"type": "object",
+			"in": "body",
+			"required": ["names", "email", "password"],
+			"properties": {
+				"names": {
+					"type": "string"
+				},
+				"email": {
+					"type": "string"
+				},
+				"password": {
+					"type": "string"
+				}
+			}
+		},
+		"Login": {
+			"type": "object",
+			"in": "body",
+			"required": ["email", "password"],
+			"properties": {
+				"email": {
+					"type": "string"
+				},
+				"password": {
+					"type": "string"
+				}
+			}
+		},
+		"refreshToken": {
+			"type": "object",
+			"in": "body",
+			"required": ["refreshToken"],
+			"properties": {
+				"refreshToken": {
+					"type": "string"
+				}
+			}
+		},"trip": {
             "type": "object",
             "in": "body",
             "properties": {
-                "managerId": {
-                    "type": "integer"
-                },
                 "departLocation": {
                     "type": "integer"
                 },
@@ -292,16 +874,55 @@
                 "returnDate": {
                     "type": "string"
                 },
-                "travelId": {
-                    "type": "integer"
-                },
                 "accomodationId": {
                     "type": "integer"
-                },
-                "status": {
-                    "type": "string"
                 }
+                
             }
-        }
-    }
+        },
+		"Room": {
+			"type": "object",
+			"required": [
+				"roomType",
+				"roomNumber",
+				"price",
+				"currency",
+				"accommodationId"
+			],
+			"properties": {
+				"roomType": {
+					"type": "string"
+				},
+				"roomNumber": {
+					"type": "string"
+				},
+				"price": {
+					"type": "integer"
+				},
+				"currency": {
+					"type": "string"
+				},
+				"isAvailable": {
+					"type": "boolean"
+				},
+				"accommodationId": {
+					"type": "integer"
+				}
+			}
+		},
+		"Location": {
+			"type": "object",
+			"properties": {
+				"locationName": {
+					"type": "string"
+				},
+				"description": {
+					"type": "string"
+				},
+				"country": {
+					"type": "string"
+				}
+			}
+		}
+	}
 }

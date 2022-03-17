@@ -1,15 +1,20 @@
 module.exports = {
-  async up(queryInterface) {
-    await queryInterface.bulkInsert('refreshTokenTables', [
-      {
-        refreshToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZXMiOiJHaWhvem8gSW5ub2NlbnRlIiwiZW1haWwiOiJnaWhvem85N0BnbWFpbC5jb20iLCJyb2xlSWQiOm51bGwsIm1hbmFnZXJJZCI6bnVsbCwiaXNBY3RpdmUiOm51bGwsInZlcmlmaWVkIjpudWxsLCJSb2xlLmlkIjpudWxsLCJSb2xlLm5hbWUiOm51bGwsImlhdCI6MTY0NzM1MjU5NSwiZXhwIjoxNjQ3OTU3Mzk1fQ.lqulLhC2C2GDZbalW-23LY_vfHZZRXpOtpe57XmGhRA',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-    ], {});
-  },
+	async up(queryInterface) {
+		await queryInterface.bulkInsert(
+			'refreshTokenTables',
+			[
+				{
+					refreshToken:
+						'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NDc1MjEwOTQsImV4cCI6MTY0ODEyNTg5NH0.KQ8OFHPhpE6f1DkV7TC9f7MwJDBMeTiMEpt80zQgOYM',
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				},
+			],
+			{}
+		);
+	},
 
-  async down(queryInterface) {
-    await queryInterface.bulkDelete('refreshTokenTables', null, {});
-  },
+	async down(queryInterface) {
+		await queryInterface.bulkDelete('refreshTokenTables', null, {});
+	},
 };

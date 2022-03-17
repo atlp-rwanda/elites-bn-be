@@ -1,7 +1,7 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-	class refreshTokenTable extends Model {
+	class Location extends Model {
 		/**
 		 * Helper method for defining associations.
 		 * This method is not a part of Sequelize lifecycle.
@@ -9,16 +9,24 @@ module.exports = (sequelize, DataTypes) => {
 		 */
 		static associate(models) {
 			// define association here
+			Location.hasMany(models.Accommodation, {
+				foreignKey: 'locationId',
+				as: 'accommodations',
+				onDelete: 'CASCADE',
+			});
 		}
 	}
-	refreshTokenTable.init(
+	Location.init(
 		{
-			refreshToken: { type: DataTypes.STRING },
+			locationName: DataTypes.STRING,
+			description: DataTypes.STRING,
+			country: DataTypes.STRING,
 		},
 		{
 			sequelize,
-			modelName: 'refreshTokenTable',
+			modelName: 'Location',
+			tableName: 'Locations',
 		}
 	);
-	return refreshTokenTable;
+	return Location;
 };

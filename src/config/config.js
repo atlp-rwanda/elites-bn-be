@@ -3,22 +3,6 @@ import 'dotenv/config';
 module.exports = {
   development: {
     use_env_variable: "DB_URL_DEV",
-<<<<<<< HEAD
-=======
-    username: process.env.DB_USERNAME_TEST,
-    password: process.env.DB_PASSWORD_TEST,
-    database: process.env.DB_DATABASE_TEST,
-    host: process.env.DB_HOST_TEST,
-    port: process.env.DB_PORT_TEST,
-    dialect: "postgres",
-    dialectOptions: {},
-    seederStorage: "sequelize",
-    seederStorageTableName: "sequelize_data",
-    
-  },
-  test: {
-    use_env_variable: "DB_URL_TEST",
->>>>>>> 0b8f6b3 (added update role)
     username: process.env.DB_USERNAME_TEST,
     password: process.env.DB_PASSWORD_TEST,
     database: process.env.DB_DATABASE_TEST,

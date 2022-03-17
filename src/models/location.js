@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
 			// define association here
 			Location.hasMany(models.Accommodation, {
 				foreignKey: 'locationId',
+				constraints: false,
 				as: 'accommodations',
 				onDelete: 'CASCADE',
 			});

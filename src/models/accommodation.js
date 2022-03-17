@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
 			});
 			Accommodation.hasMany(models.Room, {
 				foreignKey: 'accommodationId',
+				constraints: false,
 				as: 'Rooms',
 				onDelete: 'CASCADE',
 				onUpdate: 'CASCADE',

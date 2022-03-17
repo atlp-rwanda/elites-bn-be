@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
 
 			User.hasMany(User, {
 				foreignKey: 'managerId',
+				constraints: false,
 			});
 		}
 	}

@@ -1,6 +1,6 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("tripRequests", {
+    await queryInterface.createTable('tripRequests', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,9 +11,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: "Users",
-          key: "id",
-          as: "userId",
+          model: 'Users',
+          key: 'id',
+          as: 'userId',
         },
       },
       managerId: {
@@ -44,7 +44,7 @@ module.exports = {
       },
       status: {
         type: Sequelize.STRING,
-        defaultValue: "pending",
+        defaultValue: 'pending',
       },
       createdAt: {
         allowNull: false,
@@ -57,6 +57,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("tripRequests");
+    await queryInterface.dropTable('tripRequests');
   },
 };

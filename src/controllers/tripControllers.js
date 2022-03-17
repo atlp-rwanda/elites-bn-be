@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import {
   TRIP_CREATED,
   REQUEST_UPDATED,
@@ -6,7 +7,7 @@ import {
   TRIP_DELETED_MESSAGE,
   NO_TRIP_FOUND,
   ERROR_DATES,
-} from '../constants/tripConstants.js';
+} from '../constants/tripConstants';
 import {
   createTrip,
   getPending,
@@ -15,23 +16,19 @@ import {
   getAllRequests,
   fetchAllRequests,
   getManagerId,
-  checkRole
-} from '../services/tripServices.js';
-import { validateDate } from '../helpers/dateComparison.js';
-import { decodeToken } from '../helpers/jwtFunction.js';
-import { sendEmail } from '../helpers/sendgrid.js';
+  checkRole,
+} from '../services/tripServices';
+import { validateDate } from '../helpers/dateComparison';
 
 // eslint-disable-next-line import/prefer-default-export
 export class TripControllers {
-  async createController(req, res) {
+  async createController(id, req, res, next) {
     try {
-      const getId = req.headers.authorization.split(' ')[1];
-      const userId = await decodeToken(getId);
-      const { id } = userId;
+      // console.log(id);
       req.body.managerId = await getManagerId(id);
       const compareDates = validateDate(
         req.body.returnDate,
-        req.body.departDate
+        req.body.departDate,
       );
       if (compareDates) {
         const newTrip = await createTrip(id, req.body);
@@ -47,20 +44,13 @@ export class TripControllers {
       } else {
         res.status(400).json({ status: 400, message: ERROR_DATES });
       }
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({
-        status: 500,
-        message: FAILED_TRIP,
-      });
+    } catch (err) {
+      next(err);
     }
   }
 
-  async updateRequest(req, res) {
+  async updateRequest(id, req, res, next) {
     try {
-      const getId = req.headers.authorization.split(' ')[1];
-      const userId = await decodeToken(getId);
-      const { id } = userId;
       const updated = await updateRequest(id, req.params.id, req.body);
       if (updated) {
         res
@@ -72,62 +62,39 @@ export class TripControllers {
           message: 'Oops,No such trip request found! ',
         });
       }
-    } catch (error) {
-      res.status(500).json({
-        status: 500,
-        message: 'Oops,No such trip request found! ',
-      });
+    } catch (err) {
+      next(err);
     }
   }
 
-  async getAllRequests(req, res) {
+  async getAllRequests(id, req, res, next) {
     try {
-      const getId = req.headers.authorization.split(' ')[1];
-      const userId = await decodeToken(getId);
-      console.log(userId);
-      const { id } = userId;
       const getTripRequests = await getAllRequests(id);
-      res
-        .status(200)
-        .json({
-          status: 200,
-          message: TRIP_FOUND_MESSAGE,
-          payload: getTripRequests,
-        });
-    } catch (error) {
-      res.status(404).json({
-        status: 404,
-        message: NO_TRIP_FOUND,
+      res.status(200).json({
+        status: 200,
+        message: TRIP_FOUND_MESSAGE,
+        payload: getTripRequests,
       });
+    } catch (error) {
+      next();
     }
   }
 
-  async getRequests(req, res) {
+  async getRequests(id, req, res, next) {
     try {
-      const getId = req.headers.authorization.split(' ')[1];
-      const userId = await decodeToken(getId);
-      const { id } = userId;
       const getTripRequests = await getPending(id);
-      res
-        .status(200)
-        .json({
-          status: 200,
-          message: TRIP_FOUND_MESSAGE,
-          payload: getTripRequests,
-        });
-    } catch (error) {
-      res.status(404).json({
-        status: 404,
-        message: NO_TRIP_FOUND,
+      res.status(200).json({
+        status: 200,
+        message: TRIP_FOUND_MESSAGE,
+        payload: getTripRequests,
       });
+    } catch (err) {
+      next(err);
     }
   }
 
-  async deleteRequests(req, res) {
+  async deleteRequests(id, req, res, next) {
     try {
-      const getId = req.headers.authorization.split(' ')[1];
-      const userId = await decodeToken(getId);
-      const { id } = userId;
       const delTripRequests = await deleteRequest(id, req.params.id);
       if (delTripRequests) {
         res.send({ status: 204, message: TRIP_DELETED_MESSAGE });
@@ -137,39 +104,27 @@ export class TripControllers {
           message: NO_TRIP_FOUND,
         });
       }
-    } catch (error) {
-      res.status(404).json({
-        status: 404,
-        message: NO_TRIP_FOUND,
-      });
+    } catch (err) {
+      next(err);
     }
   }
 
-  async fetchAllRequest(req, res) {
+  async fetchAllRequest(id, req, res, next) {
     try {
-      const getId = req.headers.authorization.split(' ')[1];
-      const userId = await decodeToken(getId);
-      const { id } = userId;
       const userRole = await checkRole(id);
 
       if (userRole === 'manager') {
-        const getAllRequests = await fetchAllRequests(id);
-        res
-          .status(200)
-          .json({
-            status: 200,
-            message: TRIP_FOUND_MESSAGE,
-            payload: getAllRequests,
-          });
+        const getAll = await fetchAllRequests(id);
+        res.status(200).json({
+          status: 200,
+          message: TRIP_FOUND_MESSAGE,
+          payload: getAll,
+        });
       } else {
         res.status(403).json({ status: 403, message: 'unauthorized' });
       }
-    } catch (error) {
-      console.log(error);
-      res.status(404).json({
-        status: 404,
-        message: NO_TRIP_FOUND,
-      });
+    } catch (err) {
+      next(err);
     }
   }
 }

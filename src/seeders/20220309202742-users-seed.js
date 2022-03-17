@@ -14,7 +14,7 @@ module.exports = {
       managerId: 1,
       password: await hashPassword('111@call'),
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
 
     },
     {
@@ -24,7 +24,7 @@ module.exports = {
       managerId: 1,
       password: await hashPassword('111@call'),
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
 
     },
     {
@@ -34,7 +34,7 @@ module.exports = {
       managerId: 2,
       password: await hashPassword('111@call'),
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
 
     },
     {
@@ -44,7 +44,7 @@ module.exports = {
       managerId: 3,
       password: await hashPassword('111@call'),
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
 
     },
     {
@@ -54,7 +54,7 @@ module.exports = {
       managerId: 3,
       password: await hashPassword('pass123@'),
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
 
     },
     {
@@ -64,7 +64,7 @@ module.exports = {
       managerId: 3,
       password: await hashPassword('pass123@'),
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
 
     },
     {
@@ -73,13 +73,13 @@ module.exports = {
       roleId: 5,
       password: await hashPassword('pass123@'),
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
 
-    }
+    },
     ], {});
   },
 
   async down(queryInterface, Sequelize) {
     await queryInterface.bulkDelete('Users', null, {});
-  }
+  },
 };

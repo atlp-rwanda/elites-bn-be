@@ -10,6 +10,7 @@ router.get('/requests/all', authenticate, tripControllers.fetchAllRequest);
 router.post(
   '/request/',
   requestValidation,
+  authenticate,
   tripControllers.createController,
 );
 router.patch('/requests/:id', authenticate, tripControllers.updateRequest);

@@ -1,5 +1,5 @@
 const {
-  Model
+  Model,
 } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       tripRequest.belongsTo(models.User, {
         foreignKey: 'userId',
         onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
+        onUpdate: 'CASCADE',
       });
     }
   }
@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
     departDate: DataTypes.DATE,
     returnDate: DataTypes.DATE,
     accomodationId: DataTypes.INTEGER,
-    status: DataTypes.STRING
+    status: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'tripRequest',

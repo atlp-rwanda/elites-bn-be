@@ -21,21 +21,12 @@ module.exports = (sequelize, DataTypes) => {
 				constraints: false,
 			});
 
-<<<<<<< HEAD
       User.hasMany(User, {
         foreignKey: 'managerId',
       });
 
       User.hasMany(models.tripRequest, {
         foreignKey: 'userId',
-=======
-      User.hasMany(models.User, {
-        foreignKey: 'managerId'
-      });
-
-      User.hasMany(models.tripRequest, {
-        foreignKey: 'userId'
->>>>>>> some changes on trip endpoints
       });
     }
   }

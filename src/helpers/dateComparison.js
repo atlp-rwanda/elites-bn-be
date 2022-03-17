@@ -1,6 +1,9 @@
 import isAfter from 'date-fns/isAfter';
+import isEqual from 'date-fns/isEqual';
+import isPast from 'date-fns/isPast';
 import parserISO from 'date-fns/parseISO';
 
+// eslint-disable-next-line import/prefer-default-export
 export const validateDate = (date, dateToCompare) => {
   const Formatteddate = parserISO(date);
   const anotherdate = parserISO(dateToCompare);

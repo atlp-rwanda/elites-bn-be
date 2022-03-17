@@ -54,7 +54,7 @@ export const createTrip = async (userid, data) => {
     });
 
     const { managerId } = checkManager.dataValues;
-
+    console.log(managerId);
     if (managerId !== null) {
       const addTrip = await models.tripRequest.create({
         ...data,

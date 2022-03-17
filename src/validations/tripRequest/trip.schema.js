@@ -40,6 +40,6 @@ export const tripSchema = joi.object({
       'number.base': 'accomodationId must be valid',
       'number.empty': 'accomodationId is not allowed to be empty',
       'any.required': 'accomodationId is required',
-    })
+    }),
 
 });

@@ -9,30 +9,37 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 
 passport.use(new GoogleStrategy(
   {
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    clientID:'715664758719-k0jcv3kjntr94d4f30bjg5gp6db1cqg2.apps.googleusercontent.com',
+    clientSecret:'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',
     callbackURL: 'http://localhost:3000/api/v1/users/auth/google/login',
   // passReqToCallback: true
   },
   async (accessToken, refreshToken, profile, done) => {
     console.log(profile);
-    const user = await models.User.findOne({ where: { email: profile.email } });
+    const user = await models.User.findOne({ where: { email: profile.emails[0].value } });
     if (user) {
-      return done(null, user);
+      jwt.sign({ user }, 'noSecrets', (err, token) => {
+        if (err) {
+          return err;
+        }
+       
+        return done(null, token);
+      });
+    } else {
+      const role = await models.Role.findOne({ where: { name: 'requester' } });
+      const newUser = await models.User.create({
+        email: profile.emails[0].value,
+        names: profile.displayName,
+        roleId: role.dataValues.id
+      });
+      jwt.sign({ newUser }, 'noSecrets', (err, token) => {
+        if (err) {
+          return err;
+        }
+        
+        return done(null, token);
+      });
     }
-    const role = await models.Role.findOne({ where: { name: 'requester' } });
-    const newUser = await models.User.create({
-      email: profile.email,
-      names: profile.displayName,
-      roleId: role.dataValues.id,
-      verified: profile.email_verified
-    });
-    jwt.sign({ newUser }, 'noSecrets', (err, token) => {
-      if (err) {
-        return err;
-      }
-      return done(null, token);
-    });
   }
 ));
 

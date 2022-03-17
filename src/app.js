@@ -26,7 +26,7 @@ import passport from './middlewares/auth'
 >>>>>>> c663a64 (login with google and fb)
 
 const app = express();
-const port = process.env.PORT || 3009;
+ const port =  3000;
 const mode = process.env.NODE_ENV || 'development';
 
 try {

@@ -11,20 +11,18 @@ module.exports = (sequelize, DataTypes) => {
 			// define association here
 			User.belongsTo(models.Role, {
 				foreignKey: 'roleId',
-				constraints: false,
 				onDelete: 'CASCADE',
 				onUpdate: 'CASCADE',
 			});
 			User.belongsTo(User, {
 				foreignKey: 'managerId',
-				constraints: false,
 				onDelete: 'SET NULL',
 				onUpdate: 'CASCADE',
+				constraints: false,
 			});
 
 			User.hasMany(User, {
 				foreignKey: 'managerId',
-				constraints: false,
 			});
 		}
 	}

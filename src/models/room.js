@@ -11,7 +11,6 @@ module.exports = (sequelize, DataTypes) => {
 			// define association here
 			Room.belongsTo(models.Accommodation, {
 				foreignKey: 'accommodationId',
-				constraints: false,
 				as: 'accommodations',
 			});
 		}

@@ -12,11 +12,9 @@ module.exports = (sequelize, DataTypes) => {
 			Accommodation.belongsTo(models.Location, {
 				foreignKey: 'locationId',
 				as: 'location',
-				constraints: false,
 			});
 			Accommodation.hasMany(models.Room, {
 				foreignKey: 'accommodationId',
-				constraints: false,
 				as: 'Rooms',
 				onDelete: 'CASCADE',
 				onUpdate: 'CASCADE',

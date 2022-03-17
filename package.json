@@ -9,15 +9,20 @@
 	"scripts": {
 		"build": "babel src -d dist",
 		"start": "npm run build && yarn migrate && yarn seed && better-npm-run prod",
-		"dev-db": "yarn migrate && yarn seed && better-npm-run dev",
-        "dev": "better-npm-run dev",
+		"dev": "yarn migrate && yarn seed && better-npm-run dev",
 		"test": "better-npm-run test",
 		"lint": "eslint \"{src,apps,libs,test}/**/*.js\" --fix",
 		"coverage": "yarn run test && better-npm-run cov",
 		"migrate": "npx sequelize-cli db:migrate",
 		"migrate:undo": "npx sequelize-cli db:migrate:undo:all",
 		"seed": "npx sequelize-cli db:seed:all",
-		"seed:undo": "npx sequelize-cli db:seed:undo"
+		"seed:undo": "npx sequelize-cli db:seed:undo",
+		"seed-location":"npx sequelize db:seed --seed 20220309194932-Location.js",
+		"seed-role":"npx sequelize db:seed --seed 20220308144709-roles-seed.js",
+		"seed-user":"npx sequelize db:seed --seed 20220309202416-User.js",
+		"seed-accommodation":"npx sequelize db:seed --seed 20220309194916-Accommodation.js",
+		"seed-room":"npx sequelize db:seed --seed 20220309194951-Room.js",
+		"seed-refreshToken":"npx sequelize db:seed --seed 20220315140632-refreshTokenTables.js"
 	},
 	"betterScripts": {
 		"dev": {

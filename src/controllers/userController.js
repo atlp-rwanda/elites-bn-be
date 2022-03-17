@@ -77,6 +77,7 @@ export class UserControllers {
         }
         return res.status(200).json({ message:updatedUser})
         }
+<<<<<<< HEAD
     } catch (err) {
       next(err)
     }
@@ -100,6 +101,13 @@ export class UserControllers {
 
 
   
+=======
+    } catch (error) {
+      return res.status(500).json({ message: error });
+    }
+  }
+
+>>>>>>> 6e3bc1eccdf866fb0d22f5f6cfa14af9b52cc5e3
   // eslint-disable-next-line class-methods-use-this
   async refreshTokens(req, res, next) {
     try {

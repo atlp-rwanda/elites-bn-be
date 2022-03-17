@@ -35,6 +35,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.bulkDelete('Role', null, {});
+    await queryInterface.bulkDelete('Roles', null, {});
   },
 };

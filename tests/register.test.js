@@ -19,6 +19,20 @@ describe('USER REGISTER A USER', () => {
       expect(res.body).to.have.property('status');
       expect(res.body).haveOwnProperty('payload');
     });
+
+    it('should not register a user when already existing', async () => {
+      const res = await request(app).post('/api/v1/users/register')
+      
+        .send({
+          names: 'Gihozo Innocente',
+          email: 'gihozo97@gmail.com',
+          password:'Gihozo12345'
+        });
+      
+        expect(res).to.have.status([409]);
+        
+     
+    });
   
   
 })

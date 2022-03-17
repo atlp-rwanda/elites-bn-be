@@ -1,4 +1,4 @@
-import models from "../models";
+import models from '../models';
 
 export const checkRole = async (userid) => {
   const data = await models.User.findOne({
@@ -34,7 +34,7 @@ export const tripExist = async (userId, id) => {
   const dataExist = await models.tripRequest.findOne({
     where: {
       userId,
-      status: "pending",
+      status: 'pending',
       id,
     },
   });
@@ -45,6 +45,7 @@ export const tripExist = async (userId, id) => {
   return null;
 };
 
+// eslint-disable-next-line consistent-return
 export const createTrip = async (userid, data) => {
   try {
     const checkManager = await models.User.findOne({
@@ -64,7 +65,7 @@ export const createTrip = async (userid, data) => {
     }
     return false;
   } catch (err) {
-    console.error("some thing is wrong");
+    console.error('some thing is wrong');
   }
 };
 
@@ -77,7 +78,7 @@ export const getAllRequests = async (userId) => {
 
 export const getPending = async (userId) => {
   const Data = await models.tripRequest.findAll({
-    where: { status: "pending", userId },
+    where: { status: 'pending', userId },
   });
   return Data;
 };
@@ -109,7 +110,7 @@ export const deleteRequest = async (userId, id) => {
   if (checkExist) {
     const Data = await models.tripRequest.destroy({
       where: {
-        status: "pending",
+        status: 'pending',
         userId,
         id,
       },

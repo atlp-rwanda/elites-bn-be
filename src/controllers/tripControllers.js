@@ -2,21 +2,19 @@
 import {
   TRIP_CREATED,
   REQUEST_UPDATED,
-  FAILED_TRIP,
   TRIP_FOUND_MESSAGE,
   TRIP_DELETED_MESSAGE,
   NO_TRIP_FOUND,
-  ERROR_DATES,
+  VALIDATION_ERROR,
 } from '../constants/tripConstants';
 import {
   createTrip,
-  getPending,
   updateRequest,
   deleteRequest,
   getAllRequests,
-  fetchAllRequests,
   getManagerId,
-  checkRole,
+  checkLocations,
+  getOneRequest,
 } from '../services/tripServices';
 import { validateDate } from '../helpers/dateComparison';
 
@@ -30,7 +28,12 @@ export class TripControllers {
         req.body.returnDate,
         req.body.departDate,
       );
-      if (compareDates) {
+
+      const locationsValidation = await checkLocations(
+        req.body.departLocation,
+        req.body.arrivalLocation,
+      );
+      if (compareDates && locationsValidation) {
         const newTrip = await createTrip(id, req.body);
         if (newTrip) {
           res
@@ -42,7 +45,7 @@ export class TripControllers {
             .json({ message: 'you are not allowed to create a request' });
         }
       } else {
-        res.status(400).json({ status: 400, message: ERROR_DATES });
+        res.status(400).json({ status: 400, message: VALIDATION_ERROR });
       }
     } catch (err) {
       next(err);
@@ -75,19 +78,22 @@ export class TripControllers {
         message: TRIP_FOUND_MESSAGE,
         payload: getTripRequests,
       });
-    } catch (error) {
-      next();
+    } catch (err) {
+      next(err);
     }
   }
 
-  async getRequests(id, req, res, next) {
+  async getSingleRequests(id, req, res, next) {
     try {
-      const getTripRequests = await getPending(id);
-      res.status(200).json({
-        status: 200,
-        message: TRIP_FOUND_MESSAGE,
-        payload: getTripRequests,
-      });
+      const getTripRequest = await getOneRequest(id, req.params.id);
+     if (getTripRequest) {
+        res.status(200).json({
+          status: 200,
+          message: TRIP_FOUND_MESSAGE,
+          payload: getTripRequest,
+        });
+      }
+      res.status(404).json({ message: NO_TRIP_FOUND });
     } catch (err) {
       next(err);
     }
@@ -103,25 +109,6 @@ export class TripControllers {
           status: 200,
           message: NO_TRIP_FOUND,
         });
-      }
-    } catch (err) {
-      next(err);
-    }
-  }
-
-  async fetchAllRequest(id, req, res, next) {
-    try {
-      const userRole = await checkRole(id);
-
-      if (userRole === 'manager') {
-        const getAll = await fetchAllRequests(id);
-        res.status(200).json({
-          status: 200,
-          message: TRIP_FOUND_MESSAGE,
-          payload: getAll,
-        });
-      } else {
-        res.status(403).json({ status: 403, message: 'unauthorized' });
       }
     } catch (err) {
       next(err);

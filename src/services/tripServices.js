@@ -19,6 +19,14 @@ export const checkRole = async (userid) => {
   return name;
 };
 
+export const checkLocations = async (departLocation, arrivalLocation) => {
+  if(departLocation !== arrivalLocation) {
+      return true;
+  }else{
+    return false;
+  }
+};
+
 export const getManagerId = async (userid) => {
   const data = await models.User.findOne({
     where: {
@@ -70,18 +78,44 @@ export const createTrip = async (userid, data) => {
 };
 
 export const getAllRequests = async (userId) => {
+
+   const role = await checkRole(userId);
+    if (role === 'manager') {
+    const data = await models.tripRequest.findAll({
+      where: {
+        managerId: userId,
+      },
+    });
+
+    return data;
+  }
   const Data = await models.tripRequest.findAll({
     where: { userId },
   });
   return Data;
 };
 
-export const getPending = async (userId) => {
-  const Data = await models.tripRequest.findAll({
-    where: { status: 'pending', userId },
+export const getOneRequest = async (userId, id) => {
+  const role = await checkRole(userId);
+    if (role === 'manager') {
+    const data = await models.tripRequest.findOne({
+      where: {
+        managerId: userId,
+        id:id
+      },
+    });
+  return data;
+  }
+  const Data = await models.tripRequest.findOne({
+    where: {
+      userId,
+      id
+    },
+
   });
   return Data;
-};
+}
+
 
 export const updateRequest = async (userId, id, data) => {
   const exist = await tripExist(userId, id);
@@ -121,14 +155,14 @@ export const deleteRequest = async (userId, id) => {
   return null;
 };
 
-export const fetchAllRequests = async (managerId) => {
-  const data = await models.tripRequest.findAll({
-    where: {
-      managerId,
-    },
-  });
-  if (data) {
-    return data;
-  }
-  return null;
-};
+// export const fetchAllRequests = async (managerId) => {
+//   const data = await models.tripRequest.findAll({
+//     where: {
+//       managerId,
+//     },
+//   });
+//   if (data) {
+//     return data;
+//   }
+//   return null;
+// };

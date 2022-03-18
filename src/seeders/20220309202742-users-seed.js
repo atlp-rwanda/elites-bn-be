@@ -38,6 +38,16 @@ module.exports = {
 
     },
     {
+      names: 'john',
+      email: 'john@gmail.com',
+      roleId: 3,
+      managerId: 2,
+      password: await hashPassword('111@call'),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+
+    },
+    {
       names: 'bosco',
       email: 'bosco@gmail.com',
       roleId: 4,
@@ -51,7 +61,7 @@ module.exports = {
       names: 'bosco',
       email: 'senderone@gmail.com',
       roleId: 5,
-      managerId: 3,
+      managerId: 7,
       password: await hashPassword('pass123@'),
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -71,6 +81,16 @@ module.exports = {
       names: 'bosco',
       email: 'senderthree@gmail.com',
       roleId: 5,
+      password: await hashPassword('pass123@'),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+
+    },
+    {
+      names: 'bosco',
+      email: 'senderfour@gmail.com',
+      roleId: 5,
+      managerId: 8,
       password: await hashPassword('pass123@'),
       createdAt: new Date(),
       updatedAt: new Date(),

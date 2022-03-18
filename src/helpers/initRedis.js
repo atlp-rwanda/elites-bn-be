@@ -1,4 +1,4 @@
-import { URL } from 'url';
+import url from 'url';
 import { createClient } from 'redis';
 
 import 'dotenv/config';
@@ -7,7 +7,7 @@ import 'dotenv/config';
 let client;
 
 if (process.env.REDISCLOUD_URL) {
-  const redisURL = new URL(process.env.REDISCLOUD_URL);
+  const redisURL = new url.parse(process.env.REDISCLOUD_URL);
   client = createClient(redisURL);
 } else {
   client = createClient({

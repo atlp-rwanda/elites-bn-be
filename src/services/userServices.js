@@ -1,5 +1,4 @@
 import models,{Role} from "../models";
-import models from "../models";
 import { generateToken } from "../helpers/jwtFunction";
 import dotenv from "dotenv";
 dotenv.config();

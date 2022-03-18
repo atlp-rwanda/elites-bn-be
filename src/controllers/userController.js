@@ -4,8 +4,6 @@ import { hashPassword, comparePassword } from '../helpers/passwordSecurity';
 import { generateAccessToken, generateRefreshToken, decodeRefreshToken } from '../helpers/jwtFunction';
 import { userExist, createUser, updatedRole } from '../services/userServices';
 
-import { generateAccessToken, generateRefreshToken, decodeRefreshToken,decodeAcessToken } from '../helpers/jwtFunction';
-import { userExist, createUser, getUserId } from '../services/userServices';
 import { sendEmail } from '../services/send-email-service';
 import { verificationEmail } from '../template/verify-email-template';
 import models from '../models';

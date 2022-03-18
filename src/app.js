@@ -67,7 +67,7 @@ try {
   });
   app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;
-    console.log(err);
+    // console.log(err);
     res.status(statusCode).json({
       statusCode,
       name: err.name,

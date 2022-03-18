@@ -11,31 +11,31 @@ const router = express.Router();
 const roomController = new RoomControllers();
 
 router.post(
-	'/rooms/',
-	authenticate,
-	isTravelAdmin,
-	verifyToken,
-	roomValidation,
-	roomController.createRoom
+  '/rooms/',
+  authenticate,
+  isTravelAdmin,
+  verifyToken,
+  roomValidation,
+  roomController.createRoom,
 );
 router.get(
-	'/accommodations/:accommodationId/rooms',
-	roomController.getAllRoomsOfAccommodation
+  '/accommodations/:accommodationId/rooms',
+  roomController.getAllRoomsOfAccommodation,
 );
 router.get('/rooms/:roomId', roomController.getSingleRoom);
 router.patch(
-	'/rooms/:roomId',
-	authenticate,
-	isTravelAdmin,
-	verifyToken,
-	roomController.updateRoom
+  '/rooms/:roomId',
+  authenticate,
+  isTravelAdmin,
+  verifyToken,
+  roomController.updateRoom,
 );
 router.delete(
-	'/rooms/:roomId',
-	authenticate,
-	isTravelAdmin,
-	verifyToken,
-	roomController.deleteRoom
+  '/rooms/:roomId',
+  authenticate,
+  isTravelAdmin,
+  verifyToken,
+  roomController.deleteRoom,
 );
 
 export default router;

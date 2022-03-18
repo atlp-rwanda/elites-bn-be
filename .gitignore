@@ -1,4 +1,10 @@
+
 node_modules
+
+
+
+node_modules
+.env
 # Logs
 logs
 *.log
@@ -45,6 +51,8 @@ jspm_packages/
 
 # TypeScript v1 declaration files
 typings/
+
+
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/

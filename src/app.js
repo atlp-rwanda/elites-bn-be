@@ -10,7 +10,6 @@ import 'dotenv/config';
 import { PageNotFoundError } from './httpErrors/pageNotFoundError.js';
 import passport from './middlewares/auth.js';
 
-import passport from './middlewares/auth.js';
 
 
 const app = express();

@@ -15,10 +15,10 @@ passport.use(new GoogleStrategy(
   // passReqToCallback: true
   },
   async (accessToken, refreshToken, profile, done) => {
-    console.log(profile);
+    
     const user = await models.User.findOne({ where: { email: profile.emails[0].value } });
     if (user) {
-      jwt.sign({ user }, 'noSecrets', (err, token) => {
+      jwt.sign({ user }, process.env.JWT_SECRET_KEY, (err, token) => {
         if (err) {
           return err;
         }
@@ -59,7 +59,7 @@ passport.use(new FacebookStrategy(
         if (err) {
           return err;
         }
-       
+        
         return done(null, token);
       });
     } else {

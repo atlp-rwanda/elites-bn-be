@@ -112,9 +112,7 @@ export class UserControllers {
     next(err);
   }
   }
-  
-
-  
+ 
 
   async authFacebookLogin(req, res, next) {
     try {

@@ -13,7 +13,6 @@ import passport from './middlewares/auth'
 import { PageNotFoundError } from './httpErrors/pageNotFoundError.js';
 import passport from './middlewares/auth.js';
 
-import passport from './middlewares/auth.js';
 
 const app = express();
  const port =  3000;

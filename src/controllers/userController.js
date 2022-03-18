@@ -101,24 +101,7 @@ export class UserControllers {
   
 
   
- //using access token to generate refresh token
- async refreshTokens (req, res){
-  try {
-    const { refreshToken } = req.body
-    if (!refreshToken) 
-    return res.status(400).json({ status: 400, message: "Bad request" })
-    const payloadToken = await decodeRefreshToken(refreshToken)
-    const {iat,exp,...newPayloadToken}= payloadToken
-  
-    const accessToken = await generateAccessToken(newPayloadToken)
-    const refToken = await  generateRefreshToken(newPayloadToken)
-    res.status(200).json({ status: 200, message: "Access token created sussccefully", payload: { accessToken: accessToken, refreshToken: refToken}  })
-  } catch (err) {
-    next(err)
-    
-  }
-
-}
+ 
 
   async authGoogleLogin(req,res,next) {
   try {
@@ -140,28 +123,6 @@ export class UserControllers {
       const accessToken = await generateAccessToken(newPayloadToken);
       const refToken = await generateRefreshToken(newPayloadToken);
       res.status(200).json({ status: 200, message: 'Access token created sussccefully', payload: { accessToken, refreshToken: refToken } });
-    } catch (err) {
-      next(err);
-    }
-  }
-
-  async authGoogleLogin(req, res, next) {
-    try {
-      const token = await generateAccessToken({ id: req.user.id });
-      const refreshToken = await generateRefreshToken({ id: req.user.id },);
-      await models.refreshTokenTable.create({ refreshToken });
-      res.status(201).json({ status: 201, message: 'Succesfully logged in with Google!', payload: { accesstoken: token, refreshToken } });
-    } catch (err) {
-      next(err);
-    }
-  }
-
-  async authFacebookLogin(req, res, next) {
-    try {
-      const token = await generateAccessToken({ id: req.user.id });
-      const refreshToken = await generateRefreshToken({ id: req.user.id },);
-      await models.refreshTokenTable.create({ refreshToken });
-      res.status(201).json({ status: 201, message: 'Succesfully logged in with Facebook!', payload: { accesstoken: token, refreshToken } });
     } catch (err) {
       next(err);
     }

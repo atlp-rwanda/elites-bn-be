@@ -1,11 +1,20 @@
+import { URL } from 'url';
 import { createClient } from 'redis';
 
 import 'dotenv/config';
 
-const client = createClient({
-  port: process.env.REDIS_PORT,
-  host: process.env.REDIS_HOST,
-});
+// eslint-disable-next-line import/no-mutable-exports
+let client;
+
+if (process.env.REDISCLOUD_URL) {
+  const redisURL = new URL(process.env.REDISCLOUD_URL);
+  client = createClient(redisURL);
+} else {
+  client = createClient({
+    port: process.env.REDIS_PORT,
+    host: process.env.REDIS_HOST,
+  });
+}
 
 client.on('connect', () => {
   console.log('Client connected to redis...');

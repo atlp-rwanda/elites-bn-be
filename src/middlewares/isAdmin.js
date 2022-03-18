@@ -7,7 +7,7 @@ export const isAdmin = async (req, res, next) => {
     try{
       let emptyToken = req.headers.authorization
     if(emptyToken === null){
-     return res.status(403).json({ message: 'user is not logged in' });
+     return res.status(403).json({ message: 'user is note logged in' });
       }
 const token = req.headers.authorization.split(' ')[1];
     let data;

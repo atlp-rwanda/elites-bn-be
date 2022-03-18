@@ -76,8 +76,7 @@ export class UserControllers {
         if(updatedUser == null){
           return res.status(400).json({ message: "this role does not exist" });
         }
-
-        return res.status(200).json({ message:updatedUser})
+        return res.status(200).json({ message:{newRole:updatedUser.roleId,userId:updatedUser.id,email:updatedUser.email,names:updatedUser.names,managerId:updatedUser.managerId}})
         }
 
     } catch (err) {

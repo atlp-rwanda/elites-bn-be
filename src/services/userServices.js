@@ -30,7 +30,6 @@ export const updatedRole = async (newRoleId, email) => {
   }
   user.roleId = newRole.id;
   await user.save()
-
   return user
 
 };

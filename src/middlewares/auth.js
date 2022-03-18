@@ -9,8 +9,8 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 
 passport.use(new GoogleStrategy(
   {
-    clientID:'715664758719-k0jcv3kjntr94d4f30bjg5gp6db1cqg2.apps.googleusercontent.com',
-    clientSecret:'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',
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret:process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: 'http://localhost:3000/api/v1/users/auth/google/login',
   // passReqToCallback: true
   },
@@ -32,7 +32,7 @@ passport.use(new GoogleStrategy(
         names: profile.displayName,
         roleId: role.dataValues.id
       });
-      jwt.sign({ newUser }, 'noSecrets', (err, token) => {
+      jwt.sign({ newUser }, process.env.JWT_SECRET_KEY, (err, token) => {
         if (err) {
           return err;
         }
@@ -52,14 +52,14 @@ passport.use(new FacebookStrategy(
 
   },
   async (accessToken, refreshToken, profile, done) => {
-    console.log(profile);
+    
     const user = await models.User.findOne({ where: { email: profile.emails[0].value } });
     if (user) {
-      jwt.sign({ user }, 'noSecrets', (err, token) => {
+      jwt.sign({ user }, process.env.JWT_SECRET_KEY, (err, token) => {
         if (err) {
           return err;
         }
-        console.log(user);
+       
         return done(null, token);
       });
     } else {
@@ -69,7 +69,7 @@ passport.use(new FacebookStrategy(
         names: profile.displayName,
         roleId: role.dataValues.id
       });
-      jwt.sign({ newUser }, 'noSecrets', (err, token) => {
+      jwt.sign({ newUser }, process.env.JWT_SECRET_KEY, (err, token) => {
         if (err) {
           return err;
         }

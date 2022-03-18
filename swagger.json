@@ -207,7 +207,7 @@
 			}
 		},
 
-		"/api/v1/trip/request/": {
+		"/api/v1/trips": {
             "post": {
                 "tags": ["Trip Request"],
                 "summary": "This is the endpoint to request a trip by user",
@@ -233,14 +233,11 @@
                 "security": [{
                     "Bearer": []
                 }]
-            }
-        },
-
-        "/api/v1/trip/allrequests/": {
-            "get": {
+            },
+			"get": {
                 "tags": ["Trip Request"],
-                "summary": "This endPoint will retrieve the requests sent by requester pending,rejected or approved",
-                "description": "This endPoint will retrieve the requests sent by requester,either pending,rejected or approved",
+                "summary": "This endPoint will retrieve all requests ",
+                "description": "This endPoint will retrieve all requests ",
                 "operationId": "getAllRequest",
 
                 "responses": {
@@ -257,12 +254,23 @@
             }
         },
 
-        "/api/v1/trip/requests/": {
-            "get": {
+
+        "/api/v1/trips/{id}": {
+
+			"get": {
                 "tags": ["Trip Request"],
-                "summary": "This endPoint will retrieve the pending requests sent by requester",
-                "description": "This endPoint will retrieve the pending requests sent by requester",
-                "operationId": "getRequest",
+                "summary": "This endPoint will retrieve one request ",
+                "description": "This endPoint will retrieve one request ",
+                "operationId": "getOneRequest",
+				"parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Trip request id",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
 
                 "responses": {
                     "200": {
@@ -275,31 +283,8 @@
                 "security": [{
                     "Bearer": []
                 }]
-            }
-        },
-
-
-        "/api/v1/trip/requests/all": {
-            "get": {
-                "tags": ["Trip Request"],
-                "summary": "This endPoint will retrieve the requests sent to manager",
-                "description": "This endPoint will retrieve the requests sent by requesters to manager",
-                "operationId": "get requests sent to manager",
-                "responses": {
-                    "200": {
-                        "description": "Successfully retrieved"
-                    },
-                    "400": {
-                        "description": "Bad Request"
-                    }
-                },
-                "security": [{
-                    "Bearer": []
-                }]
-            }
-        },
-
-        "/api/v1/trip/requests/{id}": {
+            },
+        
             "delete": {
                 "tags": ["Trip Request"],
                 "summary": "This end Point will delete the pending request sent by requester",

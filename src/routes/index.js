@@ -15,6 +15,6 @@ routes.use('/auth', authRoutes);
 routes.use('/accommodations', accommodationsRoutes);
 routes.use('/', roomRoutes);
 routes.use('/locations', locationsRoutes);
-routes.use('/trip', tripRoutes);
+routes.use('/trips', tripRoutes);
 
 export default routes;

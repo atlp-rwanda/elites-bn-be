@@ -14,6 +14,7 @@ import {
   TRIP_DELETED_MESSAGE,
   NO_TRIP_FOUND,
   ERROR_DATES,
+  VALIDATION_ERROR,
 } from "../src/constants/tripConstants";
 import chai, { expect, request, use } from "chai";
 import chaiHttp from "chai-http";
@@ -47,7 +48,7 @@ describe("TRIP REQUEST ENDPOINTS", () => {
   it("should create a trip request while logged in as requester", (done) => {
     chai
       .request(app)
-      .post("/api/v1/trip/request/")
+      .post("/api/v1/trips/")
       .set("Authorization", `Bearer ${token}`)
       .send(addRequest)
       .end((req, res) => {
@@ -66,7 +67,7 @@ describe("TRIP REQUEST ENDPOINTS", () => {
   it("should  NOT create a trip request", (done) => {
     chai
       .request(app)
-      .post("/api/v1/trip/request/")
+      .post("/api/v1/trips/")
       .set("Authorization", `Bearer ${token}`)
       .send(incorrectDate)
       .end((req, res) => {
@@ -74,7 +75,7 @@ describe("TRIP REQUEST ENDPOINTS", () => {
         expect(res.type).to.equal("application/json");
         expect(res.body).to.have.property("message");
         expect(res.body).to.have.property("status");
-        expect(res.body.message).to.equal(ERROR_DATES);
+        expect(res.body.message).to.equal(VALIDATION_ERROR);
         done();
       });
   });
@@ -84,29 +85,10 @@ describe("TRIP REQUEST ENDPOINTS", () => {
   it("should retrieve all requests", (done) => {
     chai
       .request(app)
-      .get("/api/v1/trip/allrequests")
-      .set("Authorization", `Bearer ${token}`)
-      .end((req, res) => {
-        expect(res).to.have.status([200]);
-        expect(res.type).to.equal("application/json");
-        expect(res.body).to.have.property("message");
-        expect(res.body).to.have.property("payload");
-        expect(res.body).to.have.property("status");
-        expect(res.body.message).to.equal(TRIP_FOUND_MESSAGE);
-        done();
-      });
-  });
-
-  //   // SHOULD RETRIEVE PENDING REQUESTS BY USER
-
-  it("should retrieve all pending requests", (done) => {
-    chai
-      .request(app)
-      .get("/api/v1/trip/requests/")
+      .get("/api/v1/trips/")
       .set("Authorization", `Bearer ${token}`)
       .end((req, res) => {
         id = res.body.payload[2].id;
-        console.log(id);
         expect(res).to.have.status([200]);
         expect(res.type).to.equal("application/json");
         expect(res.body).to.have.property("message");
@@ -117,38 +99,27 @@ describe("TRIP REQUEST ENDPOINTS", () => {
       });
   });
 
+
   // SHOULD NOT RETRIEVE PENDING REQUESTS BY USER
 
-  it("should NOT retrieve all pending requests by user", (done) => {
+  it("should NOT retrieve pending requests by user", (done) => {
     chai
       .request(app)
-      .get("/api/v1/trip/requests/5h")
+      .get("/api/v1/trips/")
       .end((req, res) => {
-        expect(res).to.have.status([404]);
+        expect(res).to.have.status([401]);
         expect(res.type).to.equal("application/json");
         done();
       });
   });
 
-  // FOR MANAGERS
-  it("should NOT retrieve requests unless he is manager", (done) => {
-    chai
-      .request(app)
-      .get("/api/v1/trip/requests/all")
-      .set("Authorization", `Bearer ${token}`)
-      .end((req, res) => {
-        expect(res).to.have.status([403]);
-        expect(res.type).to.equal("application/json");
-        expect(res.body).to.have.property("message");
-        done();
-      });
-  });
+  
   // SHOULD UPDATE THE REQUEST
 
   it("should UPDATE pending requests by user", (done) => {
     chai
       .request(app)
-      .patch(`/api/v1/trip/requests/${id}`)
+      .patch(`/api/v1/trips/${id}`)
       .set("Authorization", `Bearer ${token}`)
       .send(updateRequest)
       .end((req, res) => {
@@ -166,7 +137,7 @@ describe("TRIP REQUEST ENDPOINTS", () => {
   it("should  NOT UPDATE pending requests by user", (done) => {
     chai
       .request(app)
-      .patch("/api/v1/trip/request/1/100000000000000000000000000000000009")
+      .patch("/api/v1/trips/10000")
       .set("Authorization", `Bearer ${token}`)
       .send(updateRequest)
       .end((req, res) => {
@@ -181,7 +152,7 @@ describe("TRIP REQUEST ENDPOINTS", () => {
   it("should Delete pending requests by user", (done) => {
     chai
       .request(app)
-      .delete(`/api/v1/trip/requests/${id}`)
+      .delete(`/api/v1/trips/${id}`)
       .set("Authorization", `Bearer ${token}`)
       .send(updateRequest)
       .end((req, res) => {

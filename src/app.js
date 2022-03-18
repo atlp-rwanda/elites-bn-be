@@ -6,24 +6,11 @@ import routes from './routes/index';
 import db from './models/index';
 import swaggerDoc from '../swagger.json';
 import 'dotenv/config';
-<<<<<<< HEAD
-<<<<<<< HEAD
-import { PageNotFoundError } from './httpErrors/pageNotFoundError';
-=======
+
 import { PageNotFoundError } from './httpErrors/pageNotFoundError.js';
-<<<<<<< HEAD
-import passport from './middlewares/auth'
 
-
->>>>>>> 986dac3 (login with google and fb)
-=======
 import passport from './middlewares/auth.js';
->>>>>>> ec439fb (updated fb and google login)
-=======
-import passport from './middlewares/auth'
 
-
->>>>>>> c663a64 (login with google and fb)
 
 const app = express();
  const port =  3000;
@@ -65,11 +52,7 @@ try {
   app.use(cors());
   app.use(express.json());
   app.use(morgan('dev'));
-<<<<<<< HEAD
   app.use(passport.initialize());
-=======
-  app.use(passport.initialize())
->>>>>>> c663a64 (login with google and fb)
   app.use('/api/v1/', routes);
   app.use(
     '/docs/swagger-ui/',
@@ -96,11 +79,7 @@ try {
       message: err.message,
       path: req.path,
       error: err.description,
-<<<<<<< HEAD
       stack: err.stack,
-=======
-      stack: err.stack
->>>>>>> 2518aab (changes on social auth)
     });
     next(err);
   });

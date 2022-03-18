@@ -1,25 +1,25 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-	class User extends Model {
-		/**
-		 * Helper method for defining associations.
-		 * This method is not a part of Sequelize lifecycle.
-		 * The `models/index` file will call this method automatically.
-		 */
-		static associate(models) {
-			// define association here
-			User.belongsTo(models.Role, {
-				foreignKey: 'roleId',
-				onDelete: 'CASCADE',
-				onUpdate: 'CASCADE',
-			});
-			User.belongsTo(User, {
-				foreignKey: 'managerId',
-				onDelete: 'SET NULL',
-				onUpdate: 'CASCADE',
-				constraints: false,
-			});
+  class User extends Model {
+    /**
+       * Helper method for defining associations.
+       * This method is not a part of Sequelize lifecycle.
+       * The `models/index` file will call this method automatically.
+       */
+    static associate(models) {
+      // define association here
+      User.belongsTo(models.Role, {
+        foreignKey: 'roleId',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+      });
+      User.belongsTo(User, {
+        foreignKey: 'managerId',
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE',
+        constraints: false,
+      });
 
       User.hasMany(User, {
         foreignKey: 'managerId',

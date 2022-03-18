@@ -10,27 +10,27 @@ const router = express.Router();
 const locationController = new LocationControllers();
 
 router.post(
-	'/',
-	authenticate,
-	isTravelAdmin,
-	verifyToken,
-	locationValidation,
-	locationController.createLocation
+  '/',
+  authenticate,
+  isTravelAdmin,
+  verifyToken,
+  locationValidation,
+  locationController.createLocation,
 );
 router.get('/:locationId', locationController.getSingleLocation);
 router.patch(
-	'/:locationId',
-	authenticate,
-	isTravelAdmin,
-	verifyToken,
-	locationController.updateLocation
+  '/:locationId',
+  authenticate,
+  isTravelAdmin,
+  verifyToken,
+  locationController.updateLocation,
 );
 router.delete(
-	'/:locationId',
-	authenticate,
-	isTravelAdmin,
-	verifyToken,
-	locationController.deleteLocation
+  '/:locationId',
+  authenticate,
+  isTravelAdmin,
+  verifyToken,
+  locationController.deleteLocation,
 );
 
 export default router;

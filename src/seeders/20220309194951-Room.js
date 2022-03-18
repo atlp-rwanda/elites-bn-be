@@ -31,7 +31,7 @@ module.exports = {
       },
     ],
 
-    {}
+    {},
   ),
 
   down: (queryInterface, Sequelize) => queryInterface.bulkDelete('Rooms', null, {}),

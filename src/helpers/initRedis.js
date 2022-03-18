@@ -7,7 +7,7 @@ import 'dotenv/config';
 let client;
 
 if (process.env.REDISCLOUD_URL) {
-  const redisURL = new url.parse(process.env.REDISCLOUD_URL);
+  const redisURL = url.parse(process.env.REDISCLOUD_URL);
   client = createClient(redisURL);
 } else {
   client = createClient({

@@ -11,14 +11,11 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  refreshTokenTable.init(
-    {
-      refreshToken: { type: DataTypes.STRING },
-    },
-    {
-      sequelize,
-      modelName: 'refreshTokenTable',
-    },
-  );
+  refreshTokenTable.init({
+    refreshToken: DataTypes.TEXT
+  }, {
+    sequelize,
+    modelName: 'refreshTokenTable',
+  });
   return refreshTokenTable;
 };

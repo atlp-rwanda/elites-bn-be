@@ -6,9 +6,6 @@ import routes from './routes/index';
 import db from './models/index';
 import swaggerDoc from '../swagger.json';
 import 'dotenv/config';
-import passport from './middlewares/auth'
-
-
 
 import { PageNotFoundError } from './httpErrors/pageNotFoundError.js';
 import passport from './middlewares/auth.js';

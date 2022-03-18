@@ -101,7 +101,6 @@ export class UserControllers {
   
 
 
-
   async authGoogleLogin(req,res,next) {
   try {
         const token = await generateAccessToken({ id: req.user.id });

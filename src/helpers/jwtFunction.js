@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+
 const ACCESS_TOKEN_KEY = process.env.JWT_SECRETE_KEY;
 const REFRESH_TOKEN_KEY = process.env.JWT_SECRETE_REFRESH_KEY;
 
@@ -21,11 +22,15 @@ export const decodeAcessToken = async (token) => {
   return decoded;
 };
 
-export const decodeRefreshToken = async (refreshToken) => {
-  try {
-    const decode = await jwt.verify(refreshToken, REFRESH_TOKEN_KEY);
-    return decode;
-  } catch (error) {
-    return null;
-  }
+
+
+
+export const decodeRefreshToken = async (refreshToken) => {  
+try {
+  const decode = await jwt.verify(refreshToken, REFRESH_TOKEN_KEY)
+  return decode
+} catch (error) {
+  return null
+}
 };
+

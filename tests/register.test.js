@@ -24,7 +24,11 @@ describe('USER REGISTER A USER', () => {
         names:"MAGNUS",
         email: 'LeGrand@gmail.com',
         password: 'Pass@125'
+<<<<<<< HEAD
 >>>>>>> ec439fb (updated fb and google login)
+=======
+>>>>>>> 1d72b6059294ac6e527c87f96fafc90244696c8b
+>>>>>>> 03d2558a6e5f3722258371b6b91b52cc3bec55a8
       })
       expect(res).to.have.status([200]);
       expect(res.body).to.have.property('message');
@@ -49,7 +53,11 @@ describe('USER REGISTER A USER', () => {
 <<<<<<< HEAD
 >>>>>>> ec439fb (updated fb and google login)
 =======
+<<<<<<< HEAD
 >>>>>>> ec439fb (updated fb and google login)
+=======
+>>>>>>> 1d72b6059294ac6e527c87f96fafc90244696c8b
+>>>>>>> 03d2558a6e5f3722258371b6b91b52cc3bec55a8
       
         .send({
           names: 'Gihozo Innocente',

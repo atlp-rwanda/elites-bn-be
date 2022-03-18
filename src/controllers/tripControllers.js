@@ -60,7 +60,7 @@ export class TripControllers {
           .status(200)
           .json({ status: 200, message: REQUEST_UPDATED, payload: updated });
       } else {
-        res.status(200).json({
+        res.status(404).json({
           status: 404,
           message: 'Oops,No such trip request found! ',
         });
@@ -86,7 +86,7 @@ export class TripControllers {
   async getSingleRequests(id, req, res, next) {
     try {
       const getTripRequest = await getOneRequest(id, req.params.id);
-     if (getTripRequest) {
+      if (getTripRequest) {
         res.status(200).json({
           status: 200,
           message: TRIP_FOUND_MESSAGE,

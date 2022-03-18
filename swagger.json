@@ -107,6 +107,48 @@
 				}
 			}
 		},
+        "/api/v1/users/updateRole/{id}": {
+            "patch": {
+              "tags": ["Users"],
+              "summary": "This will update a role of the user",
+              "description": " ",
+              "produces": ["application/json"],
+              "parameters": [
+                {
+                  "name": "id",
+                  "in": "path",
+                  "description": "id",
+                  "required": true
+                },
+                {
+                "name": "Body",
+                "in": "body",
+                "required": true,
+                "schema": {
+                    "$ref": "#/definitions/UpdateRole"
+                  }
+                }
+              ],
+              "responses": {
+                "201": {
+                  "description": "User role updated successfully"
+                },
+                
+                "400": {
+                  "description": "Bad request"
+                },
+                "500": {
+                  "description": "Internal server error"
+                }
+              },
+			  "security": [
+				{
+				  "Bearer": []
+				}
+			  ]
+             
+            }
+        },
 		"/api/v1/auth/logout": {
 			"post": {
 				"tag": ["Authentication"],
@@ -846,6 +888,17 @@
 				}
 			}
 		},
+		"UpdateRole": {
+            "type": "object",
+            "in":"body",
+            "required": [ "email", "role"],
+            "properties": {
+                  "email": {
+                      "type": "string"
+                  }
+                 
+              }
+          },
 		"refreshToken": {
 			"type": "object",
 			"in": "body",
@@ -926,3 +979,4 @@
 		}
 	}
 }
+   

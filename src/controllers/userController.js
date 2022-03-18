@@ -2,7 +2,8 @@
 import { USER_REGISTERED, USER_LOGIN } from '../constants/user-constants';
 import { hashPassword, comparePassword } from '../helpers/passwordSecurity';
 import { generateAccessToken, generateRefreshToken, decodeRefreshToken } from '../helpers/jwtFunction';
-import { userExist, createUser } from '../services/userServices';
+import { userExist, createUser,updatedRole } from '../services/userServices';
+
 import models from '../models';
 
 import { ConflictsError } from '../httpErrors/conflictError';
@@ -60,6 +61,29 @@ export class UserControllers {
     }
   }
 
+
+  async updateRole(req, res) {
+    try {
+      const email = req.body.email;
+      const user = await userExist(email);
+
+      if (user == null) {
+        res.status(400).json({ message: "User does not exist! " });
+        return false;
+      } else {
+    const updatedUser = await updatedRole(req.params.id, email)
+        
+        if(updatedUser == null){
+          return res.status(400).json({ message: "this role does not exist" });
+        }
+        return res.status(200).json({ message:{newRole:updatedUser.roleId,userId:updatedUser.id,email:updatedUser.email,names:updatedUser.names,managerId:updatedUser.managerId}})
+        }
+
+    } catch (err) {
+      next(err)
+    }
+  }
+
   // eslint-disable-next-line class-methods-use-this
   async refreshTokens(req, res, next) {
     try {
@@ -74,4 +98,12 @@ export class UserControllers {
       next(err);
     }
   }
+  
 }
+  
+
+
+
+
+
+

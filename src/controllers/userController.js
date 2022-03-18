@@ -4,10 +4,18 @@ import { hashPassword, comparePassword } from '../helpers/passwordSecurity';
 import { generateAccessToken, generateRefreshToken, decodeRefreshToken } from '../helpers/jwtFunction';
 import { userExist, createUser, updatedRole } from '../services/userServices';
 
+import { generateAccessToken, generateRefreshToken, decodeRefreshToken,decodeAcessToken } from '../helpers/jwtFunction';
+import { userExist, createUser, getUserId } from '../services/userServices';
+import { sendEmail } from '../services/send-email-service';
+import { verificationEmail } from '../template/verify-email-template';
 import models from '../models';
 
 import { ConflictsError } from '../httpErrors/conflictError';
 import { UnauthorizedError } from '../httpErrors/unauthorizedError';
+import jwt from 'jsonwebtoken';
+import {config }from 'dotenv'
+
+config();
 
 // eslint-disable-next-line import/prefer-default-export
 export class UserControllers {
@@ -24,8 +32,18 @@ export class UserControllers {
         const {
           password, createdAt, updatedAt, ...newcreatedUser
         } = createdUser;
-        const token = await generateAccessToken({ id: newcreatedUser.id });
+        
+        const token = await generateAccessToken({ id: createdUser.id });
         const refreshToken = await generateRefreshToken({ id: newcreatedUser.id });
+
+          
+    const email = {to: createdUser.email,
+    subject: 'Barefoot verification Email',
+    from: process.env.SENDGRID_EMAIL,
+    text: `Hello  ${createdUser.names}`,
+    html: await verificationEmail(token),}
+    await sendEmail(email)
+
         res.status(200).json({
           status: 200,
           message: USER_REGISTERED,
@@ -37,6 +55,23 @@ export class UserControllers {
     }
   }
 
+  // create verifyUser
+  async verifyNewUser(req, res) {
+    
+    try {
+      const { token } = req.params;
+      const userInfo = jwt.verify(token, process.env.JWT_SECRETE_KEY);
+      const userId = userInfo.id;
+      const isVerified=true;
+      models.User.update({ verified: isVerified }, { where: { id: userId } })
+      return res
+        .status(200)
+        .send({  message: 'Account verified!' });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send({ message: error.message });
+    }
+}
   // eslint-disable-next-line class-methods-use-this
   async login(req, res, next) {
     // login a user

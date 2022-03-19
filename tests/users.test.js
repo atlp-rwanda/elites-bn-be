@@ -21,7 +21,7 @@ describe('USER LOGIN', () => {
 
   it('it should not login a user with invalid credentials', async () => {
     const res = await request(app).post('/api/v1/users/login').send({
-      email: 'gih@gmail.com',
+      email: 'yangeney@gmail.com',
       password: 'Pass@12'
     });
     expect(res).to.have.status([401]);

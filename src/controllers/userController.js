@@ -80,7 +80,7 @@ export class UserControllers {
         }
 
     } catch (err) {
-      next(err)
+      next(err);
     }
   }
 
@@ -98,6 +98,32 @@ export class UserControllers {
       next(err);
     }
   }
+  
+
+
+  async authGoogleLogin(req,res,next) {
+  try {
+        const token = await generateAccessToken({ id: req.user.id });
+        const refreshToken = await generateRefreshToken({ id: req.user.id },);
+        await models.refreshTokenTable.create({ refreshToken });
+        res.status(201).json({status:201, message:'Succesfully logged in with Google!',payload: { accesstoken: token,refreshToken}})
+  } catch (err) {
+    next(err);
+  }
+  }
+ 
+
+  async authFacebookLogin(req, res, next) {
+    try {
+      const token = await generateAccessToken({ id: req.user.id });
+      const refreshToken = await generateRefreshToken({ id: req.user.id },);
+      await models.refreshTokenTable.create({ refreshToken });
+      res.status(201).json({ status: 201, message: 'Succesfully logged in with Facebook!', payload: { accesstoken: token, refreshToken } });
+    } catch (err) {
+      next(err);
+    }
+  }
+
   
 }
   

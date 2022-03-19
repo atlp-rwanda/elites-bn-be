@@ -71,6 +71,10 @@ passport.use(new FacebookStrategy(
         if (err) {
           return err;
         }
+<<<<<<< HEAD
+=======
+        console.log(newUser);
+>>>>>>>  This is a combination of 11 commits.
         return done(null, token);
       });
     }

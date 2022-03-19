@@ -17,7 +17,11 @@ export const userValidation = (req, res, next) => {
       }),
 
     email: Joi.string().required().email(),
+<<<<<<< HEAD
     verified: Joi.boolean(),
+=======
+    verified:Joi.boolean(),
+>>>>>>>  This is a combination of 11 commits.
 
   });
 

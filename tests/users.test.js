@@ -7,6 +7,29 @@ import app from '../src/app.js';
 chai.use(chaiHttp);
 
 describe('USER LOGIN', () => {
+<<<<<<< HEAD
+=======
+  it('it should login the user', async () => {
+    const res = await request(app).post('/api/v1/users/login').send({
+      email: 'senderone@gmail.com',
+      password: 'pass123@'
+    });
+
+    expect(res).to.have.status([200]);
+    expect(res.body).to.have.property('message');
+    expect(res.body).to.have.property('status');
+    expect(res.body).haveOwnProperty('payload');
+  });
+
+  it('it should not login a user with invalid credentials', async () => {
+    const res = await request(app).post('/api/v1/users/login').send({
+      email: 'yangeney@gmail.com',
+      password: 'Pass@12'
+    });
+    expect(res).to.have.status([401]);
+    expect(res.body).to.have.property('message');
+    expect(res.body).to.have.property('statusCode');
+>>>>>>>  This is a combination of 11 commits.
 
   it('Should login a user ', (done) => {
     chai

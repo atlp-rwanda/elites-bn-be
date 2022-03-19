@@ -1,8 +1,16 @@
 import 'dotenv/config';
 
+<<<<<<< HEAD
 const port = process.env.APP_URL;
 
 export const verificationEmail = async (token) => `
+=======
+
+const port =  process.env.APP_URL;
+
+export const verificationEmail = async (token)=>{
+ return `
+>>>>>>>  This is a combination of 11 commits.
  <!DOCTYPE html>
 <html>
 <head>
@@ -281,4 +289,9 @@ export const verificationEmail = async (token) => `
 
 </body>
 </html>
+<<<<<<< HEAD
  `;
+=======
+ `
+}
+>>>>>>>  This is a combination of 11 commits.

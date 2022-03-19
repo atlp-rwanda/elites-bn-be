@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'userId',
       });
 
+<<<<<<< HEAD
       User.hasOne(models.Profile, {
         foreignKey: 'userId',
       });
@@ -44,5 +45,24 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'User',
     },
   );
+=======
+      User.hasMany(models.TripComment, {
+        foreignKey: 'userId', as: 'comments'
+      });
+    }
+  }
+  User.init({
+    names: DataTypes.STRING,
+    email: DataTypes.STRING,
+    password: DataTypes.STRING,
+    roleId: DataTypes.INTEGER,
+    managerId: DataTypes.INTEGER,
+    isActive: DataTypes.BOOLEAN,
+    verified:DataTypes.BOOLEAN,
+  }, {
+    sequelize,
+    modelName: 'User',
+  });
+>>>>>>>  This is a combination of 11 commits.
   return User;
 };

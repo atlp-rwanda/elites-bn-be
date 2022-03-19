@@ -25,6 +25,7 @@ module.exports = {
       accomodationId: 1,
       createdAt: new Date(),
       updatedAt: new Date(),
+<<<<<<< HEAD
     }, {
       id: 3,
       userId: 2,
@@ -32,12 +33,21 @@ module.exports = {
       departLocation: 2,
       arrivalLocation: 3,
       status: 'approved',
+=======
+    },{
+      id: 3,
+      userId: 14,
+      managerId: 10,
+      departLocation: 2,
+      arrivalLocation: 3,
+>>>>>>>  This is a combination of 11 commits.
       tripReason: 'this is trip for research purpose',
       departDate: '2022-10-03',
       returnDate: '2022-12-03',
       accomodationId: 1,
       createdAt: new Date(),
       updatedAt: new Date(),
+<<<<<<< HEAD
     }, {
       id: 4,
       userId: 2,
@@ -51,6 +61,8 @@ module.exports = {
       accomodationId: 1,
       createdAt: new Date(),
       updatedAt: new Date(),
+=======
+>>>>>>>  This is a combination of 11 commits.
     }], {});
   },
 

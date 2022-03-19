@@ -81,7 +81,11 @@ export const trips = {
         },
       ],
     },
+<<<<<<< HEAD
     put: {
+=======
+    patch: {
+>>>>>>>  This is a combination of 11 commits.
       tags: ['Trip Request'],
       summary: 'update request with pending status',
       description: ' update request with pending status',
@@ -124,8 +128,15 @@ export const trips = {
 
     delete: {
       tags: ['Trip Request'],
+<<<<<<< HEAD
       summary: 'This end Point will delete the pending request sent by requester',
       description: 'This end Point will delete the pending request sent by requester',
+=======
+      summary:
+        'This end Point will delete the pending request sent by requester',
+      description:
+        'This end Point will delete the pending request sent by requester',
+>>>>>>>  This is a combination of 11 commits.
       operationId: 'delete Request',
       parameters: [
         {
@@ -151,6 +162,7 @@ export const trips = {
         },
       ],
     },
+<<<<<<< HEAD
     patch: {
       tags: ['Trip Request'],
       summary: '  Manager can update request with pending status to approved or rejected',
@@ -195,6 +207,8 @@ export const trips = {
       ],
     },
 
+=======
+>>>>>>>  This is a combination of 11 commits.
   },
 };
 
@@ -223,6 +237,7 @@ export const tripDefinitions = {
       },
     },
   },
+<<<<<<< HEAD
   trips: {
     type: 'object',
     in: 'body',
@@ -234,4 +249,6 @@ export const tripDefinitions = {
     },
   },
 
+=======
+>>>>>>>  This is a combination of 11 commits.
 };

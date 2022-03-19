@@ -14,6 +14,18 @@ describe('USER REGISTER A USER', () => {
       email: 'elites@gmail.com',
       password: 'Pass12515858',
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+  before(async () => {
+    await models.User.destroy({ where: { email: 'elites@gmail.com' } })
+  })
+  it('it should register the user', async () => {
+    const res = await request(app).post('/api/v1/users/register').send({
+      names: "MAGNUS",
+      email: 'LeGrand@gmail.com',
+      password: 'Pass@125'
+>>>>>>>  This is a combination of 11 commits.
     })
     expect(res).to.have.status([200]);
     expect(res.body).to.have.property('message');
@@ -22,6 +34,7 @@ describe('USER REGISTER A USER', () => {
   });
 
   it('should not register a user when already existing', async () => {
+<<<<<<< HEAD
     const res = await request(app).post('/api/v1/users/register');
 
     it('it should not register a user with existing email ', async () => {
@@ -42,3 +55,81 @@ describe('USER REGISTER A USER', () => {
     });
   });
 });
+=======
+    const res = await request(app).post('/api/v1/users/register')
+      .send({
+        names: 'Gihozo Innocente',
+        email: 'gihozo97@gmail.com',
+        password: 'Gihozo12345'
+      });
+    expect(res).to.have.status([409]);
+  });
+=======
+  before(async ()=>{
+    await models.User.destroy({where:{email:'elites@gmail.com'}})
+ })
+    it('it should register the user', async () => {
+      const res = await request(app).post('/api/v1/users/register').send({
+<<<<<<< HEAD
+<<<<<<< HEAD
+        email: 'elites@gmail.com',
+        password: 'Pass12515858'
+=======
+        names:"MAGNUS",
+        email: 'LeGrand@gmail.com',
+        password: 'Pass@125'
+>>>>>>> ec439fb (updated fb and google login)
+=======
+        names:"MAGNUS",
+        email: 'LeGrand@gmail.com',
+        password: 'Pass@125'
+<<<<<<< HEAD
+>>>>>>> ec439fb (updated fb and google login)
+=======
+>>>>>>> 1d72b6059294ac6e527c87f96fafc90244696c8b
+>>>>>>> 03d2558a6e5f3722258371b6b91b52cc3bec55a8
+      })
+      expect(res).to.have.status([200]);
+      expect(res.body).to.have.property('message');
+      expect(res.body).to.have.property('status');
+      expect(res.body).haveOwnProperty('payload');
+    });
+<<<<<<< HEAD
+
+    it('should not register a user when already existing', async () => {
+      const res = await request(app).post('/api/v1/users/register')
+=======
+  
+    it('it should not register a user with existing email ', async () => {
+      const res = await request(app).post('/api/v1/users/register').send({
+        names:'YANGENEYE Patrick',
+        email: 'yangeney@gmail.com',
+        password: 'password'
+      });
+    
+      expect(res.body).to.have.property('message');
+      expect(res.body).to.have.property('statusCode');
+<<<<<<< HEAD
+>>>>>>> ec439fb (updated fb and google login)
+=======
+<<<<<<< HEAD
+>>>>>>> ec439fb (updated fb and google login)
+=======
+>>>>>>> 1d72b6059294ac6e527c87f96fafc90244696c8b
+>>>>>>> 03d2558a6e5f3722258371b6b91b52cc3bec55a8
+      
+        .send({
+          names: 'Gihozo Innocente',
+          email: 'gihozo97@gmail.com',
+          password:'Gihozo12345'
+        });
+      
+        expect(res).to.have.status([409]);
+        
+     
+    });
+  
+  
+>>>>>>> 377e99e... comment and delete and read articles
+})
+>>>>>>>  This is a combination of 11 commits.

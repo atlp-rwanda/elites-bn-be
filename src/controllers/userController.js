@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import { config } from 'dotenv';
 import { USER_REGISTERED, USER_LOGIN } from '../constants/user-constants';
 import { hashPassword, comparePassword } from '../helpers/passwordSecurity';
+<<<<<<< HEAD
 import {
   generateAccessToken,
   generateRefreshToken,
@@ -18,6 +19,10 @@ import {
   userById,
   updateUserPassword,
 } from '../services/userServices';
+=======
+import { generateAccessToken, generateRefreshToken, decodeRefreshToken } from '../helpers/jwtFunction';
+import { userExist, createUser, updatedRole } from '../services/userServices';
+>>>>>>>  This is a combination of 11 commits.
 
 import { sendEmail } from '../services/send-email-service';
 import { verificationEmail } from '../template/verify-email-template';
@@ -26,8 +31,13 @@ import sendResetEmail from '../helpers/sendEmail';
 
 import { ConflictsError } from '../httpErrors/conflictError';
 import { UnauthorizedError } from '../httpErrors/unauthorizedError';
+<<<<<<< HEAD
 import makeTemplate from '../template/emailTemplate';
 import { BaseError } from '../httpErrors/baseError';
+=======
+import jwt from 'jsonwebtoken';
+import {config }from 'dotenv'
+>>>>>>>  This is a combination of 11 commits.
 
 config();
 
@@ -48,6 +58,7 @@ export class UserControllers {
         const {
           password, createdAt, updatedAt, ...newcreatedUser
         } = createdUser;
+<<<<<<< HEAD
         const token = await generateAccessToken({ id: createdUser.id });
         const refreshToken = await generateRefreshToken({
           id: newcreatedUser.id,
@@ -61,6 +72,19 @@ export class UserControllers {
           html: await verificationEmail(token),
         };
         await sendEmail(email);
+=======
+        
+        const token = await generateAccessToken({ id: createdUser.id });
+        const refreshToken = await generateRefreshToken({ id: newcreatedUser.id });
+
+          
+    const email = {to: createdUser.email,
+    subject: 'Barefoot verification Email',
+    from: process.env.SENDGRID_EMAIL,
+    text: `Hello  ${createdUser.names}`,
+    html: await verificationEmail(token),}
+    await sendEmail(email)
+>>>>>>>  This is a combination of 11 commits.
 
         res.status(200).json({
           status: 200,
@@ -74,12 +98,18 @@ export class UserControllers {
   }
 
   // create verifyUser
+<<<<<<< HEAD
   // eslint-disable-next-line class-methods-use-this
   async verifyNewUser(req, res) {
+=======
+  async verifyNewUser(req, res) {
+    
+>>>>>>>  This is a combination of 11 commits.
     try {
       const { token } = req.params;
       const userInfo = jwt.verify(token, process.env.JWT_SECRETE_KEY);
       const userId = userInfo.id;
+<<<<<<< HEAD
       const isVerified = true;
       models.User.update({ verified: isVerified }, { where: { id: userId } });
       return res.status(200).send({ message: 'Account verified!' });
@@ -88,6 +118,18 @@ export class UserControllers {
     }
   }
 
+=======
+      const isVerified=true;
+      models.User.update({ verified: isVerified }, { where: { id: userId } })
+      return res
+        .status(200)
+        .send({  message: 'Account verified!' });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send({ message: error.message });
+    }
+}
+>>>>>>>  This is a combination of 11 commits.
   // eslint-disable-next-line class-methods-use-this
   async login(req, res, next) {
     // login a user
@@ -114,8 +156,12 @@ export class UserControllers {
     }
   }
 
+<<<<<<< HEAD
   // eslint-disable-next-line class-methods-use-this
   async updateRole(req, res, next) {
+=======
+  async updateRole(req, res) {
+>>>>>>>  This is a combination of 11 commits.
     try {
       const { email } = req.body;
       const user = await userExist(email);
@@ -130,11 +176,15 @@ export class UserControllers {
       }
       return res.status(200).json({
         message: {
+<<<<<<< HEAD
           newRole: updatedUser.roleId,
           userId: updatedUser.id,
           email: updatedUser.email,
           names: updatedUser.names,
           managerId: updatedUser.managerId,
+=======
+          newRole: updatedUser.roleId, userId: updatedUser.id, email: updatedUser.email, names: updatedUser.names, managerId: updatedUser.managerId,
+>>>>>>>  This is a combination of 11 commits.
         },
       });
     } catch (err) {
@@ -163,37 +213,55 @@ export class UserControllers {
     }
   }
 
+<<<<<<< HEAD
   // eslint-disable-next-line class-methods-use-this
+=======
+>>>>>>>  This is a combination of 11 commits.
   async authGoogleLogin(req, res, next) {
     try {
       const token = await generateAccessToken({ id: req.user.id });
       const refreshToken = await generateRefreshToken({ id: req.user.id });
       await models.refreshTokenTable.create({ refreshToken });
+<<<<<<< HEAD
       res.status(201).json({
         status: 201,
         message: 'Succesfully logged in with Google!',
         payload: { accesstoken: token, refreshToken },
       });
+=======
+      res.status(201).json({ status: 201, message: 'Succesfully logged in with Google!', payload: { accesstoken: token, refreshToken } });
+>>>>>>>  This is a combination of 11 commits.
     } catch (err) {
       next(err);
     }
   }
 
+<<<<<<< HEAD
   // eslint-disable-next-line class-methods-use-this
+=======
+>>>>>>>  This is a combination of 11 commits.
   async authFacebookLogin(req, res, next) {
     try {
       const token = await generateAccessToken({ id: req.user.id });
       const refreshToken = await generateRefreshToken({ id: req.user.id });
       await models.refreshTokenTable.create({ refreshToken });
+<<<<<<< HEAD
       res.status(201).json({
         status: 201,
         message: 'Succesfully logged in with Facebook!',
         payload: { accesstoken: token, refreshToken },
       });
+=======
+      res.status(201).json({ status: 201, message: 'Succesfully logged in with Facebook!', payload: { accesstoken: token, refreshToken } });
+>>>>>>>  This is a combination of 11 commits.
     } catch (err) {
       next(err);
     }
   }
+<<<<<<< HEAD
+=======
+}
+>>>>>>>  This is a combination of 11 commits.
 
   // eslint-disable-next-line class-methods-use-this
   async sendResetLink(req, res, next) {

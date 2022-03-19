@@ -34,6 +34,7 @@ export const users = {
       },
     },
   },
+<<<<<<< HEAD
   '/api/v1/users/verifyEmail/{token}': {
     get: {
       tags: ['Authentication'],
@@ -63,6 +64,38 @@ export const users = {
     },
   },
 
+=======
+  "/api/v1/users/verifyEmail/{token}": {
+    "get": {
+      "tags": ["Authentication"],
+      "summary": "This end Point will assist to verify a user with a token",
+              "description": "This end Point will verify if a user is a really one who received the email",
+              "operationId": "Vification User Registered",
+      "produces": ["application/json"],
+      "parameters": [
+        {
+          "name": "token",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "User verified successfully"
+        },
+
+        "401": {
+          "description": "Unauthorized access"
+        },
+        "500": {
+          "description": "Internal server error"
+        }
+      }
+    }
+  },
+
+
+>>>>>>>  This is a combination of 11 commits.
   '/api/v1/users/login': {
     post: {
       tags: ['Authentication'],
@@ -95,6 +128,7 @@ export const users = {
   },
 
   '/api/v1/auth/logout': {
+<<<<<<< HEAD
     post: {
       tag: ['Authentication'],
       description: 'This will signout a user',
@@ -220,6 +254,64 @@ export const users = {
       },
     },
   },
+=======
+    			post: {
+    				tag: ['Authentication'],
+    				description: 'This will signout a user',
+    				produces: ['application/json'],
+    				parameters: [
+    					{
+    						name: 'Authorization',
+    						in: 'header',
+    						description: 'Authorization',
+    						required: true,
+    					},
+    				],
+    				responses: {
+    					205: {
+    						description: 'success',
+    					},
+    					500: {
+    						description: 'Internal server error',
+    					},
+    					401: {
+    						description: 'Bad request',
+    					},
+    				},
+    			},
+    		},
+    		'/api/v1/users/refreshToken': {
+    			post: {
+    				tags: ['Authentication'],
+    				summary: 'This is to use refresh token in order to create a new access token',
+    				description: ' ',
+    				consumes: ['application/json'],
+    				produces: ['application/json'],
+    				parameters: [
+    					{
+    						name: 'User Update section',
+    						in: 'body',
+    						description: 'Update user info',
+    						required: true,
+    						schema: {
+    							$ref: '#/definitions/refreshToken',
+    						},
+    					},
+    				],
+    				responses: {
+    					200: {
+    						description: 'Access token created successfuly',
+    					},
+    					400: {
+    						description: 'Bad request',
+    					},
+    					500: {
+    						description: 'INternal server error',
+    					},
+    				},
+    			},
+    		},
+>>>>>>>  This is a combination of 11 commits.
   '/api/v1/users/updateRole/{id}': {
     patch: {
       tags: ['Users'],
@@ -303,6 +395,7 @@ export const userDefinition = {
       },
     },
   },
+<<<<<<< HEAD
   ResetPassword: {
     type: 'object',
     in: 'body',
@@ -316,4 +409,6 @@ export const userDefinition = {
       },
     },
   },
+=======
+>>>>>>>  This is a combination of 11 commits.
 };

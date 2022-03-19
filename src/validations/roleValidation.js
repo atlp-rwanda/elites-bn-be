@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 /* eslint-disable consistent-return */
+=======
+>>>>>>>  This is a combination of 11 commits.
 import Joi from 'joi';
 
 // eslint-disable-next-line import/prefer-default-export

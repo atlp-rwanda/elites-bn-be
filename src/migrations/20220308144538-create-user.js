@@ -45,7 +45,11 @@ module.exports = {
       },
       verified: {
         type: Sequelize.BOOLEAN,
+<<<<<<< HEAD
         defaultValue: false,
+=======
+        defaultValue:false,
+>>>>>>>  This is a combination of 11 commits.
       },
       createdAt: {
         allowNull: false,

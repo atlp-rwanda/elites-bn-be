@@ -52,6 +52,24 @@ export const tripExist = async (userId, id) => {
   return null;
 };
 
+<<<<<<< HEAD
+=======
+
+export const findAtrip = async (id) => {
+  const dataExist = await models.tripRequest.findOne({
+    where: {
+      id,
+    },
+  });
+
+  if (dataExist) {
+    return dataExist;
+  }
+  return null;
+};
+
+// eslint-disable-next-line consistent-return
+>>>>>>>  This is a combination of 11 commits.
 export const createTrip = async (userid, data) => {
   try {
     const checkManager = await models.User.findOne({

@@ -20,11 +20,10 @@ export const checkRole = async (userid) => {
 };
 
 export const checkLocations = async (departLocation, arrivalLocation) => {
-  if(departLocation !== arrivalLocation) {
-      return true;
-  }else{
-    return false;
+  if (departLocation !== arrivalLocation) {
+    return true;
   }
+  return false;
 };
 
 export const getManagerId = async (userid) => {
@@ -78,9 +77,8 @@ export const createTrip = async (userid, data) => {
 };
 
 export const getAllRequests = async (userId) => {
-
-   const role = await checkRole(userId);
-    if (role === 'manager') {
+  const role = await checkRole(userId);
+  if (role === 'manager') {
     const data = await models.tripRequest.findAll({
       where: {
         managerId: userId,
@@ -97,25 +95,24 @@ export const getAllRequests = async (userId) => {
 
 export const getOneRequest = async (userId, id) => {
   const role = await checkRole(userId);
-    if (role === 'manager') {
+  if (role === 'manager') {
     const data = await models.tripRequest.findOne({
       where: {
         managerId: userId,
-        id:id
+        id,
       },
     });
-  return data;
+    return data;
   }
   const Data = await models.tripRequest.findOne({
     where: {
       userId,
-      id
+      id,
     },
 
   });
   return Data;
-}
-
+};
 
 export const updateRequest = async (userId, id, data) => {
   const exist = await tripExist(userId, id);

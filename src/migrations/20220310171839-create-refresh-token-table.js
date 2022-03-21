@@ -8,7 +8,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       refreshToken: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       createdAt: {
         allowNull: false,

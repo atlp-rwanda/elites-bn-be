@@ -1,5 +1,4 @@
-import models,{Role} from "../models";
-
+import models, { Role } from '../models';
 
 export const userExist = async (email) => {
   const User = await models.User.findOne({
@@ -20,16 +19,13 @@ export const createUser = async (user) => {
   return userCreated;
 };
 
-
-
 export const updatedRole = async (newRoleId, email) => {
-  const user = await models.User.findOne({where:{email}})
-  const newRole = await Role.findOne({where:{id:newRoleId}})
-  if(newRole ==null){
-    return null
+  const user = await models.User.findOne({ where: { email } });
+  const newRole = await Role.findOne({ where: { id: newRoleId } });
+  if (newRole == null) {
+    return null;
   }
   user.roleId = newRole.id;
-  await user.save()
-  return user
-
+  await user.save();
+  return user;
 };

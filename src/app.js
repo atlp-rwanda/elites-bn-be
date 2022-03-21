@@ -4,15 +4,14 @@ import cors from 'cors';
 import morgan from 'morgan';
 import routes from './routes/index';
 import db from './models/index';
-import swaggerDoc from '../swagger.json';
+import swaggerDoc from './documentation/index';
 import 'dotenv/config';
 
 import { PageNotFoundError } from './httpErrors/pageNotFoundError.js';
 import passport from './middlewares/auth.js';
 
-
 const app = express();
- const port =  3000;
+const port = 3000;
 const mode = process.env.NODE_ENV || 'development';
 
 try {

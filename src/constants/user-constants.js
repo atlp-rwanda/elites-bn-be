@@ -4,7 +4,4 @@ export const USER_REGISTERED = 'User registered successfully please check the em
 export const USER_LOGIN = 'User logged in successfully.';
 export const INVALID_LOGIN = 'Invalid credentials';
 
-
-
 export const USER_NOT_EXIST = 'User with this email does not exist exist.';
-

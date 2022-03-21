@@ -155,10 +155,7 @@ export class UserControllers {
     }
   }
 }
-<<<<<<< HEAD
-=======
 
 
 
 
->>>>>>> 25e799a (new Update)

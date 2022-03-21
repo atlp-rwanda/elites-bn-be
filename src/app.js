@@ -6,21 +6,12 @@ import routes from './routes/index';
 import db from './models/index';
 import swaggerDoc from './documentation/index';
 import 'dotenv/config';
-<<<<<<< HEAD
-import { PageNotFoundError } from './httpErrors/pageNotFoundError.js';
-=======
 import { PageNotFoundError } from './httpErrors/pageNotFoundError';
 import path from 'path'
->>>>>>> 25e799a (new Update)
 import passport from './middlewares/auth.js';
-import path from 'path'
 
 const app = express();
-<<<<<<< HEAD
-const port = 3000;
-=======
 const port =  3000;
->>>>>>> 25e799a (new Update)
 const mode = process.env.NODE_ENV || 'development';
 
 try {

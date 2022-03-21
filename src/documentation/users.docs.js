@@ -34,6 +34,36 @@ export const users = {
       },
     },
   },
+  "/api/v1/users/verifyEmail/{token}": {
+    "get": {
+      "tags": ["Authentication"],
+      "summary": "This end Point will assist to verify a user with a token",
+              "description": "This end Point will verify if a user is a really one who received the email",
+              "operationId": "Vification User Registered",
+      "produces": ["application/json"],
+      "parameters": [
+        {
+          "name": "token",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "User verified successfully"
+        },
+
+        "401": {
+          "description": "Unauthorized access"
+        },
+        "500": {
+          "description": "Internal server error"
+        }
+      }
+    }
+  },
+
+
   '/api/v1/users/login': {
     post: {
       tags: ['Authentication'],

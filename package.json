@@ -17,21 +17,12 @@
 		"migrate:undo": "npx sequelize-cli db:migrate:undo:all",
 		"seed": "npx sequelize-cli db:seed:all",
 		"seed:undo": "npx sequelize-cli db:seed:undo",
-<<<<<<< HEAD
 		"seed-location": "npx sequelize db:seed --seed 20220309194932-Location.js",
 		"seed-role": "npx sequelize db:seed --seed 20220308144709-roles-seed.js",
 		"seed-user": "npx sequelize db:seed --seed 20220309202416-User.js",
 		"seed-accommodation": "npx sequelize db:seed --seed 20220309194916-Accommodation.js",
 		"seed-room": "npx sequelize db:seed --seed 20220309194951-Room.js",
 		"seed-refreshToken": "npx sequelize db:seed --seed 20220315140632-refreshTokenTables.js",
-=======
-		"seed-location":"npx sequelize db:seed --seed 20220309194932-Location.js",
-		"seed-role":"npx sequelize db:seed --seed 20220308144709-roles-seed.js",
-		"seed-user":"npx sequelize db:seed --seed 20220309202416-User.js",
-		"seed-accommodation":"npx sequelize db:seed --seed 20220309194916-Accommodation.js",
-		"seed-room":"npx sequelize db:seed --seed 20220309194951-Room.js",
-		"seed-refreshToken":"npx sequelize db:seed --seed 20220315140632-refreshTokenTables.js",
->>>>>>> d6ed4c5 (email verification done well)
 		"dbmigrate:all": "npx sequelize-cli db:migrate:undo:all && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all"
 	},
 	"betterScripts": {
@@ -82,23 +73,15 @@
 		"jsonwebtoken": "^8.5.1",
 		"morgan": "^1.10.0",
 		"multer": "^1.4.4",
-<<<<<<< HEAD
 		"passport": "^0.5.2",
 		"passport-facebook": "^3.0.0",
 		"passport-google-oauth2": "^0.2.0",
-=======
->>>>>>> d6ed4c5 (email verification done well)
 		"pg": "^8.7.3",
 		"pg-hstore": "^2.3.4",
 		"redis": "^4.0.4",
 		"sequelize": "^6.17.0",
-<<<<<<< HEAD
 		"sequelize-cli": "^6.4.1",
 		"swagger-ui-express": "^4.3.0"
-=======
-		"swagger-ui-express": "^4.3.0",
-		"sequelize-cli": "^6.4.1"
->>>>>>> d6ed4c5 (email verification done well)
 	},
 	"devDependencies": {
 		"chai": "^4.3.6",
@@ -117,8 +100,4 @@
 		"nodemon": "^2.0.15",
 		"nyc": "^15.1.0"
 	}
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> d6ed4c5 (email verification done well)

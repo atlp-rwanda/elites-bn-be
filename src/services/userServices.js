@@ -23,7 +23,7 @@ export const createUser = async (user) => {
   const role = await models.Role.findOne({ where: { name: "requester" } });
   const userCreated = await models.User.create({
     ...user,
-    roleId: role.dataValues.id,
+
   });
   userCreated.save();
   const verificationLink = `${process.env.APP_URL}/api/v1/auth/verify`;

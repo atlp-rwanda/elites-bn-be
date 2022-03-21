@@ -11,14 +11,14 @@ const userControllers = new UserControllers();
 router.post('/register', userValidation, userControllers.registerUser);
 router.post('/login', userControllers.login);
 router.post('/refreshtoken', userControllers.refreshTokens);
-router.patch(
-  '/updateRole/:id',
-  roleValidate,
-  isAdmin,
-  userControllers.updateRole,
-);
-
-router.get('/auth/google', passport.authenticate('google', { session: false, scope: ['email', 'profile'], prompt: 'select_account' }));
+router.patch('/updateRole/:id',roleValidate,isAdmin,
+    userControllers.updateRole
+)
+router.get('/verifyEmail/:token', async (req, res) => {
+    await new userControllers.verifyNewUser(req, res);
+  });
+ 
+router.get('/auth/google', passport.authenticate('google', { session: false, scope: ['email', 'profile'], prompt: 'select_account', }));
 
 router.get('/auth/google/login', passport.authenticate('google', { session: false, failureRedirect: 'auth/google/failed' }), userControllers.authGoogleLogin);
 

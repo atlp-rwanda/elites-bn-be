@@ -6,12 +6,12 @@ import routes from './routes/index';
 import db from './models/index';
 import swaggerDoc from './documentation/index';
 import 'dotenv/config';
-
-import { PageNotFoundError } from './httpErrors/pageNotFoundError.js';
+import { PageNotFoundError } from './httpErrors/pageNotFoundError';
+import path from 'path'
 import passport from './middlewares/auth.js';
 
 const app = express();
-const port = 3000;
+const port =  3000;
 const mode = process.env.NODE_ENV || 'development';
 
 try {
@@ -47,11 +47,17 @@ try {
       });
   }
 
+  app.set('views', path.join(__dirname,'template'))
+  app.set('view engine', 'ejs')
   app.use(cors());
   app.use(express.json());
   app.use(morgan('dev'));
   app.use(passport.initialize());
   app.use('/api/v1/', routes);
+  app.get('/verify',(req, res)=>{
+    res.render(`index`)
+})
+
   app.use(
     '/docs/swagger-ui/',
     swaggerUi.serve,

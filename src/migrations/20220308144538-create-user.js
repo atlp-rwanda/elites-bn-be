@@ -45,7 +45,7 @@ module.exports = {
       },
       verified: {
         type: Sequelize.BOOLEAN,
-        default: false,
+        defaultValue:false,
       },
       createdAt: {
         allowNull: false,

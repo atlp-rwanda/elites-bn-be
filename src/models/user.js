@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
     roleId: DataTypes.INTEGER,
     managerId: DataTypes.INTEGER,
     isActive: DataTypes.BOOLEAN,
-    verified: DataTypes.BOOLEAN,
+    verified:DataTypes.BOOLEAN,
   }, {
     sequelize,
     modelName: 'User',

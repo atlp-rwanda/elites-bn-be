@@ -16,6 +16,7 @@ export const userValidation = (req, res, next) => {
       }),
 
     email: Joi.string().required().email(),
+    verified:Joi.boolean(),
 
   });
 

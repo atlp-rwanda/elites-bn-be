@@ -9,6 +9,7 @@ import tripRoutes from './api/tripRoutes';
 
 const routes = express.Router();
 
+
 routes.use('/', welcomeRoutes);
 routes.use('/users', usersRoutes);
 routes.use('/auth', authRoutes);

@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/prefer-default-export
 export const welcome = (req, res) => {
   res
     .status(200)

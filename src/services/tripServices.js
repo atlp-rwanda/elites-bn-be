@@ -34,6 +34,7 @@ export const getManagerId = async (userid) => {
   });
 
   const { managerId } = data.dataValues;
+  console.log(managerId);
   return managerId;
 };
 
@@ -149,4 +150,35 @@ export const deleteRequest = async (userId, id) => {
   }
 
   return null;
+};
+
+export const checkStatus = async (userid, status) => {
+  const data = await models.tripRequest.findOne({
+    where: {
+      id: userid,
+      status,
+    },
+  });
+
+  return data;
+};
+
+export const checkstatus = async (userid, status) => {
+  const data = await models.tripRequest.findOne({
+    where: {
+      id: userid,
+      status,
+    },
+  });
+
+  return data;
+};
+export const approveRequest = async (tripId, statusUpdate) => {
+  const data = await models.tripRequest.update(statusUpdate, {
+    where: { id: tripId },
+    returning: true,
+    raw: true,
+  });
+
+  return data;
 };

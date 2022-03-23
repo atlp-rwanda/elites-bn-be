@@ -1,9 +1,24 @@
-import models, { Role, User } from '../models';
+import dotenv from 'dotenv';
+import models, { Role } from '../models';
+import { generateToken } from '../helpers/jwtFunction';
+
+dotenv.config();
 
 export const userExist = async (email) => {
   const User = await models.User.findOne({
     where: { email },
     include: [{ model: models.Role, attributes: ['id', 'name'] }],
+    raw: true,
+  });
+  if (User) {
+    return User;
+  }
+  return null;
+};
+
+export const userById = async (id) => {
+  const User = await models.User.findOne({
+    where: { id },
     raw: true,
   });
   if (User) {

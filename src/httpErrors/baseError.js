@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/prefer-default-export
 export class BaseError extends Error {
   constructor(name, statusCode, message, isOperational) {
     super(message);

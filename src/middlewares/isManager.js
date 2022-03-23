@@ -1,7 +1,8 @@
+/* eslint-disable import/prefer-default-export */
 import { User, Role } from '../models';
+import { UnauthorizedError } from '../httpErrors/unauthorizedError';
 
-// eslint-disable-next-line import/prefer-default-export
-export const isTravelAdmin = async (id, req, res, next) => {
+export const isManager = async (id, req, res, next) => {
   try {
     const user = await User.findOne({
       where: { id },
@@ -9,10 +10,10 @@ export const isTravelAdmin = async (id, req, res, next) => {
     const role = await Role.findOne({
       where: { id: user.roleId },
     });
-    if (role.name === 'travel-admin') {
+    if (role.name === 'manager') {
       next();
     } else {
-      return res.status(401).json({ message: 'You are not a travel admin' });
+      throw new UnauthorizedError();
     }
   } catch (err) {
     next(err);

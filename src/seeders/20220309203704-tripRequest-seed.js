@@ -1,4 +1,5 @@
 module.exports = {
+  // eslint-disable-next-line no-unused-vars
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert('tripRequests', [{
       id: 1,
@@ -24,9 +25,36 @@ module.exports = {
       accomodationId: 1,
       createdAt: new Date(),
       updatedAt: new Date(),
+    }, {
+      id: 3,
+      userId: 2,
+      managerId: 3,
+      departLocation: 2,
+      arrivalLocation: 3,
+      status: 'approved',
+      tripReason: 'this is trip for research purpose',
+      departDate: '2022-10-03',
+      returnDate: '2022-12-03',
+      accomodationId: 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }, {
+      id: 4,
+      userId: 2,
+      managerId: 3,
+      departLocation: 2,
+      arrivalLocation: 3,
+      status: 'approved',
+      tripReason: 'this is trip for research purpose',
+      departDate: '2022-10-03',
+      returnDate: '2022-12-03',
+      accomodationId: 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     }], {});
   },
 
+  // eslint-disable-next-line no-unused-vars
   async down(queryInterface, Sequelize) {
     await queryInterface.bulkDelete('tripRequests', null, {});
   },

@@ -153,6 +153,47 @@ export const trips = {
         },
       ],
     },
+    put: {
+      tags: ['Trip Request'],
+      summary: '  Manager can update request with pending status to approved or rejected',
+      description: 'Manager can update request with pending status',
+      operationId: 'updateRequest',
+      produces: ['application/json'],
+      parameters: [
+        {
+          name: 'id',
+          in: 'path',
+          required: true,
+          type: 'integer',
+        },
+        {
+          name: 'body',
+          in: 'body',
+          required: true,
+          description: 'Trip request',
+          schema: {
+            $ref: '#/definitions/trips',
+          },
+        },
+      ],
+      responses: {
+        200: {
+          description: 'successfully updated user with given id',
+        },
+        409: {
+          description: 'please fill in all fields',
+        },
+        404: {
+          description: 'user you want to update does not exist',
+        },
+      },
+      security: [
+        {
+          Bearer: [],
+        },
+      ],
+    },
+
   },
 };
 
@@ -181,4 +222,15 @@ export const tripDefinitions = {
       },
     },
   },
+  trips: {
+    type: 'object',
+    in: 'body',
+    properties: {
+      status: {
+        type: 'string',
+      },
+
+    },
+  },
+
 };

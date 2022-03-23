@@ -71,7 +71,6 @@ passport.use(new FacebookStrategy(
         if (err) {
           return err;
         }
-        console.log(newUser);
         return done(null, token);
       });
     }

@@ -4,10 +4,12 @@ import { trips, tripDefinitions } from './trips.docs';
 import { rooms, roomsDefinitions } from './rooms.docs';
 import { accomodations } from './accomodation.docs';
 import { location, locationsDefinitions } from './locations.docs';
+import { profile } from './profile.docs';
 
 const paths = {
   ...welcome,
   ...users,
+  ...profile,
   ...trips,
   ...accomodations,
   ...rooms,

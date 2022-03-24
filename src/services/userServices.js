@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import models, { Role, User } from '../models';
 
 export const userExist = async (email) => {
@@ -17,6 +18,16 @@ export const userById = async (id) => {
     where: { id },
     raw: true,
   });
+=======
+/* eslint-disable no-unused-vars */
+import dotenv from 'dotenv';
+import models, { Role } from '../models';
+
+dotenv.config();
+
+export const userExist = async (email) => {
+  const User = await models.User.findOne({ where: { email } });
+>>>>>>> This is a combination of 8 commit.
   if (User) {
     return User;
   }
@@ -32,10 +43,17 @@ export const updateUser = async (userId) => {
 };
 
 export const createUser = async (user) => {
+<<<<<<< HEAD
   const role = await models.Role.findOne({ where: { name: 'requester' } });
   const userCreated = await models.User.create({
     ...user,
     roleId: role.dataValues.id,
+=======
+  // eslint-disable-next-line no-unused-vars
+  const role = await models.Role.findOne({ where: { name: 'requester' } });
+  const userCreated = await models.User.create({
+    ...user,
+>>>>>>> This is a combination of 8 commit.
   });
   userCreated.save();
   return userCreated;

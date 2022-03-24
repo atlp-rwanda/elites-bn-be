@@ -1,7 +1,7 @@
 import joi from 'joi';
 
+// eslint-disable-next-line import/prefer-default-export
 export const tripSchema = joi.object({
-
   departLocation: joi.number().integer().required().empty()
     .messages({
       'number.base': 'departLocation must be valid',
@@ -41,5 +41,4 @@ export const tripSchema = joi.object({
       'number.empty': 'accomodationId is not allowed to be empty',
       'any.required': 'accomodationId is required',
     }),
-
 });

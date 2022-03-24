@@ -15,7 +15,6 @@ router.post(
 router.patch('/:id', authenticate, tripControllers.updateRequest);
 router.get('/', authenticate, tripControllers.getAllRequests);
 router.get('/:id', authenticate, tripControllers.getSingleRequests);
-// router.get('/requests/', authenticate, tripControllers.getRequests);
 router.delete('/:id', authenticate, tripControllers.deleteRequests);
 
 export default router;

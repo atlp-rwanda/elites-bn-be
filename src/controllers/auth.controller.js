@@ -1,6 +1,4 @@
 import { blacklistAccessToken } from '../helpers/logoutHelper';
-
-// eslint-disable-next-line import/prefer-default-export
 export class Authentication {
   static async logout(req, res) {
     try {

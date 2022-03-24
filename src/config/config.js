@@ -21,6 +21,15 @@ module.exports = {
     host: process.env.DB_HOST_TEST,
     port: process.env.DB_PORT_TEST,
     dialect: 'postgres',
+<<<<<<< HEAD
+=======
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
+>>>>>>> This is a combination of 8 commit.
     seederStorage: 'sequelize',
     seederStorageTableName: 'sequelize_data',
     dialectOptions: {

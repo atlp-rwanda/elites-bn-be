@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import 'dotenv/config';
 import { decodeAcessToken } from '../helpers/jwtFunction';
 import models from '../models';

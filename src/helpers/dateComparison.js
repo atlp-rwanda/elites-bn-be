@@ -1,3 +1,4 @@
+import { isFuture } from 'date-fns';
 import isAfter from 'date-fns/isAfter';
 import isEqual from 'date-fns/isEqual';
 import isPast from 'date-fns/isPast';
@@ -16,4 +17,15 @@ export const validateDate = (date, dateToCompare) => {
     return false;
   }
   return valid;
+};
+
+export const compareBirthDate = (inputDate) => {
+  const dateFormatted = parserISO(inputDate);
+
+  const invalidDate = isFuture(dateFormatted);
+
+  if (invalidDate) {
+    return false;
+  }
+  return true;
 };

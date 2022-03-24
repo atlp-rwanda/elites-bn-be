@@ -24,7 +24,7 @@ import sendResetEmail from '../helpers/sendEmail';
 
 import { ConflictsError } from '../httpErrors/conflictError';
 import { UnauthorizedError } from '../httpErrors/unauthorizedError';
-import makeTemplate from '../helpers/emailTemplate';
+import makeTemplate from '../template/emailTemplate';
 import jwt from 'jsonwebtoken';
 import { config } from 'dotenv';
 

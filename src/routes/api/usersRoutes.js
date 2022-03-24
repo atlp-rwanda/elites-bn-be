@@ -4,6 +4,7 @@ import { userValidation } from '../../validations/users.validation';
 import { roleValidate } from '../../validations/roleValidation';
 import { isAdmin } from '../../middlewares/isAdmin';
 import passport from '../../middlewares/auth';
+import { passwordValidation } from '../../validations/resetPassword.validation';
 
 const router = express.Router();
 const userControllers = new UserControllers();
@@ -18,7 +19,11 @@ router.patch(
 	userControllers.updateRole
 );
 router.post('/forgot-password', userControllers.sendResetLink);
-router.patch('/reset-password/:token', userControllers.resetPassword);
+router.patch(
+	'/reset-password/:token',
+	passwordValidation,
+	userControllers.resetPassword
+);
 
 router.get(
 	'/auth/google',

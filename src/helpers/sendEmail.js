@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-const sendEmail = (recepient, source, subject, content) => {
+const sendResetEmail = (recepient, source, subject, content) => {
 	try {
 		const msg = {
 			to: recepient,
@@ -18,4 +18,4 @@ const sendEmail = (recepient, source, subject, content) => {
 	}
 };
 
-export default sendEmail;
+export default sendResetEmail;

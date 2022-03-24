@@ -20,7 +20,7 @@ import { sendEmail } from '../services/send-email-service';
 import { verificationEmail } from '../template/verify-email-template';
 import models from '../models';
 import validator from 'validator';
-import sendEmail from '../helpers/sendEmail';
+import sendResetEmail from '../helpers/sendEmail';
 
 import { ConflictsError } from '../httpErrors/conflictError';
 import { UnauthorizedError } from '../httpErrors/unauthorizedError';
@@ -218,7 +218,7 @@ export class UserControllers {
 
 			const token = await generateResetPasswordToken(payload, secret);
 			const link = `${req.protocol}://localhost:3000/api/v1/users/reset-password/${token}`;
-			await sendEmail(
+			await sendResetEmail(
 				email,
 				'ihonore01@gmail.com',
 				'Barefoot Nomad password reset',

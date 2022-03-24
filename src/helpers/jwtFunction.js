@@ -23,15 +23,6 @@ export const decodeAcessToken = async (token) => {
 	return decoded;
 };
 
-<<<<<<< HEAD
-export const decodeRefreshToken = async (refreshToken) => {  
-try {
-  const decode = await jwt.verify(refreshToken, REFRESH_TOKEN_KEY)
-  return decode
-} catch (error) {
-  return null
-}
-=======
 export const decodeRefreshToken = async (refreshToken) => {
 	try {
 		const decode = await jwt.verify(refreshToken, REFRESH_TOKEN_KEY);
@@ -53,7 +44,4 @@ export const generateResetPasswordToken = (
 export const decodeResetPasswordToken = async (token, secret) => {
 	const decoded = await jwt.verify(token, secret);
 	return decoded;
->>>>>>> 19ee691 (This is a combination of 9 commits)
 };
-
-

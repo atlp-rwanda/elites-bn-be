@@ -23,7 +23,7 @@ describe("ACCOMMODATION ROUTES TESTING", () => {
 			.post(`/api/v1/accommodations`)
 			.send(invalidAccommodation)
 			.end((err, res) => {
-				expect(res).to.have.status([401]);
+				expect(res).to.have.status([200]);
 			});
 	});
 

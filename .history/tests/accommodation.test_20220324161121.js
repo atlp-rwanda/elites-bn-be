@@ -24,6 +24,8 @@ describe("ACCOMMODATION ROUTES TESTING", () => {
 			.send(invalidAccommodation)
 			.end((err, res) => {
 				expect(res).to.have.status([401]);
+				expect(res.body).to.have.property("message");
+				expect(res.body.message).to.equal("accommodation name is required");
 			});
 	});
 

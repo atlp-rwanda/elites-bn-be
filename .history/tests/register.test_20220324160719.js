@@ -9,7 +9,6 @@ describe('USER REGISTER A USER', () => {
   before(async () => {
     await models.User.destroy({ where: { email: 'elites@gmail.com' } })
   })
-
   it('it should register the user', async () => {
     const res = await request(app).post('/api/v1/users/register').send({
       names: "elite",
@@ -34,5 +33,4 @@ describe('USER REGISTER A USER', () => {
     expect(res).to.have.status([409]);
 
   })
-  
 })

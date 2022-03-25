@@ -9,6 +9,7 @@ import tripRoutes from './api/tripRoutes';
 import profileRoute from './api/profileRoutes';
 import travels from './api/travelsRoutes';
 import commentRoutes from './api/commentRoutes';
+import bookingRoutes from './api/bookingRoutes';
 
 const routes = express.Router();
 
@@ -21,5 +22,6 @@ routes.use('/locations', locationsRoutes);
 routes.use('/trips', tripRoutes);
 routes.use('/profiles', profileRoute);
 routes.use('/comments', commentRoutes);
+routes.use('/rooms', bookingRoutes);
 
 export default routes;

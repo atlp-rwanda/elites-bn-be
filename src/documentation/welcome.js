@@ -11,7 +11,6 @@ const welcome = {
       },
     },
   },
-
 };
 
 export default welcome;

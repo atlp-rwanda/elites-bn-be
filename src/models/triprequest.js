@@ -1,6 +1,4 @@
-const {
-  Model,
-} = require('sequelize');
+const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class tripRequest extends Model {
@@ -14,19 +12,22 @@ module.exports = (sequelize, DataTypes) => {
       tripRequest.hasMany(models.TripComment, { foreignKey: 'tripId', as: 'comments' });
     }
   }
-  tripRequest.init({
-    userId: DataTypes.INTEGER,
-    managerId: DataTypes.INTEGER,
-    departLocation: DataTypes.INTEGER,
-    arrivalLocation: DataTypes.INTEGER,
-    tripReason: DataTypes.STRING,
-    departDate: DataTypes.DATE,
-    returnDate: DataTypes.DATE,
-    accomodationId: DataTypes.INTEGER,
-    status: DataTypes.STRING,
-  }, {
-    sequelize,
-    modelName: 'tripRequest',
-  });
+  tripRequest.init(
+    {
+      userId: DataTypes.INTEGER,
+      managerId: DataTypes.INTEGER,
+      departLocation: DataTypes.INTEGER,
+      arrivalLocation: DataTypes.INTEGER,
+      tripReason: DataTypes.STRING,
+      departDate: DataTypes.DATE,
+      returnDate: DataTypes.DATE,
+      accomodationId: DataTypes.INTEGER,
+      status: DataTypes.STRING,
+    },
+    {
+      sequelize,
+      modelName: 'tripRequest',
+    },
+  );
   return tripRequest;
 };

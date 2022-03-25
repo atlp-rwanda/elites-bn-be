@@ -2,6 +2,7 @@ import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
 import morgan from 'morgan';
+import path from 'path';
 import routes from './routes/index';
 import db from './models/index';
 import swaggerDoc from './documentation/index';
@@ -46,11 +47,17 @@ try {
       });
   }
 
+  app.set('views', path.join(__dirname, 'template'));
+  app.set('view engine', 'ejs');
   app.use(cors());
   app.use(express.json());
   app.use(morgan('dev'));
   app.use(passport.initialize());
   app.use('/api/v1/', routes);
+  app.get('/verify', (req, res) => {
+    res.render('index');
+  });
+
   app.use(
     '/docs/swagger-ui/',
     swaggerUi.serve,

@@ -1,12 +1,19 @@
 import { roomSchema } from './room.schema.js';
+import { BaseError } from '../../httpErrors/baseError.js';
 
 export const roomValidation = async (req, res, next) => {
-  const value = await roomSchema.validate(req.body);
-  if (value.error) {
-    res.json({
-      message: value.error.details[0].message,
-    });
-  } else {
-    next();
+  try {
+    const value = await roomSchema.validate(req.body);
+    if (value.error) {
+      throw new BaseError(
+        'Bad request',
+        400,
+        `${value.error.details[0].message}`,
+      );
+    } else {
+      next();
+    }
+  } catch (err) {
+    next(err);
   }
 };

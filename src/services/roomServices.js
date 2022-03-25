@@ -1,4 +1,4 @@
-import { Room } from "../models";
+import { Room } from '../models';
 
 class roomServices {
 	createRoom = async (room) => {
@@ -12,7 +12,7 @@ class roomServices {
 	};
 
 	getSingleRoom = async (id) => {
-		const foundRoom = await Room.findAll({
+		const foundRoom = await Room.findOne({
 			where: { id },
 		});
 		return foundRoom;
@@ -32,9 +32,9 @@ class roomServices {
 			where: { id },
 		});
 		if (deletedRoom) {
-			return "Room deleted successfully";
+			return 'Room deleted successfully';
 		} else {
-			return "Room does not exists";
+			return 'Room does not exists';
 		}
 	};
 }

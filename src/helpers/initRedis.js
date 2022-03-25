@@ -1,11 +1,23 @@
-import { createClient } from 'redis';
-
+// import redis from 'redis';
 import 'dotenv/config';
 
-const client = createClient({
-  port: process.env.REDIS_PORT,
-  host: process.env.REDIS_HOST,
-});
+const redis = require('redis');
+
+// const client = createClient({
+//   port: process.env.REDIS_PORT,
+//   host: process.env.REDIS_HOST,
+// });
+
+let client;
+if (process.env.REDISCLOUD_URL) {
+  const redisURL = process.env.REDISCLOUD_URL;
+  client = redis.createClient(redisURL);
+} else {
+  client = redis.createClient({
+    port: process.env.REDIS_PORT,
+    host: process.env.REDIS_HOST,
+  });
+}
 
 client.on('connect', () => {
   console.log('Client connected to redis...');

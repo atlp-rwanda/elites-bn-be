@@ -4,7 +4,6 @@ node_modules
 
 
 node_modules
-.env
 # Logs
 logs
 *.log
@@ -151,6 +150,7 @@ dist/
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
+.vscode
 
 # yarn v2
 .yarn/cache

@@ -1,5 +1,6 @@
-import locationServices from "../services/locationServices";
+import locationServices from '../services/locationServices';
 const locationService = new locationServices();
+import { BaseError } from '../httpErrors/baseError';
 
 class LocationControllers {
 	createLocation = async (req, res, next) => {
@@ -11,8 +12,8 @@ class LocationControllers {
 			};
 			const location = await locationService.createLocation(data);
 			return res.status(201).json({
-				status: "201",
-				message: "location added successfully",
+				status: '201',
+				message: 'location added successfully',
 				payload: location,
 			});
 		} catch (err) {
@@ -25,13 +26,18 @@ class LocationControllers {
 			const foundLocation = await locationService.getSingleLocation(
 				req.params.locationId
 			);
-			if (!foundLocation)
-				return res.status(404).json({ message: "Location not found" });
-			return res.status(200).json({
-				status: "200",
-				message: "Location found",
-				payload: foundLocation,
-			});
+			if (foundLocation) {
+				return res.status(200).json({
+					status: '200',
+					message: 'Location found',
+					payload: foundLocation,
+				});
+			} else
+				throw new BaseError(
+					'Not found',
+					404,
+					'Location with that ID does not exists'
+				);
 		} catch (err) {
 			next(err);
 		}
@@ -50,7 +56,7 @@ class LocationControllers {
 			);
 			res.status(200).json({
 				status: 200,
-				message: "location updated successfully",
+				message: 'location updated successfully',
 				payload: location,
 			});
 		} catch (err) {

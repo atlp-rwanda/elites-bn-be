@@ -27,6 +27,7 @@ import { UnauthorizedError } from '../httpErrors/unauthorizedError';
 import makeTemplate from '../template/emailTemplate';
 import jwt from 'jsonwebtoken';
 import { config } from 'dotenv';
+import { BaseError } from '../httpErrors/baseError';
 
 config();
 
@@ -196,20 +197,21 @@ export class UserControllers {
 			const { email } = req.body;
 			const user = await userExist(email);
 			if (!email) {
-				return res
-					.status(400)
-					.send({ status: 400, message: 'Email is required' });
+				throw new BaseError('Bad request', 400, 'Email is required');
 			}
 			if (!validator.isEmail(email)) {
-				return res
-					.status(400)
-					.send({ status: 400, message: 'Please Enter a valid email address' });
+				throw new BaseError(
+					'Bad request',
+					400,
+					'Please Enter a valid email address'
+				);
 			}
 			if (!user) {
-				return res.status(404).send({
-					status: 404,
-					message: `The account with provided email is not registered`,
-				});
+				throw new BaseError(
+					'Not found',
+					404,
+					'The account with provided email is not registered'
+				);
 			}
 			const payload = {
 				id: user.id,
@@ -237,9 +239,11 @@ export class UserControllers {
 		try {
 			const { password, confirmPassword } = req.body;
 			if (password !== confirmPassword) {
-				return res
-					.status(400)
-					.send({ status: 400, message: 'Entered passwords do not match' });
+				throw new BaseError(
+					'Bad request',
+					400,
+					'Entered passwords do not match'
+				);
 			}
 			const { token } = req.params;
 

@@ -6,7 +6,7 @@ class locationServices {
 	};
 
 	getSingleLocation = async (id) => {
-		const foundLocation = await Location.findAll({
+		const foundLocation = await Location.findOne({
 			where: { id },
 			include: [
 				{

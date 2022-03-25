@@ -1,8 +1,8 @@
 import cloudinary from '../config/cloudinary';
 import accommodationServices from '../services/accommodationServices';
 import { decodeAcessToken } from '../helpers/jwtFunction';
-import { decode } from 'jsonwebtoken';
 const AccommodationServices = new accommodationServices();
+import { BaseError } from '../httpErrors/baseError';
 
 class AccommodationController {
 	createAccommodation = async (req, res, next) => {
@@ -25,7 +25,8 @@ class AccommodationController {
 			const pictures = req.files;
 			const urls = [];
 			if (!pictures || pictures === undefined)
-				return res.status(422).json({ message: 'no images to upload' });
+				throw new BaseError('Bad request', 400, 'no images to upload');
+
 			const uploadImages = pictures.map((image) =>
 				cloudinary.uploader.upload(image.path, { folder: 'barefoot_api' })
 			);
@@ -34,7 +35,7 @@ class AccommodationController {
 				urls.push(file.url);
 			}
 			if (!pictures)
-				return res.status(400).json({ message: 'no picture uploaded' });
+				throw new BaseError('Bad request', 400, 'no picture uploaded');
 
 			const data = {
 				...req.body,
@@ -58,11 +59,19 @@ class AccommodationController {
 			const accommodation = await AccommodationServices.getOneAccommodation(
 				req.params.accommodationId
 			);
-			res.status(200).json({
-				status: 200,
-				message: 'accommodation found',
-				payload: accommodation,
-			});
+			if (accommodation) {
+				res.status(200).json({
+					status: 200,
+					message: 'accommodation found',
+					payload: accommodation,
+				});
+			} else {
+				throw new BaseError(
+					'Not found',
+					404,
+					`Accommodation with that ID does not exists`
+				);
+			}
 		} catch (err) {
 			next(err);
 		}

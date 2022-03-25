@@ -1,4 +1,5 @@
-import roomServices from "../services/roomServices";
+import roomServices from '../services/roomServices';
+import { BaseError } from '../httpErrors/baseError';
 const roomService = new roomServices();
 class RoomControllers {
 	createRoom = async (req, res, next) => {
@@ -13,8 +14,8 @@ class RoomControllers {
 			};
 			const room = await roomService.createRoom(data);
 			return res.status(201).json({
-				status: "201",
-				message: "room added successfully",
+				status: '201',
+				message: 'room added successfully',
 				payload: room,
 			});
 		} catch (err) {
@@ -27,13 +28,18 @@ class RoomControllers {
 			const foundRooms = await roomService.getAllRoomsOfAccommodation(
 				req.params.accommodationId
 			);
-			if (!foundRooms)
-				return res.status(404).json({ message: "No room found" });
-			return res.status(200).json({
-				status: "200",
-				message: "All rooms in given accommodation",
-				payload: foundRooms,
-			});
+			if (foundRooms.length !== 0) {
+				return res.status(200).json({
+					status: '200',
+					message: 'All rooms in given accommodation',
+					payload: foundRooms,
+				});
+			} else
+				throw new BaseError(
+					'Not found',
+					404,
+					'No rooms found in given accommodation'
+				);
 		} catch (err) {
 			next(err);
 		}
@@ -43,10 +49,14 @@ class RoomControllers {
 		try {
 			const foundRoom = await roomService.getSingleRoom(req.params.roomId);
 			if (!foundRoom)
-				return res.status(404).json({ message: "Room not found" });
+				throw new BaseError(
+					'Not found',
+					404,
+					'Room with that ID does not exists'
+				);
 			return res
 				.status(200)
-				.json({ status: "200", message: "Room found", payload: foundRoom });
+				.json({ status: '200', message: 'Room found', payload: foundRoom });
 		} catch (err) {
 			next(err);
 		}
@@ -54,18 +64,18 @@ class RoomControllers {
 
 	updateRoom = async (req, res, next) => {
 		try {
-			const { roomId, accommodationId } = req.params;
 			const roomUpdate = {
 				roomType: req.body.roomType,
 				roomNumber: req.body.roomNumber,
 				price: req.body.price,
 				isAvailable: req.body.isAvailable,
 				currency: req.body.currency,
+				accommodationId: req.body.accommodationId,
 			};
 			const room = await roomService.updateRoom(req.params.roomId, roomUpdate);
 			res.status(200).json({
 				status: 200,
-				message: "room updated successfully",
+				message: 'room updated successfully',
 				payload: room,
 			});
 		} catch (err) {

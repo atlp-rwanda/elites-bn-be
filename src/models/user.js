@@ -28,6 +28,10 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.tripRequest, {
         foreignKey: 'userId',
       });
+
+      User.hasOne(models.Profile, {
+        foreignKey: 'userId',
+      });
     }
   }
   User.init(

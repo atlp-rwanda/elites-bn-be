@@ -52,7 +52,6 @@ export const tripExist = async (userId, id) => {
   return null;
 };
 
-// eslint-disable-next-line consistent-return
 export const createTrip = async (userid, data) => {
   try {
     const checkManager = await models.User.findOne({
@@ -72,7 +71,7 @@ export const createTrip = async (userid, data) => {
     }
     return false;
   } catch (err) {
-    console.error('some thing is wrong');
+    throw new Error('something is Wrong');
   }
 };
 
@@ -151,15 +150,3 @@ export const deleteRequest = async (userId, id) => {
 
   return null;
 };
-
-// export const fetchAllRequests = async (managerId) => {
-//   const data = await models.tripRequest.findAll({
-//     where: {
-//       managerId,
-//     },
-//   });
-//   if (data) {
-//     return data;
-//   }
-//   return null;
-// };

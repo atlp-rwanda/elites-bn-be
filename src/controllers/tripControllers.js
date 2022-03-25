@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 import {
   TRIP_CREATED,
   REQUEST_UPDATED,
@@ -17,12 +16,9 @@ import {
   getOneRequest,
 } from '../services/tripServices';
 import { validateDate } from '../helpers/dateComparison';
-
-// eslint-disable-next-line import/prefer-default-export
 export class TripControllers {
   async createController(id, req, res, next) {
     try {
-      // console.log(id);
       req.body.managerId = await getManagerId(id);
       const compareDates = validateDate(
         req.body.returnDate,

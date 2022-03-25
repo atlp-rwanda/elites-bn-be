@@ -1,4 +1,7 @@
 /* eslint-disable consistent-return */
+import validator from 'validator';
+import jwt from 'jsonwebtoken';
+import { config } from 'dotenv';
 import { USER_REGISTERED, USER_LOGIN } from '../constants/user-constants';
 import { hashPassword, comparePassword } from '../helpers/passwordSecurity';
 import {
@@ -19,14 +22,11 @@ import {
 import { sendEmail } from '../services/send-email-service';
 import { verificationEmail } from '../template/verify-email-template';
 import models from '../models';
-import validator from 'validator';
 import sendResetEmail from '../helpers/sendEmail';
 
 import { ConflictsError } from '../httpErrors/conflictError';
 import { UnauthorizedError } from '../httpErrors/unauthorizedError';
 import makeTemplate from '../template/emailTemplate';
-import jwt from 'jsonwebtoken';
-import { config } from 'dotenv';
 import { BaseError } from '../httpErrors/baseError';
 
 config();
@@ -87,6 +87,7 @@ export class UserControllers {
 			return res.status(500).send({ message: error.message });
 		}
 	}
+
 	// eslint-disable-next-line class-methods-use-this
 	async login(req, res, next) {
 		// login a user
@@ -113,30 +114,29 @@ export class UserControllers {
 		}
 	}
 
-	async updateRole(req, res) {
+	async updateRole(req, res, next) {
 		try {
-			const email = req.body.email;
+			const { email } = req.body;
 			const user = await userExist(email);
 
 			if (user == null) {
 				res.status(400).json({ message: 'User does not exist! ' });
 				return false;
-			} else {
-				const updatedUser = await updatedRole(req.params.id, email);
-
-				if (updatedUser == null) {
-					return res.status(400).json({ message: 'this role does not exist' });
-				}
-				return res.status(200).json({
-					message: {
-						newRole: updatedUser.roleId,
-						userId: updatedUser.id,
-						email: updatedUser.email,
-						names: updatedUser.names,
-						managerId: updatedUser.managerId,
-					},
-				});
 			}
+			const updatedUser = await updatedRole(req.params.id, email);
+
+			if (updatedUser == null) {
+				return res.status(400).json({ message: 'this role does not exist' });
+			}
+			return res.status(200).json({
+				message: {
+					newRole: updatedUser.roleId,
+					userId: updatedUser.id,
+					email: updatedUser.email,
+					names: updatedUser.names,
+					managerId: updatedUser.managerId,
+				},
+			});
 		} catch (err) {
 			next(err);
 		}
@@ -146,8 +146,9 @@ export class UserControllers {
 	async refreshTokens(req, res, next) {
 		try {
 			const { refreshToken } = req.body;
-			if (!refreshToken)
+			if (!refreshToken) {
 				return res.status(400).json({ status: 400, message: 'Bad request' });
+			}
 			const payloadToken = await decodeRefreshToken(refreshToken);
 			const newPayloadToken = { id: payloadToken.id };
 			const accessToken = await generateAccessToken(newPayloadToken);

@@ -1,5 +1,5 @@
 const makeTemplate = (link) => {
-	let template = `
+  const template = `
 
     <!doctype html>
     <html lang="en-US">
@@ -85,7 +85,7 @@ const makeTemplate = (link) => {
     </body>
     
     </html>`;
-	return template;
+  return template;
 };
 
 export default makeTemplate;

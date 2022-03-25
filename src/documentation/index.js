@@ -12,7 +12,6 @@ const paths = {
   ...accomodations,
   ...rooms,
   ...location,
-
 };
 
 const definitions = {

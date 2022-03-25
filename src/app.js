@@ -7,7 +7,6 @@ import db from './models/index';
 import swaggerDoc from './documentation/index';
 import 'dotenv/config';
 import { PageNotFoundError } from './httpErrors/pageNotFoundError';
-import path from 'path';
 import passport from './middlewares/auth.js';
 
 const app = express();

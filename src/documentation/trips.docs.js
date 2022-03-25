@@ -125,9 +125,9 @@ export const trips = {
     delete: {
       tags: ['Trip Request'],
       summary:
-        'This end Point will delete the pending request sent by requester',
+				'This end Point will delete the pending request sent by requester',
       description:
-        'This end Point will delete the pending request sent by requester',
+				'This end Point will delete the pending request sent by requester',
       operationId: 'delete Request',
       parameters: [
         {

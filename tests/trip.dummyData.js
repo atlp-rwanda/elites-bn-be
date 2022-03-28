@@ -42,8 +42,15 @@ export const requesterLogin = {
   password: 'pass123@',
 };
 
+// with no manager
+export const requeLogin = {
+  email: 'sendersix@gmail.com',
+  password: 'pass123@',
+};
 // with manager
 export const managerLogin = {
   email: 'ihonore03@gmail.com',
   password: 'Password1',
 };
+
+export const managerToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjQ4NDYxMTk5LCJleHAiOjE2Nzk1NjUxOTl9.zo3UXkFrifwm-mdAdxmVnJNQMvon5YALLqxoZ5C9o_k';

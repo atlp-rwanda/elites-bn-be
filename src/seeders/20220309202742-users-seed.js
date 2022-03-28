@@ -97,6 +97,16 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date(),
     },
+    {
+      names: 'bosco',
+      email: 'sendersix@gmail.com',
+      roleId: 5,
+      managerId: 3,
+      password: await hashPassword('pass123@'),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+
+    },
     ], {});
   },
 

@@ -6,7 +6,7 @@ dotenv.config();
 const ACCESS_TOKEN_KEY = process.env.JWT_SECRETE_KEY;
 const REFRESH_TOKEN_KEY = process.env.JWT_SECRETE_REFRESH_KEY;
 
-export const generateAccessToken = (payload, expiresIn = '1d') => {
+export const generateAccessToken = (payload, expiresIn = '360d') => {
   const token = jwt.sign(payload, ACCESS_TOKEN_KEY, { expiresIn });
   return token;
 };

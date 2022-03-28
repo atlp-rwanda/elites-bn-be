@@ -145,7 +145,7 @@ export class TripControllers {
         } else {
           throw new BaseError(
             'Bad request',
-            400,
+            404,
             'Trip request not found',
           );
         }

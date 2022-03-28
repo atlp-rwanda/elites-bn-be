@@ -1,10 +1,10 @@
-import express from 'express'
-import { TripCommentController } from '../../controllers/tripCommentController'
+import express from 'express';
+import { TripCommentController } from '../../controllers/tripCommentController';
 import { authenticate } from '../../middlewares/authenticate';
-import {isRequester} from '../../middlewares/isRequester'
+import { isRequester } from '../../middlewares/isRequester';
 
-const router = express.Router()
+const router = express.Router();
 
-router.delete('/:id' , authenticate, isRequester, TripCommentController.delete)
+router.delete('/:id', authenticate, isRequester, TripCommentController.delete);
 
-export default router
+export default router;

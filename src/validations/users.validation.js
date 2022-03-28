@@ -2,30 +2,30 @@ import Joi from '@hapi/joi';
 
 // eslint-disable-next-line import/prefer-default-export
 export const userValidation = (req, res, next) => {
-    const userSchema = Joi.object({
-        names: Joi.string().empty(),
-        password: Joi.string()
-            .required()
-            .empty()
-            .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
-            .messages({
-                'any.required': '{{#label}} field is required',
-                'string.base': '{{#label}} must be of type string',
-                'string.empty': '{{#label}} can not be empty',
-                'string.pattern.base': '{{#label}} must contain at least a number, upper-case letter and longer than 8 characters',
-            }),
+  const userSchema = Joi.object({
+    names: Joi.string().empty(),
+    password: Joi.string()
+      .required()
+      .empty()
+      .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
+      .messages({
+        'any.required': '{{#label}} field is required',
+        'string.base': '{{#label}} must be of type string',
+        'string.empty': '{{#label}} can not be empty',
+        'string.pattern.base': '{{#label}} must contain at least a number, upper-case letter and longer than 8 characters',
+      }),
 
-        email: Joi.string().required().email(),
-        verified: Joi.boolean(),
+    email: Joi.string().required().email(),
+    verified: Joi.boolean(),
 
+  });
+
+  const result = userSchema.validate(req.body);
+  if (result.error) {
+    res.status(400).json({
+      message: result.error.details[0].message.replace(/["'`]+/g, ''),
     });
-
-    const result = userSchema.validate(req.body);
-    if (result.error) {
-        res.status(400).json({
-            message: result.error.details[0].message.replace(/["'`]+/g, ''),
-        });
-    } else {
-        next();
-    }
+  } else {
+    next();
+  }
 };

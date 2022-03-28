@@ -1,41 +1,41 @@
 export const tripComment = {
-  "/api/v1/trips/{id}/comments": {
+  '/api/v1/trips/{id}/comments': {
     post: {
-      tags: ["CommentTrip"],
+      tags: ['CommentTrip'],
       summary:
-        "This will allow a user with requester role to comment on a trip",
-      description: "Add a comment ",
-      produces: ["application/json"],
+        'This will allow a user with requester role to comment on a trip',
+      description: 'Add a comment ',
+      produces: ['application/json'],
       parameters: [
         {
-          name: "id",
-          in: "path",
-          description: "please add a trip id",
+          name: 'id',
+          in: 'path',
+          description: 'please add a trip id',
           required: true,
-          type: "integer",
+          type: 'integer',
         },
         {
-          name: "body",
-          in: "body",
-          description: "Add comment",
+          name: 'body',
+          in: 'body',
+          description: 'Add comment',
           required: true,
           schema: {
-            $ref: "#/definitions/CommentTrip",
+            $ref: '#/definitions/CommentTrip',
           },
         },
       ],
       responses: {
         201: {
-          description: "Comment added successfuly!",
+          description: 'Comment added successfuly!',
         },
         401: {
-          description: "Authorized user !",
+          description: 'Authorized user !',
         },
         400: {
-          description: "Bad request",
+          description: 'Bad request',
         },
         500: {
-          description: "Server error!",
+          description: 'Server error!',
         },
       },
       security: [
@@ -45,28 +45,28 @@ export const tripComment = {
       ],
     },
     get: {
-      tags: ["CommentTrip"],
-      summary: "This will display all comment on a travel",
-      description: "Add a comment ",
-      produces: ["application/json"],
+      tags: ['CommentTrip'],
+      summary: 'This will display all comment on a travel',
+      description: 'Add a comment ',
+      produces: ['application/json'],
       parameters: [
         {
-          name: "id",
-          in: "path",
-          description: "please add a trip id",
+          name: 'id',
+          in: 'path',
+          description: 'please add a trip id',
           required: true,
-          type: "integer",
+          type: 'integer',
         },
       ],
       responses: {
         200: {
-          description: "Comment added successfuly!",
+          description: 'Comment added successfuly!',
         },
         400: {
-          description: "Bad request",
+          description: 'Bad request',
         },
         500: {
-          description: "Server error!",
+          description: 'Server error!',
         },
       },
       security: [
@@ -76,33 +76,33 @@ export const tripComment = {
       ],
     },
   },
-  "/api/v1/comments/{id}": {
+  '/api/v1/comments/{id}': {
     delete: {
-      tags: ["CommentTrip"],
-      summary: "Owner of a comment can delete it",
-      description: "Delete a comment ",
-      produces: ["application/json"],
+      tags: ['CommentTrip'],
+      summary: 'Owner of a comment can delete it',
+      description: 'Delete a comment ',
+      produces: ['application/json'],
       parameters: [
         {
-          name: "id",
-          in: "path",
-          description: "please add a commentId",
+          name: 'id',
+          in: 'path',
+          description: 'please add a commentId',
           required: true,
-          type: "integer",
+          type: 'integer',
         },
       ],
       responses: {
         200: {
-          description: "Comment deleted successfuly!",
+          description: 'Comment deleted successfuly!',
         },
         400: {
-          description: "Bad request",
+          description: 'Bad request',
         },
         401: {
-          description: "Unauthorized User",
+          description: 'Unauthorized User',
         },
         500: {
-          description: "Server error!",
+          description: 'Server error!',
         },
       },
       security: [
@@ -116,12 +116,12 @@ export const tripComment = {
 
 export const tripCommentDefinitions = {
   CommentTrip: {
-    type: "object",
-    in: "body",
-    required: ["comment"],
+    type: 'object',
+    in: 'body',
+    required: ['comment'],
     properties: {
       comment: {
-        type: "string",
+        type: 'string',
       },
     },
   },

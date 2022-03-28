@@ -1,7 +1,7 @@
-'use strict';
 const {
-  Model
+  Model,
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class TripComment extends Model {
     /**
@@ -12,19 +12,19 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       TripComment.belongsTo(models.tripRequest, {
-        foreignKey: 'tripId', as: 'trip'
-      })
+        foreignKey: 'tripId', as: 'trip',
+      });
       TripComment.belongsTo(models.User, {
-        foreignKey: 'userId', as: 'user'
-      })
+        foreignKey: 'userId', as: 'user',
+      });
     }
   }
-  
+
   TripComment.init({
     userId: DataTypes.INTEGER,
     tripId: DataTypes.INTEGER,
     comment: DataTypes.STRING,
-    isVisible: DataTypes.BOOLEAN
+    isVisible: DataTypes.BOOLEAN,
   }, {
     sequelize,
     modelName: 'TripComment',

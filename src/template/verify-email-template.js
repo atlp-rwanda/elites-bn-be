@@ -2,7 +2,7 @@ import 'dotenv/config';
 
 const port = process.env.APP_URL;
 
-export const verificationEmail = async(token) => `
+export const verificationEmail = async (token) => `
  <!DOCTYPE html>
 <html>
 <head>

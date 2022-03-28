@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import Joi from '@hapi/joi';
 import { BaseError } from '../httpErrors/baseError';
 
@@ -13,7 +14,7 @@ export const passwordValidation = (req, res, next) => {
           'string.base': '{{#label}} must be of type string',
           'string.empty': '{{#label}} can not be empty',
           'string.pattern.base':
-						'{{#label}} must contain at least a number, upper-case letter and longer than 8 characters',
+            '{{#label}} must contain at least a number, upper-case letter and longer than 8 characters',
         }),
 
       confirmPassword: Joi.string().empty().required(),

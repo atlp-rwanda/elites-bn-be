@@ -91,7 +91,7 @@ router.get(
   userControllers.authFacebookLogin,
 );
 
-router.get('/auth/facebook/failed', (req, res, next) => {
+router.get('/auth/facebook/failed', (req, res) => {
   res.send('oops!failed to login with Facebook');
 });
 

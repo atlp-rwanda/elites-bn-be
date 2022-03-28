@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import {
   TRIP_CREATED,
   REQUEST_UPDATED,
@@ -5,6 +6,7 @@ import {
   TRIP_DELETED_MESSAGE,
   NO_TRIP_FOUND,
   VALIDATION_ERROR,
+
 } from '../constants/tripConstants';
 import {
   createTrip,
@@ -14,9 +16,18 @@ import {
   getManagerId,
   checkLocations,
   getOneRequest,
+  approveRequest,
 } from '../services/tripServices';
 import { validateDate } from '../helpers/dateComparison';
+import models from '../models';
+import { UnauthorizedError } from '../httpErrors/unauthorizedError';
+import { userById } from '../services/userServices';
+import { BaseError } from '../httpErrors/baseError';
+// import { NotFoundError } from '../httpErrors/NotFoundError';
+
+// eslint-disable-next-line import/prefer-default-export
 export class TripControllers {
+  // eslint-disable-next-line class-methods-use-this
   async createController(id, req, res, next) {
     try {
       req.body.managerId = await getManagerId(id);
@@ -24,7 +35,6 @@ export class TripControllers {
         req.body.returnDate,
         req.body.departDate,
       );
-
       const locationsValidation = await checkLocations(
         req.body.departLocation,
         req.body.arrivalLocation,
@@ -48,6 +58,7 @@ export class TripControllers {
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
   async updateRequest(id, req, res, next) {
     try {
       const updated = await updateRequest(id, req.params.id, req.body);
@@ -66,6 +77,7 @@ export class TripControllers {
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
   async getAllRequests(id, req, res, next) {
     try {
       const getTripRequests = await getAllRequests(id);
@@ -79,11 +91,12 @@ export class TripControllers {
     }
   }
 
+  // eslint-disable-next-line consistent-return
   async getSingleRequests(id, req, res, next) {
     try {
       const getTripRequest = await getOneRequest(id, req.params.id);
       if (getTripRequest) {
-        res.status(200).json({
+        return res.status(200).json({
           status: 200,
           message: TRIP_FOUND_MESSAGE,
           payload: getTripRequest,
@@ -105,6 +118,39 @@ export class TripControllers {
           status: 200,
           message: NO_TRIP_FOUND,
         });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async approveRejectTripRequest(id, req, res, next) {
+    try {
+      const managerId = id;
+      const triprequestId = req.params.id;
+      const trip = await models.tripRequest.findByPk(triprequestId);
+      const requester = await userById(trip.userId);
+
+      if (managerId === requester.managerId) {
+        const { status } = trip;
+
+        if (status === 'pending') {
+          const updatedStatus = req.body.status;
+          const updated = await approveRequest(triprequestId, { status: updatedStatus });
+          if (updated) {
+            res
+              .status(200)
+              .json({ status: 200, message: REQUEST_UPDATED, payload: updated });
+          }
+        } else {
+          throw new BaseError(
+            'Bad request',
+            404,
+            'Trip request not found',
+          );
+        }
+      } else {
+        throw new UnauthorizedError('You are not a manager of this user');
       }
     } catch (err) {
       next(err);

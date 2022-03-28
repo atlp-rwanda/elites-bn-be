@@ -38,8 +38,7 @@ export const users = {
     get: {
       tags: ['Authentication'],
       summary: 'This end Point will assist to verify a user with a token',
-      description:
-				'This end Point will verify if a user is a really one who received the email',
+      description: 'This end Point will verify if a user is a really one who received the email',
       operationId: 'Vification User Registered',
       produces: ['application/json'],
       parameters: [

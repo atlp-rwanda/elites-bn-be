@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import { profileSchema } from './profile.schema';
 
 // eslint-disable-next-line import/prefer-default-export

@@ -6,6 +6,7 @@ const hashPassword = async (plainPassword) => {
   return hash;
 };
 module.exports = {
+  // eslint-disable-next-line no-unused-vars
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert('Users', [{
       names: 'eric John',
@@ -88,11 +89,20 @@ module.exports = {
 
     },
     {
-      names: 'eric James',
-      email: 'james@gmail.com',
-      roleId: 5,
+      names: 'bosco',
+      email: 'senderfive@gmail.com',
+      roleId: 3,
       managerId: 7,
-      password: await hashPassword('111@call'),
+      password: await hashPassword('Pass123456'),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      names: 'bosco',
+      email: 'sendersix@gmail.com',
+      roleId: 5,
+      managerId: 3,
+      password: await hashPassword('pass123@'),
       createdAt: new Date(),
       updatedAt: new Date(),
 
@@ -100,6 +110,7 @@ module.exports = {
     ], {});
   },
 
+  // eslint-disable-next-line no-unused-vars
   async down(queryInterface, Sequelize) {
     await queryInterface.bulkDelete('Users', null, {});
   },

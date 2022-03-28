@@ -1,6 +1,6 @@
 import express from 'express';
 import LocationControllers from '../../controllers/locationController';
-import { locationValidation } from '../../validations/locationValidation/location.validation.js';
+import { locationValidation } from '../../validations/locationValidation/location.validation';
 import { authenticate } from '../../middlewares/authenticate';
 import { verifyToken } from '../../middlewares/verifyToken';
 import { isTravelAdmin } from '../../middlewares/isTravelAdmin';

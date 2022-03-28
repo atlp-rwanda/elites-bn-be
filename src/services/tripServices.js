@@ -138,6 +138,7 @@ export const deleteRequest = async (userId, id) => {
   const checkExist = await tripExist(userId, id);
 
   if (checkExist) {
+    // eslint-disable-next-line no-unused-vars
     const Data = await models.tripRequest.destroy({
       where: {
         status: 'pending',
@@ -149,4 +150,35 @@ export const deleteRequest = async (userId, id) => {
   }
 
   return null;
+};
+
+export const checkStatus = async (userid, status) => {
+  const data = await models.tripRequest.findOne({
+    where: {
+      id: userid,
+      status,
+    },
+  });
+
+  return data;
+};
+
+export const checkstatus = async (userid, status) => {
+  const data = await models.tripRequest.findOne({
+    where: {
+      id: userid,
+      status,
+    },
+  });
+
+  return data;
+};
+export const approveRequest = async (tripId, statusUpdate) => {
+  const data = await models.tripRequest.update(statusUpdate, {
+    where: { id: tripId },
+    returning: true,
+    raw: true,
+  });
+
+  return data;
 };

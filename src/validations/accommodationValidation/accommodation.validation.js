@@ -1,6 +1,7 @@
-import { accommodationSchema } from './accommodation.schema.js';
-import { BaseError } from '../../httpErrors/baseError.js';
+import { accommodationSchema } from './accommodation.schema';
+import { BaseError } from '../../httpErrors/baseError';
 
+// eslint-disable-next-line import/prefer-default-export
 export const accommodationValidation = async (req, res, next) => {
   try {
     const value = await accommodationSchema.validate(req.body);

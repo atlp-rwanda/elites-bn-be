@@ -2,11 +2,11 @@ import { StatusCodes, ReasonPhrases } from 'http-status-codes';
 import { BaseError } from './baseError';
 
 // eslint-disable-next-line import/prefer-default-export
-export class ConflictsError extends BaseError {
+export class BadRequestError extends BaseError {
   constructor(
-    description = 'User already exists',
-    name = ReasonPhrases.CONFLICT,
-    statusCode = StatusCodes.CONFLICT,
+    description = 'Trip is already updated',
+    name = ReasonPhrases.NOT_FOUND,
+    statusCode = StatusCodes.NOT_FOUND,
     isOperational = true,
   ) {
     super(name, statusCode, description, isOperational);

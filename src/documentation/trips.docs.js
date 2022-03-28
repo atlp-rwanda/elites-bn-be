@@ -81,7 +81,7 @@ export const trips = {
         },
       ],
     },
-    patch: {
+    put: {
       tags: ['Trip Request'],
       summary: 'update request with pending status',
       description: ' update request with pending status',
@@ -124,10 +124,8 @@ export const trips = {
 
     delete: {
       tags: ['Trip Request'],
-      summary:
-				'This end Point will delete the pending request sent by requester',
-      description:
-				'This end Point will delete the pending request sent by requester',
+      summary: 'This end Point will delete the pending request sent by requester',
+      description: 'This end Point will delete the pending request sent by requester',
       operationId: 'delete Request',
       parameters: [
         {
@@ -153,6 +151,50 @@ export const trips = {
         },
       ],
     },
+    patch: {
+      tags: ['Trip Request'],
+      summary: '  Manager can update request with pending status to approved or rejected',
+      description: 'Manager can update request with pending status',
+      operationId: 'updateRequest',
+      produces: ['application/json'],
+      parameters: [
+        {
+          name: 'id',
+          in: 'path',
+          required: true,
+          type: 'integer',
+        },
+        {
+          name: 'body',
+          in: 'body',
+          required: true,
+          description: 'Trip request',
+          schema: {
+            $ref: '#/definitions/trips',
+          },
+        },
+      ],
+      responses: {
+        200: {
+          description: 'successfully updated user with given id',
+        },
+        409: {
+          description: 'please fill in all fields',
+        },
+        404: {
+          description: 'user you want to update does not exist',
+        },
+        400: {
+          description: 'Bad Request',
+        },
+      },
+      security: [
+        {
+          Bearer: [],
+        },
+      ],
+    },
+
   },
 };
 
@@ -181,4 +223,15 @@ export const tripDefinitions = {
       },
     },
   },
+  trips: {
+    type: 'object',
+    in: 'body',
+    properties: {
+      status: {
+        type: 'string',
+      },
+
+    },
+  },
+
 };

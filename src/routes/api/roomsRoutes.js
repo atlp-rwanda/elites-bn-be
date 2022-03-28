@@ -1,6 +1,6 @@
 import express from 'express';
 import RoomControllers from '../../controllers/roomController';
-import { roomValidation } from '../../validations/roomValidation/room.validation.js';
+import { roomValidation } from '../../validations/roomValidation/room.validation';
 
 import { authenticate } from '../../middlewares/authenticate';
 import { verifyToken } from '../../middlewares/verifyToken';

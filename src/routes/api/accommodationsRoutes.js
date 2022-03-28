@@ -1,6 +1,6 @@
 import express from 'express';
 import AccommodationControllers from '../../controllers/accommodationsController';
-import { accommodationValidation } from '../../validations/accommodationValidation/accommodation.validation.js';
+import { accommodationValidation } from '../../validations/accommodationValidation/accommodation.validation';
 import upload from '../../helpers/multer';
 import { authenticate } from '../../middlewares/authenticate';
 import { verifyToken } from '../../middlewares/verifyToken';

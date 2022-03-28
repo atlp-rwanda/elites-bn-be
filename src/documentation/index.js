@@ -5,6 +5,7 @@ import { rooms, roomsDefinitions } from './rooms.docs';
 import { accomodations } from './accomodation.docs';
 import { location, locationsDefinitions } from './locations.docs';
 import { profile } from './profile.docs';
+import { tripComment, tripCommentDefinitions } from './tripComment.docs';
 
 const paths = {
   ...welcome,
@@ -14,6 +15,8 @@ const paths = {
   ...accomodations,
   ...rooms,
   ...location,
+  ...tripComment,
+
 };
 
 const definitions = {
@@ -21,6 +24,7 @@ const definitions = {
   ...tripDefinitions,
   ...roomsDefinitions,
   ...locationsDefinitions,
+  ...tripCommentDefinitions,
 };
 
 const config = {
@@ -50,12 +54,10 @@ const config = {
     },
   },
 
-  servers: [
-    {
-      url: 'http://localhost:3000',
-      name: 'DEV',
-    },
-  ],
+  servers: [{
+    url: 'http://localhost:3000',
+    name: 'DEV',
+  }],
 
   paths,
   definitions,

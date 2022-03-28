@@ -1,15 +1,10 @@
 import dotenv from 'dotenv';
 import models, { Role } from '../models';
-// import { generateToken } from '../helpers/jwtFunction';
 
 dotenv.config();
 
 export const userExist = async (email) => {
-  const User = await models.User.findOne({
-    where: { email },
-    include: [{ model: models.Role, attributes: ['id', 'name'] }],
-    raw: true,
-  });
+  const User = await models.User.findOne({ where: { email } });
   if (User) {
     return User;
   }
@@ -28,10 +23,7 @@ export const userById = async (id) => {
 };
 
 export const updateUser = async (userId) => {
-  const user = await models.User.update(
-    { verified: true },
-    { where: { id: userId } },
-  );
+  const user = await models.User.update({ verified: true }, { where: { id: userId } });
   return user;
 };
 
@@ -42,6 +34,8 @@ export const createUser = async (user) => {
     roleId: role.dataValues.id,
   });
   userCreated.save();
+  const verificationLink = `${process.env.APP_URL}/api/v1/auth/verify`;
+
   return userCreated;
 };
 

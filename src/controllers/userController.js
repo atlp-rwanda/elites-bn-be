@@ -46,7 +46,10 @@ export class UserControllers {
         req.body.password = await hashPassword(req.body.password);
         const createdUser = await createUser(req.body);
         const {
-          password, createdAt, updatedAt, ...newcreatedUser
+          password,
+          createdAt,
+          updatedAt,
+          ...newcreatedUser
         } = createdUser;
         const token = await generateAccessToken({ id: createdUser.id });
         const refreshToken = await generateRefreshToken({

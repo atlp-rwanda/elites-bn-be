@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       });
+      tripRequest.hasMany(models.TripComment, { foreignKey: 'tripId', as: 'comments' });
     }
   }
   tripRequest.init({

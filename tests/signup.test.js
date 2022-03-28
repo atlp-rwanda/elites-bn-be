@@ -30,7 +30,7 @@
 //           });
 //           expect(res).to.have.status([404]);
 //           expect(res.type).to.equal('application/json');
-         
+
 //       });
 
 //       it('should not register a user if exist', async () => {
@@ -39,7 +39,7 @@
 //           email: 'kaalicy@gmail.com',
 //           password: 'password@123'
 //         });
-  
+
 //         expect(res).to.have.status([400]);
 //         expect(res.type).to.equal('application/json');
 //         expect(res.body).to.have.property('message');

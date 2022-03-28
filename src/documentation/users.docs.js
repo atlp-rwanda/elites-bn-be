@@ -8,16 +8,14 @@ export const users = {
       summary: 'This will register a user',
       description: ' ',
       produces: ['application/json'],
-      parameters: [
-        {
-          name: 'Body',
-          in: 'body',
-          required: true,
-          schema: {
-            $ref: '#/definitions/Register',
-          },
+      parameters: [{
+        name: 'Body',
+        in: 'body',
+        required: true,
+        schema: {
+          $ref: '#/definitions/Register',
         },
-      ],
+      }],
       responses: {
         201: {
           description: 'User registered successfully',
@@ -41,13 +39,11 @@ export const users = {
       description: 'This end Point will verify if a user is a really one who received the email',
       operationId: 'Vification User Registered',
       produces: ['application/json'],
-      parameters: [
-        {
-          name: 'token',
-          in: 'path',
-          required: true,
-        },
-      ],
+      parameters: [{
+        name: 'token',
+        in: 'path',
+        required: true,
+      }],
       responses: {
         200: {
           description: 'User verified successfully',
@@ -69,16 +65,14 @@ export const users = {
       summary: 'This will login a user',
       description: ' ',
       produces: ['application/json'],
-      parameters: [
-        {
-          name: 'Body',
-          in: 'body',
-          required: true,
-          schema: {
-            $ref: '#/definitions/Login',
-          },
+      parameters: [{
+        name: 'Body',
+        in: 'body',
+        required: true,
+        schema: {
+          $ref: '#/definitions/Login',
         },
-      ],
+      }],
       responses: {
         200: {
           description: 'User Loged in successfully',
@@ -99,14 +93,12 @@ export const users = {
       tag: ['Authentication'],
       description: 'This will signout a user',
       produces: ['application/json'],
-      parameters: [
-        {
-          name: 'Authorization',
-          in: 'header',
-          description: 'Authorization',
-          required: true,
-        },
-      ],
+      parameters: [{
+        name: 'Authorization',
+        in: 'header',
+        description: 'Authorization',
+        required: true,
+      }],
       responses: {
         205: {
           description: 'success',
@@ -123,22 +115,19 @@ export const users = {
   '/api/v1/users/refreshToken': {
     post: {
       tags: ['Authentication'],
-      summary:
-				'This is to use refresh token in order to create a new access token',
+      summary: 'This is to use refresh token in order to create a new access token',
       description: ' ',
       consumes: ['application/json'],
       produces: ['application/json'],
-      parameters: [
-        {
-          name: 'User Update section',
-          in: 'body',
-          description: 'Update user info',
-          required: true,
-          schema: {
-            $ref: '#/definitions/refreshToken',
-          },
+      parameters: [{
+        name: 'User Update section',
+        in: 'body',
+        description: 'Update user info',
+        required: true,
+        schema: {
+          $ref: '#/definitions/refreshToken',
         },
-      ],
+      }],
       responses: {
         200: {
           description: 'Access token created successfuly',
@@ -158,20 +147,18 @@ export const users = {
       summary: 'This will send a reset password link to a user email',
       description: 'forgot password',
       produces: ['application/json'],
-      parameters: [
-        {
-          name: 'body',
-          in: 'body',
-          type: 'object',
-          required: true,
-          descrpition: 'Please enter your registered email',
-          properties: {
-            email: {
-              type: 'string',
-            },
+      parameters: [{
+        name: 'body',
+        in: 'body',
+        type: 'object',
+        required: true,
+        descrpition: 'Please enter your registered email',
+        properties: {
+          email: {
+            type: 'string',
           },
         },
-      ],
+      }],
       responses: {
         200: {
           description: 'reset link sent to email successfully',
@@ -191,21 +178,20 @@ export const users = {
       summary: 'This will reset the password of the user',
       description: ' ',
       produces: ['application/json'],
-      parameters: [
-        {
-          name: 'token',
-          in: 'path',
-          description: 'token from reset link',
-          required: true,
+      parameters: [{
+        name: 'token',
+        in: 'path',
+        description: 'token from reset link',
+        required: true,
+      },
+      {
+        name: 'Body',
+        in: 'body',
+        required: true,
+        schema: {
+          $ref: '#/definitions/ResetPassword',
         },
-        {
-          name: 'Body',
-          in: 'body',
-          required: true,
-          schema: {
-            $ref: '#/definitions/ResetPassword',
-          },
-        },
+      },
       ],
       responses: {
         200: {
@@ -226,21 +212,20 @@ export const users = {
       summary: 'This will update a role of the user',
       description: ' ',
       produces: ['application/json'],
-      parameters: [
-        {
-          name: 'id',
-          in: 'path',
-          description: 'id',
-          required: true,
+      parameters: [{
+        name: 'id',
+        in: 'path',
+        description: 'id',
+        required: true,
+      },
+      {
+        name: 'Body',
+        in: 'body',
+        required: true,
+        schema: {
+          $ref: '#/definitions/UpdateRole',
         },
-        {
-          name: 'Body',
-          in: 'body',
-          required: true,
-          schema: {
-            $ref: '#/definitions/UpdateRole',
-          },
-        },
+      },
       ],
       responses: {
         201: {
@@ -254,11 +239,9 @@ export const users = {
           description: 'Internal server error',
         },
       },
-      security: [
-        {
-          Bearer: [],
-        },
-      ],
+      security: [{
+        Bearer: [],
+      }],
     },
   },
 };

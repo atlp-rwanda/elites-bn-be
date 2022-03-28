@@ -52,6 +52,20 @@ export const tripExist = async (userId, id) => {
   return null;
 };
 
+export const findAtrip = async (id) => {
+  const dataExist = await models.tripRequest.findOne({
+    where: {
+      id,
+    },
+  });
+
+  if (dataExist) {
+    return dataExist;
+  }
+  return null;
+};
+
+// eslint-disable-next-line consistent-return
 export const createTrip = async (userid, data) => {
   try {
     const checkManager = await models.User.findOne({

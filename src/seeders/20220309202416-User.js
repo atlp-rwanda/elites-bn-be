@@ -45,7 +45,8 @@ module.exports = {
       managerId: 1,
       createdAt: new Date(),
       updatedAt: new Date(),
-    }], {});
+    },
+    ], {});
   },
   // eslint-disable-next-line no-unused-vars
   async down(queryInterface, Sequelize) {

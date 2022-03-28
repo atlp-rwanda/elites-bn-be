@@ -29,20 +29,17 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
   }
-  User.init(
-    {
-      names: DataTypes.STRING,
-      email: DataTypes.STRING,
-      password: DataTypes.STRING,
-      roleId: DataTypes.INTEGER,
-      managerId: DataTypes.INTEGER,
-      isActive: DataTypes.BOOLEAN,
-      verified: DataTypes.BOOLEAN,
-    },
-    {
-      sequelize,
-      modelName: 'User',
-    },
-  );
+  User.init({
+    names: DataTypes.STRING,
+    email: DataTypes.STRING,
+    password: DataTypes.STRING,
+    roleId: DataTypes.INTEGER,
+    managerId: DataTypes.INTEGER,
+    isActive: DataTypes.BOOLEAN,
+    verified: DataTypes.BOOLEAN,
+  }, {
+    sequelize,
+    modelName: 'User',
+  });
   return User;
 };

@@ -1,6 +1,7 @@
-import { roomSchema } from './room.schema.js';
-import { BaseError } from '../../httpErrors/baseError.js';
+import { roomSchema } from './room.schema';
+import { BaseError } from '../../httpErrors/baseError';
 
+// eslint-disable-next-line import/prefer-default-export
 export const roomValidation = async (req, res, next) => {
   try {
     const value = await roomSchema.validate(req.body);

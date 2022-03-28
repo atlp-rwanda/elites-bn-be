@@ -200,6 +200,7 @@ export const deleteprofile = async (userId) => {
   const checkExist = await isExist(userId);
 
   if (checkExist) {
+    // eslint-disable-next-line no-unused-vars
     const Data = await models.Profile.destroy({
       where: {
         userId,

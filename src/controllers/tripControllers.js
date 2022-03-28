@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import {
   TRIP_CREATED,
   REQUEST_UPDATED,
@@ -21,10 +22,12 @@ import { validateDate } from '../helpers/dateComparison';
 import models from '../models';
 import { UnauthorizedError } from '../httpErrors/unauthorizedError';
 import { userById } from '../services/userServices';
-import { NotFoundError } from '../httpErrors/NotFoundError';
+import { BaseError } from '../httpErrors/baseError';
+// import { NotFoundError } from '../httpErrors/NotFoundError';
 
 // eslint-disable-next-line import/prefer-default-export
 export class TripControllers {
+  // eslint-disable-next-line class-methods-use-this
   async createController(id, req, res, next) {
     try {
       req.body.managerId = await getManagerId(id);
@@ -32,7 +35,6 @@ export class TripControllers {
         req.body.returnDate,
         req.body.departDate,
       );
-
       const locationsValidation = await checkLocations(
         req.body.departLocation,
         req.body.arrivalLocation,
@@ -56,6 +58,7 @@ export class TripControllers {
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
   async updateRequest(id, req, res, next) {
     try {
       const updated = await updateRequest(id, req.params.id, req.body);
@@ -73,6 +76,8 @@ export class TripControllers {
       next(err);
     }
   }
+
+  // eslint-disable-next-line class-methods-use-this
   async getAllRequests(id, req, res, next) {
     try {
       const getTripRequests = await getAllRequests(id);
@@ -138,7 +143,11 @@ export class TripControllers {
               .json({ status: 200, message: REQUEST_UPDATED, payload: updated });
           }
         } else {
-          throw new NotFoundError();
+          throw new BaseError(
+            'Bad request',
+            400,
+            'Trip request not found',
+          );
         }
       } else {
         throw new UnauthorizedError('You are not a manager of this user');

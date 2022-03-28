@@ -13,9 +13,9 @@ router.post(
   authenticate,
   tripControllers.createController,
 );
-router.patch('/:id', authenticate, tripControllers.updateRequest);
+router.put('/:id', authenticate, tripControllers.updateRequest);
 router.get('/', authenticate, tripControllers.getAllRequests);
 router.get('/:id', authenticate, tripControllers.getSingleRequests);
 router.delete('/:id', authenticate, tripControllers.deleteRequests);
-router.put('/:id', authenticate, isManager, tripControllers.approveRejectTripRequest);
+router.patch('/:id', authenticate, isManager, tripControllers.approveRejectTripRequest);
 export default router;

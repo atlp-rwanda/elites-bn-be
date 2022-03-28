@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const salt = bcrypt.genSaltSync(10, 'b');
 
 module.exports = {
+  // eslint-disable-next-line no-unused-vars
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert('Users', [{
       names: 'YANGENEYE Patrick',
@@ -46,7 +47,7 @@ module.exports = {
       updatedAt: new Date(),
     }], {});
   },
-
+  // eslint-disable-next-line no-unused-vars
   async down(queryInterface, Sequelize) {
     await queryInterface.bulkDelete('Users', null, {});
   },

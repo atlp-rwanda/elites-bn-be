@@ -27,17 +27,6 @@ describe("TRIP REQUEST ENDPOINTS", () => {
   let requesterToken;
   let managerToken;
 
-  before("should retrieve a trip requests", (done) => {
-    chai
-      .request(app)
-      .get("/api/v1/trips/4")
-      .set("Authorization", `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjQ4MjE1ODEwLCJleHAiOjE2NDgzMDIyMTB9.8H_A_AWghtiK-g_cczotsJahXHHEhlZTxX6AlhY0dMY`)
-      .end((req, res) => {
-        id = res.body.payload.id;
-        done();
-      });
-  });
-
   it("it should login the user", async () => {
     const res = await chai
       .request(app)
@@ -62,12 +51,23 @@ describe("TRIP REQUEST ENDPOINTS", () => {
     expect(res.body).haveOwnProperty("payload");
   });
 
+  it("should retrieve a trip requests", (done) => {
+    chai
+      .request(app)
+      .get("/api/v1/trips/4")
+      .set('Authorization', `Bearer ${managerToken}`)
+      .end((req, res) => {
+        id = res.body.payload.id;
+        console.log(id);
+        done();
+      });
+  });
   // SHOULD UPDATE THE REQUEST
 
   it(' Manager should APPROVE/REJECT pending request', (done) => {
     chai
       .request(app)
-      .put(`/api/v1/trips/${id}}`)
+      .patch(`/api/v1/trips/${id}}`)
       .set('Authorization', `Bearer ${managerToken}`)
       .send({
         status: 'approved',

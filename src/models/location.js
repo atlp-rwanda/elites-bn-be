@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: 'Location',
       tableName: 'Locations',
-    }
+    },
   );
   return Location;
 };

@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable import/prefer-default-export */
 import 'dotenv/config';
 import { decodeAcessToken } from '../helpers/jwtFunction';

@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import { User, Role } from '../models';
 
 // eslint-disable-next-line import/prefer-default-export

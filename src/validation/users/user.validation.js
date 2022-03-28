@@ -1,5 +1,6 @@
-import { userSchema } from './user.schema.js';
+import { userSchema } from './user.schema';
 
+// eslint-disable-next-line import/prefer-default-export
 export const userValidation = async (req, res, next) => {
   const value = await userSchema.validate(req.body);
   if (value.error) {

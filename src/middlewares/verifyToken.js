@@ -1,6 +1,7 @@
+/* eslint-disable consistent-return */
 /* eslint-disable import/prefer-default-export */
 import 'dotenv/config';
-import { isAccessTokenBlacklisted } from '../helpers/logoutHelper.js';
+import { isAccessTokenBlacklisted } from '../helpers/logoutHelper';
 
 export const verifyToken = async (req, res, next) => {
   const token = req.headers.authorization.split(' ')[1];

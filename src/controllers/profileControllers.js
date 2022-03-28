@@ -12,6 +12,7 @@ import {
 import { ConflictsError } from '../httpErrors/conflictError';
 import { ForbbidenError } from '../httpErrors/forbidenError';
 import { PageNotFoundError } from '../httpErrors/pageNotFoundError';
+
 class ProfileController {
   async createController(id, req, res, next) {
     try {

@@ -1,5 +1,6 @@
 import joi from 'joi';
 
+// eslint-disable-next-line import/prefer-default-export
 export const accommodationSchema = joi.object({
   accommodationName: joi.string().max(100).required().messages({
     'string.base':

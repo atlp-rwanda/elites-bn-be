@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import models, { Role } from '../models';
-import { generateToken } from '../helpers/jwtFunction';
+// import { generateToken } from '../helpers/jwtFunction';
 
 dotenv.config();
 
@@ -8,17 +8,6 @@ export const userExist = async (email) => {
   const User = await models.User.findOne({
     where: { email },
     include: [{ model: models.Role, attributes: ['id', 'name'] }],
-    raw: true,
-  });
-  if (User) {
-    return User;
-  }
-  return null;
-};
-
-export const userById = async (id) => {
-  const User = await models.User.findOne({
-    where: { id },
     raw: true,
   });
   if (User) {
@@ -68,7 +57,7 @@ export const updatedRole = async (newRoleId, email) => {
 };
 
 export const updateUserPassword = async (id, email, updates) => {
-  const updatedUser = await User.update(updates, {
+  const updatedUser = await models.User.update(updates, {
     where: { id, email },
     returning: true,
     raw: true,

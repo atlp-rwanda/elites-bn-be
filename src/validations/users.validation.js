@@ -1,5 +1,6 @@
 import Joi from '@hapi/joi';
 
+// eslint-disable-next-line import/prefer-default-export
 export const userValidation = (req, res, next) => {
   const userSchema = Joi.object({
     names: Joi.string().empty(),

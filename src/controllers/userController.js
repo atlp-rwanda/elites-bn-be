@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 /* eslint-disable consistent-return */
 import validator from 'validator';
 import jwt from 'jsonwebtoken';
@@ -6,18 +5,18 @@ import { config } from 'dotenv';
 import { USER_REGISTERED, USER_LOGIN } from '../constants/user-constants';
 import { hashPassword, comparePassword } from '../helpers/passwordSecurity';
 import {
-	generateAccessToken,
-	generateRefreshToken,
-	decodeRefreshToken,
-	generateResetPasswordToken,
-	decodeResetPasswordToken,
+  generateAccessToken,
+  generateRefreshToken,
+  decodeRefreshToken,
+  generateResetPasswordToken,
+  decodeResetPasswordToken,
 } from '../helpers/jwtFunction';
 import {
-	userExist,
-	createUser,
-	updatedRole,
-	userById,
-	updateUserPassword,
+  userExist,
+  createUser,
+  updatedRole,
+  userById,
+  updateUserPassword,
 } from '../services/userServices';
 
 import { sendEmail } from '../services/send-email-service';
@@ -40,16 +39,19 @@ export class UserControllers {
       // Check if user exists
       const userEmailExist = await userExist(req.body.email);
       if (userEmailExist) {
-        throw new ConflictsError(`User with this email: "${req.body.email}" already exist please a different email`);
+        throw new ConflictsError(
+          `User with this email: "${req.body.email}" already exist please a different email`,
+        );
       } else {
         req.body.password = await hashPassword(req.body.password);
         const createdUser = await createUser(req.body);
         const {
           password, createdAt, updatedAt, ...newcreatedUser
         } = createdUser;
-
         const token = await generateAccessToken({ id: createdUser.id });
-        const refreshToken = await generateRefreshToken({ id: newcreatedUser.id });
+        const refreshToken = await generateRefreshToken({
+          id: newcreatedUser.id,
+        });
 
         const email = {
           to: createdUser.email,
@@ -73,16 +75,14 @@ export class UserControllers {
 
   // create verifyUser
   // eslint-disable-next-line class-methods-use-this
-  async VerifyNewUser(req, res) {
+  async verifyNewUser(req, res) {
     try {
       const { token } = req.params;
       const userInfo = jwt.verify(token, process.env.JWT_SECRETE_KEY);
       const userId = userInfo.id;
       const isVerified = true;
       models.User.update({ verified: isVerified }, { where: { id: userId } });
-      return res
-        .status(200)
-        .send({ message: 'Account verified!' });
+      return res.status(200).send({ message: 'Account verified!' });
     } catch (error) {
       return res.status(500).send({ message: error.message });
     }
@@ -105,7 +105,9 @@ export class UserControllers {
       const refreshToken = await generateRefreshToken(userPayload);
       await models.refreshTokenTable.create({ refreshToken });
       return res.status(200).json({
-        status: 200, message: USER_LOGIN, payload: { accesstoken: token, refreshToken },
+        status: 200,
+        message: USER_LOGIN,
+        payload: { accesstoken: token, refreshToken },
       });
     } catch (err) {
       next(err);
@@ -117,7 +119,6 @@ export class UserControllers {
     try {
       const { email } = req.body;
       const user = await userExist(email);
-
       if (user == null) {
         res.status(400).json({ message: 'User does not exist! ' });
         return false;
@@ -145,12 +146,18 @@ export class UserControllers {
   async refreshTokens(req, res, next) {
     try {
       const { refreshToken } = req.body;
-      if (!refreshToken) return res.status(400).json({ status: 400, message: 'Bad request' });
+      if (!refreshToken) {
+        return res.status(400).json({ status: 400, message: 'Bad request' });
+      }
       const payloadToken = await decodeRefreshToken(refreshToken);
       const newPayloadToken = { id: payloadToken.id };
       const accessToken = await generateAccessToken(newPayloadToken);
       const refToken = await generateRefreshToken(newPayloadToken);
-      return res.status(200).json({ status: 200, message: 'Access token created sussccefully', payload: { accessToken, refreshToken: refToken } });
+      return res.status(200).json({
+        status: 200,
+        message: 'Access token created sussccefully',
+        payload: { accessToken, refreshToken: refToken },
+      });
     } catch (err) {
       next(err);
     }
@@ -162,18 +169,104 @@ export class UserControllers {
       const token = await generateAccessToken({ id: req.user.id });
       const refreshToken = await generateRefreshToken({ id: req.user.id });
       await models.refreshTokenTable.create({ refreshToken });
-      res.status(201).json({ status: 201, message: 'Succesfully logged in with Google!', payload: { accesstoken: token, refreshToken } });
+      res.status(201).json({
+        status: 201,
+        message: 'Succesfully logged in with Google!',
+        payload: { accesstoken: token, refreshToken },
+      });
     } catch (err) {
       next(err);
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
   async authFacebookLogin(req, res, next) {
     try {
       const token = await generateAccessToken({ id: req.user.id });
       const refreshToken = await generateRefreshToken({ id: req.user.id });
       await models.refreshTokenTable.create({ refreshToken });
-      res.status(201).json({ status: 201, message: 'Succesfully logged in with Facebook!', payload: { accesstoken: token, refreshToken } });
+      res.status(201).json({
+        status: 201,
+        message: 'Succesfully logged in with Facebook!',
+        payload: { accesstoken: token, refreshToken },
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  async sendResetLink(req, res, next) {
+    try {
+      const { email } = req.body;
+      const user = await userExist(email);
+      if (!email) {
+        throw new BaseError('Bad request', 400, 'Email is required');
+      }
+      if (!validator.isEmail(email)) {
+        throw new BaseError(
+          'Bad request',
+          400,
+          'Please Enter a valid email address',
+        );
+      }
+      if (!user) {
+        throw new BaseError(
+          'Not found',
+          404,
+          'The account with provided email is not registered',
+        );
+      }
+      const payload = {
+        id: user.id,
+      };
+      const secret = process.env.JWT_SECRET_KEY;
+
+      const token = await generateResetPasswordToken(payload, secret);
+      const link = `${req.protocol}://localhost:3000/api/v1/users/reset-password/${token}`;
+      await sendResetEmail(
+        email,
+        'ihonore01@gmail.com',
+        'Barefoot Nomad password reset',
+        makeTemplate(link),
+      );
+      return res.status(200).send({
+        status: 200,
+        message: `Password reset link has been successfully sent to ${email}`,
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  async resetPassword(req, res, next) {
+    try {
+      const { password, confirmPassword } = req.body;
+      if (password !== confirmPassword) {
+        throw new BaseError(
+          'Bad request',
+          400,
+          'Entered passwords do not match',
+        );
+      }
+      const { token } = req.params;
+
+      const secret = process.env.JWT_SECRET_KEY;
+      const decoded = await decodeResetPasswordToken(token, secret);
+      const user = await userById(decoded.id);
+
+      const hash = await hashPassword(password);
+      const updatedUser = await updateUserPassword(decoded.id, user.email, {
+        password: hash,
+      });
+
+      if (updatedUser) {
+        return res.status(200).send({
+          status: 200,
+          message: 'The password has been reset successfully',
+        });
+      }
     } catch (err) {
       next(err);
     }

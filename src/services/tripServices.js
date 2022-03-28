@@ -34,7 +34,6 @@ export const getManagerId = async (userid) => {
   });
 
   const { managerId } = data.dataValues;
-  console.log(managerId);
   return managerId;
 };
 
@@ -139,6 +138,7 @@ export const deleteRequest = async (userId, id) => {
   const checkExist = await tripExist(userId, id);
 
   if (checkExist) {
+    // eslint-disable-next-line no-unused-vars
     const Data = await models.tripRequest.destroy({
       where: {
         status: 'pending',

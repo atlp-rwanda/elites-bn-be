@@ -1,6 +1,7 @@
-import { locationSchema } from './location.schema.js';
-import { BaseError } from '../../httpErrors/baseError.js';
+import { locationSchema } from './location.schema';
+import { BaseError } from '../../httpErrors/baseError';
 
+// eslint-disable-next-line import/prefer-default-export
 export const locationValidation = async (req, res, next) => {
   try {
     const value = await locationSchema.validate(req.body);

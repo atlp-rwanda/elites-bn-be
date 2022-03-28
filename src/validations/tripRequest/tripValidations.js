@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import { tripSchema } from './trip.schema';
 
 // eslint-disable-next-line import/prefer-default-export

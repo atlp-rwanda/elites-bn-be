@@ -4,77 +4,63 @@ import { trips, tripDefinitions } from './trips.docs';
 import { rooms, roomsDefinitions } from './rooms.docs';
 import { accomodations } from './accomodation.docs';
 import { location, locationsDefinitions } from './locations.docs';
-<<<<<<< HEAD
 import { profile } from './profile.docs';
-=======
 import { tripComment, tripCommentDefinitions } from './tripComment.docs';
->>>>>>>  This is a combination of 11 commits.
 
 const paths = {
-  ...welcome,
-  ...users,
-<<<<<<< HEAD
-  ...profile,
-=======
->>>>>>>  This is a combination of 11 commits.
-  ...trips,
-  ...accomodations,
-  ...rooms,
-  ...location,
-<<<<<<< HEAD
-=======
-  ...tripComment,
+    ...welcome,
+    ...users,
+    ...profile,
+    ...trips,
+    ...accomodations,
+    ...rooms,
+    ...location,
+    ...tripComment,
 
->>>>>>>  This is a combination of 11 commits.
 };
 
 const definitions = {
-  ...userDefinition,
-  ...tripDefinitions,
-  ...roomsDefinitions,
-  ...locationsDefinitions,
-<<<<<<< HEAD
-=======
-  ...tripCommentDefinitions
->>>>>>>  This is a combination of 11 commits.
+    ...userDefinition,
+    ...tripDefinitions,
+    ...roomsDefinitions,
+    ...locationsDefinitions,
+    ...tripCommentDefinitions
 };
 
 const config = {
-  swagger: '2.0',
-  info: {
-    title: 'BAREFOOT NOMAD API',
-    description: 'This is team project,Elites team',
-    version: '1.0.0',
-    contact: {
-      name: 'Developers',
-      email: 'niyonzimadeus2002@gmail.com',
+    swagger: '2.0',
+    info: {
+        title: 'BAREFOOT NOMAD API',
+        description: 'This is team project,Elites team',
+        version: '1.0.0',
+        contact: {
+            name: 'Developers',
+            email: 'niyonzimadeus2002@gmail.com',
+        },
     },
-  },
 
-  schemes: ['HTTP', 'HTTPS'],
+    schemes: ['HTTP', 'HTTPS'],
 
-  securityDefinitions: {
-    Bearer: {
-      type: 'apiKey',
-      name: 'Authorization',
-      in: 'header',
+    securityDefinitions: {
+        Bearer: {
+            type: 'apiKey',
+            name: 'Authorization',
+            in: 'header',
+        },
+        ApiKeyAuth: {
+            type: 'apiKey',
+            name: 'refreshToken',
+            in: 'header',
+        },
     },
-    ApiKeyAuth: {
-      type: 'apiKey',
-      name: 'refreshToken',
-      in: 'header',
-    },
-  },
 
-  servers: [
-    {
-      url: 'http://localhost:3000',
-      name: 'DEV',
-    },
-  ],
+    servers: [{
+        url: 'http://localhost:3000',
+        name: 'DEV',
+    }, ],
 
-  paths,
-  definitions,
+    paths,
+    definitions,
 };
 
 export default config;

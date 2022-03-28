@@ -4,7 +4,7 @@ import chaiHttp from 'chai-http';
 
 use(chaiHttp);
 
-describe.only('TRIP COMMENT TESTING', () => {
+describe('TRIP COMMENT TESTING', () => {
     let token;
     let id;
 

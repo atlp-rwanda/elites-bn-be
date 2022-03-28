@@ -1,24 +1,12 @@
 import sgMail from '@sendgrid/mail';
 import 'dotenv/config';
 
-export const sendEmail = async (email) => {
-<<<<<<< HEAD
-  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-  email.from = process.env.SENDGRID_EMAIL;
-  try {
-    await sgMail.send(email);
-  } catch (error) {
-    console.error(error);
-  }
-};
-=======
+export const sendEmail = async(email) => {
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-    email.from = process.env.SENDGRID_EMAIL
+    email.from = process.env.SENDGRID_EMAIL;
     try {
         await sgMail.send(email);
-        
-    } catch (error) {     
+    } catch (error) {
         console.error(error);
     }
-}
->>>>>>>  This is a combination of 11 commits.
+};

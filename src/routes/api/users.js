@@ -9,8 +9,4 @@ router.post('/register', userValidation, userControllers.registerUser);
 router.post('/login', userControllers.login);
 router.post('/refreshtoken', userControllers.refreshTokens);
 
-<<<<<<< HEAD
 export default router;
-=======
-export default router;
->>>>>>>  This is a combination of 11 commits.

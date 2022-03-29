@@ -9,7 +9,10 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       });
-      tripRequest.hasMany(models.TripComment, { foreignKey: 'tripId', as: 'comments' });
+      tripRequest.hasMany(models.TripComment, {
+        foreignKey: 'tripId',
+        as: 'comments',
+      });
     }
   }
   tripRequest.init(
@@ -17,17 +20,17 @@ module.exports = (sequelize, DataTypes) => {
       userId: DataTypes.INTEGER,
       managerId: DataTypes.INTEGER,
       departLocation: DataTypes.INTEGER,
-      arrivalLocation: DataTypes.INTEGER,
+      destinations: DataTypes.ARRAY(DataTypes.TEXT),
       tripReason: DataTypes.STRING,
       departDate: DataTypes.DATE,
       returnDate: DataTypes.DATE,
-      accomodationId: DataTypes.INTEGER,
       status: DataTypes.STRING,
+      tripType: DataTypes.STRING,
     },
     {
       sequelize,
       modelName: 'tripRequest',
-    },
+    }
   );
   return tripRequest;
 };

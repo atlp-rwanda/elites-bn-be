@@ -6,7 +6,6 @@ import {
   TRIP_DELETED_MESSAGE,
   NO_TRIP_FOUND,
   VALIDATION_ERROR,
-
 } from '../constants/tripConstants';
 import {
   createTrip,
@@ -14,16 +13,18 @@ import {
   deleteRequest,
   getAllRequests,
   getManagerId,
+  tripExist,
   checkLocations,
   getOneRequest,
   approveRequest,
+  findByPk,
+  updateTrip,
 } from '../services/tripServices';
 import { validateDate } from '../helpers/dateComparison';
 import models from '../models';
 import { UnauthorizedError } from '../httpErrors/unauthorizedError';
 import { userById } from '../services/userServices';
 import { BaseError } from '../httpErrors/baseError';
-// import { NotFoundError } from '../httpErrors/NotFoundError';
 
 // eslint-disable-next-line import/prefer-default-export
 export class TripControllers {
@@ -33,13 +34,24 @@ export class TripControllers {
       req.body.managerId = await getManagerId(id);
       const compareDates = validateDate(
         req.body.returnDate,
-        req.body.departDate,
+        req.body.departDate
       );
-      const locationsValidation = await checkLocations(
-        req.body.departLocation,
-        req.body.arrivalLocation,
-      );
+      const locationsValidation = await checkLocations(req.body.departLocation);
+
+      const exists = await tripExist(id, req.body.departDate);
+      console.log(exists);
+      if (exists) {
+        return res.status(201).json({
+          status: 400,
+          message: 'Trip request already exists',
+          payload: exists,
+        });
+      }
+
       if (compareDates && locationsValidation) {
+        const checkTripType = req.body.destinations.length;
+        const tripType = checkTripType > 1 ? 'multicity' : 'single-city';
+        req.body.tripType = tripType;
         const newTrip = await createTrip(id, req.body);
         if (newTrip) {
           res
@@ -54,7 +66,8 @@ export class TripControllers {
         res.status(400).json({ status: 400, message: VALIDATION_ERROR });
       }
     } catch (err) {
-      next(err);
+      console.log(err);
+      return res.status(500).json({ message: err.message });
     }
   }
 
@@ -136,18 +149,18 @@ export class TripControllers {
 
         if (status === 'pending') {
           const updatedStatus = req.body.status;
-          const updated = await approveRequest(triprequestId, { status: updatedStatus });
+          const updated = await approveRequest(triprequestId, {
+            status: updatedStatus,
+          });
           if (updated) {
-            res
-              .status(200)
-              .json({ status: 200, message: REQUEST_UPDATED, payload: updated });
+            res.status(200).json({
+              status: 200,
+              message: REQUEST_UPDATED,
+              payload: updated,
+            });
           }
         } else {
-          throw new BaseError(
-            'Bad request',
-            404,
-            'Trip request not found',
-          );
+          throw new BaseError('Bad request', 404, 'Trip request not found');
         }
       } else {
         throw new UnauthorizedError('You are not a manager of this user');

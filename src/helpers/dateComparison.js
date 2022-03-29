@@ -9,9 +9,13 @@ export const validateDate = (date, dateToCompare) => {
   const Formatteddate = parserISO(date);
   const anotherdate = parserISO(dateToCompare);
 
+  console.log(Formatteddate)
+  console.log(anotherdate)
+
   const valid = isAfter(Formatteddate, anotherdate);
   const checkEqual = isEqual(Formatteddate, anotherdate);
   const invalidDate = isPast(anotherdate);
+  console.log(valid);
 
   if (checkEqual || invalidDate) {
     return false;

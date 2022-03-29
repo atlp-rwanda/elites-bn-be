@@ -9,11 +9,9 @@ export const tripSchema = joi.object({
       'any.required': 'departLocation is required',
     }),
 
-  arrivalLocation: joi.number().integer().required().empty()
+    destinations: joi.required()
     .messages({
-      'number.base': 'arrivalLocation must be valid',
-      'number.empty': 'arrivalLocation is not allowed to be empty',
-      'any.required': 'arrivalLocation is required',
+      'any.required': 'destinations is required',
     }),
 
   tripReason: joi.string().required().empty().messages({
@@ -34,11 +32,4 @@ export const tripSchema = joi.object({
     'date.base': 'returnDate must be valid date',
     'date.format': 'date format is not correct ISO standard ',
   }),
-
-  accomodationId: joi.number().integer().required().empty()
-    .messages({
-      'number.base': 'accomodationId must be valid',
-      'number.empty': 'accomodationId is not allowed to be empty',
-      'any.required': 'accomodationId is required',
-    }),
 });

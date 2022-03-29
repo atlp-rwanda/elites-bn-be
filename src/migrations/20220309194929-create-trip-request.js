@@ -23,9 +23,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
       },
-      arrivalLocation: {
+      destinations: {
         allowNull: false,
-        type: Sequelize.INTEGER,
+        type: Sequelize.ARRAY(Sequelize.TEXT),
       },
       tripReason: {
         allowNull: false,
@@ -38,13 +38,12 @@ module.exports = {
       returnDate: {
         type: Sequelize.DATE,
       },
-      accomodationId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-      },
       status: {
         type: Sequelize.STRING,
         defaultValue: 'pending',
+      },
+      tripType: {
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,

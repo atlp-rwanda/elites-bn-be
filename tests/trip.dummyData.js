@@ -5,7 +5,6 @@ export const addRequest = {
   departDate: '2022-05-01',
   returnDate: '2022-06-04',
   accomodationId: 6,
-
 };
 
 export const tripRequest = {

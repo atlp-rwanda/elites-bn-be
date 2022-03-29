@@ -1,15 +1,15 @@
 import { Room } from '../models';
 
 class roomServices {
-	createRoom = async (room) => {
-		const createdRoom = await Room.create(room);
-		return createdRoom;
-	};
+  createRoom = async (room) => {
+    const createdRoom = await Room.create(room);
+    return createdRoom;
+  };
 
-	getAllRoomsOfAccommodation = async (accommodationId) => {
-		const rooms = await Room.findAll({ where: { accommodationId } });
-		return rooms;
-	};
+  getAllRoomsOfAccommodation = async (accommodationId) => {
+    const rooms = await Room.findAll({ where: { accommodationId } });
+    return rooms;
+  };
 
 	getSingleRoom = async (id) => {
 		const foundRoom = await Room.findOne({
@@ -18,14 +18,14 @@ class roomServices {
 		return foundRoom;
 	};
 
-	updateRoom = async (id, roomUpdate) => {
-		const updatedRoom = await Room.update(roomUpdate, {
-			where: { id },
-			returning: true,
-			raw: true,
-		});
-		return updatedRoom;
-	};
+  updateRoom = async (id, roomUpdate) => {
+    const updatedRoom = await Room.update(roomUpdate, {
+      where: { id },
+      returning: true,
+      raw: true,
+    });
+    return updatedRoom;
+  };
 
 	deleteRoom = async (id) => {
 		const deletedRoom = await Room.destroy({

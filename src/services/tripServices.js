@@ -122,7 +122,6 @@ export const getOneRequest = async (userId, id) => {
       userId,
       id,
     },
-
   });
   return Data;
 };

@@ -5,7 +5,7 @@ module.exports = {
       [
         {
           refreshToken:
-						'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NDc1MjEwOTQsImV4cCI6MTY0ODEyNTg5NH0.KQ8OFHPhpE6f1DkV7TC9f7MwJDBMeTiMEpt80zQgOYM',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NDc1MjEwOTQsImV4cCI6MTY0ODEyNTg5NH0.KQ8OFHPhpE6f1DkV7TC9f7MwJDBMeTiMEpt80zQgOYM',
           createdAt: new Date(),
           updatedAt: new Date(),
         },

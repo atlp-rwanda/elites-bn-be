@@ -5,7 +5,7 @@ import { BaseError } from './baseError.js';
 // eslint-disable-next-line import/prefer-default-export
 export class ForbbidenError extends BaseError {
   constructor(
-    description = getReasonPhrase(StatusCodes.FORBIDDEN),
+    description = 'Forbidden access',
     name = ReasonPhrases.FORBIDDEN,
     statusCode = StatusCodes.FORBIDDEN,
     isOperational = true,

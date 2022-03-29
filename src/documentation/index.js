@@ -6,6 +6,7 @@ import { accomodations } from './accomodation.docs';
 import { location, locationsDefinitions } from './locations.docs';
 import { profile } from './profile.docs';
 import { tripComment, tripCommentDefinitions } from './tripComment.docs';
+import { bookings, bookingsDefinition } from './booking.docs';
 
 const paths = {
   ...welcome,
@@ -17,6 +18,7 @@ const paths = {
   ...location,
   ...tripComment,
 
+  ...bookings,
 };
 
 const definitions = {
@@ -25,6 +27,7 @@ const definitions = {
   ...roomsDefinitions,
   ...locationsDefinitions,
   ...tripCommentDefinitions,
+  ...bookingsDefinition,
 };
 
 const config = {

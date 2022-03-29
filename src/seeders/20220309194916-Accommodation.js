@@ -1,5 +1,5 @@
 module.exports = {
-  up: (queryInterface, Sequelize) => queryInterface.bulkInsert(
+  up: (queryInterface) => queryInterface.bulkInsert(
     'Accommodations',
     [
       {
@@ -53,5 +53,5 @@ module.exports = {
     {},
   ),
 
-  down: (queryInterface, Sequelize) => queryInterface.bulkDelete('Accommodations', null, {}),
+  down: (queryInterface) => queryInterface.bulkDelete('Accommodations', null, {}),
 };

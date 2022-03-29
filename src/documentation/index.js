@@ -68,10 +68,12 @@ const config = {
     },
   },
 
-  servers: [{
-    url: 'http://localhost:3000',
-    name: 'DEV',
-  }],
+  servers: [
+    {
+      url: 'http://localhost:3000',
+      name: 'DEV',
+    },
+  ],
 
   paths,
   definitions,

@@ -5,6 +5,7 @@ import {
   TRIP_FOUND_MESSAGE,
   TRIP_DELETED_MESSAGE,
   NO_TRIP_FOUND,
+  VALIDATION_ERROR,
   VALIDATION_ERROR_INPUT,
 } from '../constants/tripConstants';
 import {
@@ -13,10 +14,11 @@ import {
   getAllRequests as fetchAllRequests,
   getManagerId,
   tripExist,
+  checkLocations,
   getOneRequest,
+  approveRequest,
   updateMulticities,
-  findLocation,
-  updateLocation,
+  findStatistcsByUser,
 } from '../services/tripServices';
 import { validateDate } from '../helpers/dateComparison';
 import { UnauthorizedError } from '../httpErrors/unauthorizedError';
@@ -35,7 +37,7 @@ export class TripControllers {
       req.body.managerId = await getManagerId(id);
       const compareDates = validateDate(
         req.body.returnDate,
-        req.body.departDate,
+        req.body.departDate
       );
       const { rememberMe } = req.body;
       const exists = await tripExist(id, req.body.departDate);
@@ -91,14 +93,20 @@ export class TripControllers {
             });
           }
         } else {
-          res.status(400).json({ status: 400, message: VALIDATION_ERROR_INPUT });
+          res
+            .status(400)
+            .json({ status: 400, message: VALIDATION_ERROR_INPUT });
         }
       } else if (compareDates) {
         const newPassportNumber = req.body.passportNumber;
         const newAddress = req.body.address;
 
         if (newPassportNumber === undefined || newAddress === undefined) {
-          throw new BaseError('Bad request', 400, 'Please fill in your new passport and address');
+          throw new BaseError(
+            'Bad request',
+            400,
+            'Please fill in your new passport and address'
+          );
         }
         const profile = await models.Profile.findOne({
           where: { userId: id },
@@ -129,13 +137,14 @@ export class TripControllers {
           },
           {
             where: { userId: id },
-          },
+          }
         );
 
         const checkTripType = req.body.destinations.length;
         const tripType = checkTripType > 1 ? 'multicity' : 'single-city';
         req.body.tripType = tripType;
         const newTrip = await createTrip(id, req.body);
+
         if (newTrip) {
           // Emit event when trip request is created
           requestEventEmitter.emit('request-created', newTrip, req);
@@ -153,7 +162,8 @@ export class TripControllers {
         res.status(400).json({ status: 400, message: VALIDATION_ERROR_INPUT });
       }
     } catch (err) {
-      next(err);
+      console.log(err);
+      return res.status(500).json({ message: err.message });
     }
   }
 
@@ -162,7 +172,13 @@ export class TripControllers {
     try {
       const updatePassportNumber = req.body.passportNumber;
       const updateNewAdress = req.body.address;
-      const multiCityTrips = await updateMulticities(id, req.params.id, req.body, updatePassportNumber, updateNewAdress);
+      const multiCityTrips = await updateMulticities(
+        id,
+        req.params.id,
+        req.body,
+        updatePassportNumber,
+        updateNewAdress
+      );
       if (multiCityTrips) {
         // Emit event when trip request is edited
         requestEventEmitter.emit('request-updated', multiCityTrips);
@@ -261,7 +277,11 @@ export class TripControllers {
             });
           }
         } else {
-          throw new BaseError('Bad request', 400, 'Trip request is already Updated');
+          throw new BaseError(
+            'Bad request',
+            400,
+            'Trip request is already Updated'
+          );
         }
       } else {
         throw new UnauthorizedError('You are not a manager of this user');
@@ -279,6 +299,34 @@ export class TripControllers {
         message: TRIP_FOUND_MESSAGE,
         payload: getTripRequests,
       });
+    } catch (err) {
+      next(err);
+    }
+  }
+  async countTripStatics(id, req, res, next) {
+    try {
+      const recordStart = await new Date(req.body.startDate);
+      const recordEnd = await new Date(req.body.endDate);
+
+      const result = await findStatistcsByUser(id, recordStart, recordEnd);
+      if (result) {
+        res.status(200).json({
+          status: 200,
+          message: 'Information successfully found',
+          payload: result,
+        });
+      }
+      if (!result) {
+        throw new BaseError(
+          'Bad request',
+          404,
+          'information not found not found'
+        );
+      } else {
+        throw new UnauthorizedError(
+          'You are not a manager or requester of this user'
+        );
+      }
     } catch (err) {
       next(err);
     }

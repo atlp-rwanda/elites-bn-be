@@ -21,9 +21,14 @@ import {
   requesterLogin,
 } from './trip.dummyData.js';
 
+<<<<<<< HEAD
 chai.use(chaiHttp);
 let token;
 let adminToken;
+=======
+use(chaiHttp);
+let token;
+>>>>>>> 3fa91f6 ( This is a combination of 2 commits.)
 describe('TRIP REQUEST ENDPOINTS', () => {
   let id;
 
@@ -71,8 +76,31 @@ describe('TRIP REQUEST ENDPOINTS', () => {
         expect(res.type).to.equal('application/json');
         expect(res.body).to.have.property('message');
         expect(res.body).to.have.property('status');
+<<<<<<< HEAD
       });
     done();
+=======
+        expect(res.body.message).to.equal(VALIDATION_ERROR);
+      });
+    done();
+  });
+
+  // SHOULD NOT CREATE A TRIP REQUEST
+  it('should  NOT create a trip request', (done) => {
+    chai
+      .request(app)
+      .post('/api/v1/trips/')
+      .set('Authorization', `Bearer ${token}`)
+      .send(incorrectDate)
+      .end((req, res) => {
+        expect(res).to.have.status([400]);
+        expect(res.type).to.equal('application/json');
+        expect(res.body).to.have.property('message');
+        expect(res.body).to.have.property('status');
+        expect(res.body.message).to.equal(VALIDATION_ERROR);
+      });
+    done();
+>>>>>>> 3fa91f6 ( This is a combination of 2 commits.)
   });
 
   
@@ -150,9 +178,12 @@ describe('TRIP REQUEST ENDPOINTS', () => {
       .end((req, res) => {
         expect(res).to.have.status([200]);
         expect(res.type).to.equal('application/json');
+<<<<<<< HEAD
         expect(res.body).to.have.property('message');
         expect(res.body).to.have.property('status');
        
+=======
+>>>>>>> 3fa91f6 ( This is a combination of 2 commits.)
       });
     done();
   });
@@ -166,7 +197,12 @@ describe('TRIP REQUEST ENDPOINTS', () => {
         expect(res).to.have.status([404]);
         expect(res.type).to.equal('application/json');
         expect(res.body).to.have.property('message');
+<<<<<<< HEAD
         
+=======
+        expect(res.body).to.have.property('status');
+        expect(res.body.message).to.equal(REQUEST_UPDATED);
+>>>>>>> 3fa91f6 ( This is a combination of 2 commits.)
       });
     done();
   });
@@ -181,6 +217,7 @@ describe('TRIP REQUEST ENDPOINTS', () => {
       .end((req, res) => {
         expect(res).to.have.status([401]);
         expect(res.type).to.equal('application/json');
+<<<<<<< HEAD
       });
     done();
   });
@@ -198,6 +235,9 @@ describe('TRIP REQUEST ENDPOINTS', () => {
         expect(res).to.have.status([200]);
         expect(res.type).to.equal('application/json');
         expect(res.body.message).to.equal(REQUEST_UPDATED);
+=======
+        expect(res.body).to.have.property('message');
+>>>>>>> 3fa91f6 ( This is a combination of 2 commits.)
       });
     done();
   });
@@ -213,7 +253,11 @@ describe('TRIP REQUEST ENDPOINTS', () => {
         expect(res.type).to.equal('application/json');
         expect(res.body).to.have.property('message');
         expect(res.body).to.have.property('status');
+<<<<<<< HEAD
          
+=======
+        expect(res.body.message).to.equal(TRIP_DELETED_MESSAGE);
+>>>>>>> 3fa91f6 ( This is a combination of 2 commits.)
       });
     done();
   });

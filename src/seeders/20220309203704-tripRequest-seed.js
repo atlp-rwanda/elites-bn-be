@@ -22,11 +22,14 @@ module.exports = {
           tripReason: 'this is trip for research purpose',
           departDate: '2022-9-03',
           returnDate: '2022-10-03',
+<<<<<<< HEAD
           address: 'KIGALI-GASABO-KARURUMA',
           passportNumber: 'FGH54673',
           names: 'YANGENEYE Patrick',
           gender: 'male',
           role: 'admin',
+=======
+>>>>>>> 3fa91f6 ( This is a combination of 2 commits.)
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -48,11 +51,14 @@ module.exports = {
           tripReason: 'this is trip for research purpose',
           departDate: '2022-10-03',
           returnDate: '2022-12-03',
+<<<<<<< HEAD
           address: 'KAMPALA-ENTEBE-KAMINA',
           passportNumber: 'ZXC9876',
           names: 'seeduser',
           gender: 'male',
           role: 'requester',
+=======
+>>>>>>> 3fa91f6 ( This is a combination of 2 commits.)
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -75,11 +81,14 @@ module.exports = {
           tripReason: 'this is trip for research purpose',
           departDate: '2022-10-03',
           returnDate: '2022-12-03',
+<<<<<<< HEAD
           address: 'KAMPALA-ENTEBE-KAMINA',
           passportNumber: 'ZXC9876',
           names: 'seeduser',
           gender: 'male',
           role: 'requester',
+=======
+>>>>>>> 3fa91f6 ( This is a combination of 2 commits.)
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -98,6 +107,7 @@ module.exports = {
               destionation: 2,
             }),
           ],
+<<<<<<< HEAD
           status: 'pending',
           tripReason: 'this is to test ',
           departDate: '2024-04-03',
@@ -125,6 +135,8 @@ module.exports = {
               destionation: 2,
             }),
           ],
+=======
+>>>>>>> 3fa91f6 ( This is a combination of 2 commits.)
           status: 'approved',
           tripReason: 'this is to test ',
           departDate: '2024-04-03',

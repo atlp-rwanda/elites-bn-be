@@ -4,7 +4,11 @@ import app from '../src/app.js';
 import db from '../src/models';
 import { UserControllers } from '../src/controllers/userController';
 
+<<<<<<< HEAD
 chai.use(chaiHttp);
+=======
+// use(chaiHttp);
+>>>>>>> 3fa91f6 ( This is a combination of 2 commits.)
 
 describe('AUTHORIZED USER LOGIN', () => {
   it('it should login the user through google',  (done) => {

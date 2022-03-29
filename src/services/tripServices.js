@@ -1,5 +1,6 @@
 import { Op } from 'sequelize';
 import models from '../models';
+import { Op } from 'sequelize';
 
 export const checkRole = async (userid) => {
   const data = await models.User.findOne({
@@ -38,12 +39,23 @@ export const getManagerId = async (userid) => {
   return managerId;
 };
 
+<<<<<<< HEAD
 export const tripExist = async (userId, departDate) => await models.tripRequest.findOne({
   where: {
     userId,
     departDate,
   },
 });
+=======
+export const tripExist = async (userId, departDate) => {
+  return await models.tripRequest.findOne({
+    where: {
+      userId,
+      departDate: departDate,
+    },
+  });
+};
+>>>>>>> 3fa91f6 ( This is a combination of 2 commits.)
 
 export const findAtrip = async (id) => {
   const dataExist = await models.tripRequest.findOne({
@@ -72,12 +84,13 @@ export const createTrip = async (userid, data) => {
         ...data,
         userId: userid,
       });
+      console.log(addTrip);
       addTrip.save();
       return addTrip;
     }
     return false;
   } catch (err) {
-    throw new Error('something is Wrong');
+    throw new Error('You are not allowed, to create trips');
   }
 };
 
@@ -133,23 +146,27 @@ export const getOneRequest = async (userId, id) => {
   return Data;
 };
 
-export const updateRequest = async (userId, id, data) => {
-  const exist = await tripExist(userId, id);
+// multcities update function
+export const updateMulticities = async (id, data) => {
+  const exist = await models.tripRequest.findOne({
+    where: {
+      id,
+    },
+  });
   if (exist) {
     exist.departLocation = data.departLocation
       ? data.departLocation
       : exist.departLocation;
-    exist.arrivalLocation = data.arrivalLocation
-      ? data.arrivalLocation
+    exist.destinations = data.destinations
+      ? data.destinations
       : exist.arrivalLocation;
     exist.tripReason = data.tripReason ? data.tripReason : exist.tripReason;
     exist.departDate = data.departDate ? data.departDate : exist.departDate;
     exist.returnDate = data.returnDate ? data.returnDate : exist.returnDate;
-    exist.accomodationId = data.accomodationId
-      ? data.accomodationId
-      : exist.accomodationId;
-    const updatedTrip = await exist.save();
-    return updatedTrip;
+    exist.tripType = data.tripType ? data.tripType : exist.tripType;
+
+    const updated = await exist.save();
+    return updated;
   }
   return null;
 };
@@ -247,6 +264,7 @@ export const approveRequest = async (tripId, statusUpdate) => {
   return data;
 };
 
+<<<<<<< HEAD
 export const findRequestById = async (id) => {
   const request = await models.tripRequest.findOne({
     where: {
@@ -286,4 +304,25 @@ export const fetchMostTravelled = async (tripId) => {
     where: { id: tripId },
   });
   return data;
+=======
+export const findStatistcsByUser = async (userId, startDate, endDate) => {
+  const role = await checkRole(userId);
+  if (role === 'requester') {
+    return await models.tripRequest.findAndCountAll({
+      where: {
+        [Op.and]: [
+          { userId: userId },
+          { createdAt: { [Op.between]: [startDate, endDate] } },
+        ],
+      },
+    });
+  }
+  if (role === 'manager') {
+    return await models.tripRequest.findAndCountAll({
+      where: {
+        [Op.and]: [{ createdAt: { [Op.between]: [startDate, endDate] } }],
+      },
+    });
+  }
+>>>>>>> 3fa91f6 ( This is a combination of 2 commits.)
 };

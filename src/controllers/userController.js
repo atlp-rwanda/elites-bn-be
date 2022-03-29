@@ -41,14 +41,13 @@ export class UserControllers {
       const userEmailExist = await userExist(req.body.email);
       if (userEmailExist) {
         throw new ConflictsError(
-          `User with this email: "${req.body.email}" already exist please a different email`,
+          `User with this email: "${req.body.email}" already exist please a different email`
         );
       } else {
         req.body.password = await hashPassword(req.body.password);
         const createdUser = await createUser(req.body);
-        const {
-          password, createdAt, updatedAt, ...newcreatedUser
-        } = createdUser;
+        const { password, createdAt, updatedAt, ...newcreatedUser } =
+          createdUser;
         const token = await generateAccessToken({ id: createdUser.id });
         const refreshToken = await generateRefreshToken({
           id: newcreatedUser.id,
@@ -208,14 +207,14 @@ export class UserControllers {
         throw new BaseError(
           'Bad request',
           400,
-          'Please Enter a valid email address',
+          'Please Enter a valid email address'
         );
       }
       if (!user) {
         throw new BaseError(
           'Not found',
           404,
-          'The account with provided email is not registered',
+          'The account with provided email is not registered'
         );
       }
       const payload = {
@@ -229,7 +228,7 @@ export class UserControllers {
         email,
         'ihonore01@gmail.com',
         'Barefoot Nomad password reset',
-        makeTemplate(link),
+        makeTemplate(link)
       );
       return res.status(200).send({
         status: 200,
@@ -248,7 +247,7 @@ export class UserControllers {
         throw new BaseError(
           'Bad request',
           400,
-          'Entered passwords do not match',
+          'Entered passwords do not match'
         );
       }
       const { token } = req.params;

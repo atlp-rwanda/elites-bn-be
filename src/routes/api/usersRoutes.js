@@ -5,6 +5,7 @@ import { roleValidate } from '../../validations/roleValidation';
 import { isAdmin } from '../../middlewares/isAdmin';
 import passport from '../../middlewares/auth';
 import { passwordValidation } from '../../validations/resetPassword.validation';
+import { emailValidation } from '../../validations/email.validation';
 
 const router = express.Router();
 const userControllers = new UserControllers();
@@ -21,7 +22,7 @@ router.patch(
   isAdmin,
   userControllers.updateRole
 );
-router.post('/forgot-password', userControllers.sendResetLink);
+router.post('/forgot-password', emailValidation, userControllers.sendResetLink);
 router.patch(
   '/reset-password/:token',
   passwordValidation,

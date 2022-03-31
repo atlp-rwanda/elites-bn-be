@@ -25,6 +25,7 @@ import models from '../models';
 import { UnauthorizedError } from '../httpErrors/unauthorizedError';
 import { userById } from '../services/userServices';
 import { BaseError } from '../httpErrors/baseError';
+import requestEventEmitter from '../controllers/notificationsController';
 
 // eslint-disable-next-line import/prefer-default-export
 export class TripControllers {
@@ -54,6 +55,9 @@ export class TripControllers {
         const newTrip = await createTrip(id, req.body);
 
         if (newTrip) {
+          //Emit event when trip request is created
+          requestEventEmitter.emit('request-created', newTrip);
+
           res
             .status(201)
             .json({ status: 201, message: TRIP_CREATED, payload: newTrip });
@@ -77,6 +81,9 @@ export class TripControllers {
     try {
       const multiCityTrips = await updateMulticities(req.params.id, req.body);
       if (multiCityTrips) {
+        //Emit event when trip request is edited
+        requestEventEmitter.emit('request-updated', updated);
+
         return res.status(200).json({
           message: 'Updating has been successfully ',
           payload: multiCityTrips,
@@ -155,6 +162,9 @@ export class TripControllers {
             status: updatedStatus,
           });
           if (updated) {
+            //Emit the event when trip request is approved or rejected
+            requestEventEmitter.emit('request-approved-or-rejected', updated);
+
             res.status(200).json({
               status: 200,
               message: REQUEST_UPDATED,

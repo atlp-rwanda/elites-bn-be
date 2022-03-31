@@ -6,6 +6,7 @@ import {
   TRIP_DELETED_MESSAGE,
   NO_TRIP_FOUND,
   VALIDATION_ERROR,
+  VALIDATION_ERROR_INPUT,
 } from '../constants/tripConstants';
 import {
   createTrip,
@@ -17,8 +18,7 @@ import {
   checkLocations,
   getOneRequest,
   approveRequest,
-  findByPk,
-  updateTrip,
+  updateMulticities,
 } from '../services/tripServices';
 import { validateDate } from '../helpers/dateComparison';
 import models from '../models';
@@ -36,34 +36,35 @@ export class TripControllers {
         req.body.returnDate,
         req.body.departDate
       );
-      const locationsValidation = await checkLocations(req.body.departLocation);
-
+      // const locationsValidation = await checkLocations(req.body.departLocation);
       const exists = await tripExist(id, req.body.departDate);
-      console.log(exists);
+
       if (exists) {
-        return res.status(201).json({
+        return res.status(400).json({
           status: 400,
           message: 'Trip request already exists',
           payload: exists,
         });
       }
 
-      if (compareDates && locationsValidation) {
+      if (compareDates) {
         const checkTripType = req.body.destinations.length;
         const tripType = checkTripType > 1 ? 'multicity' : 'single-city';
         req.body.tripType = tripType;
         const newTrip = await createTrip(id, req.body);
+
         if (newTrip) {
           res
             .status(201)
             .json({ status: 201, message: TRIP_CREATED, payload: newTrip });
         } else {
-          res
-            .status(403)
-            .json({ message: 'you are not allowed to create a request' });
+          res.status(403).json({
+            status: 403,
+            message: 'you are not allowed to create a request',
+          });
         }
       } else {
-        res.status(400).json({ status: 400, message: VALIDATION_ERROR });
+        res.status(400).json({ status: 400, message: VALIDATION_ERROR_INPUT });
       }
     } catch (err) {
       console.log(err);
@@ -74,11 +75,12 @@ export class TripControllers {
   // eslint-disable-next-line class-methods-use-this
   async updateRequest(id, req, res, next) {
     try {
-      const updated = await updateRequest(id, req.params.id, req.body);
-      if (updated) {
-        res
-          .status(200)
-          .json({ status: 200, message: REQUEST_UPDATED, payload: updated });
+      const multiCityTrips = await updateMulticities(req.params.id, req.body);
+      if (multiCityTrips) {
+        return res.status(200).json({
+          message: 'Updating has been successfully ',
+          payload: multiCityTrips,
+        });
       } else {
         res.status(404).json({
           status: 404,

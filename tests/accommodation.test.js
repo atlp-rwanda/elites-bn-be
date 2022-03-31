@@ -57,16 +57,16 @@ describe('ACCOMMODATION ROUTES TESTING', () => {
     done();
   });
 
-    it('Should not retrieve an accommodation', (done) => {
-        chai
-            .request(app)
-            .get(`/api/v1/accommodations/${'eeee'}`)
-            .end((err, res) => {
-                expect(res).to.have.status([500]);
-                expect(res.body).to.have.property('name');
-                expect(res.body.name).to.equal('SequelizeDatabaseError');
-                expect(res.body).to.have.property('message');
-            });
-        done();
-    });
+  it('Should not retrieve an accommodation', (done) => {
+    chai
+      .request(app)
+      .get(`/api/v1/accommodations/${'eeee'}`)
+      .end((err, res) => {
+        expect(res).to.have.status([500]);
+        expect(res.body).to.have.property('name');
+        expect(res.body.name).to.equal('SequelizeDatabaseError');
+        expect(res.body).to.have.property('message');
+      });
+    done();
+  });
 });

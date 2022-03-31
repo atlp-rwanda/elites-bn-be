@@ -6,36 +6,29 @@
 /* eslint-disable indent */
 /* eslint-disable no-undef */
 // eslint-disable-next-line import/extensions
-import {
-  TRIP_CREATED,
-  REQUEST_UPDATED,
-} from "../src/constants/tripConstants";
-import chai, { expect, request, use } from "chai";
-import chaiHttp from "chai-http";
-import app from "../src/app.js";
-import "dotenv/config";
-import {
-  requeLogin,
-  managerToken,
-} from "./trip.dummyData.js";
+import { TRIP_CREATED, REQUEST_UPDATED } from '../src/constants/tripConstants';
+import chai, { expect, request, use } from 'chai';
+import chaiHttp from 'chai-http';
+import app from '../src/app.js';
+import 'dotenv/config';
+import { requeLogin, managerToken } from './trip.dummyData.js';
 
 let id;
 
 use(chaiHttp);
-describe("TRIP REQUEST ENDPOINTS", () => {
-  it("it should login the user", (done) => {
+describe('TRIP REQUEST ENDPOINTS', () => {
+  it('it should login the user', (done) => {
     chai
       .request(app)
-      .post("/api/v1/users/login")
+      .post('/api/v1/users/login')
       .send(requeLogin)
 
       .end((err, res) => {
-
         expect(res).to.have.status([200]);
-        expect(res.body).to.have.property("message");
-        expect(res.body).to.have.property("status");
-        expect(res.body).to.have.property("payload");
-      })
+        expect(res.body).to.have.property('message');
+        expect(res.body).to.have.property('status');
+        expect(res.body).to.have.property('payload');
+      });
     done();
   });
 
@@ -50,8 +43,8 @@ describe("TRIP REQUEST ENDPOINTS", () => {
       })
       .end((err, res) => {
         expect(res).to.have.status([200]);
-        expect(res.body).to.have.property("message");
-        expect(res.body).to.have.property("status");
+        expect(res.body).to.have.property('message');
+        expect(res.body).to.have.property('status');
         expect(res.body.message).to.equal(REQUEST_UPDATED);
       });
     done();

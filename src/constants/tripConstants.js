@@ -10,3 +10,5 @@ export const ERROR_DATES =
   'ERROR: arrival date should be greater than departure date, departure date should not be in past!';
 export const VALIDATION_ERROR = 'Error: Validation error';
 export const LOGGED_IN_SUCCESS = 'has successful to logged in';
+export const VALIDATION_ERROR_INPUT =
+  'Error: Please, check input data are not correct';

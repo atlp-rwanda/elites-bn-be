@@ -10,9 +10,7 @@ export const trips = {
           name: 'body',
           in: 'body',
           description: 'Trip request',
-          schema: {
-            $ref: '#/definitions/trip',
-          },
+          type: 'array',
         },
       ],
       responses: {

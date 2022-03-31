@@ -11,7 +11,7 @@ export const fileUpload = async (req) => {
         throw new Error(err);
       }
       imageUrl = image.url;
-    },
+    }
   );
   return imageUrl;
 };

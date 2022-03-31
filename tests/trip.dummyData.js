@@ -1,10 +1,14 @@
 export const addRequest = {
   departLocation: 1,
-  arrivalLocation: 2,
-  tripReason: 'travelling and studies',
-  departDate: '2022-05-01',
-  returnDate: '2022-06-04',
-  accomodationId: 6,
+  destinations: [
+    {
+      accomodationId: 3,
+      destionationId: 2,
+    },
+  ],
+  tripReason: 'Free Tours',
+  departDate: '2022-05-07',
+  returnDate: '2023-02-03',
 };
 
 export const tripRequest = {

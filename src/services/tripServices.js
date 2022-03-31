@@ -68,7 +68,6 @@ export const createTrip = async (userid, data) => {
         id: userid,
       },
     });
-
     const { managerId } = checkManager.dataValues;
     if (managerId !== null) {
       const addTrip = await models.tripRequest.create({
@@ -139,6 +138,30 @@ export const updateRequest = async (userId, id, data) => {
       : exist.accomodationId;
     const updatedTrip = await exist.save();
     return updatedTrip;
+  }
+  return null;
+};
+
+// multcities update function
+export const updateMulticities = async (id, data) => {
+  const exist = await models.tripRequest.findOne({
+    where: {
+      id,
+    },
+  });
+  if (exist) {
+    exist.departLocation = data.departLocation
+      ? data.departLocation
+      : exist.departLocation;
+    exist.destinations = data.destinations
+      ? data.destinations
+      : exist.arrivalLocation;
+    exist.tripReason = data.tripReason ? data.tripReason : exist.tripReason;
+    exist.departDate = data.departDate ? data.departDate : exist.departDate;
+    exist.returnDate = data.returnDate ? data.returnDate : exist.returnDate;
+
+    const updated = await exist.save();
+    return updated;
   }
   return null;
 };

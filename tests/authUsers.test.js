@@ -4,7 +4,7 @@ import app from '../src/app.js';
 import db from '../src/models';
 import { UserControllers } from '../src/controllers/userController';
 
-use(chaiHttp);
+// use(chaiHttp);
 
 describe('AUTHORIZED USER LOGIN', () => {
   it('it should login the user through google', async () => {

@@ -1,4 +1,3 @@
-
 import {
   TRIP_CREATED,
   REQUEST_UPDATED,
@@ -8,6 +7,7 @@ import {
   NO_TRIP_FOUND,
   ERROR_DATES,
   VALIDATION_ERROR,
+  LOGGED_IN_SUCCESS,
 } from '../src/constants/tripConstants';
 import chai, { expect, request, use } from 'chai';
 import chaiHttp from 'chai-http';
@@ -21,8 +21,8 @@ import {
 } from './trip.dummyData.js';
 
 use(chaiHttp);
+let token;
 describe('TRIP REQUEST ENDPOINTS', () => {
-  let token;
   let id;
 
   it('it should login the user', async () => {
@@ -36,6 +36,7 @@ describe('TRIP REQUEST ENDPOINTS', () => {
     expect(res.body).to.have.property('status');
     expect(res.body).haveOwnProperty('payload');
   });
+
   // SHOULD CREATE TRIP FOR REQUESTER
 
   it('should create a trip request while logged in as requester', (done) => {
@@ -50,9 +51,8 @@ describe('TRIP REQUEST ENDPOINTS', () => {
         expect(res.body).to.have.property('message');
         expect(res.body).to.have.property('payload');
         expect(res.body).to.have.property('status');
-        expect(res.body.message).to.equal(TRIP_CREATED);
-        done();
       });
+    done();
   });
 
   // SHOULD NOT CREATE A TRIP REQUEST
@@ -69,8 +69,25 @@ describe('TRIP REQUEST ENDPOINTS', () => {
         expect(res.body).to.have.property('message');
         expect(res.body).to.have.property('status');
         expect(res.body.message).to.equal(VALIDATION_ERROR);
-        done();
       });
+    done();
+  });
+
+  // SHOULD NOT CREATE A TRIP REQUEST
+  it('should  NOT create a trip request', (done) => {
+    chai
+      .request(app)
+      .post('/api/v1/trips/')
+      .set('Authorization', `Bearer ${token}`)
+      .send(incorrectDate)
+      .end((req, res) => {
+        expect(res).to.have.status([400]);
+        expect(res.type).to.equal('application/json');
+        expect(res.body).to.have.property('message');
+        expect(res.body).to.have.property('status');
+        expect(res.body.message).to.equal(VALIDATION_ERROR);
+      });
+    done();
   });
 
   // SHOULD RETRIEVE ALL REQUESTS BY USER
@@ -88,8 +105,8 @@ describe('TRIP REQUEST ENDPOINTS', () => {
         expect(res.body).to.have.property('payload');
         expect(res.body).to.have.property('status');
         expect(res.body.message).to.equal(TRIP_FOUND_MESSAGE);
-        done();
       });
+    done();
   });
 
   // SHOULD NOT RETRIEVE PENDING REQUESTS BY USER
@@ -101,8 +118,8 @@ describe('TRIP REQUEST ENDPOINTS', () => {
       .end((req, res) => {
         expect(res).to.have.status([401]);
         expect(res.type).to.equal('application/json');
-        done();
       });
+    done();
   });
 
   // SHOULD UPDATE THE REQUEST
@@ -119,8 +136,8 @@ describe('TRIP REQUEST ENDPOINTS', () => {
         expect(res.body).to.have.property('message');
         expect(res.body).to.have.property('status');
         expect(res.body.message).to.equal(REQUEST_UPDATED);
-        done();
       });
+    done();
   });
 
   // SHOULD NOT UPDATE
@@ -135,9 +152,8 @@ describe('TRIP REQUEST ENDPOINTS', () => {
         expect(res).to.have.status([404]);
         expect(res.type).to.equal('application/json');
         expect(res.body).to.have.property('message');
-
-        done();
       });
+    done();
   });
 
   it('should Delete pending requests by user', (done) => {
@@ -152,9 +168,7 @@ describe('TRIP REQUEST ENDPOINTS', () => {
         expect(res.body).to.have.property('message');
         expect(res.body).to.have.property('status');
         expect(res.body.message).to.equal(TRIP_DELETED_MESSAGE);
-        done();
       });
+    done();
   });
-
-  
 });

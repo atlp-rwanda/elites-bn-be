@@ -67,7 +67,7 @@ describe('CREATE PROFILE', () => {
         expect(res.type).to.equal('application/json');
         expect(res.body).to.have.property('message');
         expect(res.body.message).to.equal(
-          'Validation error, incorrect birthdate field',
+          'Validation error, incorrect birthdate field'
         );
         done();
       });

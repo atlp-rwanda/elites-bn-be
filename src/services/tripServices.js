@@ -1,4 +1,5 @@
 import models from '../models';
+import { Op } from 'sequelize';
 
 export const checkRole = async (userid) => {
   const data = await models.User.findOne({
@@ -37,19 +38,13 @@ export const getManagerId = async (userid) => {
   return managerId;
 };
 
-export const tripExist = async (userId, id) => {
-  const dataExist = await models.tripRequest.findOne({
+export const tripExist = async (userId, departDate) => {
+  return await models.tripRequest.findOne({
     where: {
       userId,
-      status: 'pending',
-      id,
+      departDate: departDate,
     },
   });
-
-  if (dataExist) {
-    return dataExist;
-  }
-  return null;
 };
 
 export const findAtrip = async (id) => {
@@ -73,13 +68,13 @@ export const createTrip = async (userid, data) => {
         id: userid,
       },
     });
-
     const { managerId } = checkManager.dataValues;
     if (managerId !== null) {
       const addTrip = await models.tripRequest.create({
         ...data,
         userId: userid,
       });
+      console.log(addTrip);
       addTrip.save();
       return addTrip;
     }
@@ -147,6 +142,30 @@ export const updateRequest = async (userId, id, data) => {
   return null;
 };
 
+// multcities update function
+export const updateMulticities = async (id, data) => {
+  const exist = await models.tripRequest.findOne({
+    where: {
+      id,
+    },
+  });
+  if (exist) {
+    exist.departLocation = data.departLocation
+      ? data.departLocation
+      : exist.departLocation;
+    exist.destinations = data.destinations
+      ? data.destinations
+      : exist.arrivalLocation;
+    exist.tripReason = data.tripReason ? data.tripReason : exist.tripReason;
+    exist.departDate = data.departDate ? data.departDate : exist.departDate;
+    exist.returnDate = data.returnDate ? data.returnDate : exist.returnDate;
+
+    const updated = await exist.save();
+    return updated;
+  }
+  return null;
+};
+
 export const deleteRequest = async (userId, id) => {
   const checkExist = await tripExist(userId, id);
 
@@ -164,7 +183,6 @@ export const deleteRequest = async (userId, id) => {
 
   return null;
 };
-
 export const checkStatus = async (userid, status) => {
   const data = await models.tripRequest.findOne({
     where: {

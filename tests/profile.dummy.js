@@ -20,5 +20,6 @@ export const profileInfo = {
   currency: 'USD',
   residence: 2,
   department: 'marketing',
-  picture: 'https://www.pngkit.com/png/detail/126-1262807_instagram-default-profile-picture-png.png',
+  picture:
+    'https://www.pngkit.com/png/detail/126-1262807_instagram-default-profile-picture-png.png',
 };

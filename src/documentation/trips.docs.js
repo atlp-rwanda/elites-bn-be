@@ -5,14 +5,14 @@ export const trips = {
       summary: 'This is the endpoint to request a trip by user',
       description: 'This is the endpoint to request trip by user',
       operationId: 'Addt tripRequest',
-      parameters: [{
-        name: 'body',
-        in: 'body',
-        description: 'Trip request',
-        schema: {
-          $ref: '#/definitions/trip',
+      parameters: [
+        {
+          name: 'body',
+          in: 'body',
+          description: 'Trip request',
+          type: 'array',
         },
-      }],
+      ],
       responses: {
         201: {
           description: 'Trip request created successfull',
@@ -21,9 +21,11 @@ export const trips = {
           description: 'Bad Request',
         },
       },
-      security: [{
-        Bearer: [],
-      }],
+      security: [
+        {
+          Bearer: [],
+        },
+      ],
     },
     get: {
       tags: ['Trip Request'],
@@ -39,9 +41,11 @@ export const trips = {
           description: 'Bad Request',
         },
       },
-      security: [{
-        Bearer: [],
-      }],
+      security: [
+        {
+          Bearer: [],
+        },
+      ],
     },
   },
 
@@ -51,13 +55,15 @@ export const trips = {
       summary: 'This endPoint will retrieve one request ',
       description: 'This endPoint will retrieve one request ',
       operationId: 'getOneRequest',
-      parameters: [{
-        name: 'id',
-        in: 'path',
-        description: 'Trip request id',
-        required: true,
-        type: 'integer',
-      }],
+      parameters: [
+        {
+          name: 'id',
+          in: 'path',
+          description: 'Trip request id',
+          required: true,
+          type: 'integer',
+        },
+      ],
 
       responses: {
         200: {
@@ -67,9 +73,11 @@ export const trips = {
           description: 'Bad Request',
         },
       },
-      security: [{
-        Bearer: [],
-      }],
+      security: [
+        {
+          Bearer: [],
+        },
+      ],
     },
     put: {
       tags: ['Trip Request'],
@@ -77,21 +85,22 @@ export const trips = {
       description: ' update request with pending status',
       operationId: 'updateRequest',
       produces: ['application/json'],
-      parameters: [{
-        name: 'id',
-        in: 'path',
-        required: true,
-        type: 'integer',
-      },
-      {
-        name: 'body',
-        in: 'body',
-        required: true,
-        description: 'Trip request',
-        schema: {
-          $ref: '#/definitions/trip',
+      parameters: [
+        {
+          name: 'id',
+          in: 'path',
+          required: true,
+          type: 'integer',
         },
-      },
+        {
+          name: 'body',
+          in: 'body',
+          required: true,
+          description: 'Trip request',
+          schema: {
+            $ref: '#/definitions/trip',
+          },
+        },
       ],
       responses: {
         200: {
@@ -104,23 +113,29 @@ export const trips = {
           description: 'user you want to update does not exist',
         },
       },
-      security: [{
-        Bearer: [],
-      }],
+      security: [
+        {
+          Bearer: [],
+        },
+      ],
     },
 
     delete: {
       tags: ['Trip Request'],
-      summary: 'This end Point will delete the pending request sent by requester',
-      description: 'This end Point will delete the pending request sent by requester',
+      summary:
+        'This end Point will delete the pending request sent by requester',
+      description:
+        'This end Point will delete the pending request sent by requester',
       operationId: 'delete Request',
-      parameters: [{
-        name: 'id',
-        in: 'path',
-        description: 'Trip request id',
-        required: true,
-        type: 'integer',
-      }],
+      parameters: [
+        {
+          name: 'id',
+          in: 'path',
+          description: 'Trip request id',
+          required: true,
+          type: 'integer',
+        },
+      ],
 
       responses: {
         204: {
@@ -130,31 +145,35 @@ export const trips = {
           description: 'NOT FOUND',
         },
       },
-      security: [{
-        Bearer: [],
-      }],
+      security: [
+        {
+          Bearer: [],
+        },
+      ],
     },
     patch: {
       tags: ['Trip Request'],
-      summary: '  Manager can update request with pending status to approved or rejected',
+      summary:
+        '  Manager can update request with pending status to approved or rejected',
       description: 'Manager can update request with pending status',
       operationId: 'updateRequest',
       produces: ['application/json'],
-      parameters: [{
-        name: 'id',
-        in: 'path',
-        required: true,
-        type: 'integer',
-      },
-      {
-        name: 'body',
-        in: 'body',
-        required: true,
-        description: 'Trip request',
-        schema: {
-          $ref: '#/definitions/trips',
+      parameters: [
+        {
+          name: 'id',
+          in: 'path',
+          required: true,
+          type: 'integer',
         },
-      },
+        {
+          name: 'body',
+          in: 'body',
+          required: true,
+          description: 'Trip request',
+          schema: {
+            $ref: '#/definitions/trips',
+          },
+        },
       ],
       responses: {
         200: {
@@ -170,11 +189,12 @@ export const trips = {
           description: 'Bad Request',
         },
       },
-      security: [{
-        Bearer: [],
-      }],
+      security: [
+        {
+          Bearer: [],
+        },
+      ],
     },
-
   },
 };
 
@@ -210,8 +230,6 @@ export const tripDefinitions = {
       status: {
         type: 'string',
       },
-
     },
   },
-
 };

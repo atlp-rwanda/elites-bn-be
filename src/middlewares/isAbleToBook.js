@@ -24,7 +24,6 @@ export const isAbleToBook = async (req, res, next) => {
     const token = req.headers.authorization.split(' ')[1];
 
     const data = await decodeAcessToken(token);
-    console.log(data.id, '========================');
 
     const user = await models.User.findOne({
       where: { id: data.id },
@@ -41,7 +40,6 @@ export const isAbleToBook = async (req, res, next) => {
     if (tripRequest === null) {
       throw new ForbbidenError('You have no such trip request');
     }
-    console.log(tripRequest.status, '================');
     if (tripRequest.status === 'pending' || tripRequest.status === 'rejected') {
       throw new ForbbidenError('this trip request has not been approved');
     }
@@ -56,7 +54,7 @@ export const isAbleToBook = async (req, res, next) => {
     const roomAvailable = checkRoomExist.isAvailable;
     if (roomAvailable === false) {
       throw new ForbbidenError(
-        'This room is already booked try a different one',
+        'This room is already booked try a different one'
       );
     }
     next();

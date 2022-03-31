@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 const { Model } = require('sequelize');
 
+=======
+'use strict';
+const { Model } = require('sequelize');
+>>>>>>> fdb8021 ( This is a combination of 4 commits.)
 module.exports = (sequelize, DataTypes) => {
   class Notification extends Model {
     /**
@@ -26,7 +31,11 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: 'Notification',
       tableName: 'Notifications',
+<<<<<<< HEAD
     },
+=======
+    }
+>>>>>>> fdb8021 ( This is a combination of 4 commits.)
   );
   return Notification;
 };

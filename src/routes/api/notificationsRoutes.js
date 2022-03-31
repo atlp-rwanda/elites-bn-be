@@ -3,6 +3,7 @@ import NotificationControllers from '../../controllers/notificationRoutesControl
 import { UserControllers } from '../../controllers/userController';
 
 import { authenticate } from '../../middlewares/authenticate';
+import { isNotificationExist } from '../../middlewares/isNotificationExist';
 
 const router = express.Router();
 

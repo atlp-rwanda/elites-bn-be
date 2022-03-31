@@ -43,6 +43,17 @@ class notificationServices {
       return 'No notification to delete';
     }
   };
+
+  updateStatus = async (userId) => {
+    const updateNotifications = await Notification.update(
+      { isRead: true },
+      { where: { userId } }
+    );
+    const notificationMarked = await Notification.findOne({
+      where: { userId },
+    });
+    return notificationMarked;
+  };
 }
 
 export default notificationServices;

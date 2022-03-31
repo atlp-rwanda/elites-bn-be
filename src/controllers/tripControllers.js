@@ -82,7 +82,7 @@ export class TripControllers {
       const multiCityTrips = await updateMulticities(req.params.id, req.body);
       if (multiCityTrips) {
         //Emit event when trip request is edited
-        requestEventEmitter.emit('request-updated', updated);
+        requestEventEmitter.emit('request-updated', multiCityTrips);
 
         return res.status(200).json({
           message: 'Updating has been successfully ',
@@ -163,7 +163,7 @@ export class TripControllers {
           });
           if (updated) {
             //Emit the event when trip request is approved or rejected
-            requestEventEmitter.emit('request-approved-or-rejected', updated);
+            // requestEventEmitter.emit('request-approved-or-rejected', updated);
 
             res.status(200).json({
               status: 200,

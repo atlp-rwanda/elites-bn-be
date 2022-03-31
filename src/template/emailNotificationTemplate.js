@@ -47,8 +47,7 @@ const makeEmailNotificationTemplate = (payload) => {
                                           <span
                                               style="display:inline-block; vertical-align:middle; margin:29px 0 26px; border-bottom:1px solid #cecece; width:100px;"></span>
                                           <p style="color:#455056; font-size:15px;line-height:18px; margin:0;">
-                                            Hello ${payload.managerNames}!, ${payload.requesterNames} has ${payload.type} a trip request from ${payload.from.location}, ${payload.from.country} to ${payload.to.location}, ${payload.to.country} for the Reason: " ${payload.tripReason} ".
-                
+                                                  ${payload.body}
                                           </p>
                                           <a href="${payload.tripUri}"
                                               style="background:#2b80ee;text-decoration:none !important; font-weight:500; margin-top:25px;margin-bottom:25px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;">

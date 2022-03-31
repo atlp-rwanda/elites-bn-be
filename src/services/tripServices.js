@@ -213,3 +213,12 @@ export const approveRequest = async (tripId, statusUpdate) => {
 
   return data;
 };
+
+export const findRequestById = async (id) => {
+  const request = await models.tripRequest.findOne({
+    where: {
+      id,
+    },
+  });
+  return request;
+};

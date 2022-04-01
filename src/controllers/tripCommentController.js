@@ -2,7 +2,7 @@ import { findAtrip } from '../services/tripServices';
 import { TripCommentService } from '../services/tripCommentServices';
 import { PageNotFoundError } from '../httpErrors/pageNotFoundError';
 import { ForbbidenError } from '../httpErrors/forbidenError';
-import requestEventEmitter from '../controllers/notificationsController';
+import requestEventEmitter from '../controllers/notificationEventsController';
 
 export class TripCommentController {
   static async create(id, req, res, next) {

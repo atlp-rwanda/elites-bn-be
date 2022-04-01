@@ -7,6 +7,7 @@ import { location, locationsDefinitions } from './locations.docs';
 import { profile } from './profile.docs';
 import { tripComment, tripCommentDefinitions } from './tripComment.docs';
 import { bookings, bookingsDefinition } from './booking.docs';
+import { notifications } from './notification.docs';
 
 const paths = {
   ...welcome,
@@ -17,8 +18,8 @@ const paths = {
   ...rooms,
   ...location,
   ...tripComment,
-
   ...bookings,
+  ...notifications,
 };
 
 const definitions = {

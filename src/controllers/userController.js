@@ -16,6 +16,8 @@ import {
   updatedRole,
   userById,
   updateUserPassword,
+  notificationsOptOut,
+  notificationsOptIn,
 } from '../services/userServices';
 
 import { sendEmail } from '../services/send-email-service';
@@ -254,6 +256,38 @@ export class UserControllers {
           status: 200,
           message: 'The password has been reset successfully',
         });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async notificationOptOut(id, req, res, next) {
+    try {
+      const user = await notificationsOptOut(id);
+      if (user) {
+        res.status(200).json({
+          status: 200,
+          message: 'You have unsubscribed successfully',
+        });
+      } else {
+        throw new ConflictsError('You are already unsubscribed!');
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async notificationOptIn(id, req, res, next) {
+    try {
+      const user = await notificationsOptIn(id);
+      if (user) {
+        res.status(200).json({
+          status: 200,
+          message: 'You have subscribed successfully',
+        });
+      } else {
+        throw new ConflictsError('You are already subscribed!');
       }
     } catch (err) {
       next(err);

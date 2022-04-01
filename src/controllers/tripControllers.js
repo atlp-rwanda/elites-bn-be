@@ -5,17 +5,14 @@ import {
   TRIP_FOUND_MESSAGE,
   TRIP_DELETED_MESSAGE,
   NO_TRIP_FOUND,
-  VALIDATION_ERROR,
   VALIDATION_ERROR_INPUT,
 } from '../constants/tripConstants';
 import {
   createTrip,
-  updateRequest,
   deleteRequest,
   getAllRequests,
   getManagerId,
   tripExist,
-  checkLocations,
   getOneRequest,
   approveRequest,
   updateMulticities,
@@ -25,7 +22,7 @@ import models from '../models';
 import { UnauthorizedError } from '../httpErrors/unauthorizedError';
 import { userById } from '../services/userServices';
 import { BaseError } from '../httpErrors/baseError';
-import requestEventEmitter from '../controllers/notificationsController';
+import requestEventEmitter from './notificationEventsController';
 
 // eslint-disable-next-line import/prefer-default-export
 export class TripControllers {
@@ -163,7 +160,7 @@ export class TripControllers {
           });
           if (updated) {
             //Emit the event when trip request is approved or rejected
-            // requestEventEmitter.emit('request-approved-or-rejected', updated);
+            requestEventEmitter.emit('request-approved-or-rejected', updated);
 
             res.status(200).json({
               status: 200,

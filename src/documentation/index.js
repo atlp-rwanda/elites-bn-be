@@ -13,6 +13,7 @@ import {
   AccommodationRating,
   AccommodationRatingDefinitions,
 } from './accommodationRating.docs';
+import { accommodationLike } from './accommodationLike.docs';
 
 const paths = {
   ...welcome,
@@ -27,6 +28,7 @@ const paths = {
   ...notifications,
   ...chats,
   ...AccommodationRating,
+  ...accommodationLike,
 };
 
 const definitions = {

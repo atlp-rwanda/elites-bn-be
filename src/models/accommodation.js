@@ -19,10 +19,16 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       });
+<<<<<<< HEAD
 
       Accommodation.hasMany(models.AccommodationRating, {
         foreignKey: 'accommodationId',
         as: 'ratings',
+=======
+      Accommodation.hasMany(models.AccommodationLike, {
+        foreignKey: 'accommodationId',
+        as: 'likes',
+>>>>>>> This is a combination of 2 commits.
       });
     }
   }

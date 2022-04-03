@@ -11,11 +11,14 @@ import swaggerDoc from './documentation/index';
 import 'dotenv/config';
 import { PageNotFoundError } from './httpErrors/pageNotFoundError';
 import passport from './middlewares/auth';
+import socketio from 'socket.io'; 
+import http from 'http';
 import { ioMiddleware } from './helpers/socketio';
+import webSockets from './utils/websockets'
+import { handshake, userconnection } from './services/chatRoom';
 
 const app = express();
 
-// const server = http.createServer(app);
 const port = process.env.PORT || 3000;
 const mode = process.env.NODE_ENV || 'development';
 
@@ -63,6 +66,7 @@ try {
   app.get('/verify', (req, res) => {
     res.render('index');
   });
+  app.get("/api/v1/chat", (req, res) => res.sendFile(__dirname + "/public/index.html"));
 
   app.use(
     '/docs/swagger-ui/',
@@ -89,9 +93,52 @@ try {
   });
 
   const server = http.createServer(app);
+  const io = socketio(server,{
+      // cors:{
+      //   origin: '*'
+      // },
+      path: '/socket.io',
+    });
 
-  server.listen(port, () => {
-    console.log(`The server is running on port ${port}`);
+    // io.attach(server,
+    //   {
+    //     cors: {
+    //       origin: 'http://localhost',
+    //       methods: ['GET', 'POST'],
+    //       credentials: true,      
+    //     },
+    //     transports: ['websocket', 'polling'],
+    //     allowEIO3: true,
+      
+    //   });
+
+    io.on('connection',(socket)=>{
+
+      console.log('👾 New socket connected! >>', socket.id)
+      // console.log(`${socket.id} + connected`);
+    io.emit('new-connection');
+    socket.on('message', function(msg) {
+      io.emit('message', msg);
+    });
+
+    socket.on('chat',(data)=>{
+        io.sockets.emit('chat', data)
+      });
+      
+      socket.on('typing',(data)=>{
+        io.sockets.emit('typing', data);
+      });
+
+      socket.on("connect_error", (err) => {
+        console.log(`connect_error due to ${err.message}`);
+      });
+      
+    });
+
+    
+
+  server.listen(port,()=>{
+    console.log("server is running");
   });
 
   const io = socketio(server);
@@ -114,4 +161,7 @@ try {
 } catch (error) {
   console.log(error);
 }
+
+
+
 export default app;

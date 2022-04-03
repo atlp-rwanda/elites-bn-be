@@ -29,6 +29,7 @@ const definitions = {
   ...locationsDefinitions,
   ...tripCommentDefinitions,
   ...bookingsDefinition,
+  ...chatDefinitions,
 };
 
 const config = {

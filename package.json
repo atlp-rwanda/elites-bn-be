@@ -24,7 +24,7 @@
     "seed-accommodation": "npx sequelize db:seed --seed 20220309194916-Accommodation.js",
     "seed-room": "npx sequelize db:seed --seed 20220309194951-Room.js",
     "seed-refreshToken": "npx sequelize db:seed --seed 20220315140632-refreshTokenTables.js",
-    "dbmigrate:all": "npx sequelize-cli db:migrate:undo:all && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all"
+    "dbmigrate:all": "npx sequelize-cli db:migrate:undo:all && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:undo && npx sequelize-cli db:seed:all"
   },
   "betterScripts": {
     "dev": {

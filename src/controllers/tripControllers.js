@@ -20,9 +20,11 @@ import {
 import { validateDate } from '../helpers/dateComparison';
 import models from '../models';
 import { UnauthorizedError } from '../httpErrors/unauthorizedError';
+import { NotFoundError } from '../httpErrors/NotFoundError';
 import { userById } from '../services/userServices';
 import { BaseError } from '../httpErrors/baseError';
 import requestEventEmitter from './notificationEventsController';
+import { decodeAcessToken } from '../helpers/jwtFunction';
 
 // eslint-disable-next-line import/prefer-default-export
 export class TripControllers {
@@ -34,7 +36,7 @@ export class TripControllers {
         req.body.returnDate,
         req.body.departDate,
       );
-      // const locationsValidation = await checkLocations(req.body.departLocation);
+      const { rememberMe } = req.body;
       const exists = await tripExist(id, req.body.departDate);
 
       if (exists) {
@@ -45,7 +47,91 @@ export class TripControllers {
         });
       }
 
-      if (compareDates) {
+      if (rememberMe === 'true') {
+        const profile = await models.Profile.findOne({
+          where: { userId: id },
+        });
+
+        if (profile === null) {
+          res.status(400).json({
+            status: 400,
+            message: 'You do not have a profile, create one to proceed',
+          });
+        }
+        const { role } = profile;
+
+        const roleName = await models.Role.findOne({
+          where: { id: role },
+        });
+
+        const { passportNumber } = profile;
+        const { address } = profile;
+        const names = profile.name;
+        const { gender } = profile;
+        req.body.passportNumber = passportNumber;
+        req.body.address = address;
+        req.body.names = names;
+        req.body.gender = gender;
+        req.body.role = roleName.name;
+
+        if (compareDates) {
+          const checkTripType = req.body.destinations.length;
+          const tripType = checkTripType > 1 ? 'multicity' : 'single-city';
+          req.body.tripType = tripType;
+          const newTrip = await createTrip(id, req.body);
+
+          if (newTrip) {
+            res
+              .status(201)
+              .json({ status: 201, message: TRIP_CREATED, payload: newTrip });
+          } else {
+            res.status(403).json({
+              status: 403,
+              message: 'you are not allowed to create a request',
+            });
+          }
+        } else {
+          res.status(400).json({ status: 400, message: VALIDATION_ERROR_INPUT });
+        }
+      } else if (compareDates) {
+        const newPassportNumber = req.body.passportNumber;
+        const newAddress = req.body.address;
+
+        if (newPassportNumber === undefined || newAddress === undefined) {
+          throw new BaseError('Bad request', 400, 'Please fill in your new passport and address');
+        }
+        const profile = await models.Profile.findOne({
+          where: { userId: id },
+        });
+
+        if (profile === null) {
+          res.status(400).json({
+            status: 400,
+            message: 'You do not have a profile, create one to proceed',
+          });
+        }
+        const { role } = profile;
+
+        const roleName = await models.Role.findOne({
+          where: { id: role },
+        });
+
+        const names = profile.name;
+        const { gender } = profile;
+        req.body.names = names;
+        req.body.gender = gender;
+        req.body.role = roleName.name;
+
+        await models.Profile.update(
+          {
+            passportNumber: newPassportNumber,
+            address: newAddress,
+          },
+          {
+            where: { userId: id },
+          },
+        );
+
         const checkTripType = req.body.destinations.length;
         const tripType = checkTripType > 1 ? 'multicity' : 'single-city';
         req.body.tripType = tripType;
@@ -68,15 +154,16 @@ export class TripControllers {
         res.status(400).json({ status: 400, message: VALIDATION_ERROR_INPUT });
       }
     } catch (err) {
-      console.log(err);
-      return res.status(500).json({ message: err.message });
+      next(err);
     }
   }
 
   // eslint-disable-next-line class-methods-use-this
   async updateRequest(id, req, res, next) {
     try {
-      const multiCityTrips = await updateMulticities(req.params.id, req.body);
+      const updatePassportNumber = req.body.passportNumber;
+      const updateNewAdress = req.body.address;
+      const multiCityTrips = await updateMulticities(id, req.params.id, req.body, updatePassportNumber, updateNewAdress);
       if (multiCityTrips) {
         // Emit event when trip request is edited
         requestEventEmitter.emit('request-updated', multiCityTrips);
@@ -142,9 +229,11 @@ export class TripControllers {
     }
   }
 
-  async approveRejectTripRequest(id, req, res, next) {
+  async approveRejectTripRequest(req, res, next) {
     try {
-      const managerId = id;
+      const token = req.headers.authorization.split(' ')[1];
+      const decoded = await decodeAcessToken(token);
+      const managerId = decoded.id;
       const triprequestId = req.params.id;
       const trip = await models.tripRequest.findByPk(triprequestId);
       const requester = await userById(trip.userId);
@@ -154,9 +243,7 @@ export class TripControllers {
 
         if (status === 'pending') {
           const updatedStatus = req.body.status;
-          const updated = await approveRequest(triprequestId, {
-            status: updatedStatus,
-          });
+          const updated = await approveRequest(triprequestId, { status: updatedStatus });
           if (updated) {
             // Emit the event when trip request is approved or rejected
             requestEventEmitter.emit('request-approved-or-rejected', updated);
@@ -168,7 +255,7 @@ export class TripControllers {
             });
           }
         } else {
-          throw new BaseError('Bad request', 404, 'Trip request not found');
+          throw new NotFoundError();
         }
       } else {
         throw new UnauthorizedError('You are not a manager of this user');

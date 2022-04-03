@@ -52,6 +52,20 @@ export const profile = {
         },
         {
           in: 'formData',
+          name: 'passportNumber',
+          description: 'passportNumber',
+          required: true,
+          type: 'string',
+        },
+        {
+          in: 'formData',
+          name: 'address',
+          description: 'address',
+          required: true,
+          type: 'string',
+        },
+        {
+          in: 'formData',
           name: 'picture',
           description: 'profile picture',
           type: 'file',

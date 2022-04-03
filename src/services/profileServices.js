@@ -190,6 +190,11 @@ export const updateProfile = async (id, data) => {
     exist.currency = data.currency ? data.currency : exist.currency;
     exist.residence = data.residence ? data.residence : exist.residence;
     exist.department = data.department ? data.department : exist.department;
+
+    exist.passportNumber = data.passportNumber ? data.passportNumber : exist.passportNumber;
+
+    exist.address = data.address ? data.address : exist.address;
+
     exist.picture = data.picture ? data.picture : exist.picture;
     const updatedProfile = await exist.save();
     return updatedProfile;

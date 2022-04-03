@@ -18,6 +18,15 @@ export const tripSchema = joi.object({
     'string.empty': 'tripReason is not allowed to be empty',
     'any.required': 'tripReason is required',
   }),
+  rememberMe: joi.string().messages({
+    'string.base': 'rememberMe must be valid',
+  }),
+  passportNumber: joi.string().messages({
+    'string.base': 'passportNumber must be valid',
+  }),
+  address: joi.string().messages({
+    'string.base': 'address must be valid',
+  }),
 
   departDate: joi.date().iso().required().empty()
     .messages({
@@ -31,4 +40,5 @@ export const tripSchema = joi.object({
     'date.base': 'returnDate must be valid date',
     'date.format': 'date format is not correct ISO standard ',
   }),
+
 });

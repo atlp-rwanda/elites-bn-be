@@ -61,6 +61,14 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
       },
+      passportNumber: {
+        type: Sequelize.STRING,
+        defaultValue: 'none',
+      },
+      address: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
       picture: {
         type: Sequelize.STRING,
         defaultValue: 'https://www.pngkit.com/png/detail/126-1262807_instagram-default-profile-picture-png.png',

@@ -6,8 +6,13 @@ import { validateDate } from '../helpers/dateComparison';
 
 export const isAbleToBook = async (req, res, next) => {
   try {
-    const { checkinDate } = req.body;
-    const { checkoutDate } = req.body;
+    const { roomId, tripId } = req.params;
+
+    if (roomId === '{roomId}' || tripId === '{tripId}') {
+      throw new ForbbidenError('Please fill in all the fields');
+    }
+
+    const { checkinDate, checkoutDate } = req.body;
 
     const compareDates = validateDate(checkoutDate, checkinDate);
 
@@ -16,7 +21,6 @@ export const isAbleToBook = async (req, res, next) => {
     }
 
     const emptyToken = req.headers.authorization;
-    const { roomId } = req.params; // this roomId is going to be used down below line 48
 
     if (emptyToken === undefined) {
       throw new ForbbidenError('User not logged in');
@@ -34,7 +38,7 @@ export const isAbleToBook = async (req, res, next) => {
       throw new ForbbidenError('You are not allowed to perform this task');
     }
     const tripRequest = await models.tripRequest.findOne({
-      where: { userId: data.id },
+      where: { id: tripId },
     });
 
     if (tripRequest === null) {
@@ -57,6 +61,7 @@ export const isAbleToBook = async (req, res, next) => {
         'This room is already booked try a different one'
       );
     }
+
     next();
   } catch (err) {
     next(err);

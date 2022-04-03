@@ -45,6 +45,30 @@ module.exports = {
       tripType: {
         type: Sequelize.STRING,
       },
+      rememberMe: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
+      passportNumber: {
+        type: Sequelize.STRING,
+        default: 'none',
+      },
+      address: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      names: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      gender: {
+        type: Sequelize.STRING,
+        default: 'none',
+      },
+      role: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

@@ -23,7 +23,7 @@ requestEventEmitter.on('request-created', async (createdTrip) => {
     const body = `Hello ${manager.names}!, <strong>${user.names}</strong> has created a new trip request with reason: <em>${createdTrip.reason}</em>`;
 
     // Store Notification into database
-    await notificationService.createNotification({
+    await notificationService.createInAppNotification({
       userId: manager.id,
       body: removeTags(body),
       requestId: createdTrip.id,
@@ -56,7 +56,7 @@ requestEventEmitter.on('request-updated', async (updatedTrip) => {
     const body = `Hello ${manager.names}!, <strong>${user.names}</strong> has edited the trip request with reason: <em>${updatedTrip.tripReason}</em>`;
 
     // Store Notification into database
-    await notificationService.createNotification({
+    await notificationService.createInAppNotification({
       userId: manager.id,
       body: removeTags(body),
       requestId: updatedTrip.id,
@@ -90,7 +90,7 @@ requestEventEmitter.on('request-approved-or-rejected', async (updatedTrip) => {
     const body = `Hello ${user.names}!, Your manager <strong>${manager.names}</strong> has ${status} your trip request with reason: <em>${updatedTrip.tripReason}</em>`;
 
     // Store Notification into database
-    await notificationService.createNotification({
+    await notificationService.createInAppNotification({
       userId: user.id,
       body: removeTags(body),
       requestId: updatedTrip.id,
@@ -146,7 +146,7 @@ requestEventEmitter.on('commented-on-request', async (comment) => {
     const body = `${introductionSentence}<br><strong> Comment:</strong> <q>${comment.comment}</q>`;
 
     // Store Notification into database
-    await notificationService.createNotification({
+    await notificationService.createInAppNotification({
       userId: userToNotify,
       body: removeTags(body),
       requestId: trip.id,

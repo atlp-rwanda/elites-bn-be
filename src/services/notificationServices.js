@@ -1,7 +1,7 @@
 import { Notification } from '../models';
 
 class notificationServices {
-  createNotification = async (notification) => {
+  createInAppNotification = async (notification) => {
     const createdNotification = await Notification.create(notification);
     return createdNotification;
   };

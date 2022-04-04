@@ -18,6 +18,7 @@ export const tripSchema = joi.object({
     'string.empty': 'tripReason is not allowed to be empty',
     'any.required': 'tripReason is required',
   }),
+<<<<<<< HEAD
   rememberMe: joi.string().messages({
     'string.base': 'rememberMe must be valid',
   }),
@@ -27,6 +28,8 @@ export const tripSchema = joi.object({
   address: joi.string().messages({
     'string.base': 'address must be valid',
   }),
+=======
+>>>>>>> This is a combination of 4 commits.
 
   departDate: joi.date().iso().required().empty()
     .messages({

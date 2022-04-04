@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+import { Op } from 'sequelize';
+>>>>>>> This is a combination of 4 commits.
 import models from '../models';
 
 export const checkRole = async (userid) => {

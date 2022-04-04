@@ -7,8 +7,15 @@ import { location, locationsDefinitions } from './locations.docs';
 import { profile } from './profile.docs';
 import { tripComment, tripCommentDefinitions } from './tripComment.docs';
 import { bookings, bookingsDefinition } from './booking.docs';
+<<<<<<< HEAD
 import { notifications } from './notification.docs';
 import { chats } from './chat';
+=======
+import {
+  AccommodationRating,
+  AccommodationRatingDefinitions,
+} from './accommodationRating.docs';
+>>>>>>> This is a combination of 4 commits.
 
 const paths = {
   ...welcome,
@@ -20,8 +27,12 @@ const paths = {
   ...location,
   ...tripComment,
   ...bookings,
+<<<<<<< HEAD
   ...notifications,
   ...chats,
+=======
+  ...AccommodationRating,
+>>>>>>> This is a combination of 4 commits.
 };
 
 const definitions = {
@@ -31,6 +42,7 @@ const definitions = {
   ...locationsDefinitions,
   ...tripCommentDefinitions,
   ...bookingsDefinition,
+  ...AccommodationRatingDefinitions,
 };
 
 const config = {
@@ -60,12 +72,10 @@ const config = {
     },
   },
 
-  servers: [
-    {
-      url: 'http://localhost:3000',
-      name: 'DEV',
-    },
-  ],
+  servers: [{
+    url: 'http://localhost:3000',
+    name: 'DEV',
+  }],
 
   paths,
   definitions,

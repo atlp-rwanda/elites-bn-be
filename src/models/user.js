@@ -30,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Booking, {
         foreignKey: 'userId',
       });
+<<<<<<< HEAD
       // User.hasMany(models.chatMessage, {
       //   foreignKey: 'postedBy',
       // });
@@ -51,5 +52,25 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'User',
     },
   );
+=======
+
+      User.hasMany(models.AccommodationRating, {
+        foreignKey: 'userId',
+      });
+    }
+  }
+  User.init({
+    names: DataTypes.STRING,
+    email: DataTypes.STRING,
+    password: DataTypes.STRING,
+    roleId: DataTypes.INTEGER,
+    managerId: DataTypes.INTEGER,
+    isActive: DataTypes.BOOLEAN,
+    verified: DataTypes.BOOLEAN,
+  }, {
+    sequelize,
+    modelName: 'User',
+  });
+>>>>>>> This is a combination of 4 commits.
   return User;
 };

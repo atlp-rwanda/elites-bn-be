@@ -1,6 +1,7 @@
 import express from 'express';
 import { TripControllers } from '../../controllers/tripControllers';
 import { requestValidation } from '../../validations/tripRequest/tripValidations';
+import { approveTripValidation } from '../../validations/approveRejectTripValidation/approveRejectValidation'
 import { authenticate } from '../../middlewares/authenticate';
 import { isManager } from '../../middlewares/isManager';
 // import  {updateTripLocationVisit} from '../../controllers/tripControllers';
@@ -22,6 +23,7 @@ router.get('/:id', authenticate, tripControllers.getSingleRequests);
 router.delete('/:id', authenticate, tripControllers.deleteRequests);
 router.patch(
   '/:id',
+  // approveTripValidation,
   authenticate,
   isManager,
   tripControllers.approveRejectTripRequest,

@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import models from '../models';
 
 export const checkRole = async (userid) => {
@@ -80,19 +81,34 @@ export const createTrip = async (userid, data) => {
   }
 };
 
-export const getAllRequests = async (userId) => {
+export const getAllRequests = async (userId, queryParams) => {
   const role = await checkRole(userId);
   if (role === 'manager') {
     const data = await models.tripRequest.findAll({
-      where: {
-        managerId: userId,
-      },
+      where:
+       {
+         [Op.or]: [
+           { managerId: userId },
+           { tripReason: { [Op.substring]: queryParams.tripReason } },
+           { status: { [Op.substring]: queryParams.status } },
+           { departLocation: { [Op.eq]: queryParams.departLocation } },
+           { createdAt: { [Op.gte]: queryParams.createdAt } },
+         ],
+       },
     });
 
     return data;
   }
   const Data = await models.tripRequest.findAll({
-    where: { userId },
+    where: {
+      [Op.or]: [
+        { userId },
+        { tripReason: { [Op.substring]: queryParams.tripReason } },
+        { status: { [Op.substring]: queryParams.status } },
+        { departLocation: { [Op.eq]: queryParams.departLocation } },
+        { createdAt: { [Op.gte]: queryParams.createdAt } },
+      ],
+    },
   });
   return Data;
 };
@@ -265,3 +281,9 @@ export const findLocation =async(id)=> {
       data.save();
     return data;
   };
+export const fetchMostTravelled = async (tripId) => {
+  const data = await models.tripRequest.findOne(tripId, {
+    where: { id: tripId },
+  });
+  return data;
+};

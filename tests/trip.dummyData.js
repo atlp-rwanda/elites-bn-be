@@ -106,6 +106,11 @@ export const managerLogin = {
   email: 'ihonore03@gmail.com',
   password: 'Password1',
 };
+export const managerLogins = {
+  email: 'ihonore03@gmail.com',
+  password: 'password',
+};
 
-export const managerToken =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjQ4NDYxMTk5LCJleHAiOjE2Nzk1NjUxOTl9.zo3UXkFrifwm-mdAdxmVnJNQMvon5YALLqxoZ5C9o_k';
+export const managerToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjQ4NDYxMTk5LCJleHAiOjE2Nzk1NjUxOTl9.zo3UXkFrifwm-mdAdxmVnJNQMvon5YALLqxoZ5C9o_k';
+
+export const requesterToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImlhdCI6MTY0OTE1MTAzMSwiZXhwIjoxNjgwMjU1MDMxfQ.Z4ZzwuGM8tw-_H37gqHq3vzWF9g18W7PHCIVJ0qDCSk';

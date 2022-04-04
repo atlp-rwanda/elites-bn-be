@@ -10,7 +10,7 @@ import {
 import {
   createTrip,
   deleteRequest,
-  getAllRequests,
+  getAllRequests as fetchAllRequests,
   getManagerId,
   tripExist,
   getOneRequest,
@@ -184,7 +184,7 @@ export class TripControllers {
   // eslint-disable-next-line class-methods-use-this
   async getAllRequests(id, req, res, next) {
     try {
-      const getTripRequests = await getAllRequests(id);
+      const getTripRequests = await fetchAllRequests(id, req.query);
       res.status(200).json({
         status: 200,
         message: TRIP_FOUND_MESSAGE,
@@ -266,6 +266,19 @@ export class TripControllers {
       } else {
         throw new UnauthorizedError('You are not a manager of this user');
       }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async mostTravelledDestination(id, req, res, next) {
+    try {
+      const getTripRequests = await fetchMostTravelled(id);
+      res.status(200).json({
+        status: 200,
+        message: TRIP_FOUND_MESSAGE,
+        payload: getTripRequests,
+      });
     } catch (err) {
       next(err);
     }

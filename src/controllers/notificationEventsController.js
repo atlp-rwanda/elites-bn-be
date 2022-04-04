@@ -10,14 +10,19 @@ const requestEventEmitter = new RequestEventEmitter();
 
 const notificationService = new notificationServices();
 
+// Remove html tags from notification to save
+function removeTags(body) {
+  return body.replace(/(<([^>]+)>)/gi, '');
+}
+
 // Listener to the event when trip request is created
 requestEventEmitter.on('request-created', async (createdTrip) => {
   try {
     const user = await userById(createdTrip.userId);
     const manager = await userById(createdTrip.managerId);
-    let body = `Hello ${manager.names}!, <strong>${user.names}</strong> has created a new trip request with reason: <em>${createdTrip.reason}</em>`;
+    const body = `Hello ${manager.names}!, <strong>${user.names}</strong> has created a new trip request with reason: <em>${createdTrip.reason}</em>`;
 
-    //Store Notification into database
+    // Store Notification into database
     await notificationService.createNotification({
       userId: manager.id,
       body: removeTags(body),
@@ -48,9 +53,9 @@ requestEventEmitter.on('request-updated', async (updatedTrip) => {
     const user = await userById(updatedTrip.userId);
     const manager = await userById(updatedTrip.managerId);
 
-    let body = `Hello ${manager.names}!, <strong>${user.names}</strong> has edited the trip request with reason: <em>${updatedTrip.tripReason}</em>`;
+    const body = `Hello ${manager.names}!, <strong>${user.names}</strong> has edited the trip request with reason: <em>${updatedTrip.tripReason}</em>`;
 
-    //Store Notification into database
+    // Store Notification into database
     await notificationService.createNotification({
       userId: manager.id,
       body: removeTags(body),
@@ -80,11 +85,11 @@ requestEventEmitter.on('request-approved-or-rejected', async (updatedTrip) => {
   try {
     const user = await userById(updatedTrip.userId);
     const manager = await userById(updatedTrip.managerId);
-    const status = updatedTrip.status;
+    const { status } = updatedTrip;
 
-    let body = `Hello ${user.names}!, Your manager <strong>${manager.names}</strong> has ${status} your trip request with reason: <em>${updatedTrip.tripReason}</em>`;
+    const body = `Hello ${user.names}!, Your manager <strong>${manager.names}</strong> has ${status} your trip request with reason: <em>${updatedTrip.tripReason}</em>`;
 
-    //Store Notification into database
+    // Store Notification into database
     await notificationService.createNotification({
       userId: user.id,
       body: removeTags(body),
@@ -102,7 +107,6 @@ requestEventEmitter.on('request-approved-or-rejected', async (updatedTrip) => {
         `${status} Trip Request - Barefoot Nomad`,
         makeEmailNotificationTemplate(payload)
       );
-      console.log('============done=================');
     }
   } catch (err) {
     console.log(err);
@@ -118,7 +122,7 @@ requestEventEmitter.on('commented-on-request', async (comment) => {
     let userToNotify;
     let introductionSentence;
 
-    //check if the comment is made by the request owner so that we notify manager
+    // check if the comment is made by the request owner so that we notify manager
     if (comment.userId == trip.userId) {
       const manager = await userById(trip.managerId);
       userToNotify = manager.id;
@@ -128,7 +132,7 @@ requestEventEmitter.on('commented-on-request', async (comment) => {
         emailToNotify = manager.email;
       }
     }
-    //check if the comment is made by the manager so that we notify request owner
+    // check if the comment is made by the manager so that we notify request owner
     else if (comment.userId == trip.managerId) {
       const requestOwner = await userById(trip.userId);
       userToNotify = requestOwner.id;
@@ -139,9 +143,9 @@ requestEventEmitter.on('commented-on-request', async (comment) => {
       }
     }
 
-    let body = `${introductionSentence}<br><strong> Comment:</strong> <q>${comment.comment}</q>`;
+    const body = `${introductionSentence}<br><strong> Comment:</strong> <q>${comment.comment}</q>`;
 
-    //Store Notification into database
+    // Store Notification into database
     await notificationService.createNotification({
       userId: userToNotify,
       body: removeTags(body),
@@ -165,10 +169,5 @@ requestEventEmitter.on('commented-on-request', async (comment) => {
     console.log(err);
   }
 });
-
-//Remove html tags from notification to save
-function removeTags(body) {
-  return body.replace(/(<([^>]+)>)/gi, '');
-}
 
 module.exports = requestEventEmitter;

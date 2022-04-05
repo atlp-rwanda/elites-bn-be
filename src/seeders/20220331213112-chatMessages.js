@@ -1,10 +1,8 @@
-'use strict';
-
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert('chatMessages', [{
       postedBy: 10,
-      sender:'Jacob',
+      sender: 'Jacob',
       message: 'hello hello, this is my first message,rate my work',
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -12,7 +10,7 @@ module.exports = {
     },
     {
       postedBy: 11,
-      sender:'james',
+      sender: 'james',
       message: 'hello hello, this is my second message,rate my work',
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -21,9 +19,7 @@ module.exports = {
     ], {});
   },
 
-  async down (queryInterface, Sequelize) {
-    
-     await queryInterface.bulkDelete('chatMessages', null, {});
-     
-  }
+  async down(queryInterface, Sequelize) {
+    await queryInterface.bulkDelete('chatMessages', null, {});
+  },
 };

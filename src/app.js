@@ -11,7 +11,6 @@ import swaggerDoc from './documentation/index';
 import 'dotenv/config';
 import { PageNotFoundError } from './httpErrors/pageNotFoundError';
 import passport from './middlewares/auth';
-import socketio from 'socket.io';
 import http from 'http';
 import { ioMiddleware } from './helpers/socketio';
 import { getMessages, addMessage } from './services/chatServices';
@@ -66,7 +65,7 @@ try {
   app.get('/verify', (req, res) => {
     res.render('index');
   });
-  app.use('/api/v1/chat', (req, res) => res.send(__dirname + '/public/'));
+  app.use('/api/v1/chat', (req, res) => res.send(`${__dirname}/public/`));
 
   app.use(
     '/docs/swagger-ui/',
@@ -76,7 +75,7 @@ try {
         docExpansions: 'none',
         persistAuthorization: true,
       },
-    })
+    }),
   );
 
   app.use((err, req, res, next) => {
@@ -94,24 +93,8 @@ try {
 
   const server = http.createServer(app);
   const io = socketio(server, {
-    // cors:{
-    //   origin: '*'
-    // },
     path: '/socket.io',
   });
-
-  // io.attach(server,
-  //   {
-  //     cors: {
-  //       origin: 'http://localhost',
-  //       methods: ['GET', 'POST'],
-  //       credentials: true,
-  //     },
-  //     transports: ['websocket', 'polling'],
-  //     allowEIO3: true,
-
-  //   });
-
   io.on('connection', async (socket) => {
     console.log('👾 New socket connected! >>', socket.id);
     const url = socket.handshake.headers.referer.split('?')[1];
@@ -134,6 +117,7 @@ try {
       },
     });
     io.to(socket.id).emit('subscribe', findUser.names);
+    
     // get past message
 
     const getData = await getMessages();

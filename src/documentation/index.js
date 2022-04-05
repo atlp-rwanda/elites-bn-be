@@ -8,6 +8,7 @@ import { profile } from './profile.docs';
 import { tripComment, tripCommentDefinitions } from './tripComment.docs';
 import { bookings, bookingsDefinition } from './booking.docs';
 import { notifications } from './notification.docs';
+import { chats, chatDefinitions } from './chat';
 
 const paths = {
   ...welcome,

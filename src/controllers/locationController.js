@@ -2,6 +2,7 @@ import locationServices from '../services/locationServices';
 const locationService = new locationServices();
 import { BaseError } from '../httpErrors/baseError';
 
+
 class LocationControllers {
     createLocation = async(req, res, next) => {
         try {
@@ -63,6 +64,17 @@ class LocationControllers {
             next(err);
         }
     };
+
+    findMostVisitedLocations=async(req, res, next) =>{
+        try {
+          const visitedLocations = await locationService.listMostVisitedLocations()
+          return res
+            .status(200)
+            .json({ message: 'found Location', visitedLocations });
+        } catch (err) {
+            next(err);
+        }
+      }
 
     deleteLocation = async(req, res, next) => {
         try {

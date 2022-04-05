@@ -29,9 +29,21 @@ describe('LOCATION ENDPOINTS TEST', () => {
       .end((err, res) => {
         expect(res).to.have.status([200]);
         expect(res.body).to.have.property('message');
+        expect(res.body).to.have.property('visitedLocations');
         expect(res.body).to.have.property('payload');
       });
     done();
+  });
+
+  it('should fetch all Location starting from the most travelled', (done) => {
+    chai
+      .request(app)
+      .get(`/api/v1/locations/mostTravelled`)
+      .end((err, res) => {
+        expect(res).to.have.status([200]);
+        expect(res.body).to.have.property('message');
+      });
+      done();
   });
 
   it('should update a specific location', (done) => {
@@ -81,7 +93,9 @@ describe('LOCATION ENDPOINTS TEST', () => {
         expect(res.body).to.have.property('name');
         expect(res.body.name).to.equal('Not Found');
         expect(res.body).to.have.property('message');
-        done();
       });
+      done();
   });
+
+  
 });

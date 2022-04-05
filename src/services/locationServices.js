@@ -5,19 +5,19 @@ class locationServices {
     return createdLocation;
   };
 
-	getSingleLocation = async (id) => {
-		const foundLocation = await Location.findOne({
-			where: { id },
-			include: [
-				{
-					model: Accommodation,
-					as: 'accommodations',
-					attributes: { exclude: ['createdAt', 'updatedAt'] },
-				},
-			],
-		});
-		return foundLocation;
-	};
+  getSingleLocation = async (id) => {
+    const foundLocation = await Location.findOne({
+      where: { id },
+      include: [
+        {
+          model: Accommodation,
+          as: 'accommodations',
+          attributes: { exclude: ['createdAt', 'updatedAt'] },
+        },
+      ],
+    });
+    return foundLocation;
+  };
 
   updateLocation = async (id, locationUpdate) => {
     const updatedLocation = await Location.update(locationUpdate, {
@@ -38,6 +38,42 @@ class locationServices {
       return 'Location does not exists';
     }
   };
+
+  listMostVisitedLocations = async () => {
+    try {
+      const mostVisited = await Location.findAll({
+        order: [['visitCount', 'DESC']]
+      });
+      return mostVisited;
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
+
+  findLocation =async(id)=> {
+   try{
+    const findLoc = await Location.findOne(
+      { where: { id } },
+      {
+        include: [{ model: Accommodation, as: 'Accommodations' }]
+      });
+      return findLoc;
+   }catch(error){
+     console.log(error)
+   }
+  }
+
+  findAndUpdateLocation = async({ where, id }, locData) =>{
+   try{
+    const updateLoc = await Location.update(locData, {
+      where: id ? { id } : where
+    });
+    return updateLoc;
+  }catch(error){
+    console.log(error)
+  }
+   }
 }
 
 export default locationServices;

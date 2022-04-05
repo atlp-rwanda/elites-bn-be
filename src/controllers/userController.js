@@ -201,6 +201,16 @@ export class UserControllers {
     try {
       const { email } = req.body;
       const user = await userExist(email);
+      if (!email) {
+        throw new BaseError('Bad request', 400, 'Email is required');
+      }
+      if (!validator.isEmail(email)) {
+        throw new BaseError(
+          'Bad request',
+          400,
+          'Please Enter a valid email address',
+        );
+      }
       if (!user) {
         throw new BaseError(
           'Not found',

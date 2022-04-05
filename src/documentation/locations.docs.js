@@ -30,6 +30,23 @@ export const location = {
       ],
     },
   },
+  '/api/v1/locations/mostTravelled': {
+    get: {
+      tags: ['Locations'],
+      summary: 'Retrieve Locations by Most travelled',
+      description: 'add a location ',
+
+      responses: {
+        200: {
+          description: 'Most travelled Location retrieved successfuly!',
+        },
+        500: {
+          description: 'Server error!',
+        },
+      },
+
+    },
+  },
   '/api/v1/locations/{locationId}': {
     get: {
       tags: ['Locations'],

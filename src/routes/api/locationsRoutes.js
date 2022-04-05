@@ -8,7 +8,6 @@ import { isTravelAdmin } from '../../middlewares/isTravelAdmin';
 const router = express.Router();
 
 const locationController = new LocationControllers();
-
 router.post(
   '/',
   authenticate,
@@ -17,7 +16,8 @@ router.post(
   locationValidation,
   locationController.createLocation,
 );
-router.get('/:locationId', locationController.getSingleLocation);
+// router.get('/:locationId', locationController.getSingleLocation);
+router.get('/mostTravelled', locationController.findMostVisitedLocations);
 router.patch(
   '/:locationId',
   authenticate,

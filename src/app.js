@@ -95,15 +95,15 @@ try {
   const io = socketio(server, {
     path: '/socket.io',
   });
-let flags = 0;
-let ipsconnected = [];
+  let flags = 0;
+  const ipsconnected = [];
 
   io.on('connection', async (socket) => {
-    let connectedUser = socket.id
-    if(!ipsconnected.hasOwnProperty(connectedUser)){
-      ipsconnected[connectedUser]=1;
+    const connectedUser = socket.id;
+    if (!ipsconnected.hasOwnProperty(connectedUser)) {
+      ipsconnected[connectedUser] = 1;
       flags++;
-      io.emit('register',flags)
+      io.emit('register', flags);
     }
     console.log('👾 New socket connected! >>', socket.id);
     const url = socket.handshake.headers.referer.split('?')[1];
@@ -133,10 +133,10 @@ let ipsconnected = [];
     io.to(socket.id).emit('message', getData);
 
     socket.on('disconnect', () => {
-      if(ipsconnected.hasOwnProperty(connectedUser)){
-       delete ipsconnected[connectedUser];
+      if (ipsconnected.hasOwnProperty(connectedUser)) {
+        delete ipsconnected[connectedUser];
         flags--;
-        io.emit('register',flags)
+        io.emit('register', flags);
       }
     });
 

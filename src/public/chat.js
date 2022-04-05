@@ -7,6 +7,7 @@ const btn = document.getElementById('send');
 const output = document.getElementById('output');
 const feedback = document.getElementById('feedback');
 const time = document.getElementById('time');
+const user = document.getElementById('user');
 
 // Emit events
 btn.addEventListener('click', () => {
@@ -26,19 +27,19 @@ message.addEventListener('keypress', () => {
   socket.emit('typing', handle.value);
 });
 
+// counting connected user
+
+socket.on('register', (data) => {
+  user.innerText = data;
+});
+
 // Listen for events
 socket.on('chat', (data) => {
   feedback.innerHTML = '';
   console.log(data);
-  output.innerHTML
-    += `<p><strong>${
-      data.handle
-    }: </strong>${
-      data.message
-    }</p>`
-    + `<div>${
-      data.time
-    }</div>`;
+  output.innerHTML +=
+    `<p><strong>${data.handle}: </strong>${data.message}</p>` +
+    `<div>${data.time}</div>`;
 });
 
 socket.on('typing', (data) => {
@@ -56,15 +57,9 @@ socket.on('subscribe', (data) => {
 socket.on('message', (data) => {
   for (i = 0; i < data.length; i++) {
     feedback.innerHTML = '';
-    output.innerHTML
-      += `<p><strong>${
-        data[i].sender
-      }: </strong>${
-        data[i].message
-      }</p>`
-      + `<div>${
-        data[i].createdAt
-      }</div>`;
+    output.innerHTML +=
+      `<p><strong>${data[i].sender}: </strong>${data[i].message}</p>` +
+      `<div>${data[i].createdAt}</div>`;
   }
   console.log('received welcome-message >>', data);
 });

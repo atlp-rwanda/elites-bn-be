@@ -24,31 +24,6 @@ export const chats = {
           description: 'Bad Request',
         },
       },
-      // security: [
-      //   {
-      //     Bearer: [],
-      //   },
-      // ],
-    },
-    get: {
-      tags: ['chats'],
-      summary: 'This is the endpoint to post message',
-      description: 'This is the endpoint to post message',
-      operationId: 'get all past chats',
-
-      responses: {
-        200: {
-          description: 'Successfully retrieved',
-        },
-        400: {
-          description: 'Bad Request',
-        },
-      },
-      // security: [
-      //   {
-      //     Bearer: [],
-      //   },
-      // ],
     },
   },
 };

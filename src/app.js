@@ -95,7 +95,16 @@ try {
   const io = socketio(server, {
     path: '/socket.io',
   });
+let flags = 0;
+let ipsconnected = [];
+
   io.on('connection', async (socket) => {
+    let connectedUser = socket.id
+    if(!ipsconnected.hasOwnProperty(connectedUser)){
+      ipsconnected[connectedUser]=1;
+      flags++;
+      io.emit('register',flags)
+    }
     console.log('👾 New socket connected! >>', socket.id);
     const url = socket.handshake.headers.referer.split('?')[1];
     const findUser = await models.User.findOne({
@@ -117,15 +126,18 @@ try {
       },
     });
     io.to(socket.id).emit('subscribe', findUser.names);
-    
+
     // get past message
 
     const getData = await getMessages();
-    console.log(getData);
     io.to(socket.id).emit('message', getData);
 
     socket.on('disconnect', () => {
-      console.log('disconnects');
+      if(ipsconnected.hasOwnProperty(connectedUser)){
+       delete ipsconnected[connectedUser];
+        flags--;
+        io.emit('register',flags)
+      }
     });
 
     socket.on('chat', (data) => {
@@ -134,17 +146,12 @@ try {
         sender: findUser.names,
         message: data.message,
       };
-      console.log(message);
       const addData = addMessage(message);
       io.emit('chat', data);
     });
 
     socket.on('typing', (data) => {
       socket.broadcast.emit('typing', data);
-    });
-
-    socket.on('connect_error', (err) => {
-      console.log(`connect_error due to ${err.message}`);
     });
   });
 

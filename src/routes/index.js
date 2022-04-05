@@ -25,6 +25,6 @@ routes.use('/profiles', profileRoute);
 routes.use('/comments', commentRoutes);
 routes.use('/rooms', bookingRoutes);
 routes.use('/notifications', notificationRoutes);
-// routes.use('/chat', chatRoutes);
+routes.use('/chat', chatRoutes);
 
 export default routes;

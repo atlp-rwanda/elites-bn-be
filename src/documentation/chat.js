@@ -24,11 +24,11 @@ export const chats = {
             description: 'Bad Request',
           },
         },
-        security: [
-          {
-            Bearer: [],
-          },
-        ],
+        // security: [
+        //   {
+        //     Bearer: [],
+        //   },
+        // ],
       },
       get: {
         tags: ['chats'],
@@ -44,11 +44,11 @@ export const chats = {
             description: 'Bad Request',
           },
         },
-        security: [
-          {
-            Bearer: [],
-          },
-        ],
+        // security: [
+        //   {
+        //     Bearer: [],
+        //   },
+        // ],
       },
     }
 }
@@ -59,6 +59,12 @@ export const chats = {
       type: 'object',
       in: 'body',
       properties: {
+        postedBy: {
+          type: 'integer',
+        },
+        sender: {
+          type: 'string',
+        },
         message: {
           type: 'string',
         }

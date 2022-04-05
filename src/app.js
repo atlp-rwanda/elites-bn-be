@@ -11,11 +11,11 @@ import swaggerDoc from './documentation/index';
 import 'dotenv/config';
 import { PageNotFoundError } from './httpErrors/pageNotFoundError';
 import passport from './middlewares/auth';
-import socketio from 'socket.io'; 
+import socketio from 'socket.io';
 import http from 'http';
 import { ioMiddleware } from './helpers/socketio';
-import webSockets from './utils/websockets'
-import { handshake, userconnection } from './services/chatRoom';
+import { getMessages, addMessage } from './services/chatServices';
+import models from './models';
 
 const app = express();
 
@@ -66,7 +66,7 @@ try {
   app.get('/verify', (req, res) => {
     res.render('index');
   });
-  app.get("/api/v1/chat", (req, res) => res.sendFile(__dirname + "/public/index.html"));
+  app.use('/api/v1/chat', (req, res) => res.send(__dirname + '/public/'));
 
   app.use(
     '/docs/swagger-ui/',
@@ -93,52 +93,79 @@ try {
   });
 
   const server = http.createServer(app);
-  const io = socketio(server,{
-      // cors:{
-      //   origin: '*'
-      // },
-      path: '/socket.io',
+  const io = socketio(server, {
+    // cors:{
+    //   origin: '*'
+    // },
+    path: '/socket.io',
+  });
+
+  // io.attach(server,
+  //   {
+  //     cors: {
+  //       origin: 'http://localhost',
+  //       methods: ['GET', 'POST'],
+  //       credentials: true,
+  //     },
+  //     transports: ['websocket', 'polling'],
+  //     allowEIO3: true,
+
+  //   });
+
+  io.on('connection', async (socket) => {
+    console.log('👾 New socket connected! >>', socket.id);
+    const url = socket.handshake.headers.referer.split('?')[1];
+    const findUser = await models.User.findOne({
+      where: {
+        email: url,
+      },
+      attributes: {
+        exclude: [
+          'email',
+          'password',
+          'roleId',
+          'managerId',
+          'isActive',
+          'createdAt',
+          'password',
+          'updatedAt',
+          'verified',
+        ],
+      },
+    });
+    io.to(socket.id).emit('subscribe', findUser.names);
+    // get past message
+
+    const getData = await getMessages();
+    console.log(getData);
+    io.to(socket.id).emit('message', getData);
+
+    socket.on('disconnect', () => {
+      console.log('disconnects');
     });
 
-    // io.attach(server,
-    //   {
-    //     cors: {
-    //       origin: 'http://localhost',
-    //       methods: ['GET', 'POST'],
-    //       credentials: true,      
-    //     },
-    //     transports: ['websocket', 'polling'],
-    //     allowEIO3: true,
-      
-    //   });
-
-    io.on('connection',(socket)=>{
-
-      console.log('👾 New socket connected! >>', socket.id)
-      // console.log(`${socket.id} + connected`);
-    io.emit('new-connection');
-    socket.on('message', function(msg) {
-      io.emit('message', msg);
+    socket.on('chat', (data) => {
+      const message = {
+        postedBy: findUser.id,
+        sender: findUser.names,
+        message: data.message,
+      };
+      console.log(message);
+      const addData = addMessage(message);
+      io.emit('chat', data);
     });
 
-    socket.on('chat',(data)=>{
-        io.sockets.emit('chat', data)
-      });
-      
-      socket.on('typing',(data)=>{
-        io.sockets.emit('typing', data);
-      });
-
-      socket.on("connect_error", (err) => {
-        console.log(`connect_error due to ${err.message}`);
-      });
-      
+    socket.on('typing', (data) => {
+      socket.broadcast.emit('typing', data);
     });
 
-    
+    socket.on('connect_error', (err) => {
+      console.log(`connect_error due to ${err.message}`);
+    });
+  });
 
-  server.listen(port,()=>{
-    console.log("server is running");
+  server.listen(port, () => {
+    console.log('server is running');
   });
 
   const io = socketio(server);
@@ -161,7 +188,5 @@ try {
 } catch (error) {
   console.log(error);
 }
-
-
 
 export default app;

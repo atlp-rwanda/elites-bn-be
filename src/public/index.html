@@ -1,27 +1,54 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>WebScockets 101</title>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.1/socket.io.js"
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
+			integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk="
+			crossorigin="anonymous"
+		/>
+		<link rel="stylesheet" href="./styles.css" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.1/socket.io.js"
         integrity="sha512-oFOCo2/3DtjrJG4N27BjSLQWoiBv171sK6a+JiWjp/7agxC2nCUP358AqzxkBUb5jX8g6CYLPdSKQTbC0weCwA=="
         crossorigin="anonymous"></script>
-        <link href="/styles.css" rel="stylesheet" />
-    </head>
-    <body>
-
-        <div id="mario-chat">
-            <h2>Mario Chat</h2>
-            <div id="chat-window">
-                <div id="output"></div>
-                <div id="feedback"></div>
-            </div>
-            <input id="handle" type="text" placeholder="Handle" />
-            <input id="message" type="text" placeholder="Message" />
-            <button id="send">Send</button>
-        </div>
-
-
-    </body>
-    <script src="/chat.js"></script>
+		<title>ChatCord App</title>
+	</head>
+	<body>
+		<div class="join-container">
+			<header class="join-header">
+				<h1><i class="fas fa-smile"></i> ChatCord</h1>
+			</header>
+			<main class="join-main">
+				<form class="login-form" action="chat.html">
+					<div class="form-control">
+						<label for="username">Email</label>
+						<input
+							type="text"
+							name="username"
+							class="username"
+							id= "user"
+							placeholder="Enter email..."
+							required
+						/>
+					</div>
+					<div class="form-control">
+						<label for="room">Password</label>
+						<input
+							type="password"
+							name="password"
+							id = "pass"
+							class="username"
+							placeholder="Enter password..."
+							required
+						/>
+					</div>
+					<button type="submit" class="btn">Join Chat</button>
+				</form>
+			</main>
+		</div>
+		<script src="./chat1.js"></script>
+	</body>
 </html>

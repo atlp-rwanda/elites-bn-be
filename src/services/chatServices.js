@@ -1,8 +1,8 @@
 import models from '../models';
 
-export const addMessage = async(obj,user)=>{
+export const addMessage = async(obj)=>{
 
-    const data = await models.chatMessage.create({...obj, postedBy: user});
+    const data = await models.chatMessage.create({...obj});
     return data;
 }
 

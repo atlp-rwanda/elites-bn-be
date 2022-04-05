@@ -30,9 +30,9 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Booking, {
         foreignKey: 'userId',
       });
-      User.hasMany(models.chatMessage, {
-        foreignKey: 'postedBy',
-      });
+      // User.hasMany(models.chatMessage, {
+      //   foreignKey: 'postedBy',
+      // });
     }
   }
   User.init(

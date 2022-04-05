@@ -4,15 +4,16 @@ import moment from 'moment';
 
 class ChatController {
 
-    async sendMessageContoller(id, req, res, next){
+    async sendMessageContoller(req, res, next){
 
         try {
-            console.log(id);
+            // console.log(id);
             const data = { ...req.body }
-            const sentMessage = await addMessage(data, id);
+            const sentMessage = await addMessage(data);
             res.status(201).json({ status: 201, message: sentMessage , time: moment().format('h:mm a')});
         } catch (err) {
-            next(err)
+            console.log(err);
+            next(err);
         } 
     
     }

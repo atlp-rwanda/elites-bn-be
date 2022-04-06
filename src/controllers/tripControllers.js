@@ -53,7 +53,7 @@ export class TripControllers {
 
         if (newTrip) {
           //Emit event when trip request is created
-          requestEventEmitter.emit('request-created', newTrip);
+          requestEventEmitter.emit('request-created', newTrip, req);
 
           res
             .status(201)

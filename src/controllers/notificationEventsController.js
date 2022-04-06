@@ -3,8 +3,9 @@ import { findRequestById } from '../services/tripServices';
 import { sendEmailNotification } from '../helpers/sendEmail';
 import makeEmailNotificationTemplate from '../template/emailNotificationTemplate';
 import notificationServices from '../services/notificationServices';
-
 import EventEmitter from 'events';
+import SendNotification from '../helpers/sendNotification';
+
 class RequestEventEmitter extends EventEmitter {}
 const requestEventEmitter = new RequestEventEmitter();
 
@@ -16,18 +17,31 @@ function removeTags(body) {
 }
 
 // Listener to the event when trip request is created
-requestEventEmitter.on('request-created', async (createdTrip) => {
+requestEventEmitter.on('request-created', async (createdTrip, req) => {
   try {
     const user = await userById(createdTrip.userId);
     const manager = await userById(createdTrip.managerId);
     const body = `Hello ${manager.names}!, <strong>${user.names}</strong> has created a new trip request with reason: <em>${createdTrip.reason}</em>`;
 
     // Store Notification into database
-    await notificationService.createInAppNotification({
+    const notification = await notificationService.createInAppNotification({
       userId: manager.id,
       body: removeTags(body),
       requestId: createdTrip.id,
     });
+
+    // const content = {
+    //   intro: `${req.__('A trip request to')} ${newRequest.destination} ${req.__(
+    //     'on'
+    //   )} ${newRequest.departureDate} ${req.__('has been requested by')} ${
+    //     newRequest.profileData[0].passportName
+    //   }`,
+    //   instruction: req.__('To view this open request, click below'),
+    //   text: req.__('View request'),
+    //   signature: req.__('signature'),
+    // };
+
+    await SendNotification.sendNotif(notification, req, body);
 
     if (manager.notifyByEmail) {
       const payload = {
@@ -114,7 +128,7 @@ requestEventEmitter.on('request-approved-or-rejected', async (updatedTrip) => {
 });
 
 // Listener to the event when trip request is commented on
-requestEventEmitter.on('commented-on-request', async (comment) => {
+requestEventEmitter.on('commented-on-request', async (comment, req) => {
   try {
     const trip = await findRequestById(comment.tripId);
     const commentedUser = await userById(comment.userId);
@@ -146,11 +160,13 @@ requestEventEmitter.on('commented-on-request', async (comment) => {
     const body = `${introductionSentence}<br><strong> Comment:</strong> <q>${comment.comment}</q>`;
 
     // Store Notification into database
-    await notificationService.createInAppNotification({
+    const notification = await notificationService.createInAppNotification({
       userId: userToNotify,
       body: removeTags(body),
       requestId: trip.id,
     });
+
+    await SendNotification.sendNotif(notification, req, body);
 
     if (emailToNotify) {
       const payload = {

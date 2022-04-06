@@ -17,7 +17,11 @@ export class TripCommentController {
           });
           if (createdComment) {
             //Emit event when the trip request is commented on
-            requestEventEmitter.emit('commented-on-request', createdComment);
+            requestEventEmitter.emit(
+              'commented-on-request',
+              createdComment,
+              req
+            );
 
             return res.status(201).json({
               status: '201',

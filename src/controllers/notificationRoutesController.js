@@ -41,6 +41,22 @@ class NotificationControllers {
     }
   };
 
+  getUnreadNotifications = async (id, req, res, next) => {
+    try {
+      const foundNotifications =
+        await notificationService.getUnreadNotifications(id);
+      if (!foundNotifications)
+        throw new BaseError('Not found', 404, 'No new notifications');
+      return res.status(200).json({
+        status: '200',
+        message: 'All unread Notifications',
+        payload: foundNotifications,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
+
   deleteNotification = async (id, req, res, next) => {
     try {
       const deleteMessage = await notificationService.deleteNotification(

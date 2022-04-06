@@ -2,13 +2,16 @@ import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
 import morgan from 'morgan';
-import path from 'path';
+// import path from 'path';
 import routes from './routes/index';
 import db from './models/index';
 import swaggerDoc from './documentation/index';
 import 'dotenv/config';
 import { PageNotFoundError } from './httpErrors/pageNotFoundError';
 import passport from './middlewares/auth';
+import socketio from 'socket.io';
+import { ioMiddleware } from './helpers/socketio';
+const path = require('path');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -47,6 +50,7 @@ try {
       });
   }
 
+  app.use(express.static(path.join(__dirname, 'public')));
   app.set('views', path.join(__dirname, 'template'));
   app.set('view engine', 'ejs');
   app.use(cors());
@@ -66,7 +70,7 @@ try {
         docExpansions: 'none',
         persistAuthorization: true,
       },
-    }),
+    })
   );
 
   // catch all 404 errors
@@ -88,9 +92,29 @@ try {
     next(err);
   });
 
-  app.listen(port, () => {
+  // app.use('/public', express.static(path.join(__dirname, './public')));
+  app.get('/public', (req, res) =>
+    res.sendFile(__dirname + '/public/notification.html')
+  );
+
+  const server = app.listen(port, () => {
     console.log(`The server is running on port ${port}`);
   });
+
+  //////////////////
+  const io = socketio(server);
+
+  io.use(async (socket, next) => {
+    ioMiddleware(socket);
+    next();
+  });
+
+  app.use((req, res, next) => {
+    req.io = io;
+    next();
+  });
+
+  ////////////
 } catch (error) {
   console.log(error);
 }

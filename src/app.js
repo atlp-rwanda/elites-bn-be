@@ -3,17 +3,20 @@ import swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
 import morgan from 'morgan';
 // import path from 'path';
+import socketio from 'socket.io';
+import path from 'path';
+import http from 'http';
 import routes from './routes/index';
 import db from './models/index';
 import swaggerDoc from './documentation/index';
 import 'dotenv/config';
 import { PageNotFoundError } from './httpErrors/pageNotFoundError';
 import passport from './middlewares/auth';
-import socketio from 'socket.io';
 import { ioMiddleware } from './helpers/socketio';
-const path = require('path');
 
 const app = express();
+
+// const server = http.createServer(app);
 const port = process.env.PORT || 3000;
 const mode = process.env.NODE_ENV || 'development';
 
@@ -70,14 +73,9 @@ try {
         docExpansions: 'none',
         persistAuthorization: true,
       },
-    })
+    }),
   );
 
-  // catch all 404 errors
-  app.all('*', (req, res, next) => {
-    const err = new PageNotFoundError();
-    next(err);
-  });
   app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;
     // console.log(err);
@@ -92,16 +90,16 @@ try {
     next(err);
   });
 
-  // app.use('/public', express.static(path.join(__dirname, './public')));
-  app.get('/public', (req, res) =>
-    res.sendFile(__dirname + '/public/notification.html')
-  );
+  const server = http.createServer(app);
 
-  const server = app.listen(port, () => {
+  app.get('/notification', (req, res) => {
+    res.render('notification');
+  });
+
+  server.listen(port, () => {
     console.log(`The server is running on port ${port}`);
   });
 
-  //////////////////
   const io = socketio(server);
 
   io.use(async (socket, next) => {
@@ -114,7 +112,11 @@ try {
     next();
   });
 
-  ////////////
+  // catch all 404 errors
+  app.all('*', (req, res, next) => {
+    const err = new PageNotFoundError();
+    next(err);
+  });
 } catch (error) {
   console.log(error);
 }

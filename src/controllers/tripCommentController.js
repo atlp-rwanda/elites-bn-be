@@ -2,7 +2,7 @@ import { findAtrip } from '../services/tripServices';
 import { TripCommentService } from '../services/tripCommentServices';
 import { PageNotFoundError } from '../httpErrors/pageNotFoundError';
 import { ForbbidenError } from '../httpErrors/forbidenError';
-import requestEventEmitter from '../controllers/notificationEventsController';
+import requestEventEmitter from './notificationEventsController';
 
 export class TripCommentController {
   static async create(id, req, res, next) {
@@ -16,13 +16,12 @@ export class TripCommentController {
             comment: req.body.comment,
           });
           if (createdComment) {
-            //Emit event when the trip request is commented on
-            requestEventEmitter.emit(
+            // Emit event when the trip request is commented on
+            await requestEventEmitter.emit(
               'commented-on-request',
               createdComment,
-              req
+              req,
             );
-
             return res.status(201).json({
               status: '201',
               message: 'comment added successfully',
@@ -31,7 +30,7 @@ export class TripCommentController {
           }
         }
         throw new ForbbidenError(
-          'You are neither a manager nor owner of this trip'
+          'You are neither a manager nor owner of this trip',
         );
       } else {
         throw new PageNotFoundError(`Trip with id: ${req.params.id} not found`);
@@ -44,7 +43,7 @@ export class TripCommentController {
   static async delete(id, req, res, next) {
     try {
       const tripComment = await TripCommentService.findByPk(
-        parseInt(req.params.id)
+        parseInt(req.params.id),
       );
       if (tripComment) {
         if (tripComment.userId == id) {

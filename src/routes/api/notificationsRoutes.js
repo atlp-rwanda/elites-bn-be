@@ -14,7 +14,7 @@ router.get('/:id', authenticate, notificationController.getSingleNotification);
 router.get(
   '/unread',
   authenticate,
-  notificationController.getUnreadNotifications
+  notificationController.getUnreadNotifications,
 );
 router.patch('/unsubscribe', authenticate, userController.notificationOptOut);
 router.patch('/subscribe', authenticate, userController.notificationOptIn);
@@ -22,7 +22,7 @@ router.delete('/:id', authenticate, notificationController.deleteNotification);
 router.delete(
   '/',
   authenticate,
-  notificationController.deleteAllNotificationsOfUser
+  notificationController.deleteAllNotificationsOfUser,
 );
 
 export default router;

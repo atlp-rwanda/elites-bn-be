@@ -1,7 +1,7 @@
-import { connectedUsers } from '../helpers/socketio';
+import { connectedUsers } from './socketio';
 
 export default class SendNotification {
-  static async sendNotif(notification, req, content) {
+  static async sendNotif(notification, req) {
     try {
       if (connectedUsers[notification.userId]) {
         connectedUsers[notification.userId].forEach(async (el) => {

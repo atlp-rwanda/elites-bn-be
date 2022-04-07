@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = {
   up(queryInterface, Sequelize) {
     return Promise.all([
@@ -11,7 +9,7 @@ module.exports = {
           defaultValue: true,
           allowNull: true,
           after: 'verified',
-        }
+        },
       ),
     ]);
   },

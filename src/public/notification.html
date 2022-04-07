@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Notification</title>
+    <meta
+      http-equiv="refresh"
+      content="5; URL=http://localhost:3000/notification.html"
+    />
+    <title>Notifications</title>
     <style>
       .notifs-container {
         margin: auto;
         width: 50%;
-        border: 3px solid black;
+        border: 3px solid rgb(37, 101, 240);
         border-radius: 10px;
       }
       #notif-title {
@@ -14,12 +18,18 @@
         font-size: 25px;
         text-align: center;
       }
+      #notif-title span {
+        font-size: 25px;
+        text-align: center;
+        color: rgb(34, 100, 224);
+        letter-spacing: 4px;
+      }
       .notifs {
         color: rgb(13, 13, 46);
         font-size: 20px;
         list-style: none;
         margin: auto;
-        text-align: center;
+        text-align: left;
       }
     </style>
   </head>
@@ -35,21 +45,18 @@
       localStorage.setItem(
         'token',
         JSON.stringify(
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNjQ4MjEwOTIwLCJleHAiOjE2NjU0OTA5MjB9.aLY46sb66_OeUTHZc2QQBPF3iNUirf182eGE4PaDxos'
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNjQ5MzQ3NjQwLCJleHAiOjE2ODA0NTE2NDB9.6TqRna8aZ3Rf0Najmzt3QD9DPcflVQtWYeick8HkDjA'
         )
       );
       Notification.requestPermission();
       const socket = io({
-        transportOptions: {
-          polling: {
-            extraHeaders: {
-              token: localStorage.getItem('token'),
-            },
-          },
+        query: {
+          token: localStorage.getItem('token'),
         },
       });
       const token = localStorage.getItem('token');
       socket.on('initialize', (data) => {
+        console.log('in Initialize==== ' + data);
         const parsedData = JSON.parse(data);
         let notifDiv = document.querySelector('.notifications');
         notifDiv.innerHTML = '';
@@ -57,20 +64,26 @@
           let error = document.querySelector('#notif-title span');
           error.textContent = parsedData.error;
         }
-        for (obj in parsedData.notif) {
-          let node = document.createElement('div');
-          node.innerHTML = `<a href = ${parsedData.notif[obj].link} target="_blank"><li class = "notifs">${parsedData.notif[obj].content}</li></a>`;
-          notifDiv.appendChild(node);
-        }
+
+        parsedData.notif
+          .slice()
+          .reverse()
+          .forEach(function (item) {
+            let node = document.createElement('div');
+            node.style.cssText =
+              'border:1px solid gray; padding:2rem 2rem; width:80%; margin:1rem auto; ';
+            node.innerHTML = `<a style="text-decoration:none;" href = http://localhost:3000/api/v1/trips/${item.requestId} target="_blank"><li class = "notifs">${item.body}</li></a>`;
+            notifDiv.appendChild(node);
+          });
       });
       socket.on('notification', (data) => {
         const parsedData = JSON.parse(data);
         let notifDiv = document.querySelector('.notifications');
         let node = document.createElement('div');
-        node.innerHTML = `<a href = ${parsedData.link} target="_blank"><li class = "notifs">${parsedData.content}</li></a>`;
+        node.innerHTML = `<a href = 'http://localhost:3000/api/v1/trips/${parsedData.userId}' target="_blank"><li class = "notifs">${parsedData.body}</li></a>`;
         notifDiv.appendChild(node);
         var notification = new Notification('Barefoot Nomad', {
-          body: parsedData.content,
+          body: parsedData.body,
           icon: 'https://upload.wikimedia.org/wikipedia/commons/4/46/BN_Logo_1000px.png',
         });
       });

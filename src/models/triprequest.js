@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'tripRequest',
-    }
+    },
   );
   return tripRequest;
 };

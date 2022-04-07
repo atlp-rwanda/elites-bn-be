@@ -1,10 +1,9 @@
+import EventEmitter from 'events';
 import { userById } from '../services/userServices';
 import { findRequestById } from '../services/tripServices';
 import { sendEmailNotification } from '../helpers/sendEmail';
 import makeEmailNotificationTemplate from '../template/emailNotificationTemplate';
 import notificationServices from '../services/notificationServices';
-import EventEmitter from 'events';
-import SendNotification from '../helpers/sendNotification';
 
 class RequestEventEmitter extends EventEmitter {}
 const requestEventEmitter = new RequestEventEmitter();
@@ -24,24 +23,11 @@ requestEventEmitter.on('request-created', async (createdTrip, req) => {
     const body = `Hello ${manager.names}!, <strong>${user.names}</strong> has created a new trip request with reason: <em>${createdTrip.reason}</em>`;
 
     // Store Notification into database
-    const notification = await notificationService.createInAppNotification({
+    await notificationService.createInAppNotification({
       userId: manager.id,
       body: removeTags(body),
       requestId: createdTrip.id,
     });
-
-    // const content = {
-    //   intro: `${req.__('A trip request to')} ${newRequest.destination} ${req.__(
-    //     'on'
-    //   )} ${newRequest.departureDate} ${req.__('has been requested by')} ${
-    //     newRequest.profileData[0].passportName
-    //   }`,
-    //   instruction: req.__('To view this open request, click below'),
-    //   text: req.__('View request'),
-    //   signature: req.__('signature'),
-    // };
-
-    await SendNotification.sendNotif(notification, req, body);
 
     if (manager.notifyByEmail) {
       const payload = {
@@ -53,7 +39,7 @@ requestEventEmitter.on('request-created', async (createdTrip, req) => {
         manager.email,
         'ihonore01@gmail.com',
         'New Trip Request - Barefoot Nomad',
-        makeEmailNotificationTemplate(payload)
+        makeEmailNotificationTemplate(payload),
       );
     }
   } catch (err) {
@@ -86,7 +72,7 @@ requestEventEmitter.on('request-updated', async (updatedTrip) => {
         manager.email,
         'ihonore01@gmail.com',
         'Updated Trip Request - Barefoot Nomad',
-        makeEmailNotificationTemplate(payload)
+        makeEmailNotificationTemplate(payload),
       );
     }
   } catch (err) {
@@ -119,7 +105,7 @@ requestEventEmitter.on('request-approved-or-rejected', async (updatedTrip) => {
         user.email,
         'ihonore01@gmail.com',
         `${status} Trip Request - Barefoot Nomad`,
-        makeEmailNotificationTemplate(payload)
+        makeEmailNotificationTemplate(payload),
       );
     }
   } catch (err) {
@@ -160,13 +146,11 @@ requestEventEmitter.on('commented-on-request', async (comment, req) => {
     const body = `${introductionSentence}<br><strong> Comment:</strong> <q>${comment.comment}</q>`;
 
     // Store Notification into database
-    const notification = await notificationService.createInAppNotification({
+    await notificationService.createInAppNotification({
       userId: userToNotify,
       body: removeTags(body),
       requestId: trip.id,
     });
-
-    await SendNotification.sendNotif(notification, req, body);
 
     if (emailToNotify) {
       const payload = {
@@ -178,7 +162,7 @@ requestEventEmitter.on('commented-on-request', async (comment, req) => {
         emailToNotify,
         'ihonore01@gmail.com',
         'New comment on Trip Request - Barefoot Nomad',
-        makeEmailNotificationTemplate(payload)
+        makeEmailNotificationTemplate(payload),
       );
     }
   } catch (err) {

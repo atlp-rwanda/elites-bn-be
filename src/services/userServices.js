@@ -25,7 +25,7 @@ export const userById = async (id) => {
 export const updateUser = async (userId) => {
   const user = await models.User.update(
     { verified: true },
-    { where: { id: userId } }
+    { where: { id: userId } },
   );
   return user;
 };
@@ -74,12 +74,11 @@ export const notificationsOptOut = async (id) => {
         where: { id },
         returning: true,
         raw: true,
-      }
+      },
     );
     return updatedUser;
-  } else {
-    return false;
   }
+  return false;
 };
 
 export const notificationsOptIn = async (id) => {
@@ -91,10 +90,9 @@ export const notificationsOptIn = async (id) => {
         where: { id },
         returning: true,
         raw: true,
-      }
+      },
     );
     return updatedUser;
-  } else {
-    return false;
   }
+  return false;
 };

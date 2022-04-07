@@ -18,7 +18,7 @@ export const emailValidation = (req, res, next) => {
       throw new BaseError(
         'Bad request',
         400,
-        `${result.error.details[0].message.replace(/["'`]+/g, '')}`
+        `${result.error.details[0].message.replace(/["'`]+/g, '')}`,
       );
     } else {
       next();

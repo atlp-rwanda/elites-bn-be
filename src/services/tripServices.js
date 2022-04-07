@@ -1,5 +1,5 @@
-import models from '../models';
 import { Op } from 'sequelize';
+import models from '../models';
 
 export const checkRole = async (userid) => {
   const data = await models.User.findOne({
@@ -38,14 +38,12 @@ export const getManagerId = async (userid) => {
   return managerId;
 };
 
-export const tripExist = async (userId, departDate) => {
-  return await models.tripRequest.findOne({
-    where: {
-      userId,
-      departDate: departDate,
-    },
-  });
-};
+export const tripExist = async (userId, departDate) => await models.tripRequest.findOne({
+  where: {
+    userId,
+    departDate,
+  },
+});
 
 export const findAtrip = async (id) => {
   const dataExist = await models.tripRequest.findOne({

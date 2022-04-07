@@ -19,8 +19,12 @@ export const generateRefreshToken = (payload) => {
 };
 
 export const decodeAcessToken = async (token) => {
-  const decoded = await jwt.verify(token, ACCESS_TOKEN_KEY);
-  return decoded;
+  try {
+    const decoded = await jwt.verify(token, ACCESS_TOKEN_KEY);
+    return decoded;
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export const decodeRefreshToken = async (refreshToken) => {

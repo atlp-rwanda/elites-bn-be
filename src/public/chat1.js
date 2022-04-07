@@ -7,7 +7,6 @@ btn = document.querySelector('.btn'),
 password = document.getElementById('pass');
 
 const username = loginForm.elements[0];
-console.log(username);
 
 let token = '';
 
@@ -26,7 +25,6 @@ const logUserIn = async () => {
 
   if (response.status === 200) {
     const result = await response.json();
-    console.log(token);
     token = result.payload.accesstoken;
     localStorage.setItem('auth', JSON.stringify(token));
     window.location.replace(`./chat.html?${data.email}`);

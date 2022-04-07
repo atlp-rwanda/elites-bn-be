@@ -36,9 +36,9 @@ socket.on('register', (data) => {
 // Listen for events
 socket.on('chat', (data) => {
   feedback.innerHTML = '';
-  output.innerHTML
-    += `<p><strong>${data.handle}: </strong>${data.message}</p>`
-    + `<div>${data.time}</div>`;
+  output.innerHTML +=
+    `<p><strong>${data.handle}: </strong>${data.message}</p>` +
+    `<div>${data.time}</div>`;
 });
 
 socket.on('typing', (data) => {
@@ -53,11 +53,20 @@ socket.on('subscribe', (data) => {
   handle.value = data;
 });
 
-socket.on('message', (data) => {
-  for (i = 0; i < data.length; i++) {
+const getData = async () => {
+  data = await fetch('http://localhost:3000/api/v1/chat');
+  const response = await data.json();
+  socket.emit('message', response);
+  return response;
+};
+getData();
+
+socket.on('message', async (data) => {
+  const fetchedData = data.message;
+  for (i = 0; i < fetchedData.length; i++) {
     feedback.innerHTML = '';
-    output.innerHTML
-      += `<p><strong>${data[i].sender}: </strong>${data[i].message}</p>`
-      + `<div>${data[i].createdAt}</div>`;
+    output.innerHTML +=
+      `<p><strong>${fetchedData[i].sender}: </strong>${fetchedData[i].message}</p>` +
+      `<div>${fetchedData[i].createdAt}</div>`;
   }
 });

@@ -11,11 +11,6 @@ const userController = new UserControllers();
 
 router.get('/', authenticate, notificationController.getAllNotificationsOfUser);
 router.get('/:id', authenticate, notificationController.getSingleNotification);
-router.get(
-  '/unread',
-  authenticate,
-  notificationController.getUnreadNotifications,
-);
 router.patch('/unsubscribe', authenticate, userController.notificationOptOut);
 router.patch('/subscribe', authenticate, userController.notificationOptIn);
 router.delete('/:id', authenticate, notificationController.deleteNotification);

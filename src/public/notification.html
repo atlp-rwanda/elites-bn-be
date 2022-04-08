@@ -3,7 +3,7 @@
   <head>
     <meta
       http-equiv="refresh"
-      content="5; URL=http://localhost:3000/notification.html"
+      content="7; URL=http://localhost:3000/notification.html"
     />
     <title>Notifications</title>
     <style>
@@ -55,8 +55,8 @@
         },
       });
       const token = localStorage.getItem('token');
-      socket.on('initialize', (data) => {
-        console.log('in Initialize==== ' + data);
+
+      function displayNotifs(data) {
         const parsedData = JSON.parse(data);
         let notifDiv = document.querySelector('.notifications');
         notifDiv.innerHTML = '';
@@ -64,7 +64,6 @@
           let error = document.querySelector('#notif-title span');
           error.textContent = parsedData.error;
         }
-
         parsedData.notif
           .slice()
           .reverse()
@@ -75,6 +74,9 @@
             node.innerHTML = `<a style="text-decoration:none;" href = http://localhost:3000/api/v1/trips/${item.requestId} target="_blank"><li class = "notifs">${item.body}</li></a>`;
             notifDiv.appendChild(node);
           });
+      }
+      socket.on('initialize', (data) => {
+        displayNotifs(data);
       });
       socket.on('notification', (data) => {
         const parsedData = JSON.parse(data);

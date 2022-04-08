@@ -21,13 +21,6 @@ class notificationServices {
       console.log(err);
     }
   };
-  
-  getUnreadNotifications = async (userId) => {
-    const notifications = await Notification.findAll({
-      where: { userId, isRead: false },
-    });
-    return notifications;
-  };
 
   deleteNotification = async (id, userId) => {
     const deletedNotification = await Notification.destroy({

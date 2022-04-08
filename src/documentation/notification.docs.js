@@ -39,27 +39,6 @@ export const notifications = {
       ],
     },
   },
-  '/api/v1/notifications/unread': {
-    get: {
-      tags: ['Notifications'],
-      summary: 'Get all unread notifications of current user',
-      description: 'get all unread notifications',
-      produces: ['application/json'],
-      responses: {
-        200: {
-          description: 'All unread notifications retrieved successfuly!',
-        },
-        404: {
-          description: 'No new notifications found!',
-        },
-      },
-      security: [
-        {
-          Bearer: [],
-        },
-      ],
-    },
-  },
   '/api/v1/notifications/{id}': {
     get: {
       tags: ['Notifications'],

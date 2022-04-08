@@ -41,11 +41,12 @@ module.exports = (sequelize, DataTypes) => {
       managerId: DataTypes.INTEGER,
       isActive: DataTypes.BOOLEAN,
       verified: DataTypes.BOOLEAN,
+      notifyByEmail: DataTypes.BOOLEAN,
     },
     {
       sequelize,
       modelName: 'User',
-    }
+    },
   );
   return User;
 };

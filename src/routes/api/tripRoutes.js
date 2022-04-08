@@ -14,7 +14,7 @@ router.post(
   '/',
   requestValidation,
   authenticate,
-  tripControllers.createController
+  tripControllers.createController,
 );
 router.put('/:id', authenticate, tripControllers.updateRequest);
 router.get('/', authenticate, tripControllers.getAllRequests);
@@ -24,20 +24,20 @@ router.patch(
   '/:id',
   authenticate,
   isManager,
-  tripControllers.approveRejectTripRequest
+  tripControllers.approveRejectTripRequest,
 );
 
 router.post(
   '/:id/comments',
   authenticate,
   isRequester,
-  TripCommentController.create
+  TripCommentController.create,
 );
 router.get(
   '/:id/comments',
   authenticate,
   isRequester,
-  TripCommentController.findAllByTrip
+  TripCommentController.findAllByTrip,
 );
 
 export default router;

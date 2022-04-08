@@ -5,17 +5,14 @@ import {
   TRIP_FOUND_MESSAGE,
   TRIP_DELETED_MESSAGE,
   NO_TRIP_FOUND,
-  VALIDATION_ERROR,
   VALIDATION_ERROR_INPUT,
 } from '../constants/tripConstants';
 import {
   createTrip,
-  updateRequest,
   deleteRequest,
   getAllRequests,
   getManagerId,
   tripExist,
-  checkLocations,
   getOneRequest,
   approveRequest,
   updateMulticities,
@@ -25,6 +22,7 @@ import models from '../models';
 import { UnauthorizedError } from '../httpErrors/unauthorizedError';
 import { userById } from '../services/userServices';
 import { BaseError } from '../httpErrors/baseError';
+import requestEventEmitter from './notificationEventsController';
 
 // eslint-disable-next-line import/prefer-default-export
 export class TripControllers {
@@ -34,7 +32,7 @@ export class TripControllers {
       req.body.managerId = await getManagerId(id);
       const compareDates = validateDate(
         req.body.returnDate,
-        req.body.departDate
+        req.body.departDate,
       );
       // const locationsValidation = await checkLocations(req.body.departLocation);
       const exists = await tripExist(id, req.body.departDate);
@@ -54,6 +52,9 @@ export class TripControllers {
         const newTrip = await createTrip(id, req.body);
 
         if (newTrip) {
+          // Emit event when trip request is created
+          requestEventEmitter.emit('request-created', newTrip, req);
+
           res
             .status(201)
             .json({ status: 201, message: TRIP_CREATED, payload: newTrip });
@@ -77,16 +78,18 @@ export class TripControllers {
     try {
       const multiCityTrips = await updateMulticities(req.params.id, req.body);
       if (multiCityTrips) {
+        // Emit event when trip request is edited
+        requestEventEmitter.emit('request-updated', multiCityTrips);
+
         return res.status(200).json({
           message: 'Updating has been successfully ',
           payload: multiCityTrips,
         });
-      } else {
-        res.status(404).json({
-          status: 404,
-          message: 'Oops,No such trip request found! ',
-        });
       }
+      res.status(404).json({
+        status: 404,
+        message: 'Oops,No such trip request found! ',
+      });
     } catch (err) {
       next(err);
     }
@@ -155,6 +158,9 @@ export class TripControllers {
             status: updatedStatus,
           });
           if (updated) {
+            // Emit the event when trip request is approved or rejected
+            requestEventEmitter.emit('request-approved-or-rejected', updated);
+
             res.status(200).json({
               status: 200,
               message: REQUEST_UPDATED,

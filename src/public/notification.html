@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta
+      http-equiv="refresh"
+      content="7; URL=http://localhost:3000/notification.html"
+    />
+    <title>Notifications</title>
+    <style>
+      .notifs-container {
+        margin: auto;
+        width: 50%;
+        border: 3px solid rgb(37, 101, 240);
+        border-radius: 10px;
+      }
+      #notif-title {
+        background-color: #eee;
+        font-size: 25px;
+        text-align: center;
+      }
+      #notif-title span {
+        font-size: 25px;
+        text-align: center;
+        color: rgb(34, 100, 224);
+        letter-spacing: 4px;
+      }
+      .notifs {
+        color: rgb(13, 13, 46);
+        font-size: 20px;
+        list-style: none;
+        margin: auto;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="notifs-container">
+      <div id="notif-title">
+        <span>NOTIFICATIONS</span>
+      </div>
+      <div class="notifications"></div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      localStorage.setItem(
+        'token',
+        JSON.stringify(
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNjQ5MzQ3NjQwLCJleHAiOjE2ODA0NTE2NDB9.6TqRna8aZ3Rf0Najmzt3QD9DPcflVQtWYeick8HkDjA'
+        )
+      );
+      Notification.requestPermission();
+      const socket = io({
+        query: {
+          token: localStorage.getItem('token'),
+        },
+      });
+      const token = localStorage.getItem('token');
+
+      function displayNotifs(data) {
+        const parsedData = JSON.parse(data);
+        let notifDiv = document.querySelector('.notifications');
+        notifDiv.innerHTML = '';
+        if (parsedData.error) {
+          let error = document.querySelector('#notif-title span');
+          error.textContent = parsedData.error;
+        }
+        parsedData.notif
+          .slice()
+          .reverse()
+          .forEach(function (item) {
+            let node = document.createElement('div');
+            node.style.cssText =
+              'border:1px solid gray; padding:2rem 2rem; width:80%; margin:1rem auto; ';
+            node.innerHTML = `<a style="text-decoration:none;" href = http://localhost:3000/api/v1/trips/${item.requestId} target="_blank"><li class = "notifs">${item.body}</li></a>`;
+            notifDiv.appendChild(node);
+          });
+      }
+      socket.on('initialize', (data) => {
+        displayNotifs(data);
+      });
+      socket.on('notification', (data) => {
+        const parsedData = JSON.parse(data);
+        let notifDiv = document.querySelector('.notifications');
+        let node = document.createElement('div');
+        node.innerHTML = `<a href = 'http://localhost:3000/api/v1/trips/${parsedData.userId}' target="_blank"><li class = "notifs">${parsedData.body}</li></a>`;
+        notifDiv.appendChild(node);
+        var notification = new Notification('Barefoot Nomad', {
+          body: parsedData.body,
+          icon: 'https://upload.wikimedia.org/wikipedia/commons/4/46/BN_Logo_1000px.png',
+        });
+      });
+    </script>
+  </body>
+</html>

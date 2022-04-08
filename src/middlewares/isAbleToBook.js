@@ -1,8 +1,8 @@
-import "dotenv/config";
-import { decodeAcessToken } from "../helpers/jwtFunction";
-import models from "../models";
-import { ForbbidenError } from "../httpErrors/forbidenError";
-import { validateDate } from "../helpers/dateComparison";
+import 'dotenv/config';
+import { decodeAcessToken } from '../helpers/jwtFunction';
+import models from '../models';
+import { ForbbidenError } from '../httpErrors/forbidenError';
+import { validateDate } from '../helpers/dateComparison';
 
 export const isAbleToBook = async (req, res, next) => {
   try {
@@ -12,38 +12,38 @@ export const isAbleToBook = async (req, res, next) => {
     const compareDates = validateDate(checkoutDate, checkinDate);
 
     if (compareDates === false) {
-      throw new ForbbidenError("Do check well the dates");
+      throw new ForbbidenError('Do check well the dates');
     }
 
     const emptyToken = req.headers.authorization;
     const { roomId } = req.params; // this roomId is going to be used down below line 48
 
     if (emptyToken === undefined) {
-      throw new ForbbidenError("User not logged in");
+      throw new ForbbidenError('User not logged in');
     }
-    const token = req.headers.authorization.split(" ")[1];
+    const token = req.headers.authorization.split(' ')[1];
 
     const data = await decodeAcessToken(token);
-    console.log(data.id, "========================");
+    console.log(data.id, '========================');
 
     const user = await models.User.findOne({
       where: { id: data.id },
-      include: "Role",
+      include: 'Role',
     });
 
     if (user.roleId !== 5) {
-      throw new ForbbidenError("You are not allowed to perform this task");
+      throw new ForbbidenError('You are not allowed to perform this task');
     }
     const tripRequest = await models.tripRequest.findOne({
       where: { userId: data.id },
     });
 
     if (tripRequest === null) {
-      throw new ForbbidenError("You have no such trip request");
+      throw new ForbbidenError('You have no such trip request');
     }
-    console.log(tripRequest.status, "================");
-    if (tripRequest.status === "pending" || tripRequest.status === "rejected") {
-      throw new ForbbidenError("this trip request has not been approved");
+    console.log(tripRequest.status, '================');
+    if (tripRequest.status === 'pending' || tripRequest.status === 'rejected') {
+      throw new ForbbidenError('this trip request has not been approved');
     }
 
     const checkRoomExist = await models.Room.findOne({
@@ -51,12 +51,12 @@ export const isAbleToBook = async (req, res, next) => {
     });
 
     if (checkRoomExist === null) {
-      throw new ForbbidenError("This room is not in existance");
+      throw new ForbbidenError('This room is not in existance');
     }
     const roomAvailable = checkRoomExist.isAvailable;
     if (roomAvailable === false) {
       throw new ForbbidenError(
-        "This room is already booked try a different one"
+        'This room is already booked try a different one',
       );
     }
     next();

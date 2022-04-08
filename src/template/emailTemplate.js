@@ -26,8 +26,8 @@ const makeTemplate = (link) => {
                         </tr>
                         <tr>
                             <td style="text-align:center;">
-                              <a href="https://rakeshmandal.com" title="logo" target="_blank">
-                                <img width="60" src="https://upload.wikimedia.org/wikipedia/commons/4/46/BN_Logo_1000px.png" title="logo" alt="logo">
+                              <a href="https://barefootnomad.com"  target="_blank">
+                                <img width="60" src="https://upload.wikimedia.org/wikipedia/commons/4/46/BN_Logo_1000px.png">
                               </a>
                             </td>
                         </tr>

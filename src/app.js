@@ -2,15 +2,20 @@ import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
 import morgan from 'morgan';
+import socketio from 'socket.io';
 import path from 'path';
+import http from 'http';
 import routes from './routes/index';
 import db from './models/index';
 import swaggerDoc from './documentation/index';
 import 'dotenv/config';
 import { PageNotFoundError } from './httpErrors/pageNotFoundError';
 import passport from './middlewares/auth';
+import { ioMiddleware } from './helpers/socketio';
 
 const app = express();
+
+// const server = http.createServer(app);
 const port = process.env.PORT || 3000;
 const mode = process.env.NODE_ENV || 'development';
 
@@ -47,6 +52,7 @@ try {
       });
   }
 
+  app.use(express.static(path.join(__dirname, 'public')));
   app.set('views', path.join(__dirname, 'template'));
   app.set('view engine', 'ejs');
   app.use(cors());
@@ -66,17 +72,11 @@ try {
         docExpansions: 'none',
         persistAuthorization: true,
       },
-    }),
+    })
   );
 
-  // catch all 404 errors
-  app.all('*', (req, res, next) => {
-    const err = new PageNotFoundError();
-    next(err);
-  });
   app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;
-    // console.log(err);
     res.status(statusCode).json({
       statusCode,
       name: err.name,
@@ -88,8 +88,28 @@ try {
     next(err);
   });
 
-  app.listen(port, () => {
+  const server = http.createServer(app);
+
+  server.listen(port, () => {
     console.log(`The server is running on port ${port}`);
+  });
+
+  const io = socketio(server);
+
+  io.use(async (socket, next) => {
+    ioMiddleware(socket);
+    next();
+  });
+
+  app.use((req, res, next) => {
+    req.io = io;
+    next();
+  });
+
+  // catch all 404 errors
+  app.all('*', (req, res, next) => {
+    const err = new PageNotFoundError();
+    next(err);
   });
 } catch (error) {
   console.log(error);

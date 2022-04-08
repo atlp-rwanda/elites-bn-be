@@ -23,7 +23,10 @@ export const userById = async (id) => {
 };
 
 export const updateUser = async (userId) => {
-  const user = await models.User.update({ verified: true }, { where: { id: userId } });
+  const user = await models.User.update(
+    { verified: true },
+    { where: { id: userId } },
+  );
   return user;
 };
 
@@ -61,3 +64,35 @@ export const updateUserPassword = async (id, email, updates) => {
 export function getUserId(id) {
   return models.User.findOne({ where: { id } });
 }
+
+export const notificationsOptOut = async (id) => {
+  const user = await models.User.findOne({ where: { id } });
+  if (user.notifyByEmail) {
+    const updatedUser = await models.User.update(
+      { notifyByEmail: false },
+      {
+        where: { id },
+        returning: true,
+        raw: true,
+      },
+    );
+    return updatedUser;
+  }
+  return false;
+};
+
+export const notificationsOptIn = async (id) => {
+  const user = await models.User.findOne({ where: { id } });
+  if (!user.notifyByEmail) {
+    const updatedUser = await models.User.update(
+      { notifyByEmail: true },
+      {
+        where: { id },
+        returning: true,
+        raw: true,
+      },
+    );
+    return updatedUser;
+  }
+  return false;
+};

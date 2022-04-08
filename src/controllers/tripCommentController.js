@@ -2,6 +2,7 @@ import { findAtrip } from '../services/tripServices';
 import { TripCommentService } from '../services/tripCommentServices';
 import { PageNotFoundError } from '../httpErrors/pageNotFoundError';
 import { ForbbidenError } from '../httpErrors/forbidenError';
+import requestEventEmitter from './notificationEventsController';
 
 export class TripCommentController {
   static async create(id, req, res, next) {
@@ -14,11 +15,19 @@ export class TripCommentController {
             tripId: parseInt(req.params.id),
             comment: req.body.comment,
           });
-          return res.status(201).json({
-            status: '201',
-            message: 'comment added successfully',
-            payload: createdComment,
-          });
+          if (createdComment) {
+            // Emit event when the trip request is commented on
+            await requestEventEmitter.emit(
+              'commented-on-request',
+              createdComment,
+              req,
+            );
+            return res.status(201).json({
+              status: '201',
+              message: 'comment added successfully',
+              payload: createdComment,
+            });
+          }
         }
         throw new ForbbidenError(
           'You are neither a manager nor owner of this trip',

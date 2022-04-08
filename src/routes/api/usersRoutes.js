@@ -5,6 +5,7 @@ import { roleValidate } from '../../validations/roleValidation';
 import { isAdmin } from '../../middlewares/isAdmin';
 import passport from '../../middlewares/auth';
 import { passwordValidation } from '../../validations/resetPassword.validation';
+import { emailValidation } from '../../validations/email.validation';
 
 const router = express.Router();
 const userControllers = new UserControllers();
@@ -19,13 +20,13 @@ router.patch(
   '/updateRole/:id',
   roleValidate,
   isAdmin,
-  userControllers.updateRole
+  userControllers.updateRole,
 );
-router.post('/forgot-password', userControllers.sendResetLink);
+router.post('/forgot-password', emailValidation, userControllers.sendResetLink);
 router.patch(
   '/reset-password/:token',
   passwordValidation,
-  userControllers.resetPassword
+  userControllers.resetPassword,
 );
 
 router.get(
@@ -34,7 +35,7 @@ router.get(
     session: false,
     scope: ['email', 'profile'],
     prompt: 'select_account',
-  })
+  }),
 );
 
 router.get(
@@ -43,7 +44,7 @@ router.get(
     session: false,
     failureRedirect: 'auth/google/failed',
   }),
-  userControllers.authGoogleLogin
+  userControllers.authGoogleLogin,
 );
 
 router.get('/auth/google/failed', (req, res) => {
@@ -56,7 +57,7 @@ router.get(
     session: false,
     scope: ['email', 'public_profile'],
   }),
-  userControllers.authFacebookLogin
+  userControllers.authFacebookLogin,
 );
 
 router.get('/auth/facebook/failed', (req, res, next) => {
@@ -69,7 +70,7 @@ router.get(
     session: false,
     scope: ['email', 'profile'],
     prompt: 'select_account',
-  })
+  }),
 );
 
 router.get(
@@ -78,7 +79,7 @@ router.get(
     session: false,
     failureRedirect: 'auth/google/failed',
   }),
-  userControllers.authGoogleLogin
+  userControllers.authGoogleLogin,
 );
 
 router.get('/auth/google/failed', (req, res) => {
@@ -91,7 +92,7 @@ router.get(
     session: false,
     scope: ['email', 'public_profile'],
   }),
-  userControllers.authFacebookLogin
+  userControllers.authFacebookLogin,
 );
 
 router.get('/auth/facebook/failed', (req, res) => {

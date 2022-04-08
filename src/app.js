@@ -74,7 +74,7 @@ try {
         docExpansions: 'none',
         persistAuthorization: true,
       },
-    })
+    }),
   );
 
   app.use((err, req, res, next) => {

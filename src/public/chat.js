@@ -50,8 +50,13 @@ const username = alert('Welcome to this chat!');
 // emit event to server with the user's name
 
 socket.on('subscribe', (data) => {
+  console.log(data);
   handle.value = data;
 });
+
+// get logged user
+// const loggedUser = JSON.parse(localStorage.getItem('userEmail')) 
+// socket.emit('subscribe', loggedUser);
 
 const getData = async () => {
   data = await fetch('http://localhost:3000/api/v1/chat');

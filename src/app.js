@@ -12,6 +12,7 @@ import 'dotenv/config';
 import { PageNotFoundError } from './httpErrors/pageNotFoundError';
 import passport from './middlewares/auth';
 import { ioMiddleware } from './helpers/socketio';
+import {chatSocket} from './helpers/chatSockets';
 import { addMessage } from './services/chatServices';
 import models from './models';
 
@@ -64,7 +65,10 @@ try {
   app.get('/verify', (req, res) => {
     res.render('index');
   });
-  app.use('/api/v1/chat', (req, res) => res.send(`${__dirname}/public/`));
+  app.use('/public/chat', (req, res) => res.sendFile(`${__dirname}/public/login.html`));
+  app.use('/public/notification', (req, res) =>
+    res.sendFile(`${__dirname}/public/notification.html`)
+  );
 
   app.use(
     '/docs/swagger-ui/',
@@ -97,7 +101,7 @@ try {
   let flags = 0;
   const ipsconnected = [];
 
-  io.on('connection', async (socket) => {
+  io.on('connection', (socket) => {
     const connectedUser = socket.id;
     if (!ipsconnected.hasOwnProperty(connectedUser)) {
       ipsconnected[connectedUser] = 1;
@@ -105,26 +109,29 @@ try {
       io.emit('register', flags);
     }
     console.log('👾 New socket connected! >>', socket.id);
-    const url = socket.handshake.headers.referer.split('?')[1];
-    const findUser = await models.User.findOne({
-      where: {
-        email: url,
-      },
-      attributes: {
-        exclude: [
-          'email',
-          'password',
-          'roleId',
-          'managerId',
-          'isActive',
-          'createdAt',
-          'password',
-          'updatedAt',
-          'verified',
-        ],
-      },
+    socket.on('subscribe', async (data) => {
+      const findUser = await models.User.findOne({
+        where: {
+          email: data,
+        },
+        attributes: {
+          exclude: [
+            'email',
+            'password',
+            'roleId',
+            'managerId',
+            'isActive',
+            'createdAt',
+            'password',
+            'updatedAt',
+            'verified',
+          ],
+        },
+      });
+      const {names} = findUser.dataValues
+      io.to(socket.id).emit('subscribe', names);
     });
-    io.to(socket.id).emit('subscribe', findUser.names);
+    
 
     socket.on('message', (data) => {
       io.to(socket.id).emit('message', data);
@@ -156,6 +163,8 @@ try {
   server.listen(port, () => {
     console.log('server is running');
   });
+
+
 
   io.use(async (socket, next) => {
     ioMiddleware(socket);

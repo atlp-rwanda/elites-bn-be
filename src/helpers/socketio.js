@@ -25,7 +25,6 @@ export const ioMiddleware = async (socket) => {
         }),
       );
       socket.on('disconnect', () => {
-        process.stdout.write('a user is disconnected');
         connectedUsers[decoded.id].forEach((el, index, arr) => {
           if (arr[index] === socket.id) {
             arr.splice(index, 1);

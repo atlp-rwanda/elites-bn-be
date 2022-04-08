@@ -32,7 +32,7 @@ requestEventEmitter.on('request-created', async (createdTrip, req) => {
     if (manager.notifyByEmail) {
       const payload = {
         body,
-        tripUri: `http://localhost:3000/api/v1/trips/${createdTrip.id}`,
+        tripUri: `https://elites-barefoot-nomad.herokuapp.com/api/v1/trips/${createdTrip.id}`,
       };
 
       await sendEmailNotification(
@@ -65,7 +65,7 @@ requestEventEmitter.on('request-updated', async (updatedTrip) => {
     if (manager.notifyByEmail) {
       const payload = {
         body,
-        tripUri: `http://localhost:3000/api/v1/trips/${updatedTrip.id}`,
+        tripUri: `https://elites-barefoot-nomad.herokuapp.com/api/v1/trips/${updatedTrip.id}`,
       };
 
       await sendEmailNotification(
@@ -98,7 +98,7 @@ requestEventEmitter.on('request-approved-or-rejected', async (updatedTrip) => {
     if (user.notifyByEmail) {
       const payload = {
         body,
-        tripUri: `http://localhost:3000/api/v1/trips/${updatedTrip.id}`,
+        tripUri: `https://elites-barefoot-nomad.herokuapp.com/api/v1/trips/${updatedTrip.id}`,
       };
 
       await sendEmailNotification(
@@ -155,7 +155,7 @@ requestEventEmitter.on('commented-on-request', async (comment, req) => {
     if (emailToNotify) {
       const payload = {
         body,
-        tripUri: `http://localhost:3000/api/v1/trips/${comment.tripId}`,
+        tripUri: `https://elites-barefoot-nomad.herokuapp.com/api/v1/trips/${comment.tripId}`,
       };
 
       await sendEmailNotification(

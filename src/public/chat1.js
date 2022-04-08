@@ -1,5 +1,4 @@
-// const socket = io.connect();
-
+const socket = io.connect();
 // Query DOM
 const loginForm = document.querySelector('.login-form');
 user = document.getElementById('user'),
@@ -23,11 +22,20 @@ const logUserIn = async () => {
     },
   });
 
+  console.log(response);
+
   if (response.status === 200) {
-    const result = await response.json();
-    token = result.payload.accesstoken;
-    localStorage.setItem('auth', JSON.stringify(token));
-    window.location.replace(`./chat.html?${data.email}`);
+    console.log('successfully');
+    let userEmail;
+    if (localStorage.getItem('userEmail') === null) {
+      userEmail = [];
+    } else {
+      userEmail = JSON.parse(localStorage.getItem('userEmail'));
+    }
+    userEmail.push(data);
+    socket.emit('subscribe', data.email);
+    localStorage.setItem('userEmail', JSON.stringify(userEmail));
+    window.location.replace(`./chat.html`);
   } else {
     alert('invalid credential,Try again');
     console.log('error,');

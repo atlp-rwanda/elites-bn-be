@@ -139,4 +139,26 @@ export const notifications = {
       ],
     },
   },
+
+  '/api/v1/notifications/markallasread': {
+    patch: {
+      tags: ['Notifications'],
+      summary: 'User will be able to mark all as read',
+      description: 'mark all as read to notifications ',
+      produces: ['application/json'],
+      responses: {
+        200: {
+          description: 'Notifications marked as read, successfully!',
+        },
+        401: {
+          description: 'No notifications found',
+        },
+      },
+      security: [
+        {
+          Bearer: [],
+        },
+      ],
+    },
+  },
 };

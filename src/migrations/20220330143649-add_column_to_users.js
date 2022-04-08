@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-=======
-'use strict';
-
->>>>>>> fdb8021 ( This is a combination of 4 commits.)
 module.exports = {
   up(queryInterface, Sequelize) {
     return Promise.all([
@@ -14,11 +9,7 @@ module.exports = {
           defaultValue: true,
           allowNull: true,
           after: 'verified',
-<<<<<<< HEAD
-        },
-=======
         }
->>>>>>> fdb8021 ( This is a combination of 4 commits.)
       ),
     ]);
   },

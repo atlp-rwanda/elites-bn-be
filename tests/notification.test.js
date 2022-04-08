@@ -70,4 +70,27 @@ describe('NOTIFICATIONS ENDPOINTS TEST', () => {
       });
     done();
   });
+  it('Should mark all as read', (done) => {
+    chai
+      .request(app)
+      .patch(`/api/v1/notifications/markallasread`)
+      .set('Authorization', `Bearer ${token}`)
+      .end((err, res) => {
+        expect(res).to.have.status([200]);
+        expect(res.body).to.have.property('message');
+        expect(res.body).to.have.property('data');
+      });
+    done();
+  });
+  it('Should not mark all as read if he has not logged in', (done) => {
+    chai
+      .request(app)
+      .patch(`/api/v1/notifications/markallasread`)
+      .set('Authorization', `Bearer `)
+      .end((err, res) => {
+        expect(res).to.have.status([401]);
+        expect(res.body).to.have.property('error');
+      });
+    done();
+  });
 });

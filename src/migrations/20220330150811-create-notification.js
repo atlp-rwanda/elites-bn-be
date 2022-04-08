@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-'use strict';
->>>>>>> fdb8021 ( This is a combination of 4 commits.)
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Notifications', {

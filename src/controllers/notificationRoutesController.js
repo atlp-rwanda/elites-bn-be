@@ -70,9 +70,9 @@ class NotificationControllers {
     }
   };
 
-  changestatus = async (req, res, next) => {
+  markAllAsReadController = async (id, req, res, next) => {
     try {
-      const updateStatus = await notificationService.updateStatus(req.user.id);
+      const updateStatus = await notificationService.markAllAsRead(id);
 
       console.log(updateStatus);
       if (updateStatus) {
@@ -81,7 +81,7 @@ class NotificationControllers {
           data: { updateStatus },
         });
       } else {
-        return res.status(400).json({ message: DOES_NOT_EXIST });
+        return res.status(401).json({ message: DOES_NOT_EXIST });
       }
     } catch (error) {
       return res.status(500).send({ message: FETCH_ERROR });

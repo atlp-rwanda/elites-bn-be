@@ -44,15 +44,13 @@ class notificationServices {
     }
   };
 
-  updateStatus = async (userId) => {
+  markAllAsRead = async (userId) => {
     const updateNotifications = await Notification.update(
       { isRead: true },
       { where: { userId } }
     );
-    const notificationMarked = await Notification.findOne({
-      where: { userId },
-    });
-    return notificationMarked;
+
+    return updateNotifications;
   };
 }
 

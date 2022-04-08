@@ -3,7 +3,6 @@ import NotificationControllers from '../../controllers/notificationRoutesControl
 import { UserControllers } from '../../controllers/userController';
 
 import { authenticate } from '../../middlewares/authenticate';
-import { isNotificationExist } from '../../middlewares/isNotificationExist';
 
 const router = express.Router();
 
@@ -18,7 +17,12 @@ router.delete('/:id', authenticate, notificationController.deleteNotification);
 router.delete(
   '/',
   authenticate,
-  notificationController.deleteAllNotificationsOfUser,
+  notificationController.deleteAllNotificationsOfUser
+);
+router.patch(
+  '/markallasread',
+  authenticate,
+  notificationController.markAllAsReadController
 );
 
 export default router;

@@ -75,7 +75,7 @@ try {
         docExpansions: 'none',
         persistAuthorization: true,
       },
-    }),
+    })
   );
 
   app.use((err, req, res, next) => {
@@ -127,21 +127,10 @@ try {
     });
     io.to(socket.id).emit('subscribe', findUser.names);
 
-    // get past message
-
-    // const getData= async ()=>{
-
-    //   data = await fetch('http://localhost:3000/api/v1/chat');
-    //   const response= await data.json();
-    //   console.log(response);
-    //   io.to(socket.id).emit('message', data);
-    //   return response;
-    // }
-
-    socket.on('message',(data)=>{
+    socket.on('message', (data) => {
       io.to(socket.id).emit('message', data);
-    })
-  
+    });
+
     socket.on('disconnect', () => {
       if (ipsconnected.hasOwnProperty(connectedUser)) {
         delete ipsconnected[connectedUser];
@@ -191,4 +180,3 @@ try {
 }
 
 export default app;
-

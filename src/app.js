@@ -11,9 +11,8 @@ import swaggerDoc from './documentation/index';
 import 'dotenv/config';
 import { PageNotFoundError } from './httpErrors/pageNotFoundError';
 import passport from './middlewares/auth';
-import http from 'http';
 import { ioMiddleware } from './helpers/socketio';
-import { getMessages, addMessage } from './services/chatServices';
+import { addMessage } from './services/chatServices';
 import models from './models';
 
 const app = express();
@@ -157,8 +156,6 @@ try {
   server.listen(port, () => {
     console.log('server is running');
   });
-
-  const io = socketio(server);
 
   io.use(async (socket, next) => {
     ioMiddleware(socket);

@@ -2,7 +2,6 @@ import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
 import morgan from 'morgan';
-// import path from 'path';
 import socketio from 'socket.io';
 import path from 'path';
 import http from 'http';
@@ -73,12 +72,11 @@ try {
         docExpansions: 'none',
         persistAuthorization: true,
       },
-    }),
+    })
   );
 
   app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;
-    // console.log(err);
     res.status(statusCode).json({
       statusCode,
       name: err.name,
@@ -91,10 +89,6 @@ try {
   });
 
   const server = http.createServer(app);
-
-  app.get('/notification', (req, res) => {
-    res.render('notification');
-  });
 
   server.listen(port, () => {
     console.log(`The server is running on port ${port}`);

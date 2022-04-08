@@ -101,7 +101,7 @@ try {
     const connectedUser = socket.id;
     if (!ipsconnected.hasOwnProperty(connectedUser)) {
       ipsconnected[connectedUser] = 1;
-      flags++;
+      flags=flags + 1;
       io.emit('register', flags);
     }
     console.log('👾 New socket connected! >>', socket.id);
@@ -133,7 +133,7 @@ try {
     socket.on('disconnect', () => {
       if (ipsconnected.hasOwnProperty(connectedUser)) {
         delete ipsconnected[connectedUser];
-        flags--;
+        flags= flags - 1;
         io.emit('register', flags);
       }
     });

@@ -2,17 +2,6 @@ import moment from 'moment';
 import { getMessages, addMessage } from '../services/chatServices';
 
 class ChatController {
-  async sendMessageContoller(req, res, next) {
-    try {
-      // console.log(id);
-      const data = { ...req.body };
-      const sentMessage = await addMessage(data);
-      res.status(201).json({ status: 201, message: sentMessage, time: moment().format('h:mm a') });
-    } catch (err) {
-      console.log(err);
-      next(err);
-    }
-  }
 
   // get messages
 

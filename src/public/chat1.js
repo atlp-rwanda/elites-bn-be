@@ -25,16 +25,16 @@ const logUserIn = async () => {
   console.log(response);
 
   if (response.status === 200) {
-    console.log('successfully');
-    let userEmail;
-    if (localStorage.getItem('userEmail') === null) {
-      userEmail = [];
-    } else {
-      userEmail = JSON.parse(localStorage.getItem('userEmail'));
-    }
-    userEmail.push(data);
-    socket.emit('subscribe', data.email);
-    localStorage.setItem('userEmail', JSON.stringify(userEmail));
+    // console.log('successfully');
+    // let userEmail;
+    // if (localStorage.getItem('userEmail') === null) {
+    //   userEmail = [];
+    // } else {
+    //   userEmail = JSON.parse(localStorage.getItem('userEmail'));
+    // }
+    // userEmail.push(data.email);
+    // socket.emit('subscribe', data.email);
+    localStorage.setItem('userEmail', JSON.stringify(data.email));
     window.location.replace(`./chat.html`);
   } else {
     alert('invalid credential,Try again');

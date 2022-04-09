@@ -128,7 +128,7 @@ try {
           ],
         },
       });
-      const {names} = findUser.dataValues
+      const {names} = findUser
       io.to(socket.id).emit('subscribe', names);
     });
     

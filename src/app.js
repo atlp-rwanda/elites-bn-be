@@ -12,7 +12,6 @@ import 'dotenv/config';
 import { PageNotFoundError } from './httpErrors/pageNotFoundError';
 import passport from './middlewares/auth';
 import { ioMiddleware } from './helpers/socketio';
-import {chatSocket} from './helpers/chatSockets';
 import { addMessage } from './services/chatServices';
 import models from './models';
 
@@ -66,9 +65,7 @@ try {
     res.render('index');
   });
   app.use('/public/chat', (req, res) => res.sendFile(`${__dirname}/public/login.html`));
-  app.use('/public/notification', (req, res) =>
-    res.sendFile(`${__dirname}/public/notification.html`)
-  );
+  app.use('/public/notification', (req, res) => res.sendFile(`${__dirname}/public/notification.html`));
 
   app.use(
     '/docs/swagger-ui/',
@@ -105,7 +102,7 @@ try {
     const connectedUser = socket.id;
     if (!ipsconnected.hasOwnProperty(connectedUser)) {
       ipsconnected[connectedUser] = 1;
-      flags=flags + 1;
+      flags += 1;
       io.emit('register', flags);
     }
     console.log('👾 New socket connected! >>', socket.id);
@@ -128,10 +125,9 @@ try {
           ],
         },
       });
-      const {names} = findUser
+      const { names } = findUser;
       io.to(socket.id).emit('subscribe', names);
     });
-    
 
     socket.on('message', (data) => {
       io.to(socket.id).emit('message', data);
@@ -140,7 +136,7 @@ try {
     socket.on('disconnect', () => {
       if (ipsconnected.hasOwnProperty(connectedUser)) {
         delete ipsconnected[connectedUser];
-        flags= flags - 1;
+        flags -= 1;
         io.emit('register', flags);
       }
     });
@@ -163,8 +159,6 @@ try {
   server.listen(port, () => {
     console.log('server is running');
   });
-
-
 
   io.use(async (socket, next) => {
     ioMiddleware(socket);

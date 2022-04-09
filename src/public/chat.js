@@ -27,9 +27,9 @@ message.addEventListener('keypress', () => {
   socket.emit('typing', handle.value);
 });
 
-socket.on('disconnect',()=>{
+socket.on('disconnect', () => {
   localStorage.removeItem('userEmail');
-})
+});
 // counting connected user
 
 socket.on('register', (data) => {
@@ -58,7 +58,7 @@ socket.on('subscribe', (data) => {
 });
 
 // get logged user
-const loggedUser = JSON.parse(localStorage.getItem('userEmail')) 
+const loggedUser = JSON.parse(localStorage.getItem('userEmail'));
 socket.emit('subscribe', loggedUser);
 
 const getData = async () => {

@@ -16,7 +16,7 @@
 //     console.log('👾 New socket connected! >>', socket.id);
 //     // const url = socket.handshake.headers.referer.split('?')[1];
 //     socket.on('subscribe', async (data) => {
-      
+
 //       const findUser = await models.User.findOne({
 //         where: {
 //           email: data,
@@ -37,7 +37,6 @@
 //       });
 //       io.to(socket.id).emit('subscribe', findUser.names);
 //     });
-    
 
 //     socket.on('message', (data) => {
 //       io.to(socket.id).emit('message', data);

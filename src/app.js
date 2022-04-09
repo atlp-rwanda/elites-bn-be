@@ -64,7 +64,6 @@ try {
   app.get('/verify', (req, res) => {
     res.render('index');
   });
-  app.use('/public/chat', (req, res) => res.sendFile(`${__dirname}/public/login.html`));
   app.use('/public/notification', (req, res) => res.sendFile(`${__dirname}/public/notification.html`));
 
   app.use(

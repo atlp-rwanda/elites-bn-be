@@ -1,4 +1,3 @@
-const socket = io.connect();
 // Query DOM
 const loginForm = document.querySelector('.login-form');
 (user = document.getElementById('user')),
@@ -7,14 +6,14 @@ const loginForm = document.querySelector('.login-form');
 
 const username = loginForm.elements[0];
 
-const token = '';
+let token = '';
 
 const logUserIn = async () => {
   const data = {
     email: user.value,
     password: password.value,
   };
-  const response = await fetch('https://elites-barefoot-nomad.herokuapp.com/api/v1/users/login', {
+  const response = await fetch('http://localhost:3000/api/v1/users/login', {
     method: 'post',
     body: JSON.stringify(data),
     headers: {
@@ -22,10 +21,10 @@ const logUserIn = async () => {
     },
   });
 
-  console.log(response);
-
   if (response.status === 200) {
-    localStorage.setItem('userEmail', JSON.stringify(data.email));
+    const result = await response.json();
+    token = result.payload.accesstoken;
+    localStorage.setItem('accesstoken', JSON.stringify(token));
     window.location.replace('./chat.html');
   } else {
     alert('invalid credential,Try again');

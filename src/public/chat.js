@@ -1,4 +1,8 @@
-const socket = io.connect();
+const socket = io({
+  auth: {
+    token: localStorage.getItem('accesstoken'),
+  },
+});
 
 // Query DOM
 const message = document.getElementById('message');
@@ -39,9 +43,9 @@ socket.on('register', (data) => {
 // Listen for events
 socket.on('chat', (data) => {
   feedback.innerHTML = '';
-  output.innerHTML +=
-    `<p><strong>${data.handle}: </strong>${data.message}</p>` +
-    `<div>${data.time}</div>`;
+  output.innerHTML
+    += `<p><strong>${data.handle}: </strong>${data.message}</p>`
+    + `<div>${data.time}</div>`;
 });
 
 socket.on('typing', (data) => {
@@ -62,7 +66,7 @@ const loggedUser = JSON.parse(localStorage.getItem('userEmail'));
 socket.emit('subscribe', loggedUser);
 
 const getData = async () => {
-  data = await fetch('https://elites-barefoot-nomad.herokuapp.com/api/v1/chat');
+  data = await fetch('http://localhost:3000/api/v1/chat');
   const response = await data.json();
   socket.emit('message', response);
   return response;
@@ -73,8 +77,8 @@ socket.on('message', async (data) => {
   const fetchedData = data.message;
   for (i = 0; i < fetchedData.length; i++) {
     feedback.innerHTML = '';
-    output.innerHTML +=
-      `<p><strong>${fetchedData[i].sender}: </strong>${fetchedData[i].message}</p>` +
-      `<div>${fetchedData[i].createdAt}</div>`;
+    output.innerHTML
+      += `<p><strong>${fetchedData[i].sender}: </strong>${fetchedData[i].message}</p>`
+      + `<div>${fetchedData[i].createdAt}</div>`;
   }
 });

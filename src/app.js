@@ -12,8 +12,7 @@ import 'dotenv/config';
 import { PageNotFoundError } from './httpErrors/pageNotFoundError';
 import passport from './middlewares/auth';
 import { ioMiddleware } from './helpers/socketio';
-import { addMessage } from './services/chatServices';
-import models from './models';
+import io from './utils/webSockets.io';
 
 const app = express();
 
@@ -91,69 +90,7 @@ try {
   });
 
   const server = http.createServer(app);
-  const io = socketio(server, {
-    path: '/socket.io',
-  });
-  let flags = 0;
-  const ipsconnected = [];
-
-  io.on('connection', (socket) => {
-    const connectedUser = socket.id;
-    if (!ipsconnected.hasOwnProperty(connectedUser)) {
-      ipsconnected[connectedUser] = 1;
-      flags += 1;
-      io.emit('register', flags);
-    }
-    console.log('👾 New socket connected! >>', socket.id);
-    socket.on('subscribe', async (data) => {
-      const findUser = await models.User.findOne({
-        where: {
-          email: data,
-        },
-        attributes: {
-          exclude: [
-            'email',
-            'password',
-            'roleId',
-            'managerId',
-            'isActive',
-            'createdAt',
-            'password',
-            'updatedAt',
-            'verified',
-          ],
-        },
-      });
-      const { names } = findUser;
-      io.to(socket.id).emit('subscribe', names);
-    });
-
-    socket.on('message', (data) => {
-      io.to(socket.id).emit('message', data);
-    });
-
-    socket.on('disconnect', () => {
-      if (ipsconnected.hasOwnProperty(connectedUser)) {
-        delete ipsconnected[connectedUser];
-        flags -= 1;
-        io.emit('register', flags);
-      }
-    });
-
-    socket.on('chat', (data) => {
-      const message = {
-        postedBy: findUser.id,
-        sender: findUser.names,
-        message: data.message,
-      };
-      const addData = addMessage(message);
-      io.emit('chat', data);
-    });
-
-    socket.on('typing', (data) => {
-      socket.broadcast.emit('typing', data);
-    });
-  });
+  io.attach(server);
 
   server.listen(port, () => {
     console.log('server is running');

@@ -4,7 +4,7 @@ export const trips = {
       tags: ['Trip Request'],
       summary: 'This is the endpoint to request a trip by user',
       description: 'This is the endpoint to request trip by user',
-      operationId: 'Addt tripRequest',
+      operationId: 'Add tripRequest',
       parameters: [
         {
           name: 'body',

@@ -3,7 +3,7 @@
   <head>
     <meta
       http-equiv="refresh"
-      content="7; URL=http://localhost:3000/notification.html"
+      content="7; URL=https://elites-barefoot-nomad.herokuapp.com/public/notification"
     />
     <title>Notifications</title>
     <style>
@@ -71,7 +71,7 @@
             let node = document.createElement('div');
             node.style.cssText =
               'border:1px solid gray; padding:2rem 2rem; width:80%; margin:1rem auto; ';
-            node.innerHTML = `<a style="text-decoration:none;" href = http://localhost:3000/api/v1/trips/${item.requestId} target="_blank"><li class = "notifs">${item.body}</li></a>`;
+            node.innerHTML = `<a style="text-decoration:none;" href = https://elites-barefoot-nomad.herokuapp.com/api/v1/trips/${item.requestId} target="_blank"><li class = "notifs">${item.body}</li></a>`;
             notifDiv.appendChild(node);
           });
       }
@@ -82,7 +82,7 @@
         const parsedData = JSON.parse(data);
         let notifDiv = document.querySelector('.notifications');
         let node = document.createElement('div');
-        node.innerHTML = `<a href = 'http://localhost:3000/api/v1/trips/${parsedData.userId}' target="_blank"><li class = "notifs">${parsedData.body}</li></a>`;
+        node.innerHTML = `<a href = 'https://elites-barefoot-nomad.herokuapp.com/api/v1/trips/${parsedData.userId}' target="_blank"><li class = "notifs">${parsedData.body}</li></a>`;
         notifDiv.appendChild(node);
         var notification = new Notification('Barefoot Nomad', {
           body: parsedData.body,

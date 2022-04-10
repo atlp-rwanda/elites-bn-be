@@ -54,7 +54,7 @@ const makeEmailNotificationTemplate = (payload) => {
                                               Go to the Trip</a>
   
                                               <p style="color:#455056; font-size:15px;line-height:18px; margin:0 0 1.5rem;">If you don't wish to receive this kind of notification, click unsubscribe</p>
-                                              <p style="margin: 0;"><a href="http://localhost:3000/api/v1/notifications/unsubscribe" target="_blank">unsubscribe</a>
+                                              <p style="margin: 0;"><a href="https://elites-barefoot-nomad.herokuapp.com/api/v1/notifications/unsubscribe" target="_blank">unsubscribe</a>
                                               </p>
                                       </td>
                                   </tr>

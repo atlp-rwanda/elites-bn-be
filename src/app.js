@@ -12,10 +12,10 @@ import 'dotenv/config';
 import { PageNotFoundError } from './httpErrors/pageNotFoundError';
 import passport from './middlewares/auth';
 import { ioMiddleware } from './helpers/socketio';
+import io from './utils/webSockets.io';
 
 const app = express();
 
-// const server = http.createServer(app);
 const port = process.env.PORT || 3000;
 const mode = process.env.NODE_ENV || 'development';
 
@@ -63,6 +63,7 @@ try {
   app.get('/verify', (req, res) => {
     res.render('index');
   });
+  app.use('/public/notification', (req, res) => res.sendFile(`${__dirname}/public/notification.html`));
 
   app.use(
     '/docs/swagger-ui/',
@@ -72,7 +73,7 @@ try {
         docExpansions: 'none',
         persistAuthorization: true,
       },
-    })
+    }),
   );
 
   app.use((err, req, res, next) => {
@@ -89,12 +90,11 @@ try {
   });
 
   const server = http.createServer(app);
+  io.attach(server);
 
   server.listen(port, () => {
-    console.log(`The server is running on port ${port}`);
+    console.log('server is running');
   });
-
-  const io = socketio(server);
 
   io.use(async (socket, next) => {
     ioMiddleware(socket);
@@ -114,4 +114,5 @@ try {
 } catch (error) {
   console.log(error);
 }
+
 export default app;

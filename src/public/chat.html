@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>WebScockets 101</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.1/socket.io.js"
+        integrity="sha512-oFOCo2/3DtjrJG4N27BjSLQWoiBv171sK6a+JiWjp/7agxC2nCUP358AqzxkBUb5jX8g6CYLPdSKQTbC0weCwA=="
+        crossorigin="anonymous"></script>
+        <link href="/styles.css" rel="stylesheet" />
+    </head>
+    <body>
+
+        <div id="mario-chat">
+            <h2>Barefoot Nomad Chat</h2>
+            <h3>online Users: <em id="user"></em></h3>
+            <div id="chat-window">
+                <div id="output">
+                </div>
+                <div id="feedback"></div>
+            </div>
+            <input id="handle" type="text" placeholder="handle" readonly/>
+            <input id="message" type="text" placeholder="Message" />
+            <button id="send">Send</button>
+        </div>
+
+
+    </body>
+    <script src="/chat.js"></script>
+</html>

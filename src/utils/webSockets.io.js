@@ -32,31 +32,30 @@ io.on('connection', async (socket) => {
     io.emit('register', flags);
   }
   console.log('👾 New socket connected! >>', socket.id);
-  socket.on('subscribe', async () => {
-    const { token } = socket.handshake.auth;
-    const accesstoken = JSON.parse(token);
-    decodedToken = await decodeAcessToken(accesstoken);
-    const findUser = await models.User.findOne({
-      where: {
-        id: decodedToken.id,
-      },
-      attributes: {
-        exclude: [
-          'email',
-          'password',
-          'roleId',
-          'managerId',
-          'isActive',
-          'createdAt',
-          'password',
-          'updatedAt',
-          'verified',
-        ],
-      },
-    });
-    const { names } = findUser;
-    io.to(socket.id).emit('subscribe', names);
+
+  const { token } = socket.handshake.auth;
+  const accesstoken = JSON.parse(token);
+  decodedToken = await decodeAcessToken(accesstoken);
+  const findUser = await models.User.findOne({
+    where: {
+      id: decodedToken.id,
+    },
+    attributes: {
+      exclude: [
+        'email',
+        'password',
+        'roleId',
+        'managerId',
+        'isActive',
+        'createdAt',
+        'password',
+        'updatedAt',
+        'verified',
+      ],
+    },
   });
+  const { names } = findUser;
+  io.to(socket.id).emit('subscribe', names);
 
   socket.on('message', (data) => {
     io.to(socket.id).emit('message', data);
@@ -72,8 +71,8 @@ io.on('connection', async (socket) => {
 
   socket.on('chat', (data) => {
     const message = {
-      postedBy: decodedToken.id,
-      sender: data.handle,
+      postedBy: findUser.id,
+      sender: findUser.names,
       message: data.message,
     };
     const addData = addMessage(message);

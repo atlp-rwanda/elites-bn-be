@@ -21,29 +21,23 @@ import {
   requesterLogin,
 } from './trip.dummyData.js';
 
-<<<<<<< HEAD
 chai.use(chaiHttp);
 let token;
 let adminToken;
-=======
-use(chaiHttp);
-let token;
->>>>>>> 3fa91f6 ( This is a combination of 2 commits.)
 describe('TRIP REQUEST ENDPOINTS', () => {
   let id;
 
-  before('it should login the user', (done)=> {
+  before('it should login the user', (done) => {
     const res = chai.request(app).post('/api/v1/users/login').send({
       email: 'senderone@gmail.com',
       password: 'pass123@',
     });
-    token = res.body.payload.accesstoken
-   .end((req,res)=>{
-    expect(res).to.have.status([200]);
-    expect(res.body).to.have.property('message');
-    expect(res.body).to.have.property('status'); 
-   });
-    done()
+    token = res.body.payload.accesstoken.end((req, res) => {
+      expect(res).to.have.status([200]);
+      expect(res.body).to.have.property('message');
+      expect(res.body).to.have.property('status');
+    });
+    done();
   });
 
   // SHOULD CREATE TRIP FOR REQUESTER
@@ -63,7 +57,7 @@ describe('TRIP REQUEST ENDPOINTS', () => {
     done();
   });
 
-  // SHOULD NOT CREATE A TRIP REQUEST  
+  // SHOULD NOT CREATE A TRIP REQUEST
 
   it('should not create a trip request due to validation error', (done) => {
     chai
@@ -76,10 +70,6 @@ describe('TRIP REQUEST ENDPOINTS', () => {
         expect(res.type).to.equal('application/json');
         expect(res.body).to.have.property('message');
         expect(res.body).to.have.property('status');
-<<<<<<< HEAD
-      });
-    done();
-=======
         expect(res.body.message).to.equal(VALIDATION_ERROR);
       });
     done();
@@ -100,22 +90,18 @@ describe('TRIP REQUEST ENDPOINTS', () => {
         expect(res.body.message).to.equal(VALIDATION_ERROR);
       });
     done();
->>>>>>> 3fa91f6 ( This is a combination of 2 commits.)
   });
-
-  
 
   before('it should login the an admin user', async () => {
     const res = await chai.request(app).post('/api/v1/users/login').send({
       email: 'yangeney@gmail.com',
       password: 'password',
     });
-     adminToken = res.body.payload.accesstoken;
+    adminToken = res.body.payload.accesstoken;
     expect(res).to.have.status([200]);
     expect(res.body).to.have.property('message');
     expect(res.body).to.have.property('status');
-   
-  })
+  });
 
   it('should not create a trip request when logged in as an admin and rememmberMe is true', (done) => {
     chai
@@ -132,7 +118,6 @@ describe('TRIP REQUEST ENDPOINTS', () => {
     done();
   });
 
-
   it('should not create a trip request when logged in as an admin and rememberMe is false', (done) => {
     chai
       .request(app)
@@ -147,8 +132,6 @@ describe('TRIP REQUEST ENDPOINTS', () => {
       });
     done();
   });
-
-
 
   // SHOULD RETRIEVE ALL REQUESTS BY USER
 
@@ -178,12 +161,8 @@ describe('TRIP REQUEST ENDPOINTS', () => {
       .end((req, res) => {
         expect(res).to.have.status([200]);
         expect(res.type).to.equal('application/json');
-<<<<<<< HEAD
         expect(res.body).to.have.property('message');
         expect(res.body).to.have.property('status');
-       
-=======
->>>>>>> 3fa91f6 ( This is a combination of 2 commits.)
       });
     done();
   });
@@ -197,16 +176,9 @@ describe('TRIP REQUEST ENDPOINTS', () => {
         expect(res).to.have.status([404]);
         expect(res.type).to.equal('application/json');
         expect(res.body).to.have.property('message');
-<<<<<<< HEAD
-        
-=======
-        expect(res.body).to.have.property('status');
-        expect(res.body.message).to.equal(REQUEST_UPDATED);
->>>>>>> 3fa91f6 ( This is a combination of 2 commits.)
       });
     done();
   });
-
 
   // SHOULD NOT RETRIEVE PENDING REQUESTS BY USER
 
@@ -217,7 +189,6 @@ describe('TRIP REQUEST ENDPOINTS', () => {
       .end((req, res) => {
         expect(res).to.have.status([401]);
         expect(res.type).to.equal('application/json');
-<<<<<<< HEAD
       });
     done();
   });
@@ -225,23 +196,19 @@ describe('TRIP REQUEST ENDPOINTS', () => {
   // SHOULD UPDATE THE REQUEST
 
   it('should UPDATE pending requests by user', (done) => {
-   
     chai
       .request(app)
       .put(`/api/v1/trips/${id}`)
       .set('Authorization', `Bearer ${token}`)
       .send(addRequest)
-      .end((req, res) => { 
+      .end((req, res) => {
         expect(res).to.have.status([200]);
         expect(res.type).to.equal('application/json');
         expect(res.body.message).to.equal(REQUEST_UPDATED);
-=======
-        expect(res.body).to.have.property('message');
->>>>>>> 3fa91f6 ( This is a combination of 2 commits.)
       });
     done();
   });
-       // DELETING TRIP REQUEST
+  // DELETING TRIP REQUEST
 
   it('should Delete pending requests by user', (done) => {
     chai
@@ -253,11 +220,6 @@ describe('TRIP REQUEST ENDPOINTS', () => {
         expect(res.type).to.equal('application/json');
         expect(res.body).to.have.property('message');
         expect(res.body).to.have.property('status');
-<<<<<<< HEAD
-         
-=======
-        expect(res.body.message).to.equal(TRIP_DELETED_MESSAGE);
->>>>>>> 3fa91f6 ( This is a combination of 2 commits.)
       });
     done();
   });

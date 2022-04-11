@@ -35,7 +35,7 @@
       }
     },
     "test": {
-      "command": "yarn migrate  && nyc --reporter=text --reporter=lcov mocha --recursive --require @babel/polyfill --require @babel/register ./tests/globalSearch.test.js --timeout 500000000000 --exit || true",
+      "command": "yarn migrate  && nyc --reporter=text --reporter=lcov mocha --recursive --require @babel/polyfill --require @babel/register ./tests/*.js --timeout 500000000000 --exit || true",
       "env": {
         "NODE_ENV": "test",
         "PORT": 5000

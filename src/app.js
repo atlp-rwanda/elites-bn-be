@@ -54,7 +54,7 @@ try {
 
   app.use(express.static(path.join(__dirname, 'public')));
   app.set('views', path.join(__dirname, 'template'));
-  app.set('view engine', 'ejs');
+  // app.set('view engine', 'ejs');
   app.use(cors());
   app.use(express.json());
   app.use(morgan('dev'));
@@ -63,8 +63,12 @@ try {
   app.get('/verify', (req, res) => {
     res.render('index');
   });
-  app.use('/public/notification', (req, res) => res.sendFile(`${__dirname}/public/notification.html`));
-  app.use('/public/chat', (req, res) => res.sendFile(`${__dirname}/public/login.html`));
+  app.use('/public/notification', (req, res) =>
+    res.sendFile(`${__dirname}/public/notification.html`)
+  );
+  app.use('/public/chat', (req, res) =>
+    res.sendFile(`${__dirname}/public/login.html`)
+  );
   app.use(
     '/docs/swagger-ui/',
     swaggerUi.serve,
@@ -73,7 +77,7 @@ try {
         docExpansions: 'none',
         persistAuthorization: true,
       },
-    }),
+    })
   );
 
   app.use((err, req, res, next) => {

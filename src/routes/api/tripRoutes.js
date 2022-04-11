@@ -1,11 +1,13 @@
 import express from 'express';
 import { TripControllers } from '../../controllers/tripControllers';
 import { requestValidation } from '../../validations/tripRequest/tripValidations';
-import { approveTripValidation } from '../../validations/approveRejectTripValidation/approveRejectValidation';
+import { tripstatsValidations } from '../../validations/tripRequest/tripstatsValidations';
 import { authenticate } from '../../middlewares/authenticate';
 import { isManager } from '../../middlewares/isManager';
 import { TripCommentController } from '../../controllers/tripCommentController';
 import { isRequester } from '../../middlewares/isRequester';
+import { requestValidationStats } from '../../validations/tripRequest/tripstatsValidations';
+import { isManagerOrRequester } from '../../middlewares/isManagerOrRequester';
 
 const router = express.Router();
 const tripControllers = new TripControllers();

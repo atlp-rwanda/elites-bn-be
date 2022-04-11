@@ -7,8 +7,7 @@ export const addRequest = {
     },
   ],
   tripReason: 'Free Tours',
-<<<<<<< HEAD
-  rememberMe:'true',
+  rememberMe: 'true',
   departDate: '2022-06-07',
   returnDate: '2023-03-04',
 };
@@ -22,12 +21,11 @@ export const notRememberMe1 = {
     },
   ],
   tripReason: 'Free Tours',
-  rememberMe:'false',
-  passportNumber:'KZG12345',
-  address:'CALIFORNIA-BEVERLYHILLS-MONTANA',
+  rememberMe: 'false',
+  passportNumber: 'KZG12345',
+  address: 'CALIFORNIA-BEVERLYHILLS-MONTANA',
   departDate: '2022-05-07',
   returnDate: '2023-02-03',
-
 };
 export const notRememberMe2 = {
   departLocation: 1,
@@ -38,18 +36,11 @@ export const notRememberMe2 = {
     },
   ],
   tripReason: 'Free Tours',
-  rememberMe:'false',
+  rememberMe: 'false',
   departDate: '2022-04-07',
   returnDate: '2023-02-03',
-
 };
 
-=======
-  departDate: '2022-05-07',
-  returnDate: '2023-02-03',
-};
-
->>>>>>> 3fa91f6 ( This is a combination of 2 commits.)
 export const tripRequest = {
   departLocation: 2,
   arrivalLocation: 3,
@@ -61,7 +52,7 @@ export const tripRequest = {
 export const incorrectDate = {
   departLocation: 2,
   tripReason: 'travelling for research and studies',
-  rememberMe:'true',
+  rememberMe: 'true',
   departDate: '2022-05-01',
   returnDate: '2022-04-04',
   destinations: [
@@ -80,8 +71,8 @@ export const updateRequest = {
   departLocation: 9,
   tripReason: 'travelling',
   departDate: '2022-05-01',
-  passportNumber:'XDE6764',
-  address:'KIGALI-GASABO-KIBAGABAGA',
+  passportNumber: 'XDE6764',
+  address: 'KIGALI-GASABO-KIBAGABAGA',
   returnDate: '2022-06-04',
   destinations: [
     {
@@ -93,11 +84,6 @@ export const updateRequest = {
       destionationId: 2,
     },
   ],
-<<<<<<< HEAD
-
-  
-=======
->>>>>>> 3fa91f6 ( This is a combination of 2 commits.)
 };
 
 // with no manager
@@ -121,11 +107,8 @@ export const managerLogins = {
   password: 'password',
 };
 
-export const managerToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjQ4NDYxMTk5LCJleHAiOjE2Nzk1NjUxOTl9.zo3UXkFrifwm-mdAdxmVnJNQMvon5YALLqxoZ5C9o_k';
-
-<<<<<<< HEAD
-export const requesterToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImlhdCI6MTY0OTE1MTAzMSwiZXhwIjoxNjgwMjU1MDMxfQ.Z4ZzwuGM8tw-_H37gqHq3vzWF9g18W7PHCIVJ0qDCSk';
-=======
 export const managerToken =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjQ4NDYxMTk5LCJleHAiOjE2Nzk1NjUxOTl9.zo3UXkFrifwm-mdAdxmVnJNQMvon5YALLqxoZ5C9o_k';
->>>>>>> 3fa91f6 ( This is a combination of 2 commits.)
+
+export const requesterToken =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImlhdCI6MTY0OTE1MTAzMSwiZXhwIjoxNjgwMjU1MDMxfQ.Z4ZzwuGM8tw-_H37gqHq3vzWF9g18W7PHCIVJ0qDCSk';

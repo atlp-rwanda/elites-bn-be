@@ -8,108 +8,6 @@ const hashPassword = async (plainPassword) => {
 module.exports = {
   // eslint-disable-next-line no-unused-vars
   async up(queryInterface, Sequelize) {
-<<<<<<< HEAD
-    await queryInterface.bulkInsert('Users', [{
-      names: 'eric John',
-      email: 'eric@gmail.com',
-      roleId: 3,
-      managerId: 1,
-      password: await hashPassword('111@call'),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-
-    },
-    {
-      names: 'jane',
-      email: 'jane@gmail.com',
-      roleId: 3,
-      managerId: 1,
-      password: await hashPassword('111@call'),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-
-    },
-    {
-      names: 'john',
-      email: 'john@gmail.com',
-      roleId: 3,
-      managerId: 2,
-      password: await hashPassword('111@call'),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-
-    },
-    {
-      names: 'bosco',
-      email: 'bosco@gmail.com',
-      roleId: 4,
-      managerId: 7,
-      password: await hashPassword('111@call'),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-
-    },
-    {
-      names: 'bosco',
-      email: 'senderone@gmail.com',
-      roleId: 5,
-      managerId: 3,
-      password: await hashPassword('pass123@'),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-
-    },
-    {
-      names: 'bosco',
-      email: 'sendertwo@gmail.com',
-      roleId: 4,
-      managerId: 3,
-      password: await hashPassword('pass123@'),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-
-    },
-    {
-      names: 'bosco',
-      email: 'senderthree@gmail.com',
-      roleId: 5,
-      managerId: 7,
-      password: await hashPassword('pass123@'),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-
-    },
-    {
-      names: 'bosco',
-      email: 'senderfour@gmail.com',
-      roleId: 5,
-      managerId: 8,
-      password: await hashPassword('pass123@'),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-
-    },
-    {
-      names: 'bosco',
-      email: 'senderfive@gmail.com',
-      roleId: 3,
-      managerId: 7,
-      password: await hashPassword('Pass123456'),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      names: 'bosco',
-      email: 'sendersix@gmail.com',
-      roleId: 5,
-      managerId: 3,
-      password: await hashPassword('pass123@'),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-
-    },
-    ], {});
-=======
     await queryInterface.bulkInsert(
       'Users',
       [
@@ -153,7 +51,7 @@ module.exports = {
           names: 'bosco',
           email: 'senderone@gmail.com',
           roleId: 5,
-          managerId: 7,
+          managerId: 3,
           password: await hashPassword('pass123@'),
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -206,7 +104,6 @@ module.exports = {
       ],
       {}
     );
->>>>>>> 3fa91f6 ( This is a combination of 2 commits.)
   },
 
   // eslint-disable-next-line no-unused-vars

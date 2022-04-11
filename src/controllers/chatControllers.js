@@ -1,6 +1,4 @@
-
 import { getMessages } from '../services/chatServices';
-
 class ChatController {
   // get messages
 
@@ -9,7 +7,7 @@ class ChatController {
       const sentMessage = await getMessages(req.body);
       res.status(200).json({
         status: 200,
-        message:'chats retrieved successfully!',
+        message: 'chats retrieved successfully!',
         chats: sentMessage,
       });
     } catch (err) {

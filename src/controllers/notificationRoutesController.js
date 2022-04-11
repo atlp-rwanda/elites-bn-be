@@ -80,7 +80,8 @@ class NotificationControllers {
           message: NOTIFICATION_FOUND,
           data: { updateStatus },
         });
-      } else {
+      }
+      if (updateStatus) {
         return res.status(401).json({ message: DOES_NOT_EXIST });
       }
     } catch (error) {
@@ -108,5 +109,4 @@ class NotificationControllers {
     }
   };
 }
-
 export default NotificationControllers;

@@ -2,8 +2,8 @@ export const chats = {
   '/api/v1/chats': {
     get: {
       tags: ['chats'],
-      summary: 'This is the endpoint to post message',
-      description: 'This is the endpoint to post message',
+      summary: 'This is the endpoint to retrieve chart message',
+      description: 'This is the endpoint to retrieve chart message',
       operationId: 'Add message',
       responses: {
         200: {

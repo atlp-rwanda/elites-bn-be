@@ -316,11 +316,7 @@ export class TripControllers {
         });
       }
       if (!result) {
-        throw new BaseError(
-          'Bad request',
-          404,
-          'information not found not found'
-        );
+        throw new BaseError('Bad request', 404, 'information not found');
       } else {
         throw new UnauthorizedError(
           'You are not a manager or requester of this user'

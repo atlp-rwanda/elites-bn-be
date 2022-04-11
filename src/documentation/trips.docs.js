@@ -32,6 +32,36 @@ export const trips = {
       summary: 'This endPoint will retrieve all requests ',
       description: 'This endPoint will retrieve all requests ',
       operationId: 'getAllRequest',
+      parameters: [
+        {
+          name: 'userId',
+          in: 'query',
+          description: 'Trip request',
+        },   {
+          name: 'managerId',
+          in: 'query',
+          description: 'Trip request',
+        },{
+          name: 'status',
+          in: 'query',
+          description: 'Trip request',
+        },
+       
+        {
+          name: 'tripReason:',
+          in: 'query',
+          description: 'Trip request',
+        }, {
+          name: 'departLocation',
+          in: 'query',
+          description: 'Trip request',
+        },
+        {
+          name: 'createdAt',
+          in: 'query',
+          description: 'Trip request',
+        },
+      ],
       responses: {
         200: {
           description: 'Successfully retrieved',

@@ -24,12 +24,12 @@ module.exports = {
     dialect: 'postgres',
     seederStorage: 'sequelize',
     seederStorageTableName: 'sequelize_data',
-    // dialectOptions: {
-    //   ssl: {
-    //     require: true,
-    //     rejectUnauthorized: false,
-    //   },
-    // },
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
   },
   production: {
     use_env_variable: 'DB_URL_PROD',

@@ -40,4 +40,14 @@ export const profileSchema = joi.object({
     'string.empty': 'department is not allowed to be empty',
     'any.required': 'department is required',
   }),
+  passportNumber: joi.string().required().empty().messages({
+    'string.base': 'passportNumber must be valid',
+    'string.empty': 'passportNumber is not allowed to be empty',
+    'any.required': 'passportNumber is required',
+  }),
+  address: joi.string().required().empty().messages({
+    'string.base': 'address must be valid',
+    'string.empty': 'address is not allowed to be empty',
+    'any.required': 'address is required',
+  }),
 });

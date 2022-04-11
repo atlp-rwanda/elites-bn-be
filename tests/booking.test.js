@@ -18,22 +18,21 @@ describe('BOOK A ROOM', () => {
 
     const unbookRoom = await chai
       .request(app)
-      .patch('/api/v1/rooms/2/unbooking')
+      .patch('/api/v1/rooms/3/3/unbooking')
       .set('Authorization', `Bearer ${token}`);
   });
 
   it('should book a room for a requester with an approved trip request', (done) => {
-    console.log(token, 'teasting our token');
+   
     chai
       .request(app)
-      .post('/api/v1/rooms/2/booking')
+      .post('/api/v1/rooms/3/3/booking')
       .set('Authorization', `Bearer ${token}`)
       .send({
         checkinDate: '2022-10-03',
         checkoutDate: '2022-10-04',
       })
       .end((req, res) => {
-        // console.log(res.body)
         expect(res).to.have.status([201]);
         expect(res.body).to.have.property('status');
         done();
@@ -52,7 +51,7 @@ describe('BOOK A ROOM', () => {
   it('should not book a room for a user who is not a requester', (done) => {
     chai
       .request(app)
-      .post('/api/v1/rooms/1/booking')
+      .post('/api/v1/rooms/1/10/booking')
       .set('Authorization', `Bearer ${notRequesterToken}`)
       .send({
         checkinDate: '2022-10-03',
@@ -68,7 +67,7 @@ describe('BOOK A ROOM', () => {
   it('should not book a room for a user if the room does not exist', (done) => {
     chai
       .request(app)
-      .post('/api/v1/rooms/100/booking')
+      .post('/api/v1/rooms/100/10/booking')
       .set('Authorization', `Bearer ${token}`)
       .send({
         checkinDate: '2022-10-05',
@@ -84,14 +83,13 @@ describe('BOOK A ROOM', () => {
   it('should not book a room for a user if already booked', (done) => {
     chai
       .request(app)
-      .post('/api/v1/rooms/2/booking')
+      .post('/api/v1/rooms/3/10/booking')
       .set('Authorization', `Bearer ${token}`)
       .send({
         checkinDate: '2022-10-05',
         checkoutDate: '2022-10-06',
       })
       .end((error, res) => {
-        // console.log(res,'woohooo')
         expect(res).to.have.status([403]);
       });
 
@@ -110,14 +108,13 @@ describe('BOOK A ROOM', () => {
   it('should not book a room for a user if no trip request has been made', (done) => {
     chai
       .request(app)
-      .post('/api/v1/rooms/3/booking')
+      .post('/api/v1/rooms/3/10/booking')
       .set('Authorization', `Bearer ${noTripRequestToken}`)
       .send({
         checkinDate: '2022-01-05',
         checkoutDate: '2022-03-06',
       })
       .end((error, res) => {
-        // console.log(res,'woohooo')
         expect(res).to.have.status([403]);
       });
 
@@ -127,7 +124,7 @@ describe('BOOK A ROOM', () => {
   it('should unbook a room for user who had booked a room', (done) => {
     chai
       .request(app)
-      .patch('/api/v1/rooms/2/unbooking')
+      .patch('/api/v1/rooms/3/3/unbooking')
       .set('Authorization', `Bearer ${token}`)
       .end((error, res) => {
         expect(res).to.have.status([200]);
@@ -138,8 +135,8 @@ describe('BOOK A ROOM', () => {
   it('should not unbook a room for user who had not booked a room', (done) => {
     chai
       .request(app)
-      .patch('/api/v1/rooms/2/unbooking')
-      .set('Authorization', `Bearer ${notRequesterToken}`)
+      .patch('/api/v1/rooms/2/3/unbooking')
+      .set('Authorization', `Bearer ${noTripRequestToken}`)
       .end((error, res) => {
         expect(res).to.have.status([403]);
       });

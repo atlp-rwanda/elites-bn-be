@@ -1,5 +1,5 @@
 export const bookings = {
-  '/api/v1/rooms/{roomId}/booking': {
+  '/api/v1/rooms/{roomId}/{tripId}/booking': {
     post: {
       tags: ['BOOKINGS'],
       summary: 'BOOKING A ROOM',
@@ -10,6 +10,12 @@ export const bookings = {
           name: 'roomId',
           in: 'path',
           description: 'roomId',
+          required: true,
+        },
+        {
+          name: 'tripId',
+          in: 'path',
+          description: 'tripId',
           required: true,
         },
         {
@@ -42,7 +48,7 @@ export const bookings = {
     },
   },
 
-  '/api/v1/rooms/{roomId}/unbooking': {
+  '/api/v1/rooms/{roomId}/{tripId}/unbooking': {
     patch: {
       tags: ['BOOKINGS'],
       summary: 'UNBOOKING A ROOM',
@@ -53,6 +59,12 @@ export const bookings = {
           name: 'roomId',
           in: 'path',
           description: 'roomId',
+          required: true,
+        },
+        {
+          name: 'tripId',
+          in: 'path',
+          description: 'tripId',
           required: true,
         },
       ],

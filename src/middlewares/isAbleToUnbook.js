@@ -6,6 +6,7 @@ import { ForbbidenError } from '../httpErrors/forbidenError';
 export const isAbleToUnbook = async (req, res, next) => {
   try {
     const emptyToken = req.headers.authorization;
+    const { tripId } = req.params;
     const { roomId } = req.params; // this roomId is going to be used down below line 48
 
     if (emptyToken === undefined) {
@@ -24,7 +25,7 @@ export const isAbleToUnbook = async (req, res, next) => {
       throw new ForbbidenError('You are not allowed to perform this task');
     }
     const tripRequest = await models.tripRequest.findOne({
-      where: { userId: data.id },
+      where: { id: tripId },
     });
 
     if (tripRequest === null) {
@@ -32,7 +33,7 @@ export const isAbleToUnbook = async (req, res, next) => {
     }
 
     if (tripRequest.status === 'pending' || tripRequest.status === 'rejected') {
-      throw new ForbbidenError('this trip request has not been approved');
+      throw new ForbbidenError('You can not unbook a room unless you booked it ');
     }
 
     const checkRoomExist = await models.Room.findOne({

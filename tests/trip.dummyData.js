@@ -7,8 +7,40 @@ export const addRequest = {
     },
   ],
   tripReason: 'Free Tours',
+  rememberMe:'true',
+  departDate: '2022-06-07',
+  returnDate: '2023-03-04',
+};
+
+export const notRememberMe1 = {
+  departLocation: 1,
+  destinations: [
+    {
+      accomodationId: 3,
+      destionationId: 2,
+    },
+  ],
+  tripReason: 'Free Tours',
+  rememberMe:'false',
+  passportNumber:'KZG12345',
+  address:'CALIFORNIA-BEVERLYHILLS-MONTANA',
   departDate: '2022-05-07',
   returnDate: '2023-02-03',
+
+};
+export const notRememberMe2 = {
+  departLocation: 1,
+  destinations: [
+    {
+      accomodationId: 3,
+      destionationId: 2,
+    },
+  ],
+  tripReason: 'Free Tours',
+  rememberMe:'false',
+  departDate: '2022-04-07',
+  returnDate: '2023-02-03',
+
 };
 
 export const tripRequest = {
@@ -22,6 +54,7 @@ export const tripRequest = {
 export const incorrectDate = {
   departLocation: 2,
   tripReason: 'travelling for research and studies',
+  rememberMe:'true',
   departDate: '2022-05-01',
   returnDate: '2022-04-04',
   destinations: [
@@ -40,6 +73,8 @@ export const updateRequest = {
   departLocation: 9,
   tripReason: 'travelling',
   departDate: '2022-05-01',
+  passportNumber:'XDE6764',
+  address:'KIGALI-GASABO-KIBAGABAGA',
   returnDate: '2022-06-04',
   destinations: [
     {
@@ -51,6 +86,8 @@ export const updateRequest = {
       destionationId: 2,
     },
   ],
+
+  
 };
 
 // with no manager

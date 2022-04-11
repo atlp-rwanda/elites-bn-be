@@ -71,7 +71,6 @@ export const createTrip = async (userid, data) => {
         ...data,
         userId: userid,
       });
-      console.log(addTrip);
       addTrip.save();
       return addTrip;
     }
@@ -140,22 +139,53 @@ export const updateRequest = async (userId, id, data) => {
 };
 
 // multcities update function
-export const updateMulticities = async (id, data) => {
+export const updateMulticities = async (userId, tripId, data, updatePassportNumber, updateNewAdress) => {
   const exist = await models.tripRequest.findOne({
     where: {
-      id,
+      id: tripId,
     },
   });
+
+  await models.Profile.update(
+    {
+      passportNumber: updatePassportNumber,
+      address: updateNewAdress,
+    },
+    {
+      where: { userId },
+    },
+  );
+
+  const updatedProfile = await models.Profile.findOne({
+    where: {
+      userId,
+    },
+  });
+
   if (exist) {
     exist.departLocation = data.departLocation
       ? data.departLocation
       : exist.departLocation;
     exist.destinations = data.destinations
       ? data.destinations
-      : exist.arrivalLocation;
+      : exist.destinations;
     exist.tripReason = data.tripReason ? data.tripReason : exist.tripReason;
+    exist.rememberMe;
+    exist.passportNumber = updatedProfile.passportNumber ? updatedProfile.passportNumber : exist.passportNumber;
+    exist.address = updatedProfile.address ? updatedProfile.address : exist.address;
+    exist.names;
+    exist.gender;
+    exist.role;
     exist.departDate = data.departDate ? data.departDate : exist.departDate;
     exist.returnDate = data.returnDate ? data.returnDate : exist.returnDate;
+    const checkTripType = data.destinations.length;
+    if (checkTripType === undefined) {
+      exist.tripType = exist.tripType;
+    } else {
+      const checkTripType = data.destinations.length;
+      const tripType = checkTripType > 1 ? 'multicity' : 'single-city';
+      exist.tripType = tripType;
+    }
 
     const updated = await exist.save();
     return updated;

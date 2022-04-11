@@ -12,6 +12,8 @@ module.exports = {
       role: 1,
       department: 'sales',
       manager: 1,
+      address: 'KIGALI-GASABO-KARURUMA',
+      passportNumber: 'FGH54673',
       createdAt: new Date(),
       updatedAt: new Date(),
 
@@ -28,6 +30,8 @@ module.exports = {
       role: 1,
       department: 'Marketing',
       manager: 1,
+      address: 'KAMPALA-ENTEBE-KAMINA',
+      passportNumber: 'ZXC9876',
       createdAt: new Date(),
       updatedAt: new Date(),
 
@@ -44,6 +48,8 @@ module.exports = {
       role: 1,
       department: 'Marketing',
       manager: 1,
+      address: 'KAMPALA-ENTEBE-MUSEBO',
+      passportNumber: 'NJK9876',
       createdAt: new Date(),
       updatedAt: new Date(),
 
@@ -60,6 +66,8 @@ module.exports = {
       role: 1,
       department: 'Marketing',
       manager: 1,
+      address: 'KAMPALA-ENTEBE-KASORI',
+      passportNumber: 'ZXC7876',
       createdAt: new Date(),
       updatedAt: new Date(),
 

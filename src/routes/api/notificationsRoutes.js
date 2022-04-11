@@ -19,6 +19,13 @@ router.delete(
   authenticate,
   notificationController.deleteAllNotificationsOfUser
 );
+
+router.patch(
+  '/markoneasread/:id',
+  authenticate,
+  notificationController.markOneAsReadController
+);
+
 router.patch(
   '/markallasread',
   authenticate,

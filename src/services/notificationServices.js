@@ -52,6 +52,15 @@ class notificationServices {
 
     return updateNotifications;
   };
+
+  markOneAsRead = async (id) => {
+    const updateOneNotifications = await Notification.update(
+      { isRead: true },
+      { where: { id } }
+    );
+
+    return updateOneNotifications;
+  };
 }
 
 export default notificationServices;

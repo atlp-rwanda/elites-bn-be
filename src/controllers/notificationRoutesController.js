@@ -87,6 +87,26 @@ class NotificationControllers {
       return res.status(500).send({ message: FETCH_ERROR });
     }
   };
+
+  markOneAsReadController = async (id, req, res, next) => {
+    try {
+      const updateStatus = await notificationService.markOneAsRead(
+        req.params.id
+      );
+
+      console.log(updateStatus);
+      if (updateStatus) {
+        return res.status(200).json({
+          message: NOTIFICATION_FOUND,
+          data: { updateStatus },
+        });
+      } else {
+        return res.status(401).json({ message: DOES_NOT_EXIST });
+      }
+    } catch (error) {
+      return res.status(500).send({ message: FETCH_ERROR });
+    }
+  };
 }
 
 export default NotificationControllers;

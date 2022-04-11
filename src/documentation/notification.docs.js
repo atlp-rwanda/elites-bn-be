@@ -146,12 +146,53 @@ export const notifications = {
       summary: 'User will be able to mark all as read',
       description: 'mark all as read to notifications ',
       produces: ['application/json'],
+
+      parameters: [
+        {
+          name: 'id',
+          in: 'path',
+          description: ' Enter a notification ID',
+          required: true,
+          type: 'integer',
+        },
+      ],
       responses: {
         200: {
           description: 'Notifications marked as read, successfully!',
         },
         401: {
           description: 'No notifications found',
+        },
+      },
+      security: [
+        {
+          Bearer: [],
+        },
+      ],
+    },
+  },
+
+  '/api/v1/notifications/markoneasread/{id}': {
+    patch: {
+      tags: ['Notifications'],
+      summary: 'You will be able to mark one notification based on ID as read.',
+      description: 'mark a single notification ',
+      produces: ['application/json'],
+      parameters: [
+        {
+          name: 'id',
+          in: 'path',
+          description: ' Enter a notification ID',
+          required: true,
+          type: 'integer',
+        },
+      ],
+      responses: {
+        200: {
+          description: 'notification marked successfully!',
+        },
+        404: {
+          description: 'no notification found with that ID',
         },
       },
       security: [

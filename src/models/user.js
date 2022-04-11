@@ -33,6 +33,9 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.AccommodationRating, {
         foreignKey: 'userId',
       });
+      User.hasMany(models.AccommodationLike, {
+        foreignKey: 'userId',
+      });
       // User.hasMany(models.chatMessage, {
       //   foreignKey: 'postedBy',
       // });

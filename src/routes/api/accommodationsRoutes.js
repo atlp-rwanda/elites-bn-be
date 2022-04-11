@@ -5,6 +5,8 @@ import upload from '../../helpers/multer';
 import { authenticate } from '../../middlewares/authenticate';
 import { verifyToken } from '../../middlewares/verifyToken';
 import { isTravelAdmin } from '../../middlewares/isTravelAdmin';
+import { AccommodationLikeController } from '../../controllers/accommodationLikeController';
+import { isRequesterOnly } from '../../middlewares/isRequesterOnly';
 
 import { AccommodationRatingController } from '../../controllers/accommodationRatingController';
 import { hasVisitedAccommodation } from '../../middlewares/hasVisitedAccommodation';
@@ -57,5 +59,18 @@ router.get(
   '/:id/reviews',
   AccommodationRatingController.findAccommodationRating,
 );
+router.post(
+  '/:id/dislike',
+  authenticate,
+  isRequesterOnly,
+  AccommodationLikeController.dislike,
+);
+router.post(
+  '/:id/like',
+  authenticate,
+  isRequesterOnly,
+  AccommodationLikeController.like,
+);
+router.get('/:id/likes', AccommodationLikeController.findAccommodationLikes);
 
 export default router;

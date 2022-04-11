@@ -5,7 +5,7 @@ import { decodeAcessToken } from '../helpers/jwtFunction';
 
 const io = new Server({
   cors: {
-    origin: 'http://localhost:3000',
+    origin: 'https://elites-barefoot-nomad.herokuapp.com/',
   },
 });
 

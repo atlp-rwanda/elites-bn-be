@@ -62,7 +62,7 @@ socket.on('subscribe', (data) => {
 });
 
 const getData = async () => {
-  data = await fetch('https://elites-barefoot-nomad.herokuapp.com/api/v1/chat');
+  data = await fetch('https://elites-barefoot-nomad.herokuapp.com/api/v1/chats');
   const response = await data.json();
   socket.emit('message', response);
   return response;
@@ -70,7 +70,7 @@ const getData = async () => {
 getData();
 
 socket.on('message', async (data) => {
-  const fetchedData = data.message;
+  const fetchedData = data.chats;
   for (i = 0; i < fetchedData.length; i++) {
     feedback.innerHTML = '';
     output.innerHTML +=

@@ -20,7 +20,7 @@ requestEventEmitter.on('request-created', async (createdTrip, req) => {
   try {
     const user = await userById(createdTrip.userId);
     const manager = await userById(createdTrip.managerId);
-    const body = `Hello ${manager.names}!, <strong>${user.names}</strong> has created a new trip request with reason: <em>${createdTrip.reason}</em>`;
+    const body = `Hello ${manager.names}!, <strong>${user.names}</strong> has created a new trip request with reason: <em>${createdTrip.tripReason}</em>`;
 
     // Store Notification into database
     await notificationService.createInAppNotification({
@@ -39,7 +39,7 @@ requestEventEmitter.on('request-created', async (createdTrip, req) => {
         manager.email,
         'ihonore01@gmail.com',
         'New Trip Request - Barefoot Nomad',
-        makeEmailNotificationTemplate(payload),
+        makeEmailNotificationTemplate(payload)
       );
     }
   } catch (err) {
@@ -72,7 +72,7 @@ requestEventEmitter.on('request-updated', async (updatedTrip) => {
         manager.email,
         'ihonore01@gmail.com',
         'Updated Trip Request - Barefoot Nomad',
-        makeEmailNotificationTemplate(payload),
+        makeEmailNotificationTemplate(payload)
       );
     }
   } catch (err) {
@@ -105,7 +105,7 @@ requestEventEmitter.on('request-approved-or-rejected', async (updatedTrip) => {
         user.email,
         'ihonore01@gmail.com',
         `${status} Trip Request - Barefoot Nomad`,
-        makeEmailNotificationTemplate(payload),
+        makeEmailNotificationTemplate(payload)
       );
     }
   } catch (err) {
@@ -162,7 +162,7 @@ requestEventEmitter.on('commented-on-request', async (comment, req) => {
         emailToNotify,
         'ihonore01@gmail.com',
         'New comment on Trip Request - Barefoot Nomad',
-        makeEmailNotificationTemplate(payload),
+        makeEmailNotificationTemplate(payload)
       );
     }
   } catch (err) {

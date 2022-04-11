@@ -22,7 +22,6 @@ import {
 } from '../services/tripServices';
 import { validateDate } from '../helpers/dateComparison';
 import { UnauthorizedError } from '../httpErrors/unauthorizedError';
-import { NotFoundError } from '../httpErrors/NotFoundError';
 import { userById } from '../services/userServices';
 import { BaseError } from '../httpErrors/baseError';
 import requestEventEmitter from './notificationEventsController';
@@ -254,7 +253,7 @@ export class TripControllers {
       const { destinations } = trip;
       destinations.forEach(async (x) => {
         const y = await JSON.parse(x);
-        const location = await findLocation(y.destionation);
+        const location = await findLocation(y.destionationId);
         location.visitCount += 1;
         await updateLocation(location);
       });

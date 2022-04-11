@@ -12,11 +12,11 @@ module.exports = {
           destinations: [
             JSON.stringify({
               accomodationId: 1,
-              destionation: 1,
+              destionationId: 1,
             }),
             JSON.stringify({
               accomodationId: 2,
-              destionation: 2,
+              destionationId: 2,
             }),
           ],
           tripReason: 'this is trip for research purpose',
@@ -38,7 +38,7 @@ module.exports = {
           destinations: [
             JSON.stringify({
               accomodationId: 1,
-              destionation: 1,
+              destionationId: 1,
             }),
             JSON.stringify({
               accomodationId: 2,
@@ -64,11 +64,11 @@ module.exports = {
           destinations: [
             JSON.stringify({
               accomodationId: 1,
-              destionation: 1,
+              destionationId: 1,
             }),
             JSON.stringify({
               accomodationId: 2,
-              destionation: 2,
+              destionationId: 2,
             }),
           ],
           status: 'approved',
@@ -91,11 +91,11 @@ module.exports = {
           destinations: [
             JSON.stringify({
               accomodationId: 1,
-              destionation: 1,
+              destionationId: 1,
             }),
             JSON.stringify({
               accomodationId: 2,
-              destionation: 2,
+              destionationId: 2,
             }),
           ],
           status: 'pending',
@@ -118,11 +118,11 @@ module.exports = {
           destinations: [
             JSON.stringify({
               accomodationId: 1,
-              destionation: 1,
+              destionationId: 1,
             }),
             JSON.stringify({
               accomodationId: 2,
-              destionation: 2,
+              destionationId: 2,
             }),
           ],
           status: 'approved',

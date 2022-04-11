@@ -110,6 +110,28 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        {
+          id: 5,
+          userId: 13,
+          managerId: 7,
+          departLocation: 2,
+          destinations: [
+            JSON.stringify({
+              accomodationId: 1,
+              destionation: 1,
+            }),
+            JSON.stringify({
+              accomodationId: 2,
+              destionation: 2,
+            }),
+          ],
+          status: 'approved',
+          tripReason: 'this is to test ',
+          departDate: '2024-04-03',
+          returnDate: '2024-04-05',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {},
     );

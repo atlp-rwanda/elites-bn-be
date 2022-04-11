@@ -6,6 +6,10 @@ import { authenticate } from '../../middlewares/authenticate';
 import { verifyToken } from '../../middlewares/verifyToken';
 import { isTravelAdmin } from '../../middlewares/isTravelAdmin';
 
+import { AccommodationRatingController } from '../../controllers/accommodationRatingController';
+import { hasVisitedAccommodation } from '../../middlewares/hasVisitedAccommodation';
+import { accommodationRatingValidation } from '../../validations/accommodationValidation/accommodationRating.validation';
+
 const router = express.Router();
 
 const AccommodationController = new AccommodationControllers();
@@ -39,6 +43,19 @@ router.delete(
   isTravelAdmin,
   verifyToken,
   AccommodationController.deleteAccommodation,
+);
+
+router.post(
+  '/:id/reviews',
+  authenticate,
+  hasVisitedAccommodation,
+  accommodationRatingValidation,
+  AccommodationRatingController.create,
+);
+
+router.get(
+  '/:id/reviews',
+  AccommodationRatingController.findAccommodationRating,
 );
 
 export default router;

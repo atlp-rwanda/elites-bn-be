@@ -9,6 +9,10 @@ import { tripComment, tripCommentDefinitions } from './tripComment.docs';
 import { bookings, bookingsDefinition } from './booking.docs';
 import { notifications } from './notification.docs';
 import { chats } from './chat';
+import {
+  AccommodationRating,
+  AccommodationRatingDefinitions,
+} from './accommodationRating.docs';
 
 const paths = {
   ...welcome,
@@ -22,6 +26,7 @@ const paths = {
   ...bookings,
   ...notifications,
   ...chats,
+  ...AccommodationRating,
 };
 
 const definitions = {
@@ -31,6 +36,7 @@ const definitions = {
   ...locationsDefinitions,
   ...tripCommentDefinitions,
   ...bookingsDefinition,
+  ...AccommodationRatingDefinitions,
 };
 
 const config = {
@@ -60,12 +66,10 @@ const config = {
     },
   },
 
-  servers: [
-    {
-      url: 'http://localhost:3000',
-      name: 'DEV',
-    },
-  ],
+  servers: [{
+    url: 'http://localhost:3000',
+    name: 'DEV',
+  }],
 
   paths,
   definitions,

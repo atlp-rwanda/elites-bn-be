@@ -49,17 +49,9 @@ export const locationData = {
 export const invalidLocationData = {
     country: false,
 };
-<<<<<<< HEAD
-
-export const expiredToken =
-'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiaWF0IjoxNjQ4MTEzMzQ4LCJleHAiOjE2NDgxMTUxNDh9.XUP1m0dbo3cGVd0sXSjiEa1IlPmhdcqnKZCAhgvOFBA';
-export const token =
-'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNjQ4MjEwOTIwLCJleHAiOjE2NjU0OTA5MjB9.aLY46sb66_OeUTHZc2QQBPF3iNUirf182eGE4PaDxos';
-=======
 export const token =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNjQ4MjEwOTIwLCJleHAiOjE2NjU0OTA5MjB9.aLY46sb66_OeUTHZc2QQBPF3iNUirf182eGE4PaDxos';
 export const expiredToken =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiaWF0IjoxNjQ4MTEzMzQ4LCJleHAiOjE2NDgxMTUxNDh9.XUP1m0dbo3cGVd0sXSjiEa1IlPmhdcqnKZCAhgvOFBA';
 export const accessTokenRequester =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImlhdCI6MTY0OTMwNDk1OCwiZXhwIjoxNjgwNDA4OTU4fQ.zWD8AB6qj4QVH6WlObw21BLJD0q4KKYc5CFuVzaGD5Q';
->>>>>>> This is a combination of 4 commits.

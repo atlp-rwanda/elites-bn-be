@@ -9,7 +9,7 @@ module.exports = {
           defaultValue: true,
           allowNull: true,
           after: 'verified',
-        },
+        }
       ),
     ]);
   },

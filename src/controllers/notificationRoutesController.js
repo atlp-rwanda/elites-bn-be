@@ -1,5 +1,12 @@
 import notificationServices from '../services/notificationServices';
 import { BaseError } from '../httpErrors/baseError';
+import {
+  FETCH_ERROR,
+  DOES_NOT_EXIST,
+  NOTIFICATION_FOUND,
+} from '../constants/notificationConstant';
+import { config } from 'dotenv';
+config();
 
 const notificationService = new notificationServices();
 class NotificationControllers {
@@ -60,6 +67,24 @@ class NotificationControllers {
       res.status(200).json({ status: 200, message: deleteMessage });
     } catch (err) {
       next(err);
+    }
+  };
+
+  markAllAsReadController = async (id, req, res, next) => {
+    try {
+      const updateStatus = await notificationService.markAllAsRead(id);
+
+      console.log(updateStatus);
+      if (updateStatus) {
+        return res.status(200).json({
+          message: NOTIFICATION_FOUND,
+          data: { updateStatus },
+        });
+      } else {
+        return res.status(401).json({ message: DOES_NOT_EXIST });
+      }
+    } catch (error) {
+      return res.status(500).send({ message: FETCH_ERROR });
     }
   };
 }

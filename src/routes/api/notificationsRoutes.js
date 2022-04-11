@@ -17,7 +17,12 @@ router.delete('/:id', authenticate, notificationController.deleteNotification);
 router.delete(
   '/',
   authenticate,
-  notificationController.deleteAllNotificationsOfUser,
+  notificationController.deleteAllNotificationsOfUser
+);
+router.patch(
+  '/markallasread',
+  authenticate,
+  notificationController.markAllAsReadController
 );
 
 export default router;

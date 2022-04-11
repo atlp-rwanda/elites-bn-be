@@ -43,6 +43,15 @@ class notificationServices {
       return 'No notification to delete';
     }
   };
+
+  markAllAsRead = async (userId) => {
+    const updateNotifications = await Notification.update(
+      { isRead: true },
+      { where: { userId } }
+    );
+
+    return updateNotifications;
+  };
 }
 
 export default notificationServices;

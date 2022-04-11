@@ -23,7 +23,6 @@ router.get('/:id', authenticate, tripControllers.getSingleRequests);
 router.delete('/:id', authenticate, tripControllers.deleteRequests);
 router.patch(
   '/:id',
-  // approveTripValidation,
   authenticate,
   isManager,
   tripControllers.approveRejectTripRequest,

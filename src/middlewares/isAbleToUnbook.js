@@ -33,11 +33,7 @@ export const isAbleToUnbook = async (req, res, next) => {
     }
 
     if (tripRequest.status === 'pending' || tripRequest.status === 'rejected') {
-<<<<<<< HEAD
-      throw new ForbbidenError('this trip request has not been approved');
-=======
       throw new ForbbidenError('You can not unbook a room unless you booked it ');
->>>>>>>  This is a combination of 6 commits.
     }
 
     const checkRoomExist = await models.Room.findOne({

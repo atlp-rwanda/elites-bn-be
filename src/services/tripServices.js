@@ -221,16 +221,6 @@ export const checkStatus = async (userid, status) => {
   return data;
 };
 
-export const checkstatus = async (userid, status) => {
-  const data = await models.tripRequest.findOne({
-    where: {
-      id: userid,
-      status,
-    },
-  });
-
-  return data;
-};
 export const approveRequest = async (tripId, statusUpdate) => {
   const data = await models.tripRequest.update(statusUpdate, {
     where: { id: tripId },
@@ -249,3 +239,29 @@ export const findRequestById = async (id) => {
   });
   return request;
 };
+export const findLocation =async(id)=> {
+  try{
+   const findLoc = await models.Location.findOne(
+     { where: { id } },
+     );
+     return findLoc;
+  }catch(error){
+    console.log(error)
+  }
+ }
+
+ export const findAndUpdateLocation = async({ where, id }, locData) =>{
+  try{
+   const updateLoc = await models.Location.update(locData, {
+     where: id ? { id } : where
+   });
+   return updateLoc;
+ }catch(error){
+   console.log(error)
+ }
+  }
+  export const updateLocation = async ( data ) => {
+      data.update();
+      data.save();
+    return data;
+  };

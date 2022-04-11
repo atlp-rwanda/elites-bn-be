@@ -9,12 +9,11 @@ describe('SHOULD RETRIEVE CHATS', () => {
   it('Should fetch all chats ', (done) => {
     chai
       .request(app)
-      .get(`/api/v1/chat`)
+      .get(`/api/v1/chats`)
       .end((err, res) => {
         expect(res).to.have.status([200]);
         expect(res.body).to.have.property('message');
         expect(res.body).to.have.property('sender');
-        expect(res.body).to.have.property('time');
       });
     done();
   });

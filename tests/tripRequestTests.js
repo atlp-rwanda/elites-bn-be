@@ -24,19 +24,21 @@ import {
 chai.use(chaiHttp);
 let token;
 let adminToken;
-describe.only('TRIP REQUEST ENDPOINTS', () => {
+describe('TRIP REQUEST ENDPOINTS', () => {
   let id;
 
-  before('it should login the user', async () => {
-    const res = await chai.request(app).post('/api/v1/users/login').send({
+  before('it should login the user', (done)=> {
+    const res = chai.request(app).post('/api/v1/users/login').send({
       email: 'senderone@gmail.com',
       password: 'pass123@',
     });
-    token = res.body.payload.accesstoken;
+    token = res.body.payload.accesstoken
+   .end((req,res)=>{
     expect(res).to.have.status([200]);
     expect(res.body).to.have.property('message');
     expect(res.body).to.have.property('status'); 
-    
+   });
+    done()
   });
 
   // SHOULD CREATE TRIP FOR REQUESTER

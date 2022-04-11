@@ -3,7 +3,7 @@ import { TripControllers } from '../../controllers/tripControllers';
 import { requestValidation } from '../../validations/tripRequest/tripValidations';
 import { authenticate } from '../../middlewares/authenticate';
 import { isManager } from '../../middlewares/isManager';
-
+// import  {updateTripLocationVisit} from '../../controllers/tripControllers';
 import { TripCommentController } from '../../controllers/tripCommentController';
 import { isRequester } from '../../middlewares/isRequester';
 

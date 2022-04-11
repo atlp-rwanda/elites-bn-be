@@ -8,12 +8,14 @@ describe('BOOK A ROOM', () => {
   let token = '';
   let notRequesterToken = '';
   let noTripRequestToken = '';
+  console.log("check check check")
   before('it should login the user', async () => {
     const res = await chai.request(app).post('/api/v1/users/login').send({
       email: 'senderone@gmail.com',
       password: 'pass123@',
     });
-
+    console.log(res.body)
+    
     token = res.body.payload.accesstoken;
 
     const unbookRoom = await chai
@@ -35,8 +37,9 @@ describe('BOOK A ROOM', () => {
       .end((req, res) => {
         expect(res).to.have.status([201]);
         expect(res.body).to.have.property('status');
-        done();
+      
       });
+      done();
   });
 
   before('it should login the user who is not a requester', async () => {

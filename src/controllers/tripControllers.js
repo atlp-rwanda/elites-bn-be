@@ -14,17 +14,18 @@ import {
   getManagerId,
   tripExist,
   getOneRequest,
-  approveRequest,
   updateMulticities,
+  findLocation,
+  updateLocation,
 } from '../services/tripServices';
 import { validateDate } from '../helpers/dateComparison';
-import models from '../models';
 import { UnauthorizedError } from '../httpErrors/unauthorizedError';
 import { NotFoundError } from '../httpErrors/NotFoundError';
 import { userById } from '../services/userServices';
 import { BaseError } from '../httpErrors/baseError';
 import requestEventEmitter from './notificationEventsController';
 import { decodeAcessToken } from '../helpers/jwtFunction';
+import models from '../models';
 
 // eslint-disable-next-line import/prefer-default-export
 export class TripControllers {
@@ -38,7 +39,6 @@ export class TripControllers {
       );
       const { rememberMe } = req.body;
       const exists = await tripExist(id, req.body.departDate);
-
       if (exists) {
         return res.status(400).json({
           status: 400,
@@ -136,7 +136,6 @@ export class TripControllers {
         const tripType = checkTripType > 1 ? 'multicity' : 'single-city';
         req.body.tripType = tripType;
         const newTrip = await createTrip(id, req.body);
-
         if (newTrip) {
           // Emit event when trip request is created
           requestEventEmitter.emit('request-created', newTrip, req);
@@ -236,18 +235,25 @@ export class TripControllers {
       const managerId = decoded.id;
       const triprequestId = req.params.id;
       const trip = await models.tripRequest.findByPk(triprequestId);
-      const requester = await userById(trip.userId);
+      const { destinations } = trip;
+      destinations.forEach(async (x) => {
+        const y = await JSON.parse(x);
+        const location = await findLocation(y.destionation);
+        location.visitCount += 1;
+        await updateLocation(location);
+      });
 
+      const requester = await userById(trip.userId);
       if (managerId === requester.managerId) {
         const { status } = trip;
-
         if (status === 'pending') {
           const updatedStatus = req.body.status;
-          const updated = await approveRequest(triprequestId, { status: updatedStatus });
+          const updated = await trip.update({
+            status: updatedStatus,
+          });
           if (updated) {
             // Emit the event when trip request is approved or rejected
             requestEventEmitter.emit('request-approved-or-rejected', updated);
-
             res.status(200).json({
               status: 200,
               message: REQUEST_UPDATED,
@@ -255,7 +261,7 @@ export class TripControllers {
             });
           }
         } else {
-          throw new NotFoundError();
+          throw new BaseError('Bad request', 400, 'Trip request is already Updated');
         }
       } else {
         throw new UnauthorizedError('You are not a manager of this user');

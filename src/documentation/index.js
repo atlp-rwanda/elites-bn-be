@@ -8,7 +8,7 @@ import { profile } from './profile.docs';
 import { tripComment, tripCommentDefinitions } from './tripComment.docs';
 import { bookings, bookingsDefinition } from './booking.docs';
 import { notifications } from './notification.docs';
-import { chats, chatDefinitions } from './chat';
+import { chats } from './chat';
 
 const paths = {
   ...welcome,
@@ -21,6 +21,7 @@ const paths = {
   ...tripComment,
   ...bookings,
   ...notifications,
+  ...chats,
 };
 
 const definitions = {
@@ -30,7 +31,6 @@ const definitions = {
   ...locationsDefinitions,
   ...tripCommentDefinitions,
   ...bookingsDefinition,
-  ...chatDefinitions,
 };
 
 const config = {

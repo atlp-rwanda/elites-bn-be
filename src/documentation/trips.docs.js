@@ -32,7 +32,6 @@ export const trips = {
       summary: 'This endPoint will retrieve all requests ',
       description: 'This endPoint will retrieve all requests ',
       operationId: 'getAllRequest',
-
       responses: {
         200: {
           description: 'Successfully retrieved',

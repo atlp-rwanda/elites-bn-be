@@ -3,7 +3,7 @@ import chaiHttp from 'chai-http';
 import 'dotenv/config';
 import app from '../src/app';
 
-import { locationData, invalidLocationData, token } from './dummyData';
+import { locationData, token } from './dummyData';
 
 chai.use(chaiHttp);
 
@@ -25,7 +25,7 @@ describe('LOCATION ENDPOINTS TEST', () => {
   it('should get a single location with given ID', (done) => {
     chai
       .request(app)
-      .get(`/api/v1/locations/${1}`)
+      .get(`/api/v1/locations/1`)
       .end((err, res) => {
         expect(res).to.have.status([200]);
         expect(res.body).to.have.property('message');
@@ -37,7 +37,7 @@ describe('LOCATION ENDPOINTS TEST', () => {
   it('should update a specific location', (done) => {
     chai
       .request(app)
-      .patch(`/api/v1/locations/${3}`)
+      .patch(`/api/v1/locations/3`)
       .set('Authorization', `Bearer ${token}`)
       .send(locationData)
       .end((err, res) => {
@@ -50,7 +50,7 @@ describe('LOCATION ENDPOINTS TEST', () => {
   it('should delete a location of a specific accommodation', (done) => {
     chai
       .request(app)
-      .delete(`/api/v1/locations/${4}`)
+      .delete(`/api/v1/locations/4`)
       .set('Authorization', `Bearer ${token}`)
       .end((err, res) => {
         expect(res).to.have.status([200]);
@@ -61,7 +61,7 @@ describe('LOCATION ENDPOINTS TEST', () => {
   it('Should not retrieve a location', (done) => {
     chai
       .request(app)
-      .get(`/api/v1/locations/${'kjoo354'}`)
+      .get(`/api/v1/locations/kjoo354`)
       .end((err, res) => {
         expect(res).to.have.status([500]);
         expect(res.body).to.have.property('name');
@@ -70,18 +70,17 @@ describe('LOCATION ENDPOINTS TEST', () => {
       });
     done();
   });
-  it('should not update unexisting location', (done) => {
+  it('should not update location when not travel admin', (done) => {
     chai
       .request(app)
-      .patch(`/api/v1/locationss/${3}`)
+      .patch(`/api/v1/locations/5`)
       .set('Authorization', `Bearer ${token}`)
-      .send(invalidLocationData)
+      .send({ description: 'test description' })
       .end((err, res) => {
-        expect(res).to.have.status([404]);
-        expect(res.body).to.have.property('name');
-        expect(res.body.name).to.equal('Not Found');
+        expect(res).to.have.status([401]);
         expect(res.body).to.have.property('message');
-        done();
+        expect(res.body.name).to.equal('You are not a travel admin');
       });
+    done();
   });
 });

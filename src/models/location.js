@@ -20,6 +20,10 @@ module.exports = (sequelize, DataTypes) => {
       locationName: DataTypes.STRING,
       description: DataTypes.STRING,
       country: DataTypes.STRING,
+      visitCount: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
     },
     {
       sequelize,

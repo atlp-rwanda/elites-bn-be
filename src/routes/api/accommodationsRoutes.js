@@ -48,7 +48,6 @@ router.delete(
 );
 
 router.post(
-<<<<<<< HEAD
   '/:id/reviews',
   authenticate,
   hasVisitedAccommodation,
@@ -60,7 +59,7 @@ router.get(
   '/:id/reviews',
   AccommodationRatingController.findAccommodationRating,
 );
-=======
+router.post(
   '/:id/dislike',
   authenticate,
   isRequesterOnly,
@@ -73,6 +72,5 @@ router.post(
   AccommodationLikeController.like,
 );
 router.get('/:id/likes', AccommodationLikeController.findAccommodationLikes);
->>>>>>> This is a combination of 2 commits.
 
 export default router;

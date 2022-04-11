@@ -62,7 +62,7 @@ socket.on('subscribe', (data) => {
 });
 
 const getData = async () => {
-  data = await fetch('http://localhost:3000/api/v1/chat');
+  data = await fetch('https://elites-barefoot-nomad.herokuapp.com/api/v1/chat');
   const response = await data.json();
   socket.emit('message', response);
   return response;

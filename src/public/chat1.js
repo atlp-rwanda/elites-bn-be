@@ -13,7 +13,7 @@ const logUserIn = async () => {
     email: user.value,
     password: password.value,
   };
-  const response = await fetch('http://localhost:3000/api/v1/users/login', {
+  const response = await fetch('https://elites-barefoot-nomad.herokuapp.com/api/v1/users/login', {
     method: 'post',
     body: JSON.stringify(data),
     headers: {

@@ -1,5 +1,5 @@
-import moment from 'moment';
-import { getMessages, addMessage } from '../services/chatServices';
+
+import { getMessages } from '../services/chatServices';
 
 class ChatController {
   // get messages
@@ -8,9 +8,9 @@ class ChatController {
     try {
       const sentMessage = await getMessages(req.body);
       res.status(200).json({
-        sender: sentMessage.postedBy,
-        message: sentMessage,
-        time: moment().format('h:mm a'),
+        status: 200,
+        message:'chats retrieved successfully!',
+        chats: sentMessage,
       });
     } catch (err) {
       next(err);

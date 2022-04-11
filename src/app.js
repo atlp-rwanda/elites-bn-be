@@ -64,7 +64,7 @@ try {
     res.render('index');
   });
   app.use('/public/notification', (req, res) => res.sendFile(`${__dirname}/public/notification.html`));
-
+  app.use('/public/chat', (req, res) => res.sendFile(`${__dirname}/public/login.html`));
   app.use(
     '/docs/swagger-ui/',
     swaggerUi.serve,

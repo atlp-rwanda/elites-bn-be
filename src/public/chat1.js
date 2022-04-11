@@ -1,8 +1,8 @@
 // Query DOM
 const loginForm = document.querySelector('.login-form');
-(user = document.getElementById('user')),
-(btn = document.querySelector('.btn')),
-(password = document.getElementById('pass'));
+user = document.getElementById('user'),
+btn = document.querySelector('.btn'),
+password = document.getElementById('pass');
 
 const username = loginForm.elements[0];
 
@@ -25,7 +25,7 @@ const logUserIn = async () => {
     const result = await response.json();
     token = result.payload.accesstoken;
     localStorage.setItem('accesstoken', JSON.stringify(token));
-    window.location.replace('./chat.html');
+    window.location.replace('/chat.html');
   } else {
     alert('invalid credential,Try again');
     console.log('error,');

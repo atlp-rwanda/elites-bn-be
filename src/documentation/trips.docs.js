@@ -50,7 +50,7 @@ export const trips = {
         },
 
         {
-          name: 'tripReason:',
+          name: 'tripReason',
           in: 'query',
           description: 'Trip request',
         },

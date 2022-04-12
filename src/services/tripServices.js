@@ -89,8 +89,8 @@ export const getAllRequests = async (userId, queryParams) => {
   if (role === 'manager') {
     const data = await models.tripRequest.findAll({
       where: {
+        [Op.and]: [{ managerId: userId }],
         [Op.or]: [
-          { managerId: userId },
           { tripReason: { [Op.substring]: queryParams.tripReason } },
           { status: { [Op.substring]: queryParams.status } },
           { departLocation: { [Op.eq]: queryParams.departLocation } },

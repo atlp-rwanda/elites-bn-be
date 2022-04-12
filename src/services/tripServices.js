@@ -79,7 +79,8 @@ export const createTrip = async (userid, data) => {
     }
     return false;
   } catch (err) {
-    throw new Error('You are not allowed, to create trips');
+    /* throw new Error('You are not allowed, to create trips'); */
+    console.log(err);
   }
 };
 
@@ -184,7 +185,11 @@ export const updateMulticities = async (
     exist.role;
     exist.departDate = data.departDate ? data.departDate : exist.departDate;
     exist.returnDate = data.returnDate ? data.returnDate : exist.returnDate;
-    const checkTripType = data.destinations.length;
+    let checkTripType;
+    if (data.destinations) {
+      checkTripType = data.destinations.length;
+    }
+
     if (checkTripType === undefined) {
       exist.tripType = exist.tripType;
     } else {

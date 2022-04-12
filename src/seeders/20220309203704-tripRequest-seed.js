@@ -11,12 +11,12 @@ module.exports = {
           departLocation: 1,
           destinations: [
             JSON.stringify({
-              accomodationId: 1,
-              destionationId: 1,
+              accommodationId: 1,
+              destinationId: 1,
             }),
             JSON.stringify({
-              accomodationId: 2,
-              destionationId: 2,
+              accommodationId: 2,
+              destinationId: 2,
             }),
           ],
           tripReason: 'this is trip for research purpose',
@@ -37,12 +37,12 @@ module.exports = {
           departLocation: 2,
           destinations: [
             JSON.stringify({
-              accomodationId: 1,
-              destionationId: 1,
+              accommodationId: 1,
+              destinationId: 1,
             }),
             JSON.stringify({
-              accomodationId: 2,
-              destionation: 2,
+              accommodationId: 2,
+              destinationId: 2,
             }),
           ],
           tripReason: 'this is trip for research purpose',
@@ -63,8 +63,8 @@ module.exports = {
           departLocation: 2,
           destinations: [
             JSON.stringify({
-              accomodationId: 1,
-              destionationId: 1,
+              accommodationId: 1,
+              destinationId: 1,
             }),
             JSON.stringify({
               accomodationId: 2,
@@ -90,12 +90,12 @@ module.exports = {
           departLocation: 2,
           destinations: [
             JSON.stringify({
-              accomodationId: 1,
-              destionationId: 1,
+              accommodationId: 1,
+              destinationId: 1,
             }),
             JSON.stringify({
-              accomodationId: 2,
-              destionationId: 2,
+              accommodationId: 2,
+              destinationId: 2,
             }),
           ],
           status: 'pending',
@@ -117,12 +117,12 @@ module.exports = {
           departLocation: 2,
           destinations: [
             JSON.stringify({
-              accomodationId: 1,
-              destionationId: 1,
+              accommodationId: 1,
+              destinationId: 1,
             }),
             JSON.stringify({
-              accomodationId: 2,
-              destionationId: 2,
+              accommodationId: 2,
+              destinationId: 2,
             }),
           ],
           status: 'approved',

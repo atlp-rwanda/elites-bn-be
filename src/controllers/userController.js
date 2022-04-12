@@ -120,15 +120,22 @@ export class UserControllers {
       const { email } = req.body;
       const user = await userExist(email);
       if (user == null) {
-        res.status(400).json({ message: 'User does not exist! ' });
+        res.status(400).json({
+          status: 400,
+          message: 'User does not exist! ',
+        });
         return false;
       }
       const updatedUser = await updatedRole(req.params.id, email);
 
       if (updatedUser == null) {
-        return res.status(400).json({ message: 'this role does not exist' });
+        return res.status(400).json({
+          status: 400,
+          message: 'this role does not exist',
+        });
       }
       return res.status(200).json({
+        status: 200,
         message: {
           newRole: updatedUser.roleId,
           userId: updatedUser.id,

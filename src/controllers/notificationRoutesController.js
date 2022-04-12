@@ -109,4 +109,5 @@ class NotificationControllers {
     }
   };
 }
+
 export default NotificationControllers;

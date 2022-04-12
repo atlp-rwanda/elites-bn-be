@@ -8,13 +8,13 @@ export class AccommodationRatingController {
     try {
       const rating = await AccommodationRatingService.findOne(
         parseInt(id),
-        parseInt(req.params.id),
+        parseInt(req.params.id)
       );
       if (rating) {
         rating.rating = parseInt(req.body.rating);
         rating.feedback = req.body.feedback;
         const accommodationRating = await AccommodationRatingService.update(
-          rating,
+          rating
         );
         return res.status(201).json({
           status: '201',
@@ -41,7 +41,7 @@ export class AccommodationRatingController {
   static async findAccommodationRating(req, res, next) {
     try {
       const ratings = await AccommodationRatingService.findAllByAccommodation(
-        parseInt(req.params.id),
+        parseInt(req.params.id)
       );
       if (ratings) {
         const list = [...ratings.rows];

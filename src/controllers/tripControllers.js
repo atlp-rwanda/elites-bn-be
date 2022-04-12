@@ -19,6 +19,8 @@ import {
   approveRequest,
   updateMulticities,
   findStatistcsByUser,
+  findLocation,
+  updateLocation,
 } from '../services/tripServices';
 import { validateDate } from '../helpers/dateComparison';
 import { UnauthorizedError } from '../httpErrors/unauthorizedError';
@@ -322,6 +324,18 @@ export class TripControllers {
           'You are not a manager or requester of this user'
         );
       }
+    } catch (err) {
+      next(err);
+    }
+  }
+  async mostTravelledDestination(id, req, res, next) {
+    try {
+      const getTripRequests = await fetchMostTravelled(id);
+      res.status(200).json({
+        status: 200,
+        message: TRIP_FOUND_MESSAGE,
+        payload: getTripRequests,
+      });
     } catch (err) {
       next(err);
     }

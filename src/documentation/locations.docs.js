@@ -30,7 +30,7 @@ export const location = {
       ],
     },
   },
-  '/api/v1/locations/mostTravelled': {
+  '/api/v1/locations/mostTravelled/all': {
     get: {
       tags: ['Locations'],
       summary: 'Retrieve Locations by Most travelled',
@@ -44,7 +44,6 @@ export const location = {
           description: 'Server error!',
         },
       },
-
     },
   },
   '/api/v1/locations/{locationId}': {

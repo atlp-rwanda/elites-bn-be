@@ -1,10 +1,6 @@
 import express from 'express';
 import NotificationControllers from '../../controllers/notificationRoutesController';
 import { UserControllers } from '../../controllers/userController';
-import {
-  checkOneNotificationsExist,
-  checkAllNotificationsExist,
-} from '../../middlewares/isNotificationExist';
 import { authenticate } from '../../middlewares/authenticate';
 
 const router = express.Router();

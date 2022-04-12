@@ -1,6 +1,28 @@
 import { Notification } from '../models';
 
 class notificationServices {
+  checkIsRead = async (notificationId) => {
+    const isExist = await Notification.findOne({
+      where: { id: notificationId },
+    });
+
+    if (isExist.isRead) {
+      return true;
+    }
+    return false;
+  };
+
+  checkIsReadAll = async (id) => {
+    const isExist = await Notification.findOne({
+      where: { isRead: false, userId: id },
+    });
+
+    if (isExist) {
+      return true;
+    }
+    return false;
+  };
+
   createInAppNotification = async (notification) => {
     const createdNotification = await Notification.create(notification);
     return createdNotification;
@@ -58,7 +80,6 @@ class notificationServices {
       { isRead: true },
       { where: { id } }
     );
-
     return updateOneNotifications;
   };
 }

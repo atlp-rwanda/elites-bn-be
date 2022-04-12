@@ -1,16 +1,13 @@
 import { Server } from 'socket.io';
-import { addMessage } from '../services/chatServices';
+import { addMessage, getMessages } from '../services/chatServices';
 import models from '../models';
 import { decodeAcessToken } from '../helpers/jwtFunction';
-
 const io = new Server({
   cors: {
-    origin: 'https://elites-barefoot-nomad.herokuapp.com/',
+    origin: 'http://localhost:3000',
   },
 });
-
 let decodedToken;
-
 io.use(async (socket, next) => {
   const { token } = socket.handshake.auth;
   if (token) {
@@ -20,19 +17,16 @@ io.use(async (socket, next) => {
   }
   return next(new Error('unable to access token'));
 });
-
-let flags = 0;
+let onlineUsers = 0;
 const ipsconnected = [];
-
 io.on('connection', async (socket) => {
   const connectedUser = socket.id;
   if (!ipsconnected.hasOwnProperty(connectedUser)) {
     ipsconnected[connectedUser] = 1;
-    flags += 1;
-    io.emit('register', flags);
+    onlineUsers += 1;
+    io.emit('register', onlineUsers);
   }
-  console.log('👾 New socket connected! >>', socket.id);
-
+  console.log(':space_invader: New socket connected! >>', socket.id);
   const { token } = socket.handshake.auth;
   const accesstoken = JSON.parse(token);
   decodedToken = await decodeAcessToken(accesstoken);
@@ -56,19 +50,15 @@ io.on('connection', async (socket) => {
   });
   const { names } = findUser;
   io.to(socket.id).emit('subscribe', names);
-
-  socket.on('message', (data) => {
-    io.to(socket.id).emit('message', data);
-  });
-
+  const getData = await getMessages();
+  io.to(socket.id).emit('message', getData);
   socket.on('disconnect', () => {
     if (ipsconnected.hasOwnProperty(connectedUser)) {
       delete ipsconnected[connectedUser];
-      flags -= 1;
-      io.emit('register', flags);
+      onlineUsers -= 1;
+      io.emit('register', onlineUsers);
     }
   });
-
   socket.on('chat', (data) => {
     const message = {
       postedBy: findUser.id,
@@ -78,10 +68,8 @@ io.on('connection', async (socket) => {
     const addData = addMessage(message);
     io.emit('chat', data);
   });
-
   socket.on('typing', (data) => {
     socket.broadcast.emit('typing', data);
   });
 });
-
 export default io;

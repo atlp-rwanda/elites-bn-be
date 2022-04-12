@@ -7,7 +7,7 @@
   "author": "Honore IRADUKUNDA <ihonore01@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "babel src -d dist",
+    "build": "babel src -d dist --copy-files",
     "start": "npm run build && yarn migrate && yarn seed && better-npm-run prod",
     "dev": "yarn migrate && yarn seed && better-npm-run dev",
     "dev_": "better-npm-run dev",

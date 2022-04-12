@@ -22,7 +22,7 @@ import {
   findLocation,
   updateLocation,
 } from '../services/tripServices';
-import { validateDate } from '../helpers/dateComparison';
+import { validateDate, validateDateTripStat } from '../helpers/dateComparison';
 import { UnauthorizedError } from '../httpErrors/unauthorizedError';
 import { userById } from '../services/userServices';
 import { BaseError } from '../httpErrors/baseError';
@@ -84,6 +84,8 @@ export class TripControllers {
           const newTrip = await createTrip(id, req.body);
 
           if (newTrip) {
+            // Emit event when trip request is created
+            requestEventEmitter.emit('request-created', newTrip, req);
             res
               .status(201)
               .json({ status: 201, message: TRIP_CREATED, payload: newTrip });
@@ -306,22 +308,41 @@ export class TripControllers {
   }
   async countTripStatics(id, req, res, next) {
     try {
-      const recordStart = await new Date(req.body.startDate);
-      const recordEnd = await new Date(req.body.endDate);
+      /*   const recordStart = await new Date(req.body.startDate);
+      const recordEnd = await new Date(req.body.endDate); */
 
-      const result = await findStatistcsByUser(id, recordStart, recordEnd);
-      if (result) {
-        res.status(200).json({
-          status: 200,
-          message: 'Information successfully found',
-          payload: result,
-        });
-      }
-      if (!result) {
-        throw new BaseError('Bad request', 404, 'information not found');
+      const compareDates = validateDateTripStat(
+        req.body.endDate,
+        req.body.startDate
+      );
+
+      if (compareDates) {
+        const result = await findStatistcsByUser(
+          id,
+          req.body.startDate,
+          req.body.endDate
+        );
+        console.log(result, '************************');
+        if (result) {
+          res.status(200).json({
+            status: 200,
+            message: 'Information successfully found',
+            payload: result,
+          });
+        }
+
+        if (!result) {
+          throw new BaseError('Not found', 404, 'information not found');
+        } else {
+          throw new UnauthorizedError(
+            'You are not a manager or requester of this user'
+          );
+        }
       } else {
-        throw new UnauthorizedError(
-          'You are not a manager or requester of this user'
+        throw new BaseError(
+          'Bad request',
+          400,
+          'Please, check your input data.'
         );
       }
     } catch (err) {

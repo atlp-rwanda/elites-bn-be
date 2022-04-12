@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- <meta -->
-    <!-- http-equiv="refresh" -->
-    <!-- content="7; URL=https://elites-barefoot-nomad.herokuapp.com/public/notification" -->
-    <!-- /> -->
+     <meta 
+    http-equiv="refresh"
+    content="7; URL=https://elites-barefoot-nomad.herokuapp.com/public/notification" 
+     />
     <title>Notifications</title>
     <style>
       .notifs-container {
@@ -42,19 +42,13 @@
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-      localStorage.setItem(
-        'token',
-        JSON.stringify(
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNjQ5MzQ3NjQwLCJleHAiOjE2ODA0NTE2NDB9.6TqRna8aZ3Rf0Najmzt3QD9DPcflVQtWYeick8HkDjA'
-        )
-      );
       Notification.requestPermission();
       const socket = io({
-        query: {
-          token: localStorage.getItem('token'),
-        },
+        auth: {
+        token: localStorage.getItem('accesstoken'),
+      },
       });
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('accesstoken');
 
       function displayNotifs(data) {
         const parsedData = JSON.parse(data);

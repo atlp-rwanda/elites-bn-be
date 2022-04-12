@@ -65,7 +65,7 @@
           password: password.value,
         };
         const response = await fetch(
-          'http://localhost:3000/api/v1/users/login',
+          'https://elites-barefoot-nomad.herokuapp.com/api/v1/users/login',
           {
             method: 'post',
             body: JSON.stringify(data),

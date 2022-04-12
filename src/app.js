@@ -99,11 +99,6 @@ try {
     console.log('server is running');
   });
 
-  io.use(async (socket, next) => {
-    ioMiddleware(socket);
-    next();
-  });
-
   app.use((req, res, next) => {
     req.io = io;
     next();

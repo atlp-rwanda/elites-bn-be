@@ -2,6 +2,7 @@ import { Server } from 'socket.io';
 import { addMessage, getMessages } from '../services/chatServices';
 import models from '../models';
 import { decodeAcessToken } from '../helpers/jwtFunction';
+import { Notification } from '../models';
 const io = new Server({
   cors: {
     origin: 'http://localhost:3000',
@@ -71,5 +72,13 @@ io.on('connection', async (socket) => {
   socket.on('typing', (data) => {
     socket.broadcast.emit('typing', data);
   });
+  socket.emit(
+    'initialize',
+    JSON.stringify({
+      notif: await Notification.findAll({
+        where: { userId: decodedToken.id },
+      }),
+    }),
+  );
 });
 export default io;

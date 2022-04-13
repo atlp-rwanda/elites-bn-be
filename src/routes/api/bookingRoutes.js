@@ -6,11 +6,11 @@ import { isAbleToUnbook } from '../../middlewares/isAbleToUnbook';
 const bookingController = new BookingControllers();
 const router = express.Router();
 
-router.post('/:roomId/:tripId/booking', isAbleToBook, bookingController.bookRooms);
+router.post('/:roomId/booking', isAbleToBook, bookingController.bookRooms);
 router.patch(
-  '/:roomId/:tripId/unbooking',
+  '/:roomId/unbooking',
   isAbleToUnbook,
-  bookingController.deleteBooking,
+  bookingController.deleteBooking
 );
 
 export default router;

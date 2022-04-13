@@ -18,7 +18,7 @@ router.post(
   authenticate,
   tripControllers.createController
 );
-router.put('/:id', authenticate, tripControllers.updateRequest);
+// router.put('/:id', authenticate, tripControllers.updateRequest);
 router.get('/', authenticate, tripControllers.getAllRequests);
 router.get('/:id', authenticate, tripControllers.getSingleRequests);
 router.delete('/:id', authenticate, tripControllers.deleteRequests);

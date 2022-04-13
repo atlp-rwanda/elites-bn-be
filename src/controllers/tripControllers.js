@@ -82,7 +82,6 @@ export class TripControllers {
           const tripType = checkTripType > 1 ? 'multicity' : 'single-city';
           req.body.tripType = tripType;
           const newTrip = await createTrip(id, req.body);
-
           if (newTrip) {
             // Emit event when trip request is created
             requestEventEmitter.emit('request-created', newTrip, req);
@@ -257,7 +256,7 @@ export class TripControllers {
       const { destinations } = trip;
       destinations.forEach(async (x) => {
         const y = await JSON.parse(x);
-        const location = await findLocation(y.destionationId);
+        const location = await findLocation(y.destinationId);
         location.visitCount += 1;
         await updateLocation(location);
       });
@@ -322,7 +321,7 @@ export class TripControllers {
           req.body.startDate,
           req.body.endDate
         );
-        console.log(result, '************************');
+
         if (result) {
           res.status(200).json({
             status: 200,

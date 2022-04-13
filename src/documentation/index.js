@@ -14,10 +14,12 @@ import {
   AccommodationRatingDefinitions,
 } from './accommodationRating.docs';
 import { accommodationLike } from './accommodationLike.docs';
+import { socialAuth } from './socialAuth.docs';
 
 const paths = {
   ...welcome,
   ...users,
+  ...socialAuth,
   ...profile,
   ...trips,
   ...accomodations,

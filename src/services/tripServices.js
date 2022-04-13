@@ -73,7 +73,6 @@ export const createTrip = async (userid, data) => {
         ...data,
         userId: userid,
       });
-      console.log(addTrip);
       addTrip.save();
       return addTrip;
     }

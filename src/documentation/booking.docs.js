@@ -1,5 +1,5 @@
 export const bookings = {
-  '/api/v1/rooms/{roomId}/{tripId}/booking': {
+  '/api/v1/rooms/{roomId}/booking': {
     post: {
       tags: ['BOOKINGS'],
       summary: 'BOOKING A ROOM',
@@ -13,15 +13,9 @@ export const bookings = {
           required: true,
         },
         {
-          name: 'tripId',
-          in: 'path',
-          description: 'tripId',
-          required: true,
-        },
-        {
           name: 'Body',
           in: 'body',
-          description: 'checkinDate',
+          description: 'Dates and tripId',
           required: true,
           schema: {
             $ref: '#/definitions/bookRoom',
@@ -32,7 +26,6 @@ export const bookings = {
         201: {
           description: 'Room booked successfully',
         },
-
         400: {
           description: 'Bad request',
         },
@@ -47,8 +40,7 @@ export const bookings = {
       ],
     },
   },
-
-  '/api/v1/rooms/{roomId}/{tripId}/unbooking': {
+  '/api/v1/rooms/{roomId}/unbooking': {
     patch: {
       tags: ['BOOKINGS'],
       summary: 'UNBOOKING A ROOM',
@@ -62,17 +54,19 @@ export const bookings = {
           required: true,
         },
         {
-          name: 'tripId',
-          in: 'path',
+          name: 'Body',
+          in: 'body',
           description: 'tripId',
           required: true,
+          schema: {
+            $ref: '#/definitions/unbookRoom',
+          },
         },
       ],
       responses: {
         201: {
           description: 'Room unbooked successfully',
         },
-
         400: {
           description: 'Bad request',
         },
@@ -88,19 +82,30 @@ export const bookings = {
     },
   },
 };
-
 export const bookingsDefinition = {
   bookRoom: {
     type: 'object',
-    required: ['roomId', 'checkinDate', 'checkoutDate'],
+    required: ['roomId', 'checkinDate', 'checkoutDate', 'tripId'],
     in: 'body',
-
     properties: {
+      tripId: {
+        type: 'integer',
+      },
       checkinDate: {
         type: 'string',
       },
       checkoutDate: {
         type: 'string',
+      },
+    },
+  },
+  unbookRoom: {
+    type: 'object',
+    required: ['roomId', 'tripId'],
+    in: 'body',
+    properties: {
+      tripId: {
+        type: 'integer',
       },
     },
   },

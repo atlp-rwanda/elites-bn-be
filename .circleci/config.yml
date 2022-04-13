@@ -18,19 +18,27 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "NODE VERSION"
+          name: 'NODE VERSION'
           command: node --version
       - run:
-          name: "INSTALLING DEPENDENCY"
+          name: 'INSTALLING DEPENDENCY'
           command: yarn
       - run:
-          name: "TESTING"
-          command: "yarn run test"
+          name: 'TESTING'
+          command: 'yarn run test'
       - run:
           name: coverage
           command: yarn run coverage
 
       - coveralls/upload
+      - store_artifacts:
+          path: test-results
+
+      - store_artifacts:
+          path: coverage
+
+      - store_test_results:
+          path: test-results
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows

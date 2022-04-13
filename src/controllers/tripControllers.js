@@ -66,6 +66,12 @@ export class TripControllers {
         const roleName = await models.Role.findOne({
           where: { id: role },
         });
+        if (roleName.name !== 'requester') {
+          res.status(400).json({
+            status: 400,
+            message: 'Only requesters can be allowed to create a trip',
+          });
+        }
 
         const { passportNumber } = profile;
         const { address } = profile;

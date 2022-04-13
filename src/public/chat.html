@@ -73,7 +73,6 @@
     const username = alert('Welcome to this chat!');
     // emit event to server with the user's name
     socket.on('subscribe', (data) => {
-      console.log(data);
       handle.value = data;
     });
     socket.on('message', (data) => {

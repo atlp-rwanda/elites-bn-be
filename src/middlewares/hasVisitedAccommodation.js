@@ -18,7 +18,7 @@ export const hasVisitedAccommodation = async (id, req, res, next) => {
         });
       });
     }
-    console.log(isAccommodationFound);
+
     if (isAccommodationFound) {
       next(id);
     } else {

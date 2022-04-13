@@ -2,8 +2,8 @@ export const addRequest = {
   departLocation: 1,
   destinations: [
     {
-      accomodationId: 3,
-      destionationId: 2,
+      accommodationId: 3,
+      destinationId: 2,
     },
   ],
   tripReason: 'Free Tours',
@@ -16,8 +16,8 @@ export const notRememberMe1 = {
   departLocation: 1,
   destinations: [
     {
-      accomodationId: 3,
-      destionationId: 2,
+      accommodationId: 3,
+      destinationId: 2,
     },
   ],
   tripReason: 'Free Tours',
@@ -31,8 +31,8 @@ export const notRememberMe2 = {
   departLocation: 1,
   destinations: [
     {
-      accomodationId: 3,
-      destionationId: 2,
+      accommodationId: 3,
+      destinationId: 2,
     },
   ],
   tripReason: 'Free Tours',
@@ -57,33 +57,18 @@ export const incorrectDate = {
   returnDate: '2022-04-04',
   destinations: [
     {
-      accomodationId: 1,
-      destionationId: 1,
+      accommodationId: 1,
+      destinationId: 1,
     },
     {
-      accomodationId: 2,
-      destionationId: 2,
+      accommodationId: 2,
+      destinationId: 2,
     },
   ],
 };
 
 export const updateRequest = {
-  departLocation: 9,
   tripReason: 'travelling',
-  departDate: '2022-05-01',
-  passportNumber: 'XDE6764',
-  address: 'KIGALI-GASABO-KIBAGABAGA',
-  returnDate: '2022-06-04',
-  destinations: [
-    {
-      accomodationId: 1,
-      destionationId: 1,
-    },
-    {
-      accomodationId: 2,
-      destionationId: 2,
-    },
-  ],
 };
 
 // with no manager
@@ -107,6 +92,10 @@ export const managerLogins = {
   password: 'password',
 };
 
+export const userLogin_1 = {
+  email: 'ihonore100@gmail.com',
+  password: 'password',
+};
 export const managerToken =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjQ4NDYxMTk5LCJleHAiOjE2Nzk1NjUxOTl9.zo3UXkFrifwm-mdAdxmVnJNQMvon5YALLqxoZ5C9o_k';
 

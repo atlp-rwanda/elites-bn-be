@@ -3,7 +3,6 @@ import { PageNotFoundError } from '../httpErrors/pageNotFoundError';
 
 export class AccommodationRatingController {
   static async create(id, req, res, next) {
-    console.log(id);
     try {
       const accommodationRating = await AccommodationRatingService.create({
         userId: id,

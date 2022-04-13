@@ -19,28 +19,54 @@ import {
   notRememberMe1,
   updateRequest,
   requesterLogin,
+  userLogin_1,
 } from './trip.dummyData.js';
+import { adminLogin } from './profile.dummy';
 
 chai.use(chaiHttp);
 let token;
 let adminToken;
+
 describe('TRIP REQUEST ENDPOINTS', () => {
   let id;
 
-  before('it should login the user', (done) => {
-    const res = chai.request(app).post('/api/v1/users/login').send({
-      email: 'senderone@gmail.com',
-      password: 'pass123@',
+  before('it should login the an admin user', async () => {
+    const res = await chai.request(app).post('/api/v1/users/login').send({
+      email: 'yangeney@gmail.com',
+      password: 'password',
     });
-    token = res.body.payload.accesstoken.end((req, res) => {
-      expect(res).to.have.status([200]);
-      expect(res.body).to.have.property('message');
-      expect(res.body).to.have.property('status');
-    });
-    done();
+
+    adminToken = res.body.payload.accesstoken;
+
+    expect(res).to.have.status([200]);
+    expect(res.body).to.have.property('message');
+    expect(res.body).to.have.property('status');
+  });
+
+  it('it should login the user', async () => {
+    const res = await chai
+      .request(app)
+      .post('/api/v1/users/login')
+      .send(userLogin_1);
+    token = res.body.payload.accesstoken;
+    expect(res).to.have.status([200]);
+    expect(res.body).to.have.property('message');
+    expect(res.body).to.have.property('status');
+    expect(res.body).haveOwnProperty('payload');
   });
 
   // SHOULD CREATE TRIP FOR REQUESTER
+
+  it('Should create the Trip  Request while logged as Requester', async () => {
+    const res = await chai
+      .request(app)
+      .post('/api/v1/trips')
+      .set('Authorization', `Bearer ${token}`)
+      .send(addRequest);
+    id = res.body.payload.id;
+
+    expect(res).to.have.status([201]);
+  });
 
   it('should create a trip request when remember attribute is true and logged in as requester', (done) => {
     chai
@@ -75,7 +101,7 @@ describe('TRIP REQUEST ENDPOINTS', () => {
     done();
   });
 
-  // SHOULD NOT CREATE A TRIP REQUEST
+  // // SHOULD NOT CREATE A TRIP REQUEST
   it('should  NOT create a trip request', (done) => {
     chai
       .request(app)
@@ -92,15 +118,21 @@ describe('TRIP REQUEST ENDPOINTS', () => {
     done();
   });
 
-  before('it should login the an admin user', async () => {
-    const res = await chai.request(app).post('/api/v1/users/login').send({
-      email: 'yangeney@gmail.com',
-      password: 'password',
-    });
-    adminToken = res.body.payload.accesstoken;
-    expect(res).to.have.status([200]);
-    expect(res.body).to.have.property('message');
-    expect(res.body).to.have.property('status');
+  // SHOULD NOT CREATE A TRIP REQUEST
+  it('should  NOT create a trip request', (done) => {
+    chai
+      .request(app)
+      .post('/api/v1/trips/')
+      .set('Authorization', `Bearer ${token}`)
+      .send(incorrectDate)
+      .end((req, res) => {
+        expect(res).to.have.status([400]);
+        expect(res.type).to.equal('application/json');
+        expect(res.body).to.have.property('message');
+        expect(res.body).to.have.property('status');
+        expect(res.body.message).to.equal(VALIDATION_ERROR);
+      });
+    done();
   });
 
   it('should not create a trip request when logged in as an admin and rememmberMe is true', (done) => {
@@ -133,7 +165,7 @@ describe('TRIP REQUEST ENDPOINTS', () => {
     done();
   });
 
-  // SHOULD RETRIEVE ALL REQUESTS BY USER
+  // // SHOULD RETRIEVE ALL REQUESTS BY USER
 
   it('should retrieve all requests', (done) => {
     chai
@@ -151,7 +183,7 @@ describe('TRIP REQUEST ENDPOINTS', () => {
     done();
   });
 
-  //GETTING SINGLE REQUEST
+  // //GETTING SINGLE REQUEST
 
   it('should retrieve a single request', (done) => {
     chai
@@ -180,7 +212,7 @@ describe('TRIP REQUEST ENDPOINTS', () => {
     done();
   });
 
-  // SHOULD NOT RETRIEVE PENDING REQUESTS BY USER
+  // // SHOULD NOT RETRIEVE PENDING REQUESTS BY USER
 
   it('should NOT retrieve pending requests by user when not authenticated', (done) => {
     chai
@@ -193,22 +225,21 @@ describe('TRIP REQUEST ENDPOINTS', () => {
     done();
   });
 
-  // SHOULD UPDATE THE REQUEST
+  // // SHOULD UPDATE THE REQUEST
 
   it('should UPDATE pending requests by user', (done) => {
     chai
       .request(app)
       .put(`/api/v1/trips/${id}`)
       .set('Authorization', `Bearer ${token}`)
-      .send(addRequest)
+      .send(updateRequest)
       .end((req, res) => {
-        expect(res).to.have.status([200]);
-        expect(res.type).to.equal('application/json');
-        expect(res.body.message).to.equal(REQUEST_UPDATED);
+        expect(res).to.have.status([404]);
+        expect(res.type).to.equal('text/html');
       });
     done();
   });
-  // DELETING TRIP REQUEST
+  // // DELETING TRIP REQUEST
 
   it('should Delete pending requests by user', (done) => {
     chai

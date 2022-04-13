@@ -19,7 +19,8 @@ class ProfileController {
       if (req.file) {
         req.body.picture = await fileUpload(req);
       } else {
-        req.body.picture = 'https://www.pngkit.com/png/detail/126-1262807_instagram-default-profile-picture-png.png';
+        req.body.picture =
+          'https://www.pngkit.com/png/detail/126-1262807_instagram-default-profile-picture-png.png';
       }
 
       const fetchedData = await fetchData(id);
@@ -87,7 +88,8 @@ class ProfileController {
       if (req.file) {
         req.body.picture = await fileUpload(req);
       } else {
-        req.body.picture = 'https://www.pngkit.com/png/detail/126-1262807_instagram-default-profile-picture-png.png';
+        req.body.picture =
+          'https://www.pngkit.com/png/detail/126-1262807_instagram-default-profile-picture-png.png';
       }
 
       const data = {
@@ -115,10 +117,7 @@ class ProfileController {
       if (delTripRequests) {
         res.send({ status: 204, message: 'deleted successfully' });
       } else {
-        res.status(200).json({
-          status: 200,
-          message: 'deleted',
-        });
+        throw new PageNotFoundError('Not found');
       }
     } catch (err) {
       next(err);

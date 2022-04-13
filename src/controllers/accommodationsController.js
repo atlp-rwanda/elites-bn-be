@@ -137,8 +137,7 @@ class AccommodationController {
         await AccommodationServices.getOneAccommodation(
           req.params.accommodationId
         );
-      console.log(amenities);
-      console.log(geoCoordinates);
+
       if (geoCoordinates == undefined) {
         req.body.geoCoordinates = accommodationToUpdate.geoCoordinates;
       }

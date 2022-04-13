@@ -73,11 +73,10 @@ class NotificationControllers {
   markAllAsReadController = async (id, req, res, next) => {
     try {
       const isReadTest = await notificationService.checkIsReadAll(id);
-      console.log(isReadTest, '"""""""""""""""""""""""""""""');
+
       if (isReadTest) {
         const updateStatus = await notificationService.markAllAsRead(id);
 
-        console.log(updateStatus);
         if (updateStatus) {
           return res.status(200).json({
             message: NOTIFICATION_FOUND,
@@ -105,7 +104,7 @@ class NotificationControllers {
       const updateStatus = await notificationService.markOneAsRead(
         req.params.id
       );
-      console.log(updateStatus);
+
       if (updateStatus) {
         return res.status(200).json({
           message: NOTIFICATION_FOUND,

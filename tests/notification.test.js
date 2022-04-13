@@ -57,7 +57,7 @@ describe('NOTIFICATIONS ENDPOINTS TEST', () => {
       });
     done();
   });
-  it('Should not retrieve unexist notification', (done) => {
+  it('Should not retrieve unexisting notification', (done) => {
     chai
       .request(app)
       .get(`/api/v1/notifications/${2000}`)
@@ -86,7 +86,6 @@ describe('NOTIFICATIONS ENDPOINTS TEST', () => {
     chai
       .request(app)
       .patch(`/api/v1/notifications/markallasread`)
-      .set('Authorization', `Bearer `)
       .end((err, res) => {
         expect(res).to.have.status([401]);
         expect(res.body).to.have.property('error');

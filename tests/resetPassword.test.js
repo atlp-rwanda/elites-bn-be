@@ -45,7 +45,7 @@ describe('FORGOT & RESET PASSWORD TEST', () => {
       .end((err, res) => {
         expect(res).to.have.status([400]);
         expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('Please Enter a valid email address');
+        expect(res.body.message).to.equal('Enter a valid email address');
       });
     done();
   });

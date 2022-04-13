@@ -67,8 +67,8 @@ module.exports = {
               destinationId: 1,
             }),
             JSON.stringify({
-              accomodationId: 2,
-              destionationId: 2,
+              accommodationId: 2,
+              destinationId: 2,
             }),
           ],
           status: 'approved',

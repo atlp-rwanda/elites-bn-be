@@ -82,7 +82,6 @@ export class TripControllers {
           const tripType = checkTripType > 1 ? 'multicity' : 'single-city';
           req.body.tripType = tripType;
           const newTrip = await createTrip(id, req.body);
-
           if (newTrip) {
             // Emit event when trip request is created
             requestEventEmitter.emit('request-created', newTrip, req);

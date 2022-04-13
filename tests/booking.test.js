@@ -8,20 +8,12 @@ describe('BOOK A ROOM', () => {
   let token = '';
   let notRequesterToken = '';
   let noTripRequestToken = '';
-<<<<<<< HEAD
 
   /*  before('it should login the user', async () => {
-=======
-  before('it should login the user', async () => {
->>>>>>> 27d92076a7d9fba1c84ac2e9a02ad2ac19d40f14
     const res = await chai.request(app).post('/api/v1/users/login').send({
       email: 'senderone@gmail.com',
       password: 'pass123@',
     });
-<<<<<<< HEAD
-=======
-    console.log(res.body);
->>>>>>> 27d92076a7d9fba1c84ac2e9a02ad2ac19d40f14
 
     token = res.body.payload.accesstoken;
 
@@ -31,7 +23,6 @@ describe('BOOK A ROOM', () => {
       .set('Authorization', `Bearer ${token}`);
   }); */
 
-<<<<<<< HEAD
   it('should book a room for a requester with an approved trip request', async () => {
     const login = await chai
       .request(app)
@@ -46,28 +37,10 @@ describe('BOOK A ROOM', () => {
         checkinDate: '2022-10-03',
         checkoutDate: '2022-10-04',
       });
-    console.log(res, '======================');
+
     expect(res).to.have.status([201]);
     expect(res.body).to.have.property('status');
   });
-=======
-  // it('should book a room for a requester with an approved trip request', (done) => {
-  //   chai
-  //     .request(app)
-  //     .post('/api/v1/rooms/3/3/booking')
-  //     .set('Authorization', `Bearer ${token}`)
-  //     .send({
-  //       checkinDate: '2022-10-03',
-  //       checkoutDate: '2022-10-04',
-  //     })
-  //     .end((req, res) => {
-  //       console.log(res.body + '@@@@@@@@@@@@@@@@@@@@@@@@@@');
-  //       expect(res).to.have.status([201]);
-  //       expect(res.body).to.have.property('status');
-  //     });
-  //   done();
-  // });
->>>>>>> 27d92076a7d9fba1c84ac2e9a02ad2ac19d40f14
 
   before('it should login the user who is not a requester', async () => {
     const res = await chai.request(app).post('/api/v1/users/login').send({

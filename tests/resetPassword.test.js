@@ -30,7 +30,6 @@ describe('FORGOT & RESET PASSWORD TEST', () => {
       .request(app)
       .patch(`/api/v1/users/reset-password/${token}`)
       .send( resetPassword )
-      console.log(res.body,'should reset ==============================================')
         expect(res).to.have.status([200]);
         expect(res.body).to.have.property('message');
         expect(res.body.message).to.equal(

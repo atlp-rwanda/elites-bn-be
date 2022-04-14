@@ -69,6 +69,8 @@ export const incorrectDate = {
 
 export const updateRequest = {
   tripReason: 'travelling',
+  passportNumber:'POM-094',
+  address:'KIGALI-GASABO-KABEZA'
 };
 
 // with no manager
@@ -89,15 +91,35 @@ export const managerLogin = {
 };
 export const managerLogins = {
   email: 'ihonore03@gmail.com',
-  password: 'password',
+  password: 'Password1',
 };
 
 export const userLogin_1 = {
   email: 'ihonore100@gmail.com',
   password: 'password',
 };
+
+export const senderFour = {
+  email: 'senderfour@gmail.com',
+  password: 'pass123@',
+};
+export const senderFive = {
+  email: 'senderfive@gmail.com',
+  password: 'Pass123456',
+};
+
 export const managerToken =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjQ4NDYxMTk5LCJleHAiOjE2Nzk1NjUxOTl9.zo3UXkFrifwm-mdAdxmVnJNQMvon5YALLqxoZ5C9o_k';
 
 export const requesterToken =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImlhdCI6MTY0OTE1MTAzMSwiZXhwIjoxNjgwMjU1MDMxfQ.Z4ZzwuGM8tw-_H37gqHq3vzWF9g18W7PHCIVJ0qDCSk';
+
+  export const checkStatistics = {
+    startDate: '2022-01-05',
+    endDate: '2023-01-05',
+  };
+  
+  export const checkStatisticsInvalidDate = {
+    startDate: '2023-05-06',
+    endDate: '2022-04-05',
+  };

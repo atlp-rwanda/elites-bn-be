@@ -38,13 +38,12 @@ export const getManagerId = async (userid) => {
   return managerId;
 };
 
-export const tripExist = async (userId, departDate) =>
-  await models.tripRequest.findOne({
-    where: {
-      userId,
-      departDate,
-    },
-  });
+export const tripExist = async (userId, departDate) => await models.tripRequest.findOne({
+  where: {
+    userId,
+    departDate,
+  },
+});
 
 export const findAtrip = async (id) => {
   const dataExist = await models.tripRequest.findOne({
@@ -140,7 +139,7 @@ export const updateMulticities = async (
   tripId,
   data,
   updatePassportNumber,
-  updateNewAdress
+  updateNewAdress,
 ) => {
   const exist = await models.tripRequest.findOne({
     where: {
@@ -155,7 +154,7 @@ export const updateMulticities = async (
     },
     {
       where: { userId },
-    }
+    },
   );
 
   const updatedProfile = await models.Profile.findOne({
@@ -285,7 +284,7 @@ export const findStatistcsByUser = async (userId, startDate, endDate) => {
     return await models.tripRequest.findAndCountAll({
       where: {
         [Op.and]: [
-          { userId: userId },
+          { userId },
           { createdAt: { [Op.between]: [startDate, endDate] } },
         ],
       },

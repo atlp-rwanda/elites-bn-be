@@ -62,12 +62,8 @@ try {
   app.get('/verify', (req, res) => {
     res.render('index');
   });
-  app.use('/public/notification', (req, res) =>
-    res.sendFile(`${__dirname}/public/notification.html`)
-  );
-  app.use('/public/chat', (req, res) =>
-    res.sendFile(`${__dirname}/public/login.html`)
-  );
+  app.use('/public/notification', (req, res) => res.sendFile(`${__dirname}/public/notification.html`));
+  app.use('/public/chat', (req, res) => res.sendFile(`${__dirname}/public/login.html`));
   app.use(
     '/docs/swagger-ui/',
     swaggerUi.serve,
@@ -76,7 +72,7 @@ try {
         docExpansions: 'none',
         persistAuthorization: true,
       },
-    })
+    }),
   );
 
   app.use((err, req, res, next) => {

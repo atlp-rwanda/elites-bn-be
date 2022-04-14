@@ -19,8 +19,7 @@ class ProfileController {
       if (req.file) {
         req.body.picture = await fileUpload(req);
       } else {
-        req.body.picture =
-          'https://www.pngkit.com/png/detail/126-1262807_instagram-default-profile-picture-png.png';
+        req.body.picture = 'https://www.pngkit.com/png/detail/126-1262807_instagram-default-profile-picture-png.png';
       }
 
       const fetchedData = await fetchData(id);
@@ -88,8 +87,7 @@ class ProfileController {
       if (req.file) {
         req.body.picture = await fileUpload(req);
       } else {
-        req.body.picture =
-          'https://www.pngkit.com/png/detail/126-1262807_instagram-default-profile-picture-png.png';
+        req.body.picture = 'https://www.pngkit.com/png/detail/126-1262807_instagram-default-profile-picture-png.png';
       }
 
       const data = {

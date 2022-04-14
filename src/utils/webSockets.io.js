@@ -1,8 +1,8 @@
 import { Server } from 'socket.io';
 import { addMessage, getMessages } from '../services/chatServices';
-import models from '../models';
+import models, { Notification } from '../models';
 import { decodeAcessToken } from '../helpers/jwtFunction';
-import { Notification } from '../models';
+
 const io = new Server({
   cors: {
     origin: 'http://localhost:3000',

@@ -1,4 +1,5 @@
 import { getMessages } from '../services/chatServices';
+
 class ChatController {
   // get messages
 

@@ -6,7 +6,6 @@ import models from '../models';
 dotenv.config();
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
-
 passport.use(
   new GoogleStrategy(
     {
@@ -47,7 +46,6 @@ passport.use(
     }
   )
 );
-
 passport.use(
   new FacebookStrategy(
     {
@@ -88,5 +86,4 @@ passport.use(
     }
   )
 );
-
 export default passport;

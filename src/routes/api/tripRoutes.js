@@ -1,12 +1,11 @@
 import express from 'express';
 import { TripControllers } from '../../controllers/tripControllers';
 import { requestValidation } from '../../validations/tripRequest/tripValidations';
-import { tripstatsValidations } from '../../validations/tripRequest/tripstatsValidations';
+import { tripstatsValidations, requestValidationStats } from '../../validations/tripRequest/tripstatsValidations';
 import { authenticate } from '../../middlewares/authenticate';
 import { isManager } from '../../middlewares/isManager';
 import { TripCommentController } from '../../controllers/tripCommentController';
 import { isRequester } from '../../middlewares/isRequester';
-import { requestValidationStats } from '../../validations/tripRequest/tripstatsValidations';
 import { isManagerOrRequester } from '../../middlewares/isManagerOrRequester';
 
 const router = express.Router();
@@ -16,9 +15,9 @@ router.post(
   '/',
   requestValidation,
   authenticate,
-  tripControllers.createController
+  tripControllers.createController,
 );
-// router.put('/:id', authenticate, tripControllers.updateRequest);
+router.put('/:id', authenticate, tripControllers.updateRequest);
 router.get('/', authenticate, tripControllers.getAllRequests);
 router.get('/:id', authenticate, tripControllers.getSingleRequests);
 router.delete('/:id', authenticate, tripControllers.deleteRequests);
@@ -26,20 +25,20 @@ router.patch(
   '/:id',
   authenticate,
   isManager,
-  tripControllers.approveRejectTripRequest
+  tripControllers.approveRejectTripRequest,
 );
 
 router.post(
   '/:id/comments',
   authenticate,
   isRequester,
-  TripCommentController.create
+  TripCommentController.create,
 );
 router.get(
   '/:id/comments',
   authenticate,
   isRequester,
-  TripCommentController.findAllByTrip
+  TripCommentController.findAllByTrip,
 );
 
 router.post(
@@ -47,7 +46,7 @@ router.post(
   requestValidationStats,
   authenticate,
   isManagerOrRequester,
-  tripControllers.countTripStatics
+  tripControllers.countTripStatics,
 );
 
 export default router;

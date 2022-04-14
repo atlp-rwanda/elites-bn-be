@@ -23,7 +23,7 @@ export class AccommodationRatingController {
   static async findAccommodationRating(req, res, next) {
     try {
       const ratings = await AccommodationRatingService.findAllByAccommodation(
-        parseInt(req.params.id)
+        parseInt(req.params.id),
       );
       if (ratings) {
         const list = [...ratings.rows];

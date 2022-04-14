@@ -10,7 +10,7 @@ router.post('/:roomId/booking', isAbleToBook, bookingController.bookRooms);
 router.patch(
   '/:roomId/unbooking',
   isAbleToUnbook,
-  bookingController.deleteBooking
+  bookingController.deleteBooking,
 );
 
 export default router;

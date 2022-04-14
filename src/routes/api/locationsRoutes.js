@@ -14,7 +14,7 @@ router.post(
   isTravelAdmin,
   verifyToken,
   locationValidation,
-  locationController.createLocation
+  locationController.createLocation,
 );
 router.get('/:locationId', locationController.getSingleLocation);
 router.get('/mostTravelled/all', locationController.findMostVisitedLocations);
@@ -23,14 +23,14 @@ router.patch(
   authenticate,
   isTravelAdmin,
   verifyToken,
-  locationController.updateLocation
+  locationController.updateLocation,
 );
 router.delete(
   '/:locationId',
   authenticate,
   isTravelAdmin,
   verifyToken,
-  locationController.deleteLocation
+  locationController.deleteLocation,
 );
 
 export default router;

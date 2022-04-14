@@ -5,7 +5,6 @@ module.exports = {
       'tripRequests',
       [
         {
-          id: 1,
           userId: 1,
           managerId: 1,
           departLocation: 1,
@@ -31,7 +30,6 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          id: 2,
           userId: 2,
           managerId: 1,
           departLocation: 2,
@@ -57,7 +55,6 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          id: 3,
           userId: 2,
           managerId: 3,
           departLocation: 2,
@@ -84,7 +81,6 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          id: 4,
           userId: 10,
           managerId: 3,
           departLocation: 2,
@@ -111,7 +107,6 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          id: 5,
           userId: 13,
           managerId: 7,
           departLocation: 2,
@@ -138,7 +133,7 @@ module.exports = {
           updatedAt: new Date(),
         },
       ],
-      {}
+      {},
     );
   },
 

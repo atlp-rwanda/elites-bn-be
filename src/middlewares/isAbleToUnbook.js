@@ -6,7 +6,7 @@ import { BaseError } from '../httpErrors/baseError';
 export const isAbleToUnbook = async (req, res, next) => {
   try {
     const emptyToken = req.headers.authorization;
-    const tripId = req.body.tripId;
+    const { tripId } = req.body;
     const { roomId } = req.params; // this roomId is going to be used down below line 48
 
     if (emptyToken === undefined) {
@@ -25,7 +25,7 @@ export const isAbleToUnbook = async (req, res, next) => {
       throw new BaseError(
         'Bad Request',
         400,
-        'You are not allowed to perform this task'
+        'You are not allowed to perform this task',
       );
     }
     const tripRequest = await models.tripRequest.findOne({
@@ -40,7 +40,7 @@ export const isAbleToUnbook = async (req, res, next) => {
       throw new BaseError(
         'Bad Request',
         400,
-        'You can not unbook a room unless you booked it'
+        'You can not unbook a room unless you booked it',
       );
     }
 

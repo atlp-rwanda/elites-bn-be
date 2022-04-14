@@ -7,7 +7,7 @@ import { BaseError } from '../httpErrors/baseError';
 export const isAbleToBook = async (req, res, next) => {
   try {
     const { roomId } = req.params;
-    const tripId = req.body.tripId;
+    const { tripId } = req.body;
 
     if (roomId === '{roomId}' || tripId === '{tripId}') {
       throw new BaseError('Bad Request', 400, 'Please fill in all the fields');
@@ -39,7 +39,7 @@ export const isAbleToBook = async (req, res, next) => {
       throw new BaseError(
         'Bad Request',
         400,
-        'You are not allowed to perform this task'
+        'You are not allowed to perform this task',
       );
     }
     const tripRequest = await models.tripRequest.findOne({
@@ -53,7 +53,7 @@ export const isAbleToBook = async (req, res, next) => {
       throw new BaseError(
         'Bad Request',
         400,
-        'this trip request has not been approved'
+        'this trip request has not been approved',
       );
     }
 
@@ -69,13 +69,13 @@ export const isAbleToBook = async (req, res, next) => {
       throw new BaseError(
         'Bad Request',
         400,
-        'This room is already booked try a different one'
+        'This room is already booked try a different one',
       );
     }
 
     next();
   } catch (err) {
-    console.log(err + '@@@@@@@@@@@@@@@@@@@@@');
+    console.log(`${err}@@@@@@@@@@@@@@@@@@@@@`);
     next(err);
   }
 };

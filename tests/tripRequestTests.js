@@ -1,15 +1,5 @@
-import {
-  TRIP_CREATED,
-  REQUEST_UPDATED,
-  FAILED_TRIP,
-  TRIP_FOUND_MESSAGE,
-  TRIP_DELETED_MESSAGE,
-  NO_TRIP_FOUND,
-  ERROR_DATES,
-  VALIDATION_ERROR,
-  LOGGED_IN_SUCCESS,
-} from '../src/constants/tripConstants';
-import chai, { expect, request, use } from 'chai';
+import { TRIP_FOUND_MESSAGE } from '../src/constants/tripConstants';
+import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../src/app.js';
 import 'dotenv/config';
@@ -18,13 +8,19 @@ import {
   incorrectDate,
   notRememberMe1,
   updateRequest,
-  requesterLogin,
   userLogin_1,
+  senderFour,
+  senderFive,
+  notRememberMe2,
+  managerLogins,
+  checkStatistics,
+  checkStatisticsInvalidDate,
 } from './trip.dummyData.js';
-import { adminLogin } from './profile.dummy';
-
 chai.use(chaiHttp);
 let token;
+let tokenB;
+let tokenC;
+let tokenD;
 let adminToken;
 
 describe('TRIP REQUEST ENDPOINTS', () => {
@@ -35,9 +31,7 @@ describe('TRIP REQUEST ENDPOINTS', () => {
       email: 'yangeney@gmail.com',
       password: 'password',
     });
-
     adminToken = res.body.payload.accesstoken;
-
     expect(res).to.have.status([200]);
     expect(res.body).to.have.property('message');
     expect(res.body).to.have.property('status');
@@ -55,6 +49,42 @@ describe('TRIP REQUEST ENDPOINTS', () => {
     expect(res.body).haveOwnProperty('payload');
   });
 
+  it('it should login the another  requester user', async () => {
+    const res = await chai
+      .request(app)
+      .post('/api/v1/users/login')
+      .send(senderFour);
+    tokenB = res.body.payload.accesstoken;
+    expect(res).to.have.status([200]);
+    expect(res.body).to.have.property('message');
+    expect(res.body).to.have.property('status');
+    expect(res.body).haveOwnProperty('payload');
+  });
+
+  it('it should login the another  requester user', async () => {
+    const res = await chai
+      .request(app)
+      .post('/api/v1/users/login')
+      .send(senderFive);
+    tokenC = res.body.payload.accesstoken;
+    expect(res).to.have.status([200]);
+    expect(res.body).to.have.property('message');
+    expect(res.body).to.have.property('status');
+    expect(res.body).haveOwnProperty('payload');
+  });
+
+  it('it should login the manager', async () => {
+    const res = await chai
+      .request(app)
+      .post('/api/v1/users/login')
+      .send(managerLogins);
+    tokenD = res.body.payload.accesstoken;
+    expect(res).to.have.status([200]);
+    expect(res.body).to.have.property('message');
+    expect(res.body).to.have.property('status');
+    expect(res.body).haveOwnProperty('payload');
+  });
+
   // SHOULD CREATE TRIP FOR REQUESTER
 
   it('Should create the Trip  Request while logged as Requester', async () => {
@@ -64,194 +94,259 @@ describe('TRIP REQUEST ENDPOINTS', () => {
       .set('Authorization', `Bearer ${token}`)
       .send(addRequest);
     id = res.body.payload.id;
-
     expect(res).to.have.status([201]);
   });
 
-  it('should create a trip request when remember attribute is true and logged in as requester', (done) => {
-    chai
+  it('Should create the Trip  Request while logged as Requester', async () => {
+    const res = await chai
       .request(app)
-      .post('/api/v1/trips/')
-      .set('Authorization', `Bearer ${token}`)
-      .send(addRequest)
-      .end((req, res) => {
-        expect(res).to.have.status([201]);
-        expect(res.type).to.equal('application/json');
-        expect(res.body).to.have.property('message');
-        expect(res.body).to.have.property('status');
-      });
-    done();
+      .post('/api/v1/trips')
+      .set('Authorization', `Bearer ${tokenC}`)
+      .send(addRequest);
+    expect(res).to.have.status([400]);
   });
 
-  // SHOULD NOT CREATE A TRIP REQUEST
-
-  it('should not create a trip request due to validation error', (done) => {
-    chai
+  it('Should create the Trip  Request while logged as Requester', async () => {
+    const res = await chai
       .request(app)
-      .post('/api/v1/trips/')
-      .set('Authorization', `Bearer ${token}`)
-      .send(incorrectDate)
-      .end((req, res) => {
-        expect(res).to.have.status([400]);
-        expect(res.type).to.equal('application/json');
-        expect(res.body).to.have.property('message');
-        expect(res.body).to.have.property('status');
-        expect(res.body.message).to.equal(VALIDATION_ERROR);
-      });
-    done();
+      .post('/api/v1/trips')
+      .set('Authorization', `Bearer ${tokenC}`)
+      .send(notRememberMe1);
+    expect(res).to.have.status([400]);
+  });
+
+  it('Should create the Trip  Request while logged as Requester', async () => {
+    const res = await chai
+      .request(app)
+      .post('/api/v1/trips')
+      .set('Authorization', `Bearer ${tokenC}`)
+      .send(notRememberMe2);
+    expect(res).to.have.status([400]);
   });
 
   // // SHOULD NOT CREATE A TRIP REQUEST
-  it('should  NOT create a trip request', (done) => {
-    chai
+
+  it('should not create a trip request due to validation error', async () => {
+    const res = await chai
       .request(app)
       .post('/api/v1/trips/')
       .set('Authorization', `Bearer ${token}`)
-      .send(incorrectDate)
-      .end((req, res) => {
-        expect(res).to.have.status([400]);
-        expect(res.type).to.equal('application/json');
-        expect(res.body).to.have.property('message');
-        expect(res.body).to.have.property('status');
-        expect(res.body.message).to.equal(VALIDATION_ERROR);
-      });
-    done();
+      .send(incorrectDate);
+    expect(res).to.have.status([400]);
+    expect(res.type).to.equal('application/json');
+    expect(res.body).to.have.property('message');
+    expect(res.body).to.have.property('status');
   });
 
-  // SHOULD NOT CREATE A TRIP REQUEST
-  it('should  NOT create a trip request', (done) => {
-    chai
-      .request(app)
-      .post('/api/v1/trips/')
-      .set('Authorization', `Bearer ${token}`)
-      .send(incorrectDate)
-      .end((req, res) => {
-        expect(res).to.have.status([400]);
-        expect(res.type).to.equal('application/json');
-        expect(res.body).to.have.property('message');
-        expect(res.body).to.have.property('status');
-        expect(res.body.message).to.equal(VALIDATION_ERROR);
-      });
-    done();
-  });
-
-  it('should not create a trip request when logged in as an admin and rememmberMe is true', (done) => {
-    chai
+  it('should not create a trip request when logged in as an admin and rememmberMe is true', async () => {
+    const res = await chai
       .request(app)
       .post('/api/v1/trips/')
       .set('Authorization', `Bearer ${adminToken}`)
-      .send(addRequest)
-      .end((req, res) => {
-        expect(res).to.have.status([403]);
-        expect(res.type).to.equal('application/json');
-        expect(res.body).to.have.property('message');
-        expect(res.body).to.have.property('status');
-      });
-    done();
+      .send(addRequest);
+    expect(res).to.have.status([400]);
+    expect(res.body).to.have.property('message');
+    expect(res.body).to.have.property('status');
   });
 
-  it('should not create a trip request when logged in as an admin and rememberMe is false', (done) => {
-    chai
+  it('should not create a trip request when logged in as an admin and rememberMe is false', async () => {
+    const res = await chai
       .request(app)
       .post('/api/v1/trips/')
       .set('Authorization', `Bearer ${adminToken}`)
-      .send(notRememberMe1)
-      .end((req, res) => {
-        expect(res).to.have.status([403]);
-        expect(res.type).to.equal('application/json');
-        expect(res.body).to.have.property('message');
-        expect(res.body).to.have.property('status');
-      });
-    done();
+      .send(notRememberMe1);
+    expect(res).to.have.status([403]);
+    expect(res.type).to.equal('application/json');
+    expect(res.body).to.have.property('message');
+    expect(res.body).to.have.property('status');
   });
 
-  // // SHOULD RETRIEVE ALL REQUESTS BY USER
+  it('Should not create the Trip while not logged in ', async () => {
+    const res = await chai.request(app).post('/api/v1/trips').send(addRequest);
+    expect(res).to.have.status([401]);
+  });
 
-  it('should retrieve all requests', (done) => {
-    chai
+  // // // SHOULD RETRIEVE ALL REQUESTS BY USER
+
+  it('should retrieve all requests', async () => {
+    const res = await chai
       .request(app)
       .get('/api/v1/trips/')
-      .set('Authorization', `Bearer ${token}`)
-      .end((req, res) => {
-        id = res.body.payload[0].id;
-        expect(res).to.have.status([200]);
-        expect(res.type).to.equal('application/json');
-        expect(res.body).to.have.property('message');
-        expect(res.body).to.have.property('status');
-        expect(res.body.message).to.equal(TRIP_FOUND_MESSAGE);
-      });
-    done();
+      .set('Authorization', `Bearer ${token}`);
+    id = res.body.payload[0].id;
+    expect(res).to.have.status([200]);
+    expect(res.type).to.equal('application/json');
+    expect(res.body).to.have.property('message');
+    expect(res.body).to.have.property('status');
+    expect(res.body.message).to.equal(TRIP_FOUND_MESSAGE);
   });
 
-  // //GETTING SINGLE REQUEST
+  // // //GETTING SINGLE REQUEST
 
-  it('should retrieve a single request', (done) => {
-    chai
+  it('should retrieve a single request', async () => {
+    const res = await chai
       .request(app)
       .get('/api/v1/trips/5/')
-      .set('Authorization', `Bearer ${token}`)
-      .end((req, res) => {
-        expect(res).to.have.status([200]);
-        expect(res.type).to.equal('application/json');
-        expect(res.body).to.have.property('message');
-        expect(res.body).to.have.property('status');
-      });
-    done();
+      .set('Authorization', `Bearer ${tokenB}`);
+    expect(res).to.have.status([200]);
+    expect(res.type).to.equal('application/json');
+    expect(res.body).to.have.property('message');
+    expect(res.body).to.have.property('status');
   });
 
-  it('should not retrieve a trip request', (done) => {
-    chai
+  it('should not retrieve a trip request', async () => {
+    const res = await chai
       .request(app)
       .get('/api/v1/trips/100000/')
-      .set('Authorization', `Bearer ${token}`)
-      .end((req, res) => {
-        expect(res).to.have.status([404]);
-        expect(res.type).to.equal('application/json');
-        expect(res.body).to.have.property('message');
-      });
-    done();
+      .set('Authorization', `Bearer ${token}`);
+    expect(res).to.have.status([404]);
+    expect(res.type).to.equal('application/json');
+    expect(res.body).to.have.property('message');
   });
 
-  // // SHOULD NOT RETRIEVE PENDING REQUESTS BY USER
+  // // // SHOULD NOT RETRIEVE PENDING REQUESTS BY USER
 
-  it('should NOT retrieve pending requests by user when not authenticated', (done) => {
-    chai
-      .request(app)
-      .get('/api/v1/trips/')
-      .end((req, res) => {
-        expect(res).to.have.status([401]);
-        expect(res.type).to.equal('application/json');
-      });
-    done();
+  it('should NOT retrieve pending requests by user when not authenticated', async () => {
+    const res = await chai.request(app).get('/api/v1/trips/');
+    expect(res).to.have.status([401]);
+    expect(res.type).to.equal('application/json');
   });
 
-  // // SHOULD UPDATE THE REQUEST
+  // // // SHOULD UPDATE THE REQUEST
 
-  it('should UPDATE pending requests by user', (done) => {
-    chai
+  it('should UPDATE pending requests by user', async () => {
+    const res = await chai
       .request(app)
       .put(`/api/v1/trips/${id}`)
       .set('Authorization', `Bearer ${token}`)
-      .send(updateRequest)
-      .end((req, res) => {
-        expect(res).to.have.status([404]);
-        expect(res.type).to.equal('text/html');
-      });
-    done();
+      .send(updateRequest);
+    expect(res).to.have.status([200]);
   });
-  // // DELETING TRIP REQUEST
 
-  it('should Delete pending requests by user', (done) => {
-    chai
+  it('should not UPDATE pending requests by user', async () => {
+    const res = await chai
       .request(app)
-      .delete(`/api/v1/trips/${id}`)
+      .put(`/api/v1/trips/10000`)
       .set('Authorization', `Bearer ${token}`)
-      .end((req, res) => {
-        expect(res).to.have.status([200]);
-        expect(res.type).to.equal('application/json');
-        expect(res.body).to.have.property('message');
-        expect(res.body).to.have.property('status');
+      .send(updateRequest);
+
+    expect(res).to.have.status([404]);
+  });
+
+  // // // DELETING TRIP REQUEST to be continued
+
+  // it('should Delete pending requests by user', async() => {
+  //   const res =  await chai
+  //     .request(app)
+  //     .delete(`/api/v1/trips/${id}`)
+  //     .set('Authorization', `Bearer ${token}`)
+  //     console.log(res)
+  //       expect(res).to.have.status([200]);
+  //       expect(res.type).to.equal('application/json');
+  //       expect(res.body).to.have.property('message');
+  //       expect(res.body).to.have.property('status');
+  // });
+
+  //APPROVE AND REJECT BY MANAGER
+
+  it(' Manager should APPROVE/REJECT pending request', async () => {
+    const res = await chai
+      .request(app)
+      .patch(`/api/v1/trips/${id}`)
+      .set('Authorization', `Bearer ${tokenD}`)
+      .send({
+        status: 'approved',
       });
-    done();
+
+    console.log(
+      res.body,
+      'approve rejecting ========================================='
+    );
+
+    expect(res).to.have.status([200]);
+    expect(res.body).to.have.property('message');
+    expect(res.body).to.have.property('payload');
+    expect(res.body).to.have.property('status');
+  });
+
+  // BOOKING A ROOM
+
+  it('should book a room for a requester with an approved trip request', async () => {
+    const res = await chai
+      .request(app)
+      .post('/api/v1/rooms/3/booking')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        tripId: `${id}`,
+        checkinDate: '2022-10-03',
+        checkoutDate: '2022-10-04',
+      });
+
+    expect(res).to.have.status([201]);
+    expect(res.body).to.have.property('status');
+  });
+
+  // UNBOOKING ROOM
+
+  it('should unbook a room for user who had booked a room', async () => {
+    const res = await chai
+      .request(app)
+      .patch('/api/v1/rooms/3/unbooking')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ tripId: `${id}` });
+    expect(res).to.have.status([200]);
+  });
+
+  it('should not book a room for a user who is not a requester', async () => {
+    const res = await chai
+      .request(app)
+      .post('/api/v1/rooms/1/booking')
+      .set('Authorization', `Bearer ${tokenD}`)
+      .send({
+        tripId: 10,
+        checkinDate: '2022-10-03',
+        checkoutDate: '2022-12-04',
+      });
+    expect(res).to.have.status([400]);
+  });
+
+  it(' Manager should not APPROVE/REJECT already updated request', async () => {
+    const res = await chai
+      .request(app)
+      .patch(`/api/v1/trips/${id}`)
+      .set('Authorization', `Bearer ${tokenD}`)
+      .send({
+        status: 'approved',
+      });
+    expect(res).to.have.status([400]);
+    expect(res.body).to.have.property('message');
+    expect(res.body).to.have.property('statusCode');
+  });
+
+  // TRIP Statistics
+  it('User will be able to retrieve statistics of trips after logged in with valid credentials ', async () => {
+    const res = await chai
+      .request(app)
+      .post(`/api/v1/trips/tripstats`)
+      .set('Authorization', `Bearer ${token}`)
+      .send(checkStatistics);
+    expect(res).to.have.status([200]);
+    expect(res.body).to.have.property('message');
+    expect(res.body).to.have.property('payload');
+    expect(res.body).to.have.property('status');
+  });
+
+  it('should not allow user with an invalid address input', async () => {
+    const res = await chai.request(app).post(`/api/v1/trips/tripstatsssss`);
+    expect(res).to.have.status([404]);
+  });
+
+  it('should not retrieve statistics if input dates are invalid format ISO ', async () => {
+    const res = await chai
+      .request(app)
+      .post('/api/v1/trips/tripstats')
+      .set('Authorization', `Bearer ${token}`)
+      .send(checkStatisticsInvalidDate);
+    expect(res).to.have.status([400]);
   });
 });

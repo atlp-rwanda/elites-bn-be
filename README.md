@@ -38,7 +38,7 @@ yarn install
 
 ### Running the app
 
-> Before running the project locally, make sure you have all required evironment variables in your .env file.
+> Before running the project locally, make sure you have all required environment variables in your .env file.
 > you can find the required environment variables in `.env.sample` file.
 
 #### Database migration and seeding

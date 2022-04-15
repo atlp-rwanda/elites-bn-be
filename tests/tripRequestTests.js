@@ -1,6 +1,6 @@
-import { TRIP_FOUND_MESSAGE } from '../src/constants/tripConstants';
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
+import { TRIP_FOUND_MESSAGE } from '../src/constants/tripConstants';
 import app from '../src/app.js';
 import 'dotenv/config';
 import {
@@ -16,6 +16,7 @@ import {
   checkStatistics,
   checkStatisticsInvalidDate,
 } from './trip.dummyData.js';
+
 chai.use(chaiHttp);
 let token;
 let tokenB;
@@ -25,7 +26,6 @@ let adminToken;
 
 describe('TRIP REQUEST ENDPOINTS', () => {
   let id;
-
   before('it should login the an admin user', async () => {
     const res = await chai.request(app).post('/api/v1/users/login').send({
       email: 'yangeney@gmail.com',
@@ -167,9 +167,6 @@ describe('TRIP REQUEST ENDPOINTS', () => {
     expect(res).to.have.status([401]);
   });
 
-  // // // SHOULD RETRIEVE ALL REQUESTS BY USER gihozo
-
-
   // // //GETTING SINGLE REQUEST
 
   it('should retrieve a single request', async () => {
@@ -215,7 +212,7 @@ describe('TRIP REQUEST ENDPOINTS', () => {
   it('should not UPDATE pending requests by user', async () => {
     const res = await chai
       .request(app)
-      .put(`/api/v1/trips/10000`)
+      .put('/api/v1/trips/10000')
       .set('Authorization', `Bearer ${token}`)
       .send(updateRequest);
 
@@ -236,7 +233,7 @@ describe('TRIP REQUEST ENDPOINTS', () => {
   //       expect(res.body).to.have.property('status');
   // });
 
-  //APPROVE AND REJECT BY MANAGER
+  // APPROVE AND REJECT BY MANAGER
 
   it(' Manager should APPROVE/REJECT pending request', async () => {
     const res = await chai
@@ -247,34 +244,87 @@ describe('TRIP REQUEST ENDPOINTS', () => {
         status: 'approved',
       });
 
-    console.log(
-      res.body,
-      'approve rejecting ========================================='
-    );
-
     expect(res).to.have.status([200]);
     expect(res.body).to.have.property('message');
     expect(res.body).to.have.property('payload');
     expect(res.body).to.have.property('status');
   });
 
+  // // // // SHOULD RETRIEVE ALL REQUESTS BY USER gihozo
+  it(' A user should be able to use global search and retrieve data from database with related status approved', async () => {
+    const res = await chai
+      .request(app)
+      .get('/api/v1/trips?status="approved"')
+      .set('Authorization', `Bearer ${token}`);
+    expect(res).to.have.status([200]);
+    expect(res.body).to.have.property('message');
+    expect(res.body).to.have.property('status');
+  });
+  it(' A user should be able to use global search and retrieve data from database according to manager ID', async() => {
+    const res = await chai
+      .request(app)
+      .get(`/api/v1/trips?managerId=3`)
+      .set('Authorization', `Bearer ${token}`);
+    expect(res).to.have.status([200]);
+    expect(res.body).to.have.property("message");
+    expect(res.body).to.have.property("status");
+  });
+
+  it(' A user should be able to use global search and retrieve data from database according to Departure Location', async() => {
+    const res = await chai
+      .request(app)
+      .get(`/api/v1/trips?departLocation=1`)
+      .set('Authorization', `Bearer ${token}`);
+    expect(res).to.have.status([200]);
+    expect(res.body).to.have.property("message");
+    expect(res.body).to.have.property("status");
+  });
+
+  it(' A user should be able to use global search and retrieve data from database according to trip reason', async() => {
+    const res = await chai
+      .request(app)
+      .get(`/api/v1/trips?tripReason="this is to test "`)
+      .set('Authorization', `Bearer ${token}`)
+    expect(res).to.have.status([200]);
+    expect(res.body).to.have.property("message");
+    expect(res.body).to.have.property("status");
+  });
+
+  it(' A Manager should be able to use global search and retrieve data from database with related status approved', async () => {
+    const res = await chai
+      .request(app)
+      .get('/api/v1/trips?status="approved"')
+      .set('Authorization', `Bearer ${tokenD}`);
+    expect(res).to.have.status([200]);
+    expect(res.body).to.have.property('message');
+    expect(res.body).to.have.property('status');
+  });
+
+  it(' A user should be able to use global search and retrieve data from database according to trip reason', async() => {
+    const res = await chai
+      .request(app)
+      .get(`/api/v1/trips?tripReason="this is to test "`)
+      .set('Authorization', `Bearer ${tokenD}`)
+    expect(res).to.have.status([200]);
+    expect(res.body).to.have.property("message");
+    expect(res.body).to.have.property("status");
+  });
   // SHOULD NOT APPROVE/REJECT
 
-
   //   it(' Manager should not APPROVE/REJECT an already updated trip request', async() => {
-//     const res  = await chai
-//       .request(app)
-//       .patch(`/api/v1/trips/4`)
-//       .set('Authorization', `Bearer ${managerToken}`)
-//       .send({
-//         status: 'approved',
-//       })
-//         console.log(res.body, "______________________");
-//         expect(res).to.have.status([400]);
-//         expect(res.body).to.have.property('message');
-//         expect(res.body).to.have.property('status');
-  
-//   });
+  //     const res  = await chai
+  //       .request(app)
+  //       .patch(`/api/v1/trips/4`)
+  //       .set('Authorization', `Bearer ${managerToken}`)
+  //       .send({
+  //         status: 'approved',
+  //       })
+  //         console.log(res.body, "______________________");
+  //         expect(res).to.have.status([400]);
+  //         expect(res.body).to.have.property('message');
+  //         expect(res.body).to.have.property('status');
+
+  //   });
 
   // BOOKING A ROOM
 
@@ -334,7 +384,7 @@ describe('TRIP REQUEST ENDPOINTS', () => {
   it('User will be able to retrieve statistics of trips after logged in with valid credentials ', async () => {
     const res = await chai
       .request(app)
-      .post(`/api/v1/trips/tripstats`)
+      .post('/api/v1/trips/tripstats')
       .set('Authorization', `Bearer ${token}`)
       .send(checkStatistics);
     expect(res).to.have.status([200]);
@@ -344,7 +394,7 @@ describe('TRIP REQUEST ENDPOINTS', () => {
   });
 
   it('should not allow user with an invalid address input', async () => {
-    const res = await chai.request(app).post(`/api/v1/trips/tripstatsssss`);
+    const res = await chai.request(app).post('/api/v1/trips/tripstatsssss');
     expect(res).to.have.status([404]);
   });
 

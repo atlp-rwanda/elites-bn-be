@@ -312,19 +312,6 @@ export class TripControllers {
     }
   }
 
-  async mostTravelledDestination(id, req, res, next) {
-    try {
-      const getTripRequests = await fetchMostTravelled(id);
-      res.status(200).json({
-        status: 200,
-        message: TRIP_FOUND_MESSAGE,
-        payload: getTripRequests,
-      });
-    } catch (err) {
-      next(err);
-    }
-  }
-
   async countTripStatics(id, req, res, next) {
     try {
       /*   const recordStart = await new Date(req.body.startDate);
@@ -364,19 +351,6 @@ export class TripControllers {
           'Please, check your input data.',
         );
       }
-    } catch (err) {
-      next(err);
-    }
-  }
-
-  async mostTravelledDestination(id, req, res, next) {
-    try {
-      const getTripRequests = await fetchMostTravelled(id);
-      res.status(200).json({
-        status: 200,
-        message: TRIP_FOUND_MESSAGE,
-        payload: getTripRequests,
-      });
     } catch (err) {
       next(err);
     }

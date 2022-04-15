@@ -224,7 +224,7 @@ export class UserControllers {
       const link = `${req.protocol}://localhost:3000/api/v1/users/reset-password/${token}`;
       await sendResetEmail(
         email,
-        'ihonore01@gmail.com',
+        'ericmaniraguha@gmail.com',
         'Barefoot Nomad password reset',
         makeTemplate(link),
       );

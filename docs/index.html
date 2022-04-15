@@ -17,10 +17,17 @@
     <script>
       window.$docsify = {
         el: '#app',
-        repo: '/https://github.com/atlp-rwanda/elites-bn-be/tree/ft-#181339629-trips-statistics',
+        // repo: 'https://github.com/atlp-rwanda/elites-bn-be/',
         loadSidebar: true,
+        // basePath: '/docs/',
         // basePath:
-        //   '/https://github.com/atlp-rwanda/elites-bn-be/tree/ft-#181339629-trips-statistics/docs/',
+        //   'https://github.com/atlp-rwanda/elites-bn-be/tree/ft-%23181339629-trips-statistics/docs',
+        repo: 'https://github.com/atlp-rwanda/elites-bn-be/tree/ft-%23181339629-trips-statistics',
+        loadSidebar: true,
+        alias: { '/.*/_sidebar.md': '/_sidebar.md' },
+        subMaxLevel: 3,
+        sidebarDisplayLevel: 1,
+        search: 'auto',
       };
     </script>
     <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>

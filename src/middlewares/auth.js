@@ -51,7 +51,7 @@ passport.use(
     {
       clientID: '464262885339408',
       clientSecret: '3807d297c4216ee50e130ee1265877ad',
-      callbackURL: 'http://localhost:3000/api/v1/users/auth/facebook',
+      callbackURL: 'https://elites-barefoot-nomad.herokuapp.com/api/v1/users/auth/facebook',
 
       profileFields: ['emails', 'displayName'],
     },

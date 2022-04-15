@@ -8,7 +8,7 @@ import { resetPassword } from './profile.dummy'
 
 chai.use(chaiHttp);
 
-describe('FORGOT & RESET PASSWORD TEST', () => {
+describe.only('FORGOT & RESET PASSWORD TEST', () => {
   let token;
 
 

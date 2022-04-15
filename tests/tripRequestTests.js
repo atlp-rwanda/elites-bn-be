@@ -260,34 +260,34 @@ describe('TRIP REQUEST ENDPOINTS', () => {
     expect(res.body).to.have.property('message');
     expect(res.body).to.have.property('status');
   });
-  it(' A user should be able to use global search and retrieve data from database according to manager ID', async() => {
+  it(' A user should be able to use global search and retrieve data from database according to manager ID', async () => {
     const res = await chai
       .request(app)
       .get(`/api/v1/trips?managerId=3`)
       .set('Authorization', `Bearer ${token}`);
     expect(res).to.have.status([200]);
-    expect(res.body).to.have.property("message");
-    expect(res.body).to.have.property("status");
+    expect(res.body).to.have.property('message');
+    expect(res.body).to.have.property('status');
   });
 
-  it(' A user should be able to use global search and retrieve data from database according to Departure Location', async() => {
+  it(' A user should be able to use global search and retrieve data from database according to Departure Location', async () => {
     const res = await chai
       .request(app)
       .get(`/api/v1/trips?departLocation=1`)
       .set('Authorization', `Bearer ${token}`);
     expect(res).to.have.status([200]);
-    expect(res.body).to.have.property("message");
-    expect(res.body).to.have.property("status");
+    expect(res.body).to.have.property('message');
+    expect(res.body).to.have.property('status');
   });
 
-  it(' A user should be able to use global search and retrieve data from database according to trip reason', async() => {
+  it(' A user should be able to use global search and retrieve data from database according to trip reason', async () => {
     const res = await chai
       .request(app)
       .get(`/api/v1/trips?tripReason="this is to test "`)
-      .set('Authorization', `Bearer ${token}`)
+      .set('Authorization', `Bearer ${token}`);
     expect(res).to.have.status([200]);
-    expect(res.body).to.have.property("message");
-    expect(res.body).to.have.property("status");
+    expect(res.body).to.have.property('message');
+    expect(res.body).to.have.property('status');
   });
 
   it(' A Manager should be able to use global search and retrieve data from database with related status approved', async () => {
@@ -300,14 +300,14 @@ describe('TRIP REQUEST ENDPOINTS', () => {
     expect(res.body).to.have.property('status');
   });
 
-  it(' A user should be able to use global search and retrieve data from database according to trip reason', async() => {
+  it(' A user should be able to use global search and retrieve data from database according to trip reason', async () => {
     const res = await chai
       .request(app)
       .get(`/api/v1/trips?tripReason="this is to test "`)
-      .set('Authorization', `Bearer ${tokenD}`)
+      .set('Authorization', `Bearer ${tokenD}`);
     expect(res).to.have.status([200]);
-    expect(res.body).to.have.property("message");
-    expect(res.body).to.have.property("status");
+    expect(res.body).to.have.property('message');
+    expect(res.body).to.have.property('status');
   });
   // SHOULD NOT APPROVE/REJECT
 

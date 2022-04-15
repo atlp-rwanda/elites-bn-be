@@ -269,6 +269,24 @@ describe('TRIP REQUEST ENDPOINTS', () => {
     expect(res.body).to.have.property('status');
   });
 
+  // SHOULD NOT APPROVE/REJECT
+
+
+  //   it(' Manager should not APPROVE/REJECT an already updated trip request', async() => {
+//     const res  = await chai
+//       .request(app)
+//       .patch(`/api/v1/trips/4`)
+//       .set('Authorization', `Bearer ${managerToken}`)
+//       .send({
+//         status: 'approved',
+//       })
+//         console.log(res.body, "______________________");
+//         expect(res).to.have.status([400]);
+//         expect(res.body).to.have.property('message');
+//         expect(res.body).to.have.property('status');
+  
+//   });
+
   // BOOKING A ROOM
 
   it('should book a room for a requester with an approved trip request', async () => {

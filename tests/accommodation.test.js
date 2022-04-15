@@ -18,25 +18,33 @@ describe('ACCOMMODATION ROUTES TESTING', () => {
     expect(res.body).haveOwnProperty('payload');
   });
 
-  // it('Should create an accommodation', async() => {
-  //   const res =  await chai
-  //     .request(app)
-  //     .post(`/api/v1/accommodations`)
-  //     .set('Authorization', `Bearer ${token}`)
-  //     .send(accommodationData)
-  //     console.log(res.body,'should create ===========================================')
-  //     id = res.body.payload.id;
-  //       expect(res).to.have.status([201]);
-  //       expect(res.body).to.have.property('message');
-  //       expect(res.body).to.have.property('payload');
-
-  // });
+  it('Should create an accommodation', async () => {
+    const res = await chai
+      .request(app)
+      .post(`/api/v1/accommodations`)
+      .set('Authorization', `Bearer ${token}`)
+      .send(accommodationData);
+    id = res.body.payload.id;
+    expect(res).to.have.status([201]);
+    expect(res.body).to.have.property('message');
+    expect(res.body).to.have.property('payload');
+  });
 
   it('Should retrieve all accommodations', async () => {
     const res = await chai.request(app).get(`/api/v1/accommodations`);
     expect(res).to.have.status([200]);
     expect(res.body).to.have.property('message');
     expect(res.body).to.have.property('payload');
+  });
+
+  it('Should retrieve all accommodations in given location', async () => {
+    const res = await chai.request(app).get(`/api/v1/accommodations/in/1`);
+    expect(res).to.have.status([200]);
+    expect(res.body).to.have.property('message');
+    expect(res.body).to.have.property('payload');
+    expect(res.body.message).to.equal(
+      'These are the accommodations in specified location'
+    );
   });
 
   it('Should not create an accommodation', async () => {
@@ -60,9 +68,9 @@ describe('ACCOMMODATION ROUTES TESTING', () => {
   it('Should update accommodation when logged in', async () => {
     const res = await chai
       .request(app)
-      .patch(`/api/v1/accommodations/1`)
+      .patch(`/api/v1/accommodations/${id}`)
       .set('Authorization', `Bearer ${token}`)
-      .send({ description: 'This is the updated description' });
+      .send(accommodationData);
     expect(res).to.have.status([200]);
     expect(res.body).to.have.property('message');
   });
@@ -75,12 +83,12 @@ describe('ACCOMMODATION ROUTES TESTING', () => {
     expect(res.body).to.have.property('message');
   });
 
-  // it('Should delete an accommodation', async() => {
-  //   const res =  await chai
-  //     .request(app)
-  //     .delete(`/api/v1/accommodations/${id}`)
-  //     .set('Authorization', `Bearer ${token}`)
-  //       expect(res).to.have.status([200]);
-  //       expect(res.body).to.have.property('message');
-  // });
+  it('Should delete an accommodation', async () => {
+    const res = await chai
+      .request(app)
+      .delete(`/api/v1/accommodations/${id}`)
+      .set('Authorization', `Bearer ${token}`);
+    expect(res).to.have.status([200]);
+    expect(res.body).to.have.property('message');
+  });
 });

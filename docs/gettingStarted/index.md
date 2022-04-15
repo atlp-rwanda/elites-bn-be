@@ -8,7 +8,7 @@ Open your favorite text edtitor, and open terminal.
 
 install yarn globally if you haven't already
 
-```bash
+```ps
 npm install -g yarn
 ```
 
@@ -18,7 +18,7 @@ npm install -g yarn
 
 clone the project to your local computer
 
-```bash
+```ps
 git clone https://github.com/atlp-rwanda/elites-bn-be.git
 ```
 
@@ -28,7 +28,7 @@ git clone https://github.com/atlp-rwanda/elites-bn-be.git
 
 after opening the project, install all required dependencies from _package.json_ using the following command
 
-```bash
+```ps
 yarn install
 ```
 
@@ -38,19 +38,19 @@ yarn install
 
 - Running app in development mode
 
-  ```bash
+  ```ps
   yarn dev
   ```
 
 - Running app in testing mode
 
-  ```bash
+  ```ps
   yarn test
   ```
 
 - Running app in production mode
 
-      ```bash
+      ```ps
       yarn start
       ```
 

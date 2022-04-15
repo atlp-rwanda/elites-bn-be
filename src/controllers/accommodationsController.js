@@ -5,7 +5,7 @@ const AccommodationServices = new accommodationServices();
 import { BaseError } from '../httpErrors/baseError';
 
 class AccommodationController {
-  createAccommodation = async (req, res, next) => {
+  async createAccommodation(req, res, next) {
     try {
       //getting user ID from access Token
       const token = req.headers.authorization.split(' ')[1];
@@ -24,19 +24,15 @@ class AccommodationController {
       }
       const pictures = req.files;
       const urls = [];
-      if (!pictures || pictures === undefined)
-        throw new BaseError('Bad request', 400, 'no images to upload');
-
-      const uploadImages = pictures.map((image) =>
-        cloudinary.uploader.upload(image.path, { folder: 'barefoot_api' })
-      );
-      const imageResponse = await Promise.all(uploadImages);
-      for (const file of imageResponse) {
-        urls.push(file.url);
+      if (pictures) {
+        const uploadImages = pictures.map((image) =>
+          cloudinary.uploader.upload(image.path, { folder: 'barefoot_api' })
+        );
+        const imageResponse = await Promise.all(uploadImages);
+        for (const file of imageResponse) {
+          urls.push(file.url);
+        }
       }
-      if (!pictures)
-        throw new BaseError('Bad request', 400, 'no picture uploaded');
-
       const data = {
         ...req.body,
         images: urls,
@@ -52,7 +48,7 @@ class AccommodationController {
     } catch (err) {
       next(err);
     }
-  };
+  }
 
   async getOneAccommodation(req, res, next) {
     try {

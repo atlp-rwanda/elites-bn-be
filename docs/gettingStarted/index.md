@@ -8,7 +8,7 @@ Open your favorite text edtitor, and open terminal.
 
 install yarn globally if you haven't already
 
-```ps
+```bash
 npm install -g yarn
 ```
 
@@ -18,7 +18,7 @@ npm install -g yarn
 
 clone the project to your local computer
 
-```ps
+```bash
 git clone https://github.com/atlp-rwanda/elites-bn-be.git
 ```
 
@@ -28,7 +28,7 @@ git clone https://github.com/atlp-rwanda/elites-bn-be.git
 
 after opening the project, install all required dependencies from _package.json_ using the following command
 
-```ps
+```bash
 yarn install
 ```
 
@@ -38,20 +38,20 @@ yarn install
 
 - Running app in development mode
 
-  ```ps
+  ```bash
   yarn dev
   ```
 
 - Running app in testing mode
 
-  ```ps
+  ```bash
   yarn test
   ```
 
 - Running app in production mode
 
-      ```ps
-      yarn start
-      ```
+  ```bash
+  yarn start
+  ```
 
   You need to have postgres databases for each envirnoment and put them into their respective variables in `.env` file that you will create in root directory, all environment variables can be found in `env.example` file. Once you have all that in place, congratulations!!😉 you are good to go.

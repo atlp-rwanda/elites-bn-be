@@ -25,7 +25,7 @@ import {
   
   use(chaiHttp);
 
-  describe.only("GLOBAL SEARCH FUNCTIONALITY ENDPOINTS BY A USER", () => {
+  describe("GLOBAL SEARCH FUNCTIONALITY ENDPOINTS BY A USER", () => {
 
   let requesterToken;
     it("it should login a user", async() => {

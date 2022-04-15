@@ -17,6 +17,7 @@ describe('FORGOT & RESET PASSWORD TEST', () => {
       .request(app)
       .post(`/api/v1/users/forgot-password`)
       .send({ email: 'ihonore03@gmail.com' })
+      console.log(res.body,'should reset pass =================================================')
        token =  res.body.payload.token;
         expect(res).to.have.status([200]);
         expect(res.body).to.have.property('message');

@@ -31,7 +31,7 @@ module.exports = {
         {
           names: 'Honore Iradukunda',
           email: 'ihonore03@gmail.com',
-          password: await bcrypt.hash('password', salt),
+          password: await bcrypt.hash('Password1', salt),
           roleId: 3,
           managerId: 1,
           createdAt: new Date(),

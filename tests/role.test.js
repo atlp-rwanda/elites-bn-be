@@ -51,10 +51,6 @@ describe('UPDATE ROLE USER TESTS', () => {
       .send({
         email: 'seedusgmail.com',
       });
-    console.log(
-      res.body,
-      'should not assign role email not exist =============================='
-    );
 
     expect(res).to.have.status([400]);
   });

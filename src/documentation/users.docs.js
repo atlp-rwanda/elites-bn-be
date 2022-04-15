@@ -139,6 +139,12 @@ export const users = {
           description: 'INternal server error',
         },
       },
+      security: [
+        {
+          Bearer: [],
+        },
+      ],
+
     },
   },
   '/api/v1/users/forgot-password': {
@@ -206,6 +212,7 @@ export const users = {
       },
     },
   },
+
   '/api/v1/users/updateRole/{id}': {
     patch: {
       tags: ['Users'],
@@ -295,6 +302,16 @@ export const userDefinition = {
         type: 'string',
       },
       confirmPassword: {
+        type: 'string',
+      },
+    },
+  },
+  refreshToken: {
+    type: 'object',
+    in: 'body',
+    required: ['refreshToken'],
+    properties: {
+      refreshToken: {
         type: 'string',
       },
     },

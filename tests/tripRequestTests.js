@@ -78,6 +78,7 @@ describe('TRIP REQUEST ENDPOINTS', () => {
       .request(app)
       .post('/api/v1/users/login')
       .send(managerLogins);
+
     tokenD = res.body.payload.accesstoken;
     expect(res).to.have.status([200]);
     expect(res.body).to.have.property('message');
@@ -97,7 +98,7 @@ describe('TRIP REQUEST ENDPOINTS', () => {
     expect(res).to.have.status([201]);
   });
 
-  it('Should create the Trip  Request while logged as Requester', async () => {
+  it('Should not create the Trip  Request while not having profile', async () => {
     const res = await chai
       .request(app)
       .post('/api/v1/trips')
@@ -106,7 +107,7 @@ describe('TRIP REQUEST ENDPOINTS', () => {
     expect(res).to.have.status([400]);
   });
 
-  it('Should create the Trip  Request while logged as Requester', async () => {
+  it('Should not create the Trip while not having profile and rememberMe is false,passportNumber and address provided ', async () => {
     const res = await chai
       .request(app)
       .post('/api/v1/trips')
@@ -115,7 +116,7 @@ describe('TRIP REQUEST ENDPOINTS', () => {
     expect(res).to.have.status([400]);
   });
 
-  it('Should create the Trip  Request while logged as Requester', async () => {
+  it('Should not create the Trip while not having profile and rememberMe is false,passportNumber and address not provided ', async () => {
     const res = await chai
       .request(app)
       .post('/api/v1/trips')
@@ -166,20 +167,8 @@ describe('TRIP REQUEST ENDPOINTS', () => {
     expect(res).to.have.status([401]);
   });
 
-  // // // SHOULD RETRIEVE ALL REQUESTS BY USER
+  // // // SHOULD RETRIEVE ALL REQUESTS BY USER gihozo
 
-  it('should retrieve all requests', async () => {
-    const res = await chai
-      .request(app)
-      .get('/api/v1/trips/')
-      .set('Authorization', `Bearer ${token}`);
-    id = res.body.payload[0].id;
-    expect(res).to.have.status([200]);
-    expect(res.type).to.equal('application/json');
-    expect(res.body).to.have.property('message');
-    expect(res.body).to.have.property('status');
-    expect(res.body.message).to.equal(TRIP_FOUND_MESSAGE);
-  });
 
   // // //GETTING SINGLE REQUEST
 

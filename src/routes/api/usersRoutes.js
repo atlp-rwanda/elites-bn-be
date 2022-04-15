@@ -6,6 +6,7 @@ import { isAdmin } from '../../middlewares/isAdmin';
 import passport from '../../middlewares/auth';
 import { passwordValidation } from '../../validations/resetPassword.validation';
 import { emailValidation } from '../../validations/email.validation';
+import { authenticate } from '../../middlewares/authenticate';
 
 const router = express.Router();
 const userControllers = new UserControllers();
@@ -15,7 +16,7 @@ router.get('/verifyEmail/:token', async (req, res) => {
   await new userControllers.verifyNewUser(req, res);
 });
 router.post('/login', userControllers.login);
-router.post('/refreshtoken', userControllers.refreshTokens);
+router.post('/refreshtoken',authenticate, userControllers.refreshTokens);
 router.patch(
   '/updateRole/:id',
   roleValidate,

@@ -242,7 +242,6 @@ describe('CKECKING MANAGER', () => {
       .delete('/api/v1/profiles')
       .set('Authorization', `Bearer ${token_one}`)
       .end((req, res) => {
-        console.log(res);
         expect(res).to.have.status([404]);
         expect(res.type).to.equal('application/json');
         expect(res.body).to.have.property('message');

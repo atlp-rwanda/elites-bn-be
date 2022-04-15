@@ -151,7 +151,7 @@ export class UserControllers {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  async refreshTokens(req, res, next) {
+  async refreshTokens(id, req, res, next) {
     try {
       const { refreshToken } = req.body;
       if (!refreshToken) {

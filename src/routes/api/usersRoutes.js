@@ -12,11 +12,11 @@ const router = express.Router();
 const userControllers = new UserControllers();
 
 router.post('/register', userValidation, userControllers.registerUser);
-router.get('/verifyEmail/:token', async (req, res) => {
+router.patch('/verifyEmail/:token', async (req, res) => {
   await new userControllers.verifyNewUser(req, res);
 });
 router.post('/login', userControllers.login);
-router.post('/refreshtoken',authenticate, userControllers.refreshTokens);
+router.post('/refreshtoken', authenticate, userControllers.refreshTokens);
 router.patch(
   '/updateRole/:id',
   roleValidate,

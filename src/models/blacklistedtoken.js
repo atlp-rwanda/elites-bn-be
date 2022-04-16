@@ -1,7 +1,7 @@
-'use strict';
 const {
-  Model
+  Model,
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class BlacklistedToken extends Model {
     /**
@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   BlacklistedToken.init({
-    token: DataTypes.STRING
+    token: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'BlacklistedToken',

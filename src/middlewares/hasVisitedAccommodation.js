@@ -5,7 +5,7 @@ import { AccommodationRatingService } from '../services/accommodationRatingServi
 export const hasVisitedAccommodation = async (id, req, res, next) => {
   try {
     const trips = await AccommodationRatingService.findAllTripsByUser(
-      parseInt(id)
+      parseInt(id),
     );
     let isAccommodationFound = false;
     if (trips.length > 0) {

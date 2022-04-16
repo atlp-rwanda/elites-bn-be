@@ -23,6 +23,7 @@ let tokenB;
 let tokenC;
 let tokenD;
 let adminToken;
+let commentId;
 
 describe('TRIP REQUEST ENDPOINTS', () => {
   let id;
@@ -97,6 +98,69 @@ describe('TRIP REQUEST ENDPOINTS', () => {
     id = res.body.payload.id;
     expect(res).to.have.status([201]);
   });
+
+  //TRIP COMMENTING
+
+  it('It should create a comment', async() => {
+    const res = await chai 
+        .request(app)
+        .post(`/api/v1/trips/${id}/comments`)
+        .set('Authorization', `Bearer ${token}`)
+        .send({
+            comment: 'Test Comment',
+        });
+        commentId = res.body.payload.id;
+    expect(res).to.have.status([201]);
+});
+
+it('Manager should create a comment', async() => {
+  const res = await chai 
+      .request(app)
+      .post(`/api/v1/trips/${id}/comments`)
+      .set('Authorization', `Bearer ${tokenD}`)
+      .send({
+          comment: 'Test Comment',
+      });
+  expect(res).to.have.status([201]);
+});
+
+it('It should get all comment for manager', async() => {
+  const res = await chai
+      .request(app)
+      .get(`/api/v1/trips/${id}/comments`)
+      .set('Authorization', `Bearer ${tokenD}`);
+  expect(res).to.have.status([200]);
+});
+
+it('It should get all comment for requester', async() => {
+  const res = await chai
+      .request(app)
+      .get(`/api/v1/trips/${id}/comments`)
+      .set('Authorization', `Bearer ${token}`);
+     expect(res).to.have.status([200]);
+});
+
+it('It should not delete comment when not owner ', async() => {
+  const res = await chai
+      .request(app)
+      .delete(`/api/v1/comments/${commentId}`)
+      .set('Authorization', `Bearer ${adminToken}`);
+     expect(res).to.have.status([403]);
+     expect(res.body).to.have.property('message');
+});
+
+it('It should delete comment ', async() => {
+  const res = await chai
+      .request(app)
+      .delete(`/api/v1/comments/${commentId}`)
+      .set('Authorization', `Bearer ${token}`);
+     expect(res).to.have.status([200]);
+     expect(res.body).to.have.property('message');
+});
+
+
+
+
 
   it('Should not create the Trip  Request while not having profile', async () => {
     const res = await chai

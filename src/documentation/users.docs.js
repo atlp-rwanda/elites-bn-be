@@ -33,7 +33,7 @@ export const users = {
     },
   },
   '/api/v1/users/verifyEmail/{token}': {
-    get: {
+    patch: {
       tags: ['Authentication'],
       summary: 'This end Point will assist to verify a user with a token',
       description: 'This end Point will verify if a user is a really one who received the email',

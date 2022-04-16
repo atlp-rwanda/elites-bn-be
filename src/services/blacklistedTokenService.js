@@ -8,9 +8,8 @@ export class BlacklistedTokenService {
   static async findOne(token) {
     return await models.BlacklistedToken.findOne({
       where: {
-        token: token
+        token,
       },
     });
   }
-
 }

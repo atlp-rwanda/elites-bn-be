@@ -27,7 +27,6 @@ io.on('connection', async (socket) => {
     onlineUsers += 1;
     io.emit('register', onlineUsers);
   }
-  console.log(':space_invader: New socket connected! >>', socket.id);
   const { token } = socket.handshake.auth;
   const accesstoken = JSON.parse(token);
   decodedToken = await decodeAcessToken(accesstoken);

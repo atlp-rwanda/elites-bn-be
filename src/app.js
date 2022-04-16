@@ -10,7 +10,6 @@ import swaggerDoc from './documentation/index';
 import 'dotenv/config';
 import { PageNotFoundError } from './httpErrors/pageNotFoundError';
 import passport from './middlewares/auth';
-import { ioMiddleware } from './helpers/socketio';
 import io from './utils/webSockets.io';
 
 const app = express();

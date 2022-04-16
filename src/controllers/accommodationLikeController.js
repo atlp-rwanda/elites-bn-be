@@ -1,9 +1,6 @@
-import { findAtrip } from '../services/tripServices';
 import { AccommodationLikeService } from '../services/accommodationLikeServices';
-import AccommodationServices from '../services/accommodationServices';
-import { TripCommentService } from '../services/tripCommentServices';
+import { AccommodationServices } from '../services/accommodationServices';
 import { PageNotFoundError } from '../httpErrors/pageNotFoundError';
-import { ForbbidenError } from '../httpErrors/forbidenError';
 
 export class AccommodationLikeController {
   static async dislike(id, req, res, next) {
@@ -58,8 +55,8 @@ export class AccommodationLikeController {
       );
       if (accommodation) {
         const accommodationLike = await AccommodationLikeService.findOneByAccommodationAndUser(
-          parseInt(id),
-          parseInt(req.params.id),
+          parseInt(id,10),
+          parseInt(req.params.id,10),
         );
         if (accommodationLike) {
           if (accommodationLike.isLike == false) {

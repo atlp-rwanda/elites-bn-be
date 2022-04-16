@@ -1,7 +1,7 @@
 import express from 'express';
 import { TripControllers } from '../../controllers/tripControllers';
 import { requestValidation } from '../../validations/tripRequest/tripValidations';
-import { tripstatsValidations, requestValidationStats } from '../../validations/tripRequest/tripstatsValidations';
+import { requestValidationStats } from '../../validations/tripRequest/tripstatsValidations';
 import { authenticate } from '../../middlewares/authenticate';
 import { isManager } from '../../middlewares/isManager';
 import { TripCommentController } from '../../controllers/tripCommentController';

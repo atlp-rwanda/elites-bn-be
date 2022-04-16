@@ -42,15 +42,13 @@ describe('ACCOMMODATION ROUTES TESTING', () => {
     expect(res).to.have.status([200]);
     expect(res.body).to.have.property('message');
     expect(res.body).to.have.property('payload');
-    expect(res.body.message).to.equal(
-      'These are the accommodations in specified location'
-    );
+    expect(res.body.message).to.equal('These are the accommodations in specified location');
   });
 
   it('Should not create an accommodation', async () => {
     const res = await chai
       .request(app)
-      .post(`/api/v1/accommodations`)
+      .post('/api/v1/accommodations')
       .set('Authorization', `Bearer ${token}`)
       .send(invalidAccommodation);
     expect(res).to.have.status([400]);

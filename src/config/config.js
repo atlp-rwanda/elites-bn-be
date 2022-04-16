@@ -13,6 +13,7 @@ module.exports = {
     dialectOptions: {},
     seederStorage: 'sequelize',
     seederStorageTableName: 'sequelize_data',
+    logging: false
   },
   test: {
     use_env_variable: 'DB_URL_TEST',
@@ -30,6 +31,7 @@ module.exports = {
         rejectUnauthorized: false,
       },
     },
+    logging: false
   },
   production: {
     use_env_variable: 'DB_URL_PROD',
@@ -47,5 +49,6 @@ module.exports = {
         rejectUnauthorized: false,
       },
     },
+    logging: false
   },
 };

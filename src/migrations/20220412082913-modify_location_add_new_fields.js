@@ -13,7 +13,7 @@ module.exports = {
     ]);
   },
 
-  down(queryInterface, Sequelize) {
+  down(queryInterface) {
     // logic for reverting the changes
     return Promise.all([
       queryInterface.removeColumn('Locations', 'visitCount'),

@@ -1,5 +1,5 @@
 import { AccommodationLikeService } from '../services/accommodationLikeServices';
-import { AccommodationServices } from '../services/accommodationServices';
+import  AccommodationServices  from '../services/accommodationServices';
 import { PageNotFoundError } from '../httpErrors/pageNotFoundError';
 
 export class AccommodationLikeController {

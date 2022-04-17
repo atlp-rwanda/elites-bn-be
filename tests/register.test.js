@@ -60,6 +60,18 @@ describe('USER REGISTER A USER', () => {
     expect(res).to.have.status([200]);
   });
 
+  it('it should not assign a manager to user ', async () => {
+    const res = await chai
+    .request(app)
+    .patch(`/api/v1/users/${userId}`)
+    .set('Authorization', `Bearer ${token}`)
+    .send({
+      manager: 3, 
+    });
+    expect(res.body).to.have.property('message');
+    expect(res).to.have.status([500]);
+  });
+
   it('Should login a user ', async () => {
     const res = await chai.request(app).post(`/api/v1/users/login/`).send({
       email: 'elites@gmail.com',

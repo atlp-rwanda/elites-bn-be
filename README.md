@@ -1,7 +1,6 @@
 ## Elites-barefoot-Backend
 
 [![Reviewed by Hound](https://img.shields.io/badge/Reviewed_by-Hound-8E64B0.svg)](https://houndci.com)
-
 [![CircleCI](https://circleci.com/gh/atlp-rwanda/elites-bn-be.svg?style=svg)](https://circleci.com/gh/atlp-rwanda/elites-bn-be)
 [![Coverage Status](https://coveralls.io/repos/github/atlp-rwanda/elites-bn-be/badge.svg)](https://coveralls.io/github/atlp-rwanda/elites-bn-be)
 
@@ -70,13 +69,13 @@ yarn seed
 > development mode
 
 ```ps
-$ yarn dev
+yarn dev
 ```
 
 > testing mode
 
 ```ps
-$ yarn test
+yarn test
 ```
 
 > production mode

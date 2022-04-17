@@ -21,13 +21,13 @@ router.patch(
   '/updateRole/:id',
   roleValidate,
   isAdmin,
-  userControllers.updateRole,
+  userControllers.updateRole
 );
 router.post('/forgot-password', emailValidation, userControllers.sendResetLink);
 router.patch(
   '/reset-password/:token',
   passwordValidation,
-  userControllers.resetPassword,
+  userControllers.resetPassword
 );
 
 router.get(
@@ -36,7 +36,7 @@ router.get(
     session: false,
     scope: ['email', 'profile'],
     prompt: 'select_account',
-  }),
+  })
 );
 
 router.get(
@@ -45,7 +45,7 @@ router.get(
     session: false,
     failureRedirect: 'auth/google/failed',
   }),
-  userControllers.authGoogleLogin,
+  userControllers.authGoogleLogin
 );
 
 router.get('/auth/google/failed', (req, res) => {
@@ -58,7 +58,7 @@ router.get(
     session: false,
     scope: ['email', 'public_profile'],
   }),
-  userControllers.authFacebookLogin,
+  userControllers.authFacebookLogin
 );
 
 router.get('/auth/facebook/failed', (req, res, next) => {
@@ -71,7 +71,7 @@ router.get(
     session: false,
     scope: ['email', 'profile'],
     prompt: 'select_account',
-  }),
+  })
 );
 
 router.get(
@@ -80,7 +80,7 @@ router.get(
     session: false,
     failureRedirect: 'auth/google/failed',
   }),
-  userControllers.authGoogleLogin,
+  userControllers.authGoogleLogin
 );
 
 router.get('/auth/google/failed', (req, res) => {
@@ -93,7 +93,7 @@ router.get(
     session: false,
     scope: ['email', 'public_profile'],
   }),
-  userControllers.authFacebookLogin,
+  userControllers.authFacebookLogin
 );
 
 router.get('/auth/facebook/failed', (req, res) => {

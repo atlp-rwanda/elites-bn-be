@@ -7,8 +7,7 @@ dotenv.config();
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 
-passport.use
-(
+passport.use(
   new GoogleStrategy(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
@@ -45,16 +44,15 @@ passport.use
           return done(null, token);
         });
       }
-    },
+    }
   )
 );
-passport.use
-(
+passport.use(
   new FacebookStrategy(
     {
-      clientID: '464262885339408',
-      clientSecret: '3807d297c4216ee50e130ee1265877ad',
-      callbackURL: 'https://elites-barefoot-nomad.herokuapp.com/api/v1/users/auth/facebook',
+      clientID: process.env.FB_CLIENT_ID,
+      clientSecret: process.env.FB_CLIENT_SECRET,
+      callbackURL:process.env.FB_CALL_BACKURL,
 
       profileFields: ['emails', 'displayName'],
     },
@@ -86,7 +84,7 @@ passport.use
           return done(null, token);
         });
       }
-    },
+    }
   )
 );
 export default passport;

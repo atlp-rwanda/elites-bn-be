@@ -1,3 +1,6 @@
+/* eslint-disable radix */
+/* eslint-disable import/prefer-default-export */
+/* eslint-disable consistent-return */
 import { findAtrip } from '../services/tripServices';
 import { TripCommentService } from '../services/tripCommentServices';
 import { PageNotFoundError } from '../httpErrors/pageNotFoundError';
@@ -9,7 +12,7 @@ export class TripCommentController {
     try {
       const trip = await findAtrip(parseInt(req.params.id));
       if (trip) {
-        if (trip.managerId == id || trip.userId == id) {
+        if (trip.managerId === id || trip.userId === id) {
           const createdComment = await TripCommentService.create({
             userId: id,
             tripId: parseInt(req.params.id),
@@ -46,7 +49,7 @@ export class TripCommentController {
         parseInt(req.params.id),
       );
       if (tripComment) {
-        if (tripComment.userId == id) {
+        if (tripComment.userId === id) {
           const row = TripCommentService.delete(tripComment.id);
           return res.status(200).json({
             status: '200',
@@ -67,7 +70,7 @@ export class TripCommentController {
     try {
       const trip = await findAtrip(parseInt(req.params.id));
       if (trip) {
-        if (trip.managerId == id || trip.userId == id) {
+        if (trip.managerId === id || trip.userId === id) {
           const tripComments = await TripCommentService.findAllByTrip(trip.id);
           return res.send(tripComments);
         }

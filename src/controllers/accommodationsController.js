@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import cloudinary from '../config/cloudinary';
 import accommodationServices from '../services/accommodationServices';
 import { decodeAcessToken } from '../helpers/jwtFunction';
@@ -162,10 +163,9 @@ class AccommodationController {
         req.params.accommodationId,
       );
       res.status(200).json({ status: 200, message: deleteMessage });
-    } catch (error) {
+    } catch (err) {
       next(err);
     }
   }
 }
-
 export default AccommodationController;

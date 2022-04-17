@@ -2,10 +2,12 @@ import chai, { expect, request, use } from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../src/app';
 import models from '../src/models';
+
 use(chaiHttp);
 
 describe('USER REGISTER A USER', () => {
-  let accessToken, refreshToken;
+  let accessToken; let
+    refreshToken;
 
   before(async () => {
     await models.User.destroy({ where: { email: 'elites@gmail.com' } });
@@ -33,7 +35,7 @@ describe('USER REGISTER A USER', () => {
   });
 
   it('Should login a user ', async () => {
-    const res = await chai.request(app).post(`/api/v1/users/login/`).send({
+    const res = await chai.request(app).post('/api/v1/users/login/').send({
       email: 'elites@gmail.com',
       password: 'Pass12515858',
     });
@@ -55,7 +57,7 @@ describe('USER REGISTER A USER', () => {
     expect(res.body).to.have.property('statusCode');
   });
 
-  //CREATING REFRESH TOKEN to be continued
+  // CREATING REFRESH TOKEN to be continued
 
   it('Should create access token using refresh token', async () => {
     const res = await chai

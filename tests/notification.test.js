@@ -23,7 +23,7 @@ describe('NOTIFICATIONS ENDPOINTS TEST', () => {
   it('Should retrieve all notifications of a logged in user  ', async () => {
     const res = await chai
       .request(app)
-      .get(`/api/v1/notifications`)
+      .get('/api/v1/notifications')
       .set('Authorization', `Bearer ${token}`);
     expect(res).to.have.status([200]);
     expect(res.body).to.have.property('message');
@@ -31,7 +31,7 @@ describe('NOTIFICATIONS ENDPOINTS TEST', () => {
   });
 
   it('should not retrieve notifications for unauthenticated user', async () => {
-    const res = await chai.request(app).get(`/api/v1/notifications`);
+    const res = await chai.request(app).get('/api/v1/notifications');
     expect(res).to.have.status([401]);
     expect(res.body).to.have.property('status');
     expect(res.body).to.have.property('error');
@@ -41,7 +41,7 @@ describe('NOTIFICATIONS ENDPOINTS TEST', () => {
   it('should opt out email notifications for user', async () => {
     const res = await chai
       .request(app)
-      .patch(`/api/v1/notifications/subscribe`)
+      .patch('/api/v1/notifications/subscribe')
       .set('Authorization', `Bearer ${token}`);
     expect(res).to.have.status([200]);
     expect(res.body).to.have.property('message');
@@ -50,7 +50,7 @@ describe('NOTIFICATIONS ENDPOINTS TEST', () => {
   it('should turn on email notifications for user', async () => {
     const res = await chai
       .request(app)
-      .patch(`/api/v1/notifications/unsubscribe`)
+      .patch('/api/v1/notifications/unsubscribe')
       .set('Authorization', `Bearer ${token}`);
     expect(res).to.have.status([200]);
     expect(res.body).to.have.property('message');
@@ -71,7 +71,7 @@ describe('NOTIFICATIONS ENDPOINTS TEST', () => {
   it('Should mark all as read', async () => {
     const res = await chai
       .request(app)
-      .patch(`/api/v1/notifications/markallasread`)
+      .patch('/api/v1/notifications/markallasread')
       .set('Authorization', `Bearer ${token}`);
     expect(res).to.have.status([409]);
     expect(res.body).to.have.property('message');
@@ -80,7 +80,7 @@ describe('NOTIFICATIONS ENDPOINTS TEST', () => {
   it('Should not mark all as read if he has not logged in', async () => {
     const res = await chai
       .request(app)
-      .patch(`/api/v1/notifications/markallasread`);
+      .patch('/api/v1/notifications/markallasread');
     expect(res).to.have.status([401]);
     expect(res.body).to.have.property('error');
   });
@@ -105,7 +105,7 @@ describe('NOTIFICATIONS ENDPOINTS TEST', () => {
       await models.User.destroy({ where: { id: 5 } });
       const res = await chai
         .request(app)
-        .patch(`/api/v1/notifications/markoneasread/5`)
+        .patch('/api/v1/notifications/markoneasread/5')
         .set('Authorization', `Bearer ${token1}`);
       expect(res.status).to.be.equal([200]);
     });
@@ -114,7 +114,7 @@ describe('NOTIFICATIONS ENDPOINTS TEST', () => {
   it('should not mark one as read.', async () => {
     const res = await chai
       .request(app)
-      .patch(`/api/v1/notifications/markoneasread/1`)
+      .patch('/api/v1/notifications/markoneasread/1')
       .set('Authorization', `Bearer ${token}`);
     expect(res.status).to.be.equal(409);
   });
@@ -122,7 +122,7 @@ describe('NOTIFICATIONS ENDPOINTS TEST', () => {
   it('No notification you have to mark as one read.', async () => {
     const res = await chai
       .request(app)
-      .patch(`/api/v1/notification/markoneasread/14552444`)
+      .patch('/api/v1/notification/markoneasread/14552444')
       .set('Authorization', `Bearer ${token}`)
       .send({});
     expect(res.status).to.be.equal(404);

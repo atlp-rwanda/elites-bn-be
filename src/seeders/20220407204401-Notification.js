@@ -1,5 +1,5 @@
 module.exports = {
-  up: (queryInterface, Sequelize) => queryInterface.bulkInsert(
+  up: (queryInterface) => queryInterface.bulkInsert(
     'Notifications',
     [
       {

@@ -2,7 +2,7 @@
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import 'dotenv/config';
-import models from 'models';
+import models from '../src/models';
 import app from '../src/app';
 
 // import { token } from './dummyData';

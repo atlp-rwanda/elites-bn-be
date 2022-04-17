@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import chai, { expect, request, use } from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../src/app';

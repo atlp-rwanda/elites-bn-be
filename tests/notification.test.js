@@ -1,6 +1,8 @@
+/* eslint-disable import/no-unresolved */
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import 'dotenv/config';
+import models from 'models';
 import app from '../src/app';
 
 // import { token } from './dummyData';

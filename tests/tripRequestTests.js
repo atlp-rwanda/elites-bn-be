@@ -1,7 +1,6 @@
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
-import { TRIP_FOUND_MESSAGE } from '../src/constants/tripConstants';
-import app from '../src/app.js';
+import app from '../src/app';
 import 'dotenv/config';
 import {
   addRequest,

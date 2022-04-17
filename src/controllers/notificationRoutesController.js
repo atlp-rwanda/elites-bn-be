@@ -72,9 +72,39 @@ class NotificationControllers {
 
   markAllAsReadController = async (id, req, res, next) => {
     try {
-      const updateStatus = await notificationService.markAllAsRead(id);
+      const isReadTest = await notificationService.checkIsReadAll(id);
 
-      console.log(updateStatus);
+      if (isReadTest) {
+        const updateStatus = await notificationService.markAllAsRead(id);
+
+        if (updateStatus) {
+          return res.status(200).json({
+            message: NOTIFICATION_FOUND,
+            data: { updateStatus },
+          });
+        }
+      }
+      return res
+        .status(409)
+        .json({ message: 'Notification is already marked as read' });
+    } catch (error) {
+      return res.status(500).send({ message: FETCH_ERROR });
+    }
+  };
+
+  markOneAsReadController = async (id, req, res, next) => {
+    try {
+      const isReadTest = await notificationService.checkIsRead(req.params.id);
+
+      if (isReadTest) {
+        return res
+          .status(409)
+          .json({ message: 'Notification is already marked as read' });
+      }
+      const updateStatus = await notificationService.markOneAsRead(
+        req.params.id
+      );
+
       if (updateStatus) {
         return res.status(200).json({
           message: NOTIFICATION_FOUND,
@@ -84,6 +114,7 @@ class NotificationControllers {
         return res.status(401).json({ message: DOES_NOT_EXIST });
       }
     } catch (error) {
+      console.log(error);
       return res.status(500).send({ message: FETCH_ERROR });
     }
   };

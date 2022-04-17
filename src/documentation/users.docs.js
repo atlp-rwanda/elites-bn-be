@@ -33,7 +33,7 @@ export const users = {
     },
   },
   '/api/v1/users/verifyEmail/{token}': {
-    get: {
+    patch: {
       tags: ['Authentication'],
       summary: 'This end Point will assist to verify a user with a token',
       description: 'This end Point will verify if a user is a really one who received the email',
@@ -139,6 +139,12 @@ export const users = {
           description: 'INternal server error',
         },
       },
+      security: [
+        {
+          Bearer: [],
+        },
+      ],
+
     },
   },
   '/api/v1/users/forgot-password': {
@@ -206,6 +212,7 @@ export const users = {
       },
     },
   },
+
   '/api/v1/users/updateRole/{id}': {
     patch: {
       tags: ['Users'],
@@ -244,6 +251,45 @@ export const users = {
       }],
     },
   },
+  
+  '/api/v1/users/{id}': {
+    patch: {
+      tags: ['Users'],
+      summary: 'This will update user, by assigning manager',
+      description: 'This will update user, by assigning manager',
+      produces: ['application/json'],
+      parameters: [{
+        name: 'id',
+        in: 'path',
+        description: 'id',
+        required: true,
+      },
+      {
+        name: 'Body',
+        in: 'body',
+        required: true,
+        schema: {
+          $ref: '#/definitions/UpdateManager',
+        },
+      },
+      ],
+      responses: {
+        201: {
+          description: 'User manager updated successfully',
+        },
+
+        400: {
+          description: 'Bad request',
+        },
+        500: {
+          description: 'Internal server error',
+        },
+      },
+      security: [{
+        Bearer: [],
+      }],
+    },
+  },   
 };
 
 export const userDefinition = {
@@ -286,6 +332,17 @@ export const userDefinition = {
       },
     },
   },
+
+  UpdateManager: {
+    type: 'object',
+    in: 'body',
+    properties: {
+      manager: {
+        type: 'integer',
+      },
+    },
+  },
+
   ResetPassword: {
     type: 'object',
     in: 'body',
@@ -295,6 +352,16 @@ export const userDefinition = {
         type: 'string',
       },
       confirmPassword: {
+        type: 'string',
+      },
+    },
+  },
+  refreshToken: {
+    type: 'object',
+    in: 'body',
+    required: ['refreshToken'],
+    properties: {
+      refreshToken: {
         type: 'string',
       },
     },

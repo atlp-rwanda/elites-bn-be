@@ -1,12 +1,12 @@
 import express from 'express';
 import { TripControllers } from '../../controllers/tripControllers';
 import { requestValidation } from '../../validations/tripRequest/tripValidations';
-import { approveTripValidation } from '../../validations/approveRejectTripValidation/approveRejectValidation'
+import { requestValidationStats } from '../../validations/tripRequest/tripstatsValidations';
 import { authenticate } from '../../middlewares/authenticate';
 import { isManager } from '../../middlewares/isManager';
-// import  {updateTripLocationVisit} from '../../controllers/tripControllers';
 import { TripCommentController } from '../../controllers/tripCommentController';
 import { isRequester } from '../../middlewares/isRequester';
+import { isManagerOrRequester } from '../../middlewares/isManagerOrRequester';
 
 const router = express.Router();
 const tripControllers = new TripControllers();
@@ -39,6 +39,14 @@ router.get(
   authenticate,
   isRequester,
   TripCommentController.findAllByTrip,
+);
+
+router.post(
+  '/tripstats',
+  requestValidationStats,
+  authenticate,
+  isManagerOrRequester,
+  tripControllers.countTripStatics,
 );
 
 export default router;

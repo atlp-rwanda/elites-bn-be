@@ -17,7 +17,7 @@ router.post(
   locationController.createLocation,
 );
 router.get('/:locationId', locationController.getSingleLocation);
-router.get('/mostTravelled', locationController.findMostVisitedLocations);
+router.get('/mostTravelled/all', locationController.findMostVisitedLocations);
 router.patch(
   '/:locationId',
   authenticate,

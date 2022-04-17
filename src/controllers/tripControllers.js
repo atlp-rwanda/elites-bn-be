@@ -5,6 +5,7 @@ import {
   TRIP_FOUND_MESSAGE,
   TRIP_DELETED_MESSAGE,
   NO_TRIP_FOUND,
+  VALIDATION_ERROR,
   VALIDATION_ERROR_INPUT,
 } from '../constants/tripConstants';
 import {
@@ -13,14 +14,16 @@ import {
   getAllRequests as fetchAllRequests,
   getManagerId,
   tripExist,
+  checkLocations,
   getOneRequest,
+  approveRequest,
   updateMulticities,
+  findStatistcsByUser,
   findLocation,
   updateLocation,
 } from '../services/tripServices';
-import { validateDate } from '../helpers/dateComparison';
+import { validateDate, validateDateTripStat } from '../helpers/dateComparison';
 import { UnauthorizedError } from '../httpErrors/unauthorizedError';
-import { NotFoundError } from '../httpErrors/NotFoundError';
 import { userById } from '../services/userServices';
 import { BaseError } from '../httpErrors/baseError';
 import requestEventEmitter from './notificationEventsController';
@@ -63,6 +66,12 @@ export class TripControllers {
         const roleName = await models.Role.findOne({
           where: { id: role },
         });
+        if (roleName.name !== 'requester') {
+          res.status(400).json({
+            status: 400,
+            message: 'Only requesters can be allowed to create a trip',
+          });
+        }
 
         const { passportNumber } = profile;
         const { address } = profile;
@@ -79,8 +88,9 @@ export class TripControllers {
           const tripType = checkTripType > 1 ? 'multicity' : 'single-city';
           req.body.tripType = tripType;
           const newTrip = await createTrip(id, req.body);
-
           if (newTrip) {
+            // Emit event when trip request is created
+            requestEventEmitter.emit('request-created', newTrip, req);
             res
               .status(201)
               .json({ status: 201, message: TRIP_CREATED, payload: newTrip });
@@ -91,14 +101,20 @@ export class TripControllers {
             });
           }
         } else {
-          res.status(400).json({ status: 400, message: VALIDATION_ERROR_INPUT });
+          res
+            .status(400)
+            .json({ status: 400, message: VALIDATION_ERROR_INPUT });
         }
       } else if (compareDates) {
         const newPassportNumber = req.body.passportNumber;
         const newAddress = req.body.address;
 
         if (newPassportNumber === undefined || newAddress === undefined) {
-          throw new BaseError('Bad request', 400, 'Please fill in your new passport and address');
+          throw new BaseError(
+            'Bad request',
+            400,
+            'Please fill in your new passport and address',
+          );
         }
         const profile = await models.Profile.findOne({
           where: { userId: id },
@@ -136,6 +152,7 @@ export class TripControllers {
         const tripType = checkTripType > 1 ? 'multicity' : 'single-city';
         req.body.tripType = tripType;
         const newTrip = await createTrip(id, req.body);
+
         if (newTrip) {
           // Emit event when trip request is created
           requestEventEmitter.emit('request-created', newTrip, req);
@@ -153,7 +170,8 @@ export class TripControllers {
         res.status(400).json({ status: 400, message: VALIDATION_ERROR_INPUT });
       }
     } catch (err) {
-      next(err);
+      console.log(err);
+      return res.status(500).json({ message: err.message });
     }
   }
 
@@ -162,7 +180,13 @@ export class TripControllers {
     try {
       const updatePassportNumber = req.body.passportNumber;
       const updateNewAdress = req.body.address;
-      const multiCityTrips = await updateMulticities(id, req.params.id, req.body, updatePassportNumber, updateNewAdress);
+      const multiCityTrips = await updateMulticities(
+        id,
+        req.params.id,
+        req.body,
+        updatePassportNumber,
+        updateNewAdress,
+      );
       if (multiCityTrips) {
         // Emit event when trip request is edited
         requestEventEmitter.emit('request-updated', multiCityTrips);
@@ -235,10 +259,23 @@ export class TripControllers {
       const managerId = decoded.id;
       const triprequestId = req.params.id;
       const trip = await models.tripRequest.findByPk(triprequestId);
+
+      if (!trip) {
+        return res.status(400).json({
+          status: 400,
+          message: 'This trip does not exist',
+        });
+      }
       const { destinations } = trip;
       destinations.forEach(async (x) => {
         const y = await JSON.parse(x);
-        const location = await findLocation(y.destionation);
+        const location = await findLocation(y.destinationId);
+        if (!location) {
+          return res.status(400).json({
+            status: 400,
+            message: 'One of the Location does not exist',
+          });
+        }
         location.visitCount += 1;
         await updateLocation(location);
       });
@@ -261,7 +298,11 @@ export class TripControllers {
             });
           }
         } else {
-          throw new BaseError('Bad request', 400, 'Trip request is already Updated');
+          throw new BaseError(
+            'Bad request',
+            400,
+            'Trip request is already Updated',
+          );
         }
       } else {
         throw new UnauthorizedError('You are not a manager of this user');
@@ -271,14 +312,45 @@ export class TripControllers {
     }
   }
 
-  async mostTravelledDestination(id, req, res, next) {
+  async countTripStatics(id, req, res, next) {
     try {
-      const getTripRequests = await fetchMostTravelled(id);
-      res.status(200).json({
-        status: 200,
-        message: TRIP_FOUND_MESSAGE,
-        payload: getTripRequests,
-      });
+      /*   const recordStart = await new Date(req.body.startDate);
+      const recordEnd = await new Date(req.body.endDate); */
+
+      const compareDates = validateDateTripStat(
+        req.body.endDate,
+        req.body.startDate,
+      );
+
+      if (compareDates) {
+        const result = await findStatistcsByUser(
+          id,
+          req.body.startDate,
+          req.body.endDate,
+        );
+
+        if (result) {
+          res.status(200).json({
+            status: 200,
+            message: 'Information successfully found',
+            payload: result,
+          });
+        }
+
+        if (!result) {
+          throw new BaseError('Not found', 404, 'information not found');
+        } else {
+          throw new UnauthorizedError(
+            'You are not a manager or requester of this user',
+          );
+        }
+      } else {
+        throw new BaseError(
+          'Bad request',
+          400,
+          'Please, check your input data.',
+        );
+      }
     } catch (err) {
       next(err);
     }

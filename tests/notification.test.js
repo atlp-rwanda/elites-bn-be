@@ -1,96 +1,132 @@
+/* eslint-disable import/no-unresolved */
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import 'dotenv/config';
+import models from '../src/models';
 import app from '../src/app';
 
-import { token } from './dummyData';
+// import { token } from './dummyData';
+import { jane } from './profile.dummy';
 
 chai.use(chaiHttp);
 
 describe('NOTIFICATIONS ENDPOINTS TEST', () => {
-  it('Should retrieve all notifications of a logged in user  ', (done) => {
-    chai
-      .request(app)
-      .get(`/api/v1/notifications`)
-      .set('Authorization', `Bearer ${token}`)
-      .end((err, res) => {
-        expect(res).to.have.status([200]);
-        expect(res.body).to.have.property('message');
-        expect(res.body).to.have.property('payload');
-      });
-    done();
+  let token;
+
+  it('it should login the user', async () => {
+    const res = await chai.request(app).post('/api/v1/users/login').send(jane);
+    token = res.body.payload.accesstoken;
+    expect(res).to.have.status([200]);
+    expect(res.body).to.have.property('message');
+    expect(res.body).to.have.property('status');
+    expect(res.body).haveOwnProperty('payload');
   });
 
-  it('should not retrieve notifications for unauthenticated user', (done) => {
-    chai
+  it('Should retrieve all notifications of a logged in user  ', async () => {
+    const res = await chai
       .request(app)
-      .get(`/api/v1/notifications`)
-      .end((err, res) => {
-        expect(res).to.have.status([401]);
-        expect(res.body).to.have.property('status');
-        expect(res.body).to.have.property('error');
-        expect(res.body.error).to.equal('You are not authorized, Please login');
-      });
-    done();
+      .get('/api/v1/notifications')
+      .set('Authorization', `Bearer ${token}`);
+    expect(res).to.have.status([200]);
+    expect(res.body).to.have.property('message');
+    expect(res.body).to.have.property('payload');
   });
 
-  it('should opt out email notifications for user', (done) => {
-    chai
-      .request(app)
-      .patch(`/api/v1/notifications/subscribe`)
-      .set('Authorization', `Bearer ${token}`)
-      .end((err, res) => {
-        expect(res).to.have.status([200]);
-        expect(res.body).to.have.property('message');
-      });
-    done();
+  it('should not retrieve notifications for unauthenticated user', async () => {
+    const res = await chai.request(app).get('/api/v1/notifications');
+    expect(res).to.have.status([401]);
+    expect(res.body).to.have.property('status');
+    expect(res.body).to.have.property('error');
+    expect(res.body.error).to.equal('You are not authorized, Please login');
   });
 
-  it('should turn on email notifications for user', (done) => {
-    chai
+  it('should opt out email notifications for user', async () => {
+    const res = await chai
       .request(app)
-      .patch(`/api/v1/notifications/unsubscribe`)
-      .set('Authorization', `Bearer ${token}`)
-      .end((err, res) => {
-        expect(res).to.have.status([200]);
-        expect(res.body).to.have.property('message');
-      });
-    done();
+      .patch('/api/v1/notifications/subscribe')
+      .set('Authorization', `Bearer ${token}`);
+    expect(res).to.have.status([200]);
+    expect(res.body).to.have.property('message');
   });
-  it('Should not retrieve unexist notification', (done) => {
-    chai
+
+  it('should turn on email notifications for user', async () => {
+    const res = await chai
+      .request(app)
+      .patch('/api/v1/notifications/unsubscribe')
+      .set('Authorization', `Bearer ${token}`);
+    expect(res).to.have.status([200]);
+    expect(res.body).to.have.property('message');
+  });
+  it('Should not retrieve unexisting notification', async () => {
+    const res = await chai
       .request(app)
       .get(`/api/v1/notifications/${2000}`)
-      .set('Authorization', `Bearer ${token}`)
-      .end((err, res) => {
-        expect(res).to.have.status([404]);
-        expect(res.body).to.have.property('name');
-        expect(res.body.name).to.equal('Not found');
-        expect(res.body).to.have.property('message');
-      });
-    done();
+      .set('Authorization', `Bearer ${token}`);
+
+    expect(res).to.have.status([404]);
+    expect(res.body).to.have.property('name');
+    expect(res.body.name).to.equal('Not found');
+    expect(res.body).to.have.property('message');
   });
-  it('Should mark all as read', (done) => {
-    chai
+
+  // mark all as read
+  it('Should mark all as read', async () => {
+    const res = await chai
       .request(app)
-      .patch(`/api/v1/notifications/markallasread`)
-      .set('Authorization', `Bearer ${token}`)
-      .end((err, res) => {
-        expect(res).to.have.status([200]);
-        expect(res.body).to.have.property('message');
-        expect(res.body).to.have.property('data');
-      });
-    done();
+      .patch('/api/v1/notifications/markallasread')
+      .set('Authorization', `Bearer ${token}`);
+    expect(res).to.have.status([409]);
+    expect(res.body).to.have.property('message');
   });
-  it('Should not mark all as read if he has not logged in', (done) => {
-    chai
+
+  it('Should not mark all as read if he has not logged in', async () => {
+    const res = await chai
       .request(app)
-      .patch(`/api/v1/notifications/markallasread`)
-      .set('Authorization', `Bearer `)
-      .end((err, res) => {
-        expect(res).to.have.status([401]);
-        expect(res.body).to.have.property('error');
+      .patch('/api/v1/notifications/markallasread');
+    expect(res).to.have.status([401]);
+    expect(res.body).to.have.property('error');
+  });
+
+  // mark one as read
+  before(async () => {
+    let token1;
+    it('it should register the user', async () => {
+      const res = await chai.request(app).post('/api/v1/users/register').send({
+        names: 'kamanzi',
+        email: 'kamanzi@gmail.com',
+        password: 'Pass@12345',
       });
-    done();
+      token1 = res.body.payload.accesstoken;
+      expect(res).to.have.status([200]);
+      expect(res.body).to.have.property('message');
+      expect(res.body).to.have.property('status');
+      expect(res.body).haveOwnProperty('payload');
+    });
+
+    it('should mark one as read.', async () => {
+      await models.User.destroy({ where: { id: 5 } });
+      const res = await chai
+        .request(app)
+        .patch('/api/v1/notifications/markoneasread/5')
+        .set('Authorization', `Bearer ${token1}`);
+      expect(res.status).to.be.equal([200]);
+    });
+  });
+
+  it('should not mark one as read.', async () => {
+    const res = await chai
+      .request(app)
+      .patch('/api/v1/notifications/markoneasread/1')
+      .set('Authorization', `Bearer ${token}`);
+    expect(res.status).to.be.equal(409);
+  });
+
+  it('No notification you have to mark as one read.', async () => {
+    const res = await chai
+      .request(app)
+      .patch('/api/v1/notification/markoneasread/14552444')
+      .set('Authorization', `Bearer ${token}`)
+      .send({});
+    expect(res.status).to.be.equal(404);
   });
 });

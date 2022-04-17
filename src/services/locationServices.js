@@ -42,38 +42,38 @@ class locationServices {
   listMostVisitedLocations = async () => {
     try {
       const mostVisited = await Location.findAll({
-        order: [['visitCount', 'DESC']]
+        order: [['visitCount', 'DESC']],
       });
       return mostVisited;
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
+  };
 
-  }
-
-  findLocation =async(id)=> {
-   try{
-    const findLoc = await Location.findOne(
-      { where: { id } },
-      {
-        include: [{ model: Accommodation, as: 'Accommodations' }]
-      });
+  findLocation = async (id) => {
+    try {
+      const findLoc = await Location.findOne(
+        { where: { id } },
+        {
+          include: [{ model: Accommodation, as: 'Accommodations' }],
+        }
+      );
       return findLoc;
-   }catch(error){
-     console.log(error)
-   }
-  }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  findAndUpdateLocation = async({ where, id }, locData) =>{
-   try{
-    const updateLoc = await Location.update(locData, {
-      where: id ? { id } : where
-    });
-    return updateLoc;
-  }catch(error){
-    console.log(error)
-  }
-   }
+  findAndUpdateLocation = async ({ where, id }, locData) => {
+    try {
+      const updateLoc = await Location.update(locData, {
+        where: id ? { id } : where,
+      });
+      return updateLoc;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }
 
 export default locationServices;

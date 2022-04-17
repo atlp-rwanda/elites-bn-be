@@ -3,25 +3,7 @@ import { PageNotFoundError } from '../httpErrors/pageNotFoundError';
 
 export class AccommodationRatingController {
   static async create(id, req, res, next) {
-    console.log('=========================');
-    console.log(id);
     try {
-      const rating = await AccommodationRatingService.findOne(
-        parseInt(id),
-        parseInt(req.params.id),
-      );
-      if (rating) {
-        rating.rating = parseInt(req.body.rating);
-        rating.feedback = req.body.feedback;
-        const accommodationRating = await AccommodationRatingService.update(
-          rating,
-        );
-        return res.status(201).json({
-          status: '201',
-          message: 'rating updated successfully',
-          payload: accommodationRating,
-        });
-      }
       const accommodationRating = await AccommodationRatingService.create({
         userId: id,
         accommodationId: req.params.id,

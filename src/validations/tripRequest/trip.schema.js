@@ -40,5 +40,4 @@ export const tripSchema = joi.object({
     'date.base': 'returnDate must be valid date',
     'date.format': 'date format is not correct ISO standard ',
   }),
-
 });

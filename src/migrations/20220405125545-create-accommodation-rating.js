@@ -1,19 +1,27 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('AccommodationRatings', {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER,
+      },
       userId: {
         type: Sequelize.INTEGER,
-        primaryKey: true,
+        allowNull: false,
       },
       accommodationId: {
         type: Sequelize.INTEGER,
-        primaryKey: true,
+        allowNull: false,
       },
       rating: {
         type: Sequelize.INTEGER,
+        allowNull: false,
       },
       feedback: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
@@ -25,7 +33,7 @@ module.exports = {
       },
     });
   },
-  async down(queryInterface, Sequelize) {
+  async down(queryInterface) {
     await queryInterface.dropTable('AccommodationRatings');
   },
 };

@@ -3,10 +3,10 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class AccommodationRating extends Model {
     /**
-         * Helper method for defining associations.
-         * This method is not a part of Sequelize lifecycle.
-         * The `models/index` file will call this method automatically.
-         */
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
     static associate(models) {
       // define association here
       AccommodationRating.belongsTo(models.Accommodation, {
@@ -19,20 +19,17 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
   }
-  AccommodationRating.init({
-    userId: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
+  AccommodationRating.init(
+    {
+      userId: DataTypes.INTEGER,
+      accommodationId: DataTypes.INTEGER,
+      rating: DataTypes.INTEGER,
+      feedback: DataTypes.STRING,
     },
-    accommodationId: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
+    {
+      sequelize,
+      modelName: 'AccommodationRating',
     },
-    rating: DataTypes.INTEGER,
-    feedback: DataTypes.STRING,
-  }, {
-    sequelize,
-    modelName: 'AccommodationRating',
-  });
+  );
   return AccommodationRating;
 };

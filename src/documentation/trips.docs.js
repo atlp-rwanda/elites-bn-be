@@ -37,21 +37,24 @@ export const trips = {
           name: 'userId',
           in: 'query',
           description: 'Trip request',
-        },   {
+        },
+        {
           name: 'managerId',
           in: 'query',
           description: 'Trip request',
-        },{
+        },
+        {
           name: 'status',
           in: 'query',
           description: 'Trip request',
         },
-       
+
         {
-          name: 'tripReason:',
+          name: 'tripReason',
           in: 'query',
           description: 'Trip request',
-        }, {
+        },
+        {
           name: 'departLocation',
           in: 'query',
           description: 'Trip request',
@@ -165,6 +168,9 @@ export const trips = {
           type: 'integer',
         },
       ],
+      schema: {
+        $ref: '#/definitions/trip',
+      },
 
       responses: {
         204: {
@@ -225,6 +231,41 @@ export const trips = {
       ],
     },
   },
+  '/api/v1/trips/tripstats': {
+    post: {
+      tags: ['Trip Statistics'],
+      summary:
+        'This end Point will display trip statistics for the manager or the requester',
+      description:
+        'This end Point will display trip statistics for the manager or the requester',
+      operationId: 'Statistics of Trips',
+      parameters: [
+        {
+          name: 'body',
+          in: 'body',
+          required: true,
+          description: 'trip statistics',
+          schema: {
+            $ref: '#/definitions/tripstats',
+          },
+        },
+      ],
+
+      responses: {
+        200: {
+          description: 'Infomation found',
+        },
+        404: {
+          description: 'information not found',
+        },
+      },
+      security: [
+        {
+          Bearer: [],
+        },
+      ],
+    },
+  },
 };
 
 export const tripDefinitions = {
@@ -257,6 +298,20 @@ export const tripDefinitions = {
     in: 'body',
     properties: {
       status: {
+        type: 'string',
+      },
+    },
+  },
+
+  tripstats: {
+    type: 'object',
+    required: ['startDate', 'endDate'],
+    in: 'body',
+    properties: {
+      startDate: {
+        type: 'string',
+      },
+      endDate: {
         type: 'string',
       },
     },

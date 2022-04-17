@@ -13,6 +13,25 @@ export const adminLogin = {
   password: 'password',
 };
 
+export const userLogin = {
+  email: 'bosco@gmail.com',
+  password: '111@call',
+};
+
+export const jane = {
+  email: 'jane@gmail.com',
+  password: '111@call',
+};
+export const brad = {
+  email: 'brad@gmail.com',
+  password: 'pass123@',
+};
+
+export const resetPassword = {
+  password: 'Password1',
+  confirmPassword: 'Password1',
+};
+
 export const profileInfo = {
   gender: 'Female',
   birthdate: '2000-12-12',

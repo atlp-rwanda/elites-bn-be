@@ -41,14 +41,13 @@ export class UserControllers {
       const userEmailExist = await userExist(req.body.email);
       if (userEmailExist) {
         throw new ConflictsError(
-          `User with this email: "${req.body.email}" already exist please a different email`,
+          `User with this email: "${req.body.email}" already exist please a different email`
         );
       } else {
         req.body.password = await hashPassword(req.body.password);
         const createdUser = await createUser(req.body);
-        const {
-          password, createdAt, updatedAt, ...newcreatedUser
-        } = createdUser;
+        const { password, createdAt, updatedAt, ...newcreatedUser } =
+          createdUser;
         const token = await generateAccessToken({ id: createdUser.id });
         const refreshToken = await generateRefreshToken({
           id: newcreatedUser.id,
@@ -121,15 +120,22 @@ export class UserControllers {
       const { email } = req.body;
       const user = await userExist(email);
       if (user == null) {
-        res.status(400).json({ message: 'User does not exist! ' });
+        res.status(400).json({
+          status: 400,
+          message: 'User does not exist! ',
+        });
         return false;
       }
       const updatedUser = await updatedRole(req.params.id, email);
 
       if (updatedUser == null) {
-        return res.status(400).json({ message: 'this role does not exist' });
+        return res.status(400).json({
+          status: 400,
+          message: 'this role does not exist',
+        });
       }
       return res.status(200).json({
+        status: 200,
         message: {
           newRole: updatedUser.roleId,
           userId: updatedUser.id,
@@ -144,7 +150,7 @@ export class UserControllers {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  async refreshTokens(req, res, next) {
+  async refreshTokens(id, req, res, next) {
     try {
       const { refreshToken } = req.body;
       if (!refreshToken) {
@@ -201,21 +207,11 @@ export class UserControllers {
     try {
       const { email } = req.body;
       const user = await userExist(email);
-      if (!email) {
-        throw new BaseError('Bad request', 400, 'Email is required');
-      }
-      if (!validator.isEmail(email)) {
-        throw new BaseError(
-          'Bad request',
-          400,
-          'Please Enter a valid email address',
-        );
-      }
       if (!user) {
         throw new BaseError(
           'Not found',
           404,
-          'The account with provided email is not registered',
+          'The account with provided email is not registered'
         );
       }
       const payload = {
@@ -229,11 +225,12 @@ export class UserControllers {
         email,
         'ihonore01@gmail.com',
         'Barefoot Nomad password reset',
-        makeTemplate(link),
+        makeTemplate(link)
       );
       return res.status(200).send({
         status: 200,
         message: `Password reset link has been successfully sent to ${email}`,
+        payload: { token },
       });
     } catch (err) {
       next(err);
@@ -248,7 +245,7 @@ export class UserControllers {
         throw new BaseError(
           'Bad request',
           400,
-          'Entered passwords do not match',
+          'Entered passwords do not match'
         );
       }
       const { token } = req.params;

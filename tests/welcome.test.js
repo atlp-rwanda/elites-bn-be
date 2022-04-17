@@ -18,7 +18,7 @@ describe('WELCOME END-POINTS TESTING', () => {
   it('Should not display Welcome due to invalid Url', async () => {
     const res = await request(app).get('/api/v1/h');
     expect(res).to.have.status([404]);
-    expect(res.type).to.equal('application/json');
+    expect(res.type).to.equal('text/html');
   });
 });
 
@@ -26,6 +26,6 @@ describe('WELCOME END-POINTS TESTING', () => {
   it('Should not display Welcome due to invalid Url', async () => {
     const res = await request(app).get('/api/v1/h');
     expect(res).to.have.status([404]);
-    expect(res.type).to.equal('application/json');
+    expect(res.type).to.equal('text/html');
   });
 });

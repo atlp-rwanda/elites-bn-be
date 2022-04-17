@@ -7,13 +7,13 @@
   "author": "Honore IRADUKUNDA <ihonore01@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "babel src -d dist",
+    "build": "babel src -d dist --copy-files",
     "start": "npm run build && yarn migrate && yarn seed && better-npm-run prod",
     "dev": "yarn migrate && yarn seed && better-npm-run dev",
     "dev_": "better-npm-run dev",
-    "test": "better-npm-run test",
+    "test": "cross-env NODE_ENV=test yarn migrate && cross-env NODE_ENV=test yarn seed && cross-env NODE_ENV=test nyc --reporter=text --reporter=lcov mocha --recursive --require @babel/polyfill --require @babel/register ./tests/*.js --timeout 500000000 --exit || true",
     "lint": "eslint \"{src,apps,libs,test}/**/*.js\" --fix",
-    "coverage": "yarn run test && better-npm-run cov",
+    "coverage": "yarn run test",
     "migrate": "npx sequelize-cli db:migrate",
     "migrate:undo": "npx sequelize-cli db:migrate:undo:all",
     "seed": "npx sequelize-cli db:seed:all",
@@ -35,7 +35,7 @@
       }
     },
     "test": {
-      "command": "yarn migrate  && nyc --reporter=text --reporter=lcov mocha --recursive --require @babel/polyfill --require @babel/register ./tests/globalSearch.test.js --timeout 500000000000 --exit || true",
+      "command": "yarn migrate  && yarn seed && nyc --reporter=text --reporter=lcov mocha --require @babel/polyfill --require @babel/register ./tests/*.test.js --timeout 500000000000 --exit || true",
       "env": {
         "NODE_ENV": "test",
         "PORT": 5000
@@ -68,6 +68,7 @@
     "better-npm-run": "^0.1.1",
     "cloudinary": "^1.28.1",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "date-fns": "^2.28.0",
     "dotenv": "^16.0.0",
     "ejs": "^3.1.6",
@@ -78,7 +79,6 @@
     "http-status-codes": "^2.2.0",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
-    "moment": "^2.29.1",
     "morgan": "^1.10.0",
     "multer": "^1.4.4",
     "passport": "^0.5.2",

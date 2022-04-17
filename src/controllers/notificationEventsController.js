@@ -20,7 +20,7 @@ requestEventEmitter.on('request-created', async (createdTrip, req) => {
   try {
     const user = await userById(createdTrip.userId);
     const manager = await userById(createdTrip.managerId);
-    const body = `Hello ${manager.names}!, <strong>${user.names}</strong> has created a new trip request with reason: <em>${createdTrip.reason}</em>`;
+    const body = `Hello ${manager.names}!, <strong>${user.names}</strong> has created a new trip request with reason: <em>${createdTrip.tripReason}</em>`;
 
     // Store Notification into database
     await notificationService.createInAppNotification({

@@ -2,7 +2,6 @@ import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
 import morgan from 'morgan';
-import socketio from 'socket.io';
 import path from 'path';
 import http from 'http';
 import routes from './routes/index';
@@ -11,7 +10,6 @@ import swaggerDoc from './documentation/index';
 import 'dotenv/config';
 import { PageNotFoundError } from './httpErrors/pageNotFoundError';
 import passport from './middlewares/auth';
-import { ioMiddleware } from './helpers/socketio';
 import io from './utils/webSockets.io';
 
 const app = express();
@@ -94,11 +92,6 @@ try {
 
   server.listen(port, () => {
     console.log('server is running');
-  });
-
-  io.use(async (socket, next) => {
-    ioMiddleware(socket);
-    next();
   });
 
   app.use((req, res, next) => {

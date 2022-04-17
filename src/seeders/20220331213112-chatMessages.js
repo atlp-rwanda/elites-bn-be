@@ -1,5 +1,5 @@
 module.exports = {
-  async up(queryInterface, Sequelize) {
+  async up(queryInterface) {
     await queryInterface.bulkInsert('chatMessages', [{
       postedBy: 10,
       sender: 'Jacob',
@@ -19,7 +19,7 @@ module.exports = {
     ], {});
   },
 
-  async down(queryInterface, Sequelize) {
+  async down(queryInterface) {
     await queryInterface.bulkDelete('chatMessages', null, {});
   },
 };

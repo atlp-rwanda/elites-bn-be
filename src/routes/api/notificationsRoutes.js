@@ -1,7 +1,6 @@
 import express from 'express';
 import NotificationControllers from '../../controllers/notificationRoutesController';
 import { UserControllers } from '../../controllers/userController';
-
 import { authenticate } from '../../middlewares/authenticate';
 
 const router = express.Router();
@@ -17,12 +16,19 @@ router.delete('/:id', authenticate, notificationController.deleteNotification);
 router.delete(
   '/',
   authenticate,
-  notificationController.deleteAllNotificationsOfUser
+  notificationController.deleteAllNotificationsOfUser,
 );
+
+router.patch(
+  '/markoneasread/:id',
+  authenticate,
+  notificationController.markOneAsReadController,
+);
+
 router.patch(
   '/markallasread',
   authenticate,
-  notificationController.markAllAsReadController
+  notificationController.markAllAsReadController,
 );
 
 export default router;

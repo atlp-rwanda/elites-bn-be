@@ -1,13 +1,14 @@
+/* eslint-disable camelcase */
 export const addRequest = {
   departLocation: 1,
   destinations: [
     {
-      accomodationId: 3,
-      destionationId: 2,
+      accommodationId: 3,
+      destinationId: 2,
     },
   ],
   tripReason: 'Free Tours',
-  rememberMe:'true',
+  rememberMe: 'true',
   departDate: '2022-06-07',
   returnDate: '2023-03-04',
 };
@@ -16,31 +17,29 @@ export const notRememberMe1 = {
   departLocation: 1,
   destinations: [
     {
-      accomodationId: 3,
-      destionationId: 2,
+      accommodationId: 3,
+      destinationId: 2,
     },
   ],
   tripReason: 'Free Tours',
-  rememberMe:'false',
-  passportNumber:'KZG12345',
-  address:'CALIFORNIA-BEVERLYHILLS-MONTANA',
+  rememberMe: 'false',
+  passportNumber: 'KZG12345',
+  address: 'CALIFORNIA-BEVERLYHILLS-MONTANA',
   departDate: '2022-05-07',
   returnDate: '2023-02-03',
-
 };
 export const notRememberMe2 = {
   departLocation: 1,
   destinations: [
     {
-      accomodationId: 3,
-      destionationId: 2,
+      accommodationId: 3,
+      destinationId: 2,
     },
   ],
   tripReason: 'Free Tours',
-  rememberMe:'false',
+  rememberMe: 'false',
   departDate: '2022-04-07',
   returnDate: '2023-02-03',
-
 };
 
 export const tripRequest = {
@@ -54,40 +53,25 @@ export const tripRequest = {
 export const incorrectDate = {
   departLocation: 2,
   tripReason: 'travelling for research and studies',
-  rememberMe:'true',
+  rememberMe: 'true',
   departDate: '2022-05-01',
   returnDate: '2022-04-04',
   destinations: [
     {
-      accomodationId: 1,
-      destionationId: 1,
+      accommodationId: 1,
+      destinationId: 1,
     },
     {
-      accomodationId: 2,
-      destionationId: 2,
+      accommodationId: 2,
+      destinationId: 2,
     },
   ],
 };
 
 export const updateRequest = {
-  departLocation: 9,
   tripReason: 'travelling',
-  departDate: '2022-05-01',
-  passportNumber:'XDE6764',
-  address:'KIGALI-GASABO-KIBAGABAGA',
-  returnDate: '2022-06-04',
-  destinations: [
-    {
-      accomodationId: 1,
-      destionationId: 1,
-    },
-    {
-      accomodationId: 2,
-      destionationId: 2,
-    },
-  ],
-
-  
+  passportNumber: 'POM-094',
+  address: 'KIGALI-GASABO-KABEZA',
 };
 
 // with no manager
@@ -108,9 +92,33 @@ export const managerLogin = {
 };
 export const managerLogins = {
   email: 'ihonore03@gmail.com',
+  password: 'Password1',
+};
+
+export const userLogin_1 = {
+  email: 'ihonore100@gmail.com',
   password: 'password',
+};
+
+export const senderFour = {
+  email: 'senderfour@gmail.com',
+  password: 'pass123@',
+};
+export const senderFive = {
+  email: 'senderfive@gmail.com',
+  password: 'Pass123456',
 };
 
 export const managerToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjQ4NDYxMTk5LCJleHAiOjE2Nzk1NjUxOTl9.zo3UXkFrifwm-mdAdxmVnJNQMvon5YALLqxoZ5C9o_k';
 
 export const requesterToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImlhdCI6MTY0OTE1MTAzMSwiZXhwIjoxNjgwMjU1MDMxfQ.Z4ZzwuGM8tw-_H37gqHq3vzWF9g18W7PHCIVJ0qDCSk';
+
+export const checkStatistics = {
+  startDate: '2022-01-05',
+  endDate: '2023-01-05',
+};
+
+export const checkStatisticsInvalidDate = {
+  startDate: '2023-05-06',
+  endDate: '2022-04-05',
+};

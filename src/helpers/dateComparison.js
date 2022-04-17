@@ -18,6 +18,14 @@ export const validateDate = (date, dateToCompare) => {
   return valid;
 };
 
+export const validateDateTripStat = (date, dateToCompare) => {
+  const Formatteddate = parserISO(date);
+  const anotherdate = parserISO(dateToCompare);
+  const valid = isAfter(Formatteddate, anotherdate);
+
+  return valid;
+};
+
 export const compareBirthDate = (inputDate) => {
   const dateFormatted = parserISO(inputDate);
 

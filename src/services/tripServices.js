@@ -1,3 +1,4 @@
+/* eslint-disable no-return-await */
 import { Op } from 'sequelize';
 import models from '../models';
 
@@ -77,7 +78,8 @@ export const createTrip = async (userid, data) => {
     }
     return false;
   } catch (err) {
-    throw new Error('something is Wrong');
+    /* throw new Error('You are not allowed, to create trips'); */
+    console.log(err);
   }
 };
 
@@ -85,24 +87,23 @@ export const getAllRequests = async (userId, queryParams) => {
   const role = await checkRole(userId);
   if (role === 'manager') {
     const data = await models.tripRequest.findAll({
-      where:
-       {
-         [Op.or]: [
-           { managerId: userId },
-           { tripReason: { [Op.substring]: queryParams.tripReason } },
-           { status: { [Op.substring]: queryParams.status } },
-           { departLocation: { [Op.eq]: queryParams.departLocation } },
-           { createdAt: { [Op.gte]: queryParams.createdAt } },
-         ],
-       },
+      where: {
+        [Op.and]: [{ managerId: userId }],
+        [Op.or]: [
+          { tripReason: { [Op.substring]: queryParams.tripReason } },
+          { status: { [Op.substring]: queryParams.status } },
+          { departLocation: { [Op.eq]: queryParams.departLocation } },
+          { createdAt: { [Op.gte]: queryParams.createdAt } },
+        ],
+      },
     });
 
     return data;
   }
   const Data = await models.tripRequest.findAll({
     where: {
+      [Op.and]: [{ userId }],
       [Op.or]: [
-        { userId },
         { tripReason: { [Op.substring]: queryParams.tripReason } },
         { status: { [Op.substring]: queryParams.status } },
         { departLocation: { [Op.eq]: queryParams.departLocation } },
@@ -133,29 +134,14 @@ export const getOneRequest = async (userId, id) => {
   return Data;
 };
 
-export const updateRequest = async (userId, id, data) => {
-  const exist = await tripExist(userId, id);
-  if (exist) {
-    exist.departLocation = data.departLocation
-      ? data.departLocation
-      : exist.departLocation;
-    exist.arrivalLocation = data.arrivalLocation
-      ? data.arrivalLocation
-      : exist.arrivalLocation;
-    exist.tripReason = data.tripReason ? data.tripReason : exist.tripReason;
-    exist.departDate = data.departDate ? data.departDate : exist.departDate;
-    exist.returnDate = data.returnDate ? data.returnDate : exist.returnDate;
-    exist.accomodationId = data.accomodationId
-      ? data.accomodationId
-      : exist.accomodationId;
-    const updatedTrip = await exist.save();
-    return updatedTrip;
-  }
-  return null;
-};
-
 // multcities update function
-export const updateMulticities = async (userId, tripId, data, updatePassportNumber, updateNewAdress) => {
+export const updateMulticities = async (
+  userId,
+  tripId,
+  data,
+  updatePassportNumber,
+  updateNewAdress,
+) => {
   const exist = await models.tripRequest.findOne({
     where: {
       id: tripId,
@@ -187,14 +173,22 @@ export const updateMulticities = async (userId, tripId, data, updatePassportNumb
       : exist.destinations;
     exist.tripReason = data.tripReason ? data.tripReason : exist.tripReason;
     exist.rememberMe;
-    exist.passportNumber = updatedProfile.passportNumber ? updatedProfile.passportNumber : exist.passportNumber;
-    exist.address = updatedProfile.address ? updatedProfile.address : exist.address;
+    exist.passportNumber = updatedProfile.passportNumber
+      ? updatedProfile.passportNumber
+      : exist.passportNumber;
+    exist.address = updatedProfile.address
+      ? updatedProfile.address
+      : exist.address;
     exist.names;
     exist.gender;
     exist.role;
     exist.departDate = data.departDate ? data.departDate : exist.departDate;
     exist.returnDate = data.returnDate ? data.returnDate : exist.returnDate;
-    const checkTripType = data.destinations.length;
+    let checkTripType;
+    if (data.destinations) {
+      checkTripType = data.destinations.length;
+    }
+
     if (checkTripType === undefined) {
       exist.tripType = exist.tripType;
     } else {
@@ -255,35 +249,53 @@ export const findRequestById = async (id) => {
   });
   return request;
 };
-export const findLocation =async(id)=> {
-  try{
-   const findLoc = await models.Location.findOne(
-     { where: { id } },
-     );
-     return findLoc;
-  }catch(error){
-    console.log(error)
+export const findLocation = async (id) => {
+  try {
+    const findLoc = await models.Location.findOne({ where: { id } });
+    return findLoc;
+  } catch (error) {
+    console.log(error);
   }
- }
+};
 
- export const findAndUpdateLocation = async({ where, id }, locData) =>{
-  try{
-   const updateLoc = await models.Location.update(locData, {
-     where: id ? { id } : where
-   });
-   return updateLoc;
- }catch(error){
-   console.log(error)
- }
+export const findAndUpdateLocation = async ({ where, id }, locData) => {
+  try {
+    const updateLoc = await models.Location.update(locData, {
+      where: id ? { id } : where,
+    });
+    return updateLoc;
+  } catch (error) {
+    console.log(error);
   }
-  export const updateLocation = async ( data ) => {
-      data.update();
-      data.save();
-    return data;
-  };
+};
+export const updateLocation = async (data) => {
+  data.update();
+  data.save();
+  return data;
+};
 export const fetchMostTravelled = async (tripId) => {
   const data = await models.tripRequest.findOne(tripId, {
     where: { id: tripId },
   });
   return data;
+};
+export const findStatistcsByUser = async (userId, startDate, endDate) => {
+  const role = await checkRole(userId);
+  if (role === 'requester') {
+    return await models.tripRequest.findAndCountAll({
+      where: {
+        [Op.and]: [
+          { userId },
+          { createdAt: { [Op.between]: [startDate, endDate] } },
+        ],
+      },
+    });
+  }
+  if (role === 'manager') {
+    return await models.tripRequest.findAndCountAll({
+      where: {
+        [Op.and]: [{ createdAt: { [Op.between]: [startDate, endDate] } }],
+      },
+    });
+  }
 };

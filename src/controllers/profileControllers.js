@@ -115,10 +115,7 @@ class ProfileController {
       if (delTripRequests) {
         res.send({ status: 204, message: 'deleted successfully' });
       } else {
-        res.status(200).json({
-          status: 200,
-          message: 'deleted',
-        });
+        throw new PageNotFoundError('Not found');
       }
     } catch (err) {
       next(err);

@@ -3,12 +3,18 @@ import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../src/app.js';
 import 'dotenv/config';
-import { requesterLogin, managerLogin, adminLogin } from './profile.dummy';
+import {
+  requesterLogin,
+  managerLogin,
+  adminLogin,
+  userLogin,
+} from './profile.dummy';
 
 chai.use(chaiHttp);
 
 describe('CREATE PROFILE', () => {
   let token;
+  let profileId;
 
   it('it should login the user', async () => {
     const res = await chai
@@ -36,9 +42,12 @@ describe('CREATE PROFILE', () => {
         currency: 'USD',
         residence: 2,
         department: 'marketing',
+        passportNumber: 'PC-1455',
+        address: 'KAMPALA-ENTEBE',
       })
       .attach({ picture: fs.readFileSync(`${__dirname}/image/download.jpeg`) })
       .end((req, res) => {
+        profileId = res.body.payload.id;
         expect(res).to.have.status([201]);
         expect(res.type).to.equal('application/json');
         expect(res.body).to.have.property('message');
@@ -60,6 +69,8 @@ describe('CREATE PROFILE', () => {
         currency: 'USD',
         residence: 2,
         department: 'marketing',
+        passportNumber: 'PC-452',
+        address: 'KAMPALA-ENTEBE',
       })
       .attach({ picture: fs.readFileSync(`${__dirname}/image/download.jpeg`) })
       .end((req, res) => {
@@ -76,7 +87,7 @@ describe('CREATE PROFILE', () => {
   it('should get user profile', (done) => {
     chai
       .request(app)
-      .get(`/api/v1/profiles/${3}`)
+      .get(`/api/v1/profiles/${profileId}`)
       .set('Authorization', `Bearer ${token}`)
       .end((req, res) => {
         expect(res).to.have.status([200]);
@@ -143,6 +154,7 @@ describe('CREATE PROFILE', () => {
 
 describe('CKECKING MANAGER', () => {
   let token;
+  let tokenOne;
 
   it('it should login the user', async () => {
     const res = await chai
@@ -170,6 +182,8 @@ describe('CKECKING MANAGER', () => {
         currency: 'USD',
         residence: 2,
         department: 'marketing',
+        passportNumber: 'PC-785',
+        address: 'KAMPALA-KABARE',
       })
       .attach({ picture: fs.readFileSync(`${__dirname}/image/download.jpeg`) })
       .end((req, res) => {
@@ -206,6 +220,32 @@ describe('CKECKING MANAGER', () => {
         expect(res.type).to.equal('application/json');
         expect(res.body).to.have.property('message');
         expect(res.body).to.have.property('status');
+        done();
+      });
+  });
+
+  it('it should login the user without profile', async () => {
+    const res = await chai
+      .request(app)
+      .post('/api/v1/users/login')
+      .send(userLogin);
+    tokenOne = res.body.payload.accesstoken;
+    expect(res).to.have.status([200]);
+    expect(res.body).to.have.property('message');
+    expect(res.body).to.have.property('status');
+    expect(res.body).haveOwnProperty('payload');
+  });
+
+  it('should not delete user profile', (done) => {
+    chai
+      .request(app)
+      .delete('/api/v1/profiles')
+      .set('Authorization', `Bearer ${tokenOne}`)
+      .end((req, res) => {
+        expect(res).to.have.status([404]);
+        expect(res.type).to.equal('application/json');
+        expect(res.body).to.have.property('message');
+        expect(res.body).to.have.property('statusCode');
         done();
       });
   });

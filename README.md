@@ -2,7 +2,7 @@
 
 [![Reviewed by Hound](https://img.shields.io/badge/Reviewed_by-Hound-8E64B0.svg)](https://houndci.com)
 [![CircleCI](https://circleci.com/gh/atlp-rwanda/elites-bn-be.svg?style=svg)](https://circleci.com/gh/atlp-rwanda/elites-bn-be)
-[![Coverage Status](https://coveralls.io/repos/github/atlp-rwanda/elites-bn-be/badge.svg)](https://coveralls.io/github/atlp-rwanda/elites-bn-be)
+[![Coverage Status](https://coveralls.io/repos/github/atlp-rwanda/elites-bn-be/badge.png)](https://coveralls.io/github/atlp-rwanda/elites-bn-be)
 
 [click here for Barefoot Nomad Documentation](http://rwanda.andela.com/elites-bn-be/#/)
 

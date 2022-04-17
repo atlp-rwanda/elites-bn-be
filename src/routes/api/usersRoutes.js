@@ -7,9 +7,11 @@ import passport from '../../middlewares/auth';
 import { passwordValidation } from '../../validations/resetPassword.validation';
 import { emailValidation } from '../../validations/email.validation';
 import { authenticate } from '../../middlewares/authenticate';
+import ManagerContoller from '../../controllers/assigManagerController';
 
 const router = express.Router();
 const userControllers = new UserControllers();
+const managerController = new ManagerContoller();
 
 router.post('/register', userValidation, userControllers.registerUser);
 router.patch('/verifyEmail/:token', async (req, res) => {
@@ -23,6 +25,13 @@ router.patch(
   isAdmin,
   userControllers.updateRole
 );
+
+router.patch(
+  '/:id',
+  isAdmin,
+  managerController.assignManager,
+);
+
 router.post('/forgot-password', emailValidation, userControllers.sendResetLink);
 router.patch(
   '/reset-password/:token',

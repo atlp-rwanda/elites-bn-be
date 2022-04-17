@@ -97,5 +97,5 @@ module.exports = {
     {},
   ),
 
-  down: (queryInterface, Sequelize) => queryInterface.bulkDelete('Notifications', null, {}),
+  down: (queryInterface) => queryInterface.bulkDelete('Notifications', null, {}),
 };

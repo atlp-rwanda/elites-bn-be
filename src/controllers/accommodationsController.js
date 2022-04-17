@@ -6,6 +6,7 @@ import { BaseError } from '../httpErrors/baseError';
 const AccommodationServices = new accommodationServices();
 
 class AccommodationController {
+  // eslint-disable-next-line class-methods-use-this
   async createAccommodation(req, res, next) {
     try {
       // getting user ID from access Token
@@ -25,11 +26,10 @@ class AccommodationController {
       }
       const pictures = req.files;
       const urls = [];
-      if (pictures) 
-      {
+      if (pictures) {
         const uploadImages = pictures.map((image) => cloudinary.uploader.upload(image.path, { folder: 'barefoot_api' }));
         const imageResponse = await Promise.all(uploadImages);
-        for (const file of imageResponse) {
+        for (const file of imageResponse) 
           urls.push(file.url);
         }
       }
@@ -44,7 +44,7 @@ class AccommodationController {
         message: 'Accommodation added successfully',
         payload: createdAccommodation,
       });
-    } catch (err) {
+    } catch(err) {
       next(err);
     }
   }
@@ -167,5 +167,4 @@ class AccommodationController {
     }
   }
 }
-
 export default AccommodationController;

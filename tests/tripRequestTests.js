@@ -14,7 +14,7 @@ import {
   managerLogins,
   checkStatistics,
   checkStatisticsInvalidDate,
-} from './trip.dummyData.js';
+} from './trip.dummyData';
 
 chai.use(chaiHttp);
 let token;

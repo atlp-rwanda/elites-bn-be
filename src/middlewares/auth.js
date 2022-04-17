@@ -7,8 +7,7 @@ dotenv.config();
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 
-passport.use
-(
+passport.use(
   new GoogleStrategy(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
@@ -48,8 +47,7 @@ passport.use
     },
   )
 );
-passport.use
-(
+passport.use(
   new FacebookStrategy(
     {
       clientID: '464262885339408',
@@ -87,6 +85,6 @@ passport.use
         });
       }
     },
-  )
+  ),
 );
 export default passport;

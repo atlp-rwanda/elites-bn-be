@@ -18,7 +18,7 @@ describe('LOGING OUT A USER', () => {
       email: 'kelly@gmail.com',
       password: 'Password1',
     });
-    blackListedToken = res.body.payload.accessToken
+    blackListedToken = res.body.payload.accessToken;
     expect(res).to.have.status([200]);
     expect(res.body).to.have.property('message');
     expect(res.body).to.have.property('status');

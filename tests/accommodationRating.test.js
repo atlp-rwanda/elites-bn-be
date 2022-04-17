@@ -21,7 +21,7 @@ describe('ACCOMMODATION RATING ROUTES TESTING', () => {
   });
 
   it('Should retrieve all accommodations rating', async () => {
-    const res = await chai.request(app).get(`/api/v1/accommodations/1/reviews`);
+    const res = await chai.request(app).get('/api/v1/accommodations/1/reviews');
     expect(res).to.have.status([200]);
     expect(res.body).to.have.property('message');
     expect(res.body).to.have.property('payload');
@@ -30,7 +30,7 @@ describe('ACCOMMODATION RATING ROUTES TESTING', () => {
   it('Should create an accommodation rating', async () => {
     const res = await chai
       .request(app)
-      .post(`/api/v1/accommodations/1/reviews`)
+      .post('/api/v1/accommodations/1/reviews')
       .set('Authorization', `Bearer ${accessTokenRequester}`)
       .send({
         rating: 5,
@@ -44,7 +44,7 @@ describe('ACCOMMODATION RATING ROUTES TESTING', () => {
   it('Should not create an accommodation rating', async () => {
     const res = await chai
       .request(app)
-      .post(`/api/v1/accommodations/1/reviews`)
+      .post('/api/v1/accommodations/1/reviews')
       .set('Authorization', `Bearer ${accessTokenRequester}`)
       .send({
         rating: 6,

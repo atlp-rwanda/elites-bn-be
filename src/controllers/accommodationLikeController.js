@@ -1,5 +1,6 @@
+/* eslint-disable import/prefer-default-export */
 import { AccommodationLikeService } from '../services/accommodationLikeServices';
-import  AccommodationServices  from '../services/accommodationServices';
+import AccommodationServices from '../services/accommodationServices';
 import { PageNotFoundError } from '../httpErrors/pageNotFoundError';
 
 export class AccommodationLikeController {
@@ -55,8 +56,8 @@ export class AccommodationLikeController {
       );
       if (accommodation) {
         const accommodationLike = await AccommodationLikeService.findOneByAccommodationAndUser(
-          parseInt(id,10),
-          parseInt(req.params.id,10),
+          parseInt(id, 10),
+          parseInt(req.params.id, 10),
         );
         if (accommodationLike) {
           if (accommodationLike.isLike == false) {

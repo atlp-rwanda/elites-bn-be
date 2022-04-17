@@ -154,7 +154,7 @@ describe('CREATE PROFILE', () => {
 
 describe('CKECKING MANAGER', () => {
   let token;
-  let token_one;
+  let tokenOne;
 
   it('it should login the user', async () => {
     const res = await chai
@@ -229,7 +229,7 @@ describe('CKECKING MANAGER', () => {
       .request(app)
       .post('/api/v1/users/login')
       .send(userLogin);
-    token_one = res.body.payload.accesstoken;
+    tokenOne = res.body.payload.accesstoken;
     expect(res).to.have.status([200]);
     expect(res.body).to.have.property('message');
     expect(res.body).to.have.property('status');
@@ -240,7 +240,7 @@ describe('CKECKING MANAGER', () => {
     chai
       .request(app)
       .delete('/api/v1/profiles')
-      .set('Authorization', `Bearer ${token_one}`)
+      .set('Authorization', `Bearer ${tokenOne}`)
       .end((req, res) => {
         expect(res).to.have.status([404]);
         expect(res.type).to.equal('application/json');

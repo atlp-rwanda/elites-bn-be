@@ -7,11 +7,11 @@ chai.use(chaiHttp);
 
 describe('SHOULD RETRIEVE CHATS', () => {
   it('Should fetch all chats ', async () => {
-    const res =  await chai
+    const res = await chai
       .request(app)
       .get(`/api/v1/chats`)
-        expect(res).to.have.status([200]);
-        expect(res.body).to.have.property('message');
-        expect(res.body).to.have.property('chats');
+    expect(res).to.have.status([200]);
+    expect(res.body).to.have.property('message');
+    expect(res.body).to.have.property('chats');
   });
 });

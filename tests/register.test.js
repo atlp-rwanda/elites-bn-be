@@ -2,10 +2,11 @@ import chai, { expect, request, use } from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../src/app';
 import models from '../src/models';
+import { decodeAcessToken } from '../src/helpers/jwtFunction';
 use(chaiHttp);
 
 describe('USER REGISTER A USER', () => {
-  let accessToken, refreshToken;
+  let accessToken, refreshToken, userId, token;
 
   before(async () => {
     await models.User.destroy({ where: { email: 'elites@gmail.com' } });
@@ -16,6 +17,9 @@ describe('USER REGISTER A USER', () => {
       email: 'elites@gmail.com',
       password: 'Pass12515858',
     });
+     token = res.body.payload.accessToken;
+     const tok= await decodeAcessToken(token);
+    userId=tok.id;
     expect(res).to.have.status([200]);
     expect(res.body).to.have.property('message');
     expect(res.body).to.have.property('status');
@@ -30,6 +34,30 @@ describe('USER REGISTER A USER', () => {
     });
     expect(res.body).to.have.property('message');
     expect(res).to.have.status([400]);
+  });
+
+  it('Should login a user ', async () => {
+    const res = await chai.request(app).post(`/api/v1/users/login/`).send({
+      email: 'yangeney@gmail.com',
+      password: 'password',
+    });
+    token= res.body.payload.accesstoken;
+    expect(res).to.have.status([200]);
+    expect(res.body).to.have.property('message');
+    expect(res.body).to.have.property('payload');
+    expect(res.body).to.have.property('status');
+  });
+
+  it('it should assign a manager to user ', async () => {
+    const res = await chai
+    .request(app)
+    .patch(`/api/v1/users/${userId}`)
+    .set('Authorization', `Bearer ${token}`)
+    .send({
+      manager: 3, 
+    });
+    expect(res.body).to.have.property('message');
+    expect(res).to.have.status([200]);
   });
 
   it('Should login a user ', async () => {

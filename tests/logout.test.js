@@ -26,17 +26,17 @@ describe('LOGING OUT A USER', () => {
   });
   it('it not should blacklist user token ', async () => {
     const res = await chai.request(app).post('/api/v1/auth/logout')
-      .set('Authorization', 'Bearer blackListedT')
+      .set('Authorization', 'Bearer blackListedT');
     expect(res).to.have.status([401]);
     expect(res.body).to.have.property('status');
   });
 
   it('it should blacklist user token ', async () => {
     const res = await chai.request(app).post('/api/v1/auth/logout')
-      .set('Authorization', `Bearer ${blackListedToken}`)
+      .set('Authorization', `Bearer ${blackListedToken}`);
     expect(res).to.have.status([201]);
     expect(res.body).to.have.property('message');
     expect(res.body).to.have.property('status');
     expect(res.body).haveOwnProperty('payload');
   });
-})
+});

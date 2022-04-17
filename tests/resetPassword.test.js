@@ -11,7 +11,6 @@ chai.use(chaiHttp);
 describe('FORGOT & RESET PASSWORD TEST', () => {
   let token;
 
-
   // it('Should send a reset password link ', async() => {
   //   const res = await chai
   //     .request(app)

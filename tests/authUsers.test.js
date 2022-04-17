@@ -1,6 +1,6 @@
 import { expect, request, use } from 'chai';
 import chaiHttp from 'chai-http';
-import app from '../src/app.js';
+import app from '../src/app';
 import { UserControllers } from '../src/controllers/userController';
 
 use(chaiHttp);
@@ -49,7 +49,7 @@ describe('AUTHORIZED USER LOGIN', () => {
       },
     };
 
-     await new UserControllers().authFacebookLogin(
+    await new UserControllers().authFacebookLogin(
       {
         user: {
           email: 'yangeney@gmail.com',

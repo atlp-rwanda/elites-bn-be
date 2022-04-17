@@ -1,4 +1,4 @@
-import joi, { string } from 'joi';
+import joi from 'joi';
 
 // eslint-disable-next-line import/prefer-default-export
 export const approvetripSchema = joi.object({

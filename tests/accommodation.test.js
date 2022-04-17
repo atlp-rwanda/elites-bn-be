@@ -7,7 +7,8 @@ import { brad } from './profile.dummy';
 chai.use(chaiHttp);
 
 describe('ACCOMMODATION ROUTES TESTING', () => {
-  let id, token;
+  let id; let
+    token;
 
   it('it should login the user', async () => {
     const res = await chai.request(app).post('/api/v1/users/login').send(brad);
@@ -21,7 +22,7 @@ describe('ACCOMMODATION ROUTES TESTING', () => {
   it('Should create an accommodation', async () => {
     const res = await chai
       .request(app)
-      .post(`/api/v1/accommodations`)
+      .post('/api/v1/accommodations')
       .set('Authorization', `Bearer ${token}`)
       .send(accommodationData);
     id = res.body.payload.id;
@@ -31,14 +32,14 @@ describe('ACCOMMODATION ROUTES TESTING', () => {
   });
 
   it('Should retrieve all accommodations', async () => {
-    const res = await chai.request(app).get(`/api/v1/accommodations`);
+    const res = await chai.request(app).get('/api/v1/accommodations');
     expect(res).to.have.status([200]);
     expect(res.body).to.have.property('message');
     expect(res.body).to.have.property('payload');
   });
 
   it('Should retrieve all accommodations in given location', async () => {
-    const res = await chai.request(app).get(`/api/v1/accommodations/in/1`);
+    const res = await chai.request(app).get('/api/v1/accommodations/in/1');
     expect(res).to.have.status([200]);
     expect(res.body).to.have.property('message');
     expect(res.body).to.have.property('payload');

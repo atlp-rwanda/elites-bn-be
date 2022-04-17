@@ -23,7 +23,7 @@ describe('ACCOMMODATION LIKE ROUTES TESTING', () => {
   it('Should like an accommodation', async () => {
     const res = await chai
       .request(app)
-      .post(`/api/v1/accommodations/1/like`)
+      .post('/api/v1/accommodations/1/like')
       .set('Authorization', `Bearer ${accessTokenRequester}`);
     expect(res).to.have.status([200]);
     expect(res.body).to.have.property('message');
@@ -31,14 +31,14 @@ describe('ACCOMMODATION LIKE ROUTES TESTING', () => {
   });
 
   it('Should retrieve all like of an accommodation', async () => {
-    const res = await chai.request(app).get(`/api/v1/accommodations/1/likes`);
+    const res = await chai.request(app).get('/api/v1/accommodations/1/likes');
     expect(res).to.have.status([200]);
   });
 
   it('Should dislike an accommodation', async () => {
     const res = await chai
       .request(app)
-      .post(`/api/v1/accommodations/1/dislike`)
+      .post('/api/v1/accommodations/1/dislike')
       .set('Authorization', `Bearer ${accessTokenRequester}`);
     expect(res).to.have.status([200]);
     expect(res.body).to.have.property('message');

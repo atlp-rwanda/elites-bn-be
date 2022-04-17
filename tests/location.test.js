@@ -9,7 +9,8 @@ import { brad, requesterLogin } from './profile.dummy';
 chai.use(chaiHttp);
 
 describe('LOCATION ENDPOINTS TEST', () => {
-  let id, token, requesterToken;
+  let id; let token; let
+    requesterToken;
 
   it('it should login a manager', async () => {
     const res = await chai.request(app).post('/api/v1/users/login').send(brad);
@@ -35,7 +36,7 @@ describe('LOCATION ENDPOINTS TEST', () => {
   it('Should add a location ', async () => {
     const res = await chai
       .request(app)
-      .post(`/api/v1/locations`)
+      .post('/api/v1/locations')
       .set('Authorization', `Bearer ${token}`)
       .send(locationData);
     id = res.body.payload.id;
@@ -62,7 +63,7 @@ describe('LOCATION ENDPOINTS TEST', () => {
   });
 
   it('Should not retrieve a location', async () => {
-    const res = await chai.request(app).get(`/api/v1/locations/kjoo354`);
+    const res = await chai.request(app).get('/api/v1/locations/kjoo354');
     expect(res).to.have.status([500]);
     expect(res.body).to.have.property('name');
     expect(res.body.name).to.equal('SequelizeDatabaseError');

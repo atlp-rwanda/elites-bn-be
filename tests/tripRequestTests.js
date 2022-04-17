@@ -1,7 +1,6 @@
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
-import { TRIP_FOUND_MESSAGE } from '../src/constants/tripConstants';
-import app from '../src/app.js';
+import app from '../src/app';
 import 'dotenv/config';
 import {
   addRequest,
@@ -15,7 +14,7 @@ import {
   managerLogins,
   checkStatistics,
   checkStatisticsInvalidDate,
-} from './trip.dummyData.js';
+} from './trip.dummyData';
 
 chai.use(chaiHttp);
 let token;
@@ -99,68 +98,64 @@ describe('TRIP REQUEST ENDPOINTS', () => {
     expect(res).to.have.status([201]);
   });
 
-  //TRIP COMMENTING
+  // TRIP COMMENTING
 
-  it('It should create a comment', async() => {
-    const res = await chai 
-        .request(app)
-        .post(`/api/v1/trips/${id}/comments`)
-        .set('Authorization', `Bearer ${token}`)
-        .send({
-            comment: 'Test Comment',
-        });
-        commentId = res.body.payload.id;
+  it('It should create a comment', async () => {
+    const res = await chai
+      .request(app)
+      .post(`/api/v1/trips/${id}/comments`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        comment: 'Test Comment',
+      });
+    commentId = res.body.payload.id;
     expect(res).to.have.status([201]);
-});
+  });
 
-it('Manager should create a comment', async() => {
-  const res = await chai 
+  it('Manager should create a comment', async () => {
+    const res = await chai
       .request(app)
       .post(`/api/v1/trips/${id}/comments`)
       .set('Authorization', `Bearer ${tokenD}`)
       .send({
-          comment: 'Test Comment',
+        comment: 'Test Comment',
       });
-  expect(res).to.have.status([201]);
-});
+    expect(res).to.have.status([201]);
+  });
 
-it('It should get all comment for manager', async() => {
-  const res = await chai
+  it('It should get all comment for manager', async () => {
+    const res = await chai
       .request(app)
       .get(`/api/v1/trips/${id}/comments`)
       .set('Authorization', `Bearer ${tokenD}`);
-  expect(res).to.have.status([200]);
-});
+    expect(res).to.have.status([200]);
+  });
 
-it('It should get all comment for requester', async() => {
-  const res = await chai
+  it('It should get all comment for requester', async () => {
+    const res = await chai
       .request(app)
       .get(`/api/v1/trips/${id}/comments`)
       .set('Authorization', `Bearer ${token}`);
-     expect(res).to.have.status([200]);
-});
+    expect(res).to.have.status([200]);
+  });
 
-it('It should not delete comment when not owner ', async() => {
-  const res = await chai
+  it('It should not delete comment when not owner ', async () => {
+    const res = await chai
       .request(app)
       .delete(`/api/v1/comments/${commentId}`)
       .set('Authorization', `Bearer ${adminToken}`);
-     expect(res).to.have.status([403]);
-     expect(res.body).to.have.property('message');
-});
+    expect(res).to.have.status([403]);
+    expect(res.body).to.have.property('message');
+  });
 
-it('It should delete comment ', async() => {
-  const res = await chai
+  it('It should delete comment ', async () => {
+    const res = await chai
       .request(app)
       .delete(`/api/v1/comments/${commentId}`)
       .set('Authorization', `Bearer ${token}`);
-     expect(res).to.have.status([200]);
-     expect(res.body).to.have.property('message');
-});
-
-
-
-
+    expect(res).to.have.status([200]);
+    expect(res.body).to.have.property('message');
+  });
 
   it('Should not create the Trip  Request while not having profile', async () => {
     const res = await chai
@@ -327,7 +322,7 @@ it('It should delete comment ', async() => {
   it(' A user should be able to use global search and retrieve data from database according to manager ID', async () => {
     const res = await chai
       .request(app)
-      .get(`/api/v1/trips?managerId=3`)
+      .get('/api/v1/trips?managerId=3')
       .set('Authorization', `Bearer ${token}`);
     expect(res).to.have.status([200]);
     expect(res.body).to.have.property('message');
@@ -337,7 +332,7 @@ it('It should delete comment ', async() => {
   it(' A user should be able to use global search and retrieve data from database according to Departure Location', async () => {
     const res = await chai
       .request(app)
-      .get(`/api/v1/trips?departLocation=1`)
+      .get('/api/v1/trips?departLocation=1')
       .set('Authorization', `Bearer ${token}`);
     expect(res).to.have.status([200]);
     expect(res.body).to.have.property('message');
@@ -347,7 +342,7 @@ it('It should delete comment ', async() => {
   it(' A user should be able to use global search and retrieve data from database according to trip reason', async () => {
     const res = await chai
       .request(app)
-      .get(`/api/v1/trips?tripReason="this is to test "`)
+      .get('/api/v1/trips?tripReason="this is to test "')
       .set('Authorization', `Bearer ${token}`);
     expect(res).to.have.status([200]);
     expect(res.body).to.have.property('message');
@@ -367,7 +362,7 @@ it('It should delete comment ', async() => {
   it(' A user should be able to use global search and retrieve data from database according to trip reason', async () => {
     const res = await chai
       .request(app)
-      .get(`/api/v1/trips?tripReason="this is to test "`)
+      .get('/api/v1/trips?tripReason="this is to test "')
       .set('Authorization', `Bearer ${tokenD}`);
     expect(res).to.have.status([200]);
     expect(res.body).to.have.property('message');

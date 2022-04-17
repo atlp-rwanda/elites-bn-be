@@ -1,3 +1,5 @@
+/* eslint-disable no-return-await */
+/* eslint-disable import/prefer-default-export */
 import models from '../models';
 
 export class BlacklistedTokenService {

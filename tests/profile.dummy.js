@@ -27,19 +27,10 @@ export const brad = {
   password: 'pass123@',
 };
 
-
-
-
-
 export const resetPassword = {
   password: 'Password1',
   confirmPassword: 'Password1',
 };
-
-
-
-
-
 
 export const profileInfo = {
   gender: 'Female',

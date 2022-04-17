@@ -1,3 +1,4 @@
+/* eslint-disable no-return-await */
 import { Op } from 'sequelize';
 import models from '../models';
 

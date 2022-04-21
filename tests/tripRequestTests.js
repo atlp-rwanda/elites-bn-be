@@ -456,7 +456,6 @@ describe('TRIP REQUEST ENDPOINTS', () => {
       .request(app)
       .delete(`/api/v1/trips/${pendingId}`)
       .set('Authorization', `Bearer ${token}`)
-      console.log(res.body)
         expect(res).to.have.status([200]);
         expect(res.type).to.equal('application/json');
         expect(res.body).to.have.property('message');
@@ -470,7 +469,6 @@ describe('TRIP REQUEST ENDPOINTS', () => {
       .request(app)
       .delete(`/api/v1/trips/${199999999}`)
       .set('Authorization', `Bearer ${token}`)
-      console.log(res.body)
         expect(res).to.have.status([404]);
         expect(res.type).to.equal('application/json');
         expect(res.body).to.have.property('message');

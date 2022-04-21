@@ -7,21 +7,19 @@ import { BaseError } from '../httpErrors/baseError';
 export class AccommodationLikeController {
   static async dislike(id, req, res, next) {
     try {
-      const accommodation =
-        await new AccommodationServices().getOneAccommodation(
-          parseInt(req.params.id)
-        );
+      const accommodation = await new AccommodationServices().getOneAccommodation(
+        parseInt(req.params.id),
+      );
       if (accommodation) {
-        const accommodationLike =
-          await AccommodationLikeService.findOneByAccommodationAndUser(
-            parseInt(id),
-            parseInt(req.params.id)
-          );
+        const accommodationLike = await AccommodationLikeService.findOneByAccommodationAndUser(
+          parseInt(id),
+          parseInt(req.params.id),
+        );
         if (accommodationLike) {
           if (accommodationLike.isLike) {
             accommodationLike.isLike = false;
             const newAccommodationLike = await AccommodationLikeService.update(
-              accommodationLike
+              accommodationLike,
             );
             return res.status(200).json({
               status: '200',
@@ -46,7 +44,7 @@ export class AccommodationLikeController {
           payload: newAccommodationLike,
         });
       }
-      throw new BaseError('Not found',404,'Accommodation not found');
+      throw new BaseError('Not found', 404, 'Accommodation not found');
     } catch (error) {
       next(error);
     }
@@ -54,21 +52,19 @@ export class AccommodationLikeController {
 
   static async like(id, req, res, next) {
     try {
-      const accommodation =
-        await new AccommodationServices().getOneAccommodation(
-          parseInt(req.params.id)
-        );
+      const accommodation = await new AccommodationServices().getOneAccommodation(
+        parseInt(req.params.id),
+      );
       if (accommodation) {
-        const accommodationLike =
-          await AccommodationLikeService.findOneByAccommodationAndUser(
-            parseInt(id, 10),
-            parseInt(req.params.id, 10)
-          );
+        const accommodationLike = await AccommodationLikeService.findOneByAccommodationAndUser(
+          parseInt(id, 10),
+          parseInt(req.params.id, 10),
+        );
         if (accommodationLike) {
           if (accommodationLike.isLike == false) {
             accommodationLike.isLike = true;
             const newAccommodationLike = await AccommodationLikeService.update(
-              accommodationLike
+              accommodationLike,
             );
             return res.status(200).json({
               status: '200',
@@ -93,7 +89,7 @@ export class AccommodationLikeController {
           payload: newAccommodationLike,
         });
       }
-      throw new BaseError('Not found',404,'comment not found');
+      throw new BaseError('Not found', 404, 'comment not found');
     } catch (error) {
       next(error);
     }
@@ -101,17 +97,15 @@ export class AccommodationLikeController {
 
   static async findAccommodationLikes(req, res, next) {
     try {
-      const accommodation =
-        await new AccommodationServices().getOneAccommodation(
-          parseInt(req.params.id)
-        );
+      const accommodation = await new AccommodationServices().getOneAccommodation(
+        parseInt(req.params.id),
+      );
       if (accommodation) {
-        const dislikes =
-          await AccommodationLikeService.findAllDisLikeByAccommodation(
-            parseInt(req.params.id)
-          );
+        const dislikes = await AccommodationLikeService.findAllDisLikeByAccommodation(
+          parseInt(req.params.id),
+        );
         const likes = await AccommodationLikeService.findAllLikeByAccommodation(
-          parseInt(req.params.id)
+          parseInt(req.params.id),
         );
         return res.status(200).json({
           status: '200',
@@ -122,7 +116,7 @@ export class AccommodationLikeController {
           },
         });
       }
-      throw new BaseError('Not found',404, 'comment not found');
+      throw new BaseError('Not found', 404, 'comment not found');
     } catch (error) {
       next(error);
     }

@@ -394,7 +394,7 @@ describe('TRIP REQUEST ENDPOINTS', () => {
         checkinDate: '2022-10-03',
         checkoutDate: '2022-12-04',
       });
-    expect(res).to.have.status([400]);
+    expect(res).to.have.status([403]);
   });
 
   it(' Manager should not APPROVE/REJECT already updated request', async () => {

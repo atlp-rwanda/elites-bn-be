@@ -26,8 +26,7 @@ class AccommodationController {
       }
       const pictures = req.files;
       const urls = [];
-      if (pictures) 
-      {
+      if (pictures) {
         const uploadImages = pictures.map((image) => cloudinary.uploader.upload(image.path, { folder: 'barefoot_api' }));
         const imageResponse = await Promise.all(uploadImages);
         for (const file of imageResponse) {

@@ -76,7 +76,7 @@ class ProfileController {
           payload: getProfile,
         });
       }
-      throw new BaseError('NOT FOUND',404,'Resource not found');
+      throw new BaseError('NOT FOUND', 404, 'Resource not found');
     } catch (err) {
       next(err);
     }
@@ -102,7 +102,7 @@ class ProfileController {
           payload: updated,
         });
       } else {
-        throw new BaseError('Not found',404,'Resource to update not found');
+        throw new BaseError('Not found', 404, 'Resource to update not found');
       }
     } catch (err) {
       next(err);
@@ -115,7 +115,7 @@ class ProfileController {
       if (delTripRequests) {
         res.send({ status: 204, message: 'deleted successfully' });
       } else {
-        throw new BaseError('Not found',404,'TRIP NOT FOUND');
+        throw new BaseError('Not found', 404, 'TRIP NOT FOUND');
       }
     } catch (err) {
       next(err);

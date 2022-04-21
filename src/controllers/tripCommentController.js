@@ -60,7 +60,7 @@ export class TripCommentController {
         }
         throw new ForbbidenError('"You are not the own of this comment"');
       } else {
-        throw new BaseError('NOT FOUND',404,'Comment not found');
+        throw new BaseError('NOT FOUND', 404, 'Comment not found');
       }
     } catch (error) {
       next(error);
@@ -77,7 +77,7 @@ export class TripCommentController {
         }
         throw new ForbbidenError('"You are not related to this trip"');
       } else {
-        throw new BaseError('Not found',404,`Trip with id: ${req.params.id} not found`);
+        throw new BaseError('Not found', 404, `Trip with id: ${req.params.id} not found`);
       }
     } catch (error) {
       next(error);

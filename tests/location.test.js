@@ -76,7 +76,7 @@ describe('LOCATION ENDPOINTS TEST', () => {
       .patch(`/api/v1/locations/${id}`)
       .set('Authorization', `Bearer ${requesterToken}`)
       .send({ description: 'test description' });
-    expect(res).to.have.status([401]);
+    expect(res).to.have.status([403]);
     expect(res.body).to.have.property('message');
     expect(res.body.message).to.equal('You are not a travel admin');
   });

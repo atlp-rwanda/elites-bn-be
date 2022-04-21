@@ -25,7 +25,7 @@ export const isAbleToBook = async (req, res, next) => {
     const emptyToken = req.headers.authorization;
 
     if (emptyToken === undefined) {
-      throw new BaseError('Bad Request', 400, 'User not logged in');
+      throw new BaseError('Unauthorized', 401, 'User not logged in');
     }
     const token = req.headers.authorization.split(' ')[1];
 
@@ -38,8 +38,8 @@ export const isAbleToBook = async (req, res, next) => {
 
     if (user.roleId !== 5) {
       throw new BaseError(
-        'Bad Request',
-        400,
+        'Forbidden',
+        403,
         'You are not allowed to perform this task',
       );
     }
@@ -48,7 +48,7 @@ export const isAbleToBook = async (req, res, next) => {
     });
 
     if (tripRequest === null) {
-      throw new BaseError('Bad Request', 400, 'You have no such trip request');
+      throw new BaseError('Not Found', 404, 'You have no such trip request');
     }
     if (tripRequest.status === 'pending' || tripRequest.status === 'rejected') {
       throw new BaseError(

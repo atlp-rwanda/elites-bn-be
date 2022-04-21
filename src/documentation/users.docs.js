@@ -251,7 +251,7 @@ export const users = {
       }],
     },
   },
-  
+
   '/api/v1/users/{id}': {
     patch: {
       tags: ['Users'],
@@ -289,7 +289,7 @@ export const users = {
         Bearer: [],
       }],
     },
-  },   
+  },
 };
 
 export const userDefinition = {

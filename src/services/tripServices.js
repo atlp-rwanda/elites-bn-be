@@ -170,7 +170,7 @@ export const updateMulticities = async (
   const existId = await models.tripRequest.findOne({
     where: {
       id: tripId,
-    }
+    },
   });
   await models.Profile.update(
     {
@@ -223,9 +223,9 @@ export const updateMulticities = async (
 
     const updated = await exist.save();
     return updated;
-  }else if(!existId) {
+  } if (!existId) {
     throw new NotFoundError('Trip not found');
-  } 
+  }
   throw new BaseError(
     'Conflict Error',
     409,
@@ -234,19 +234,19 @@ export const updateMulticities = async (
 };
 
 export const deleteRequest = async (userId, id) => {
-    // eslint-disable-next-line no-unused-vars
-    const Data = await models.tripRequest.destroy({
-      where: {
-        status: 'pending',
-        userId: userId,
-        id: id,
-      },
-    });
+  // eslint-disable-next-line no-unused-vars
+  const Data = await models.tripRequest.destroy({
+    where: {
+      status: 'pending',
+      userId,
+      id,
+    },
+  });
 
-    if(Data){
-      return true;
-    }
-    return false;
+  if (Data) {
+    return true;
+  }
+  return false;
 };
 export const checkStatus = async (userid, status) => {
   const data = await models.tripRequest.findOne({

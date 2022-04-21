@@ -44,7 +44,7 @@ export const createProfile = async (userid, data) => {
     }
     return false;
   } catch (err) {
-    throw new Error('something went wrong');
+    throw new Error('You don\'t have manager!');
   }
 };
 

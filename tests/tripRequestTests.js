@@ -14,6 +14,7 @@ import {
   managerLogins,
   checkStatistics,
   checkStatisticsInvalidDate,
+  pendingRequest, 
 } from './trip.dummyData';
 
 chai.use(chaiHttp);
@@ -25,7 +26,7 @@ let adminToken;
 let commentId;
 
 describe('TRIP REQUEST ENDPOINTS', () => {
-  let id;
+  let id, pendingId;
   before('it should login the an admin user', async () => {
     const res = await chai.request(app).post('/api/v1/users/login').send({
       email: 'yangeney@gmail.com',
@@ -278,20 +279,6 @@ describe('TRIP REQUEST ENDPOINTS', () => {
     expect(res).to.have.status([404]);
   });
 
-  // // // DELETING TRIP REQUEST to be continued
-
-  // it('should Delete pending requests by user', async() => {
-  //   const res =  await chai
-  //     .request(app)
-  //     .delete(`/api/v1/trips/${id}`)
-  //     .set('Authorization', `Bearer ${token}`)
-  //     console.log(res)
-  //       expect(res).to.have.status([200]);
-  //       expect(res.type).to.equal('application/json');
-  //       expect(res.body).to.have.property('message');
-  //       expect(res.body).to.have.property('status');
-  // });
-
   // APPROVE AND REJECT BY MANAGER
 
   it(' Manager should APPROVE/REJECT pending request', async () => {
@@ -368,22 +355,6 @@ describe('TRIP REQUEST ENDPOINTS', () => {
     expect(res.body).to.have.property('message');
     expect(res.body).to.have.property('status');
   });
-  // SHOULD NOT APPROVE/REJECT
-
-  //   it(' Manager should not APPROVE/REJECT an already updated trip request', async() => {
-  //     const res  = await chai
-  //       .request(app)
-  //       .patch(`/api/v1/trips/4`)
-  //       .set('Authorization', `Bearer ${managerToken}`)
-  //       .send({
-  //         status: 'approved',
-  //       })
-  //         console.log(res.body, "______________________");
-  //         expect(res).to.have.status([400]);
-  //         expect(res.body).to.have.property('message');
-  //         expect(res.body).to.have.property('status');
-
-  //   });
 
   // BOOKING A ROOM
 
@@ -464,5 +435,45 @@ describe('TRIP REQUEST ENDPOINTS', () => {
       .set('Authorization', `Bearer ${token}`)
       .send(checkStatisticsInvalidDate);
     expect(res).to.have.status([400]);
+  });
+
+  // SHOULD CREATE TRIP FOR REQUESTER
+
+  it('Should create the Trip  Request while logged as Requester', async () => {
+    const res = await chai
+      .request(app)
+      .post('/api/v1/trips')
+      .set('Authorization', `Bearer ${token}`)
+      .send(pendingRequest );
+      pendingId = res.body.payload.id;
+    expect(res).to.have.status([201]);
+  });
+
+  // DELETING TRIP REQUEST to be continued
+
+  it('should Delete pending requests by user', async() => {
+    const res =  await chai
+      .request(app)
+      .delete(`/api/v1/trips/${pendingId}`)
+      .set('Authorization', `Bearer ${token}`)
+      console.log(res.body)
+        expect(res).to.have.status([200]);
+        expect(res.type).to.equal('application/json');
+        expect(res.body).to.have.property('message');
+        expect(res.body).to.have.property('status');
+  });
+
+  // DELETE NON EXIST TRIP
+
+  it('should NOT Delete unexisting requests by user', async() => {
+    const res =  await chai
+      .request(app)
+      .delete(`/api/v1/trips/${199999999}`)
+      .set('Authorization', `Bearer ${token}`)
+      console.log(res.body)
+        expect(res).to.have.status([404]);
+        expect(res.type).to.equal('application/json');
+        expect(res.body).to.have.property('message');
+        expect(res.body).to.have.property('status');
   });
 });

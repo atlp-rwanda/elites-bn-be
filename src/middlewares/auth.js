@@ -13,9 +13,8 @@ passport.use(
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: process.env.GOOGLE_CALL_BACKURL,
-      // passReqToCallback: true
     },
-    async (accessToken, refreshToken, profile, done) => {
+    async (profile, done) => {
       const user = await models.User.findOne({
         where: { email: profile.emails[0].value },
       });
@@ -48,11 +47,11 @@ passport.use(
     {
       clientID: process.env.FB_CLIENT_ID,
       clientSecret: process.env.FB_CLIENT_SECRET,
-      callbackURL: process.env.FB_CALL_BACKURL,
+      callbackURL:process.env.FB_CALL_BACKURL,
 
       profileFields: ['emails', 'displayName'],
     },
-    async (accessToken, refreshToken, profile, done) => {
+    async (profile, done) => {
       const user = await models.User.findOne({
         where: { email: profile.emails[0].value },
       });
@@ -80,7 +79,7 @@ passport.use(
           return done(null, token);
         });
       }
-    },
-  ),
+    }
+  )
 );
 export default passport;

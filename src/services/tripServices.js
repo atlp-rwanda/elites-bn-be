@@ -234,21 +234,19 @@ export const updateMulticities = async (
 };
 
 export const deleteRequest = async (userId, id) => {
-  const checkExist = await tripExist(userId, id);
-
-  if (checkExist) {
     // eslint-disable-next-line no-unused-vars
     const Data = await models.tripRequest.destroy({
       where: {
         status: 'pending',
-        userId,
-        id,
+        userId: userId,
+        id: id,
       },
     });
-    return true;
-  }
 
-  return null;
+    if(Data){
+      return true;
+    }
+    return false;
 };
 export const checkStatus = async (userid, status) => {
   const data = await models.tripRequest.findOne({

@@ -1,5 +1,6 @@
 import { AccommodationRatingService } from '../services/accommodationRatingServices';
 import { PageNotFoundError } from '../httpErrors/pageNotFoundError';
+import { BaseError } from '../httpErrors/baseError';
 
 export class AccommodationRatingController {
   static async create(id, req, res, next) {
@@ -23,7 +24,7 @@ export class AccommodationRatingController {
   static async findAccommodationRating(req, res, next) {
     try {
       const ratings = await AccommodationRatingService.findAllByAccommodation(
-        parseInt(req.params.id),
+        parseInt(req.params.id)
       );
       if (ratings) {
         const list = [...ratings.rows];
@@ -38,7 +39,7 @@ export class AccommodationRatingController {
           payload: { averageRating, ratings },
         });
       }
-      throw new PageNotFoundError('Ratings not found');
+      throw new BaseError('NOT FOUND', 404, 'Ratings not found');
     } catch (error) {
       next(error);
     }

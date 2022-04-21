@@ -2,23 +2,26 @@
 import { AccommodationLikeService } from '../services/accommodationLikeServices';
 import AccommodationServices from '../services/accommodationServices';
 import { PageNotFoundError } from '../httpErrors/pageNotFoundError';
+import { BaseError } from '../httpErrors/baseError';
 
 export class AccommodationLikeController {
   static async dislike(id, req, res, next) {
     try {
-      const accommodation = await new AccommodationServices().getOneAccommodation(
-        parseInt(req.params.id),
-      );
-      if (accommodation) {
-        const accommodationLike = await AccommodationLikeService.findOneByAccommodationAndUser(
-          parseInt(id),
-          parseInt(req.params.id),
+      const accommodation =
+        await new AccommodationServices().getOneAccommodation(
+          parseInt(req.params.id)
         );
+      if (accommodation) {
+        const accommodationLike =
+          await AccommodationLikeService.findOneByAccommodationAndUser(
+            parseInt(id),
+            parseInt(req.params.id)
+          );
         if (accommodationLike) {
           if (accommodationLike.isLike) {
             accommodationLike.isLike = false;
             const newAccommodationLike = await AccommodationLikeService.update(
-              accommodationLike,
+              accommodationLike
             );
             return res.status(200).json({
               status: '200',
@@ -26,8 +29,8 @@ export class AccommodationLikeController {
               payload: newAccommodationLike,
             });
           }
-          return res.status(200).json({
-            status: '200',
+          return res.status(409).json({
+            status: '409',
             message: 'Accommodation already disliked successfully',
             payload: accommodationLike,
           });
@@ -37,13 +40,13 @@ export class AccommodationLikeController {
           accommodationId: parseInt(req.params.id),
           isLike: false,
         });
-        return res.status(200).json({
-          status: '200',
+        return res.status(409).json({
+          status: '409',
           message: 'Accommodation already disliked successfully',
           payload: newAccommodationLike,
         });
       }
-      throw new PageNotFoundError('Accommodation not found');
+      throw new BaseError('Not found',404,'Accommodation not found');
     } catch (error) {
       next(error);
     }
@@ -51,19 +54,21 @@ export class AccommodationLikeController {
 
   static async like(id, req, res, next) {
     try {
-      const accommodation = await new AccommodationServices().getOneAccommodation(
-        parseInt(req.params.id),
-      );
-      if (accommodation) {
-        const accommodationLike = await AccommodationLikeService.findOneByAccommodationAndUser(
-          parseInt(id, 10),
-          parseInt(req.params.id, 10),
+      const accommodation =
+        await new AccommodationServices().getOneAccommodation(
+          parseInt(req.params.id)
         );
+      if (accommodation) {
+        const accommodationLike =
+          await AccommodationLikeService.findOneByAccommodationAndUser(
+            parseInt(id, 10),
+            parseInt(req.params.id, 10)
+          );
         if (accommodationLike) {
           if (accommodationLike.isLike == false) {
             accommodationLike.isLike = true;
             const newAccommodationLike = await AccommodationLikeService.update(
-              accommodationLike,
+              accommodationLike
             );
             return res.status(200).json({
               status: '200',
@@ -71,8 +76,8 @@ export class AccommodationLikeController {
               payload: newAccommodationLike,
             });
           }
-          return res.status(200).json({
-            status: '200',
+          return res.status(409).json({
+            status: '409',
             message: 'Accommodation already liked successfully',
             payload: accommodationLike,
           });
@@ -88,7 +93,7 @@ export class AccommodationLikeController {
           payload: newAccommodationLike,
         });
       }
-      throw new PageNotFoundError('comment not found');
+      throw new BaseError('Not found',404,'comment not found');
     } catch (error) {
       next(error);
     }
@@ -96,15 +101,17 @@ export class AccommodationLikeController {
 
   static async findAccommodationLikes(req, res, next) {
     try {
-      const accommodation = await new AccommodationServices().getOneAccommodation(
-        parseInt(req.params.id),
-      );
-      if (accommodation) {
-        const dislikes = await AccommodationLikeService.findAllDisLikeByAccommodation(
-          parseInt(req.params.id),
+      const accommodation =
+        await new AccommodationServices().getOneAccommodation(
+          parseInt(req.params.id)
         );
+      if (accommodation) {
+        const dislikes =
+          await AccommodationLikeService.findAllDisLikeByAccommodation(
+            parseInt(req.params.id)
+          );
         const likes = await AccommodationLikeService.findAllLikeByAccommodation(
-          parseInt(req.params.id),
+          parseInt(req.params.id)
         );
         return res.status(200).json({
           status: '200',
@@ -115,7 +122,7 @@ export class AccommodationLikeController {
           },
         });
       }
-      throw new PageNotFoundError('comment not found');
+      throw new BaseError('Not found',404, 'comment not found');
     } catch (error) {
       next(error);
     }

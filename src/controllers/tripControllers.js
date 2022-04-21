@@ -5,7 +5,6 @@ import {
   TRIP_FOUND_MESSAGE,
   TRIP_DELETED_MESSAGE,
   NO_TRIP_FOUND,
-  VALIDATION_ERROR,
   VALIDATION_ERROR_INPUT,
 } from '../constants/tripConstants';
 import {

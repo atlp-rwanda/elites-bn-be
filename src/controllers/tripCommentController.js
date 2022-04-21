@@ -6,6 +6,7 @@ import { TripCommentService } from '../services/tripCommentServices';
 import { PageNotFoundError } from '../httpErrors/pageNotFoundError';
 import { ForbbidenError } from '../httpErrors/forbidenError';
 import requestEventEmitter from './notificationEventsController';
+import { BaseError } from '../httpErrors/baseError';
 
 export class TripCommentController {
   static async create(id, req, res, next) {
@@ -59,7 +60,7 @@ export class TripCommentController {
         }
         throw new ForbbidenError('"You are not the own of this comment"');
       } else {
-        throw new PageNotFoundError('comment not found');
+        throw new BaseError('NOT FOUND',404,'Comment not found');
       }
     } catch (error) {
       next(error);
@@ -76,7 +77,7 @@ export class TripCommentController {
         }
         throw new ForbbidenError('"You are not related to this trip"');
       } else {
-        throw new PageNotFoundError(`Trip with id: ${req.params.id} not found`);
+        throw new BaseError('Not found',404,`Trip with id: ${req.params.id} not found`);
       }
     } catch (error) {
       next(error);

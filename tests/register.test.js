@@ -6,7 +6,7 @@ import { decodeAcessToken } from '../src/helpers/jwtFunction';
 use(chaiHttp);
 
 describe('USER REGISTER A USER', () => {
-  let accessToken, refreshToken, userId, token;
+  let accessToken, refreshToken, userId, token, userToken;
 
   before(async () => {
     await models.User.destroy({ where: { email: 'elites@gmail.com' } });
@@ -17,8 +17,8 @@ describe('USER REGISTER A USER', () => {
       email: 'elites@gmail.com',
       password: 'Pass12515858',
     });
-     token = res.body.payload.accessToken;
-     const tok= await decodeAcessToken(token);
+     userToken = res.body.payload.accessToken;
+     const tok= await decodeAcessToken(userToken);
     userId=tok.id;
     expect(res).to.have.status([200]);
     expect(res.body).to.have.property('message');
@@ -71,6 +71,15 @@ describe('USER REGISTER A USER', () => {
     expect(res.body).to.have.property('message');
     expect(res).to.have.status([500]);
   });
+
+// VERIFY a USER
+
+it('Should Verify the user ', async () => {
+  const res = await chai.request(app).patch(`/api/v1/users/verifyEmail/${userToken}`)
+  console.log(res.body);
+  expect(res).to.have.status([200]);
+  expect(res.body).to.have.property('message');
+});
 
   it('Should login a user ', async () => {
     const res = await chai.request(app).post(`/api/v1/users/login/`).send({

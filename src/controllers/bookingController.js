@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import bookingServices from '../services/bookingServices';
 import { decodeAcessToken } from '../helpers/jwtFunction';
 import models from '../models';

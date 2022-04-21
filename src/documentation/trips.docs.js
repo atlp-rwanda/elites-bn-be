@@ -36,33 +36,33 @@ export const trips = {
         {
           name: 'userId',
           in: 'query',
-          description: 'Trip request',
+          description: 'Fetch all trip request of related user',
         },
         {
           name: 'managerId',
           in: 'query',
-          description: 'Trip request',
+          description: 'Fetch all trip request of related manager',
         },
         {
           name: 'status',
           in: 'query',
-          description: 'Trip request',
+          description: 'Fetch all trip request of related status',
         },
 
         {
           name: 'tripReason',
           in: 'query',
-          description: 'Trip request',
+          description: 'Fetch all trip request according to trip reason',
         },
         {
           name: 'departLocation',
           in: 'query',
-          description: 'Trip request',
+          description: 'Fetch all trip request according to departure Location',
         },
         {
           name: 'createdAt',
           in: 'query',
-          description: 'Trip request',
+          description: 'Fetch all trip request according to created date',
         },
       ],
       responses: {

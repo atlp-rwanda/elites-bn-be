@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import 'dotenv/config';
 import { decodeAcessToken } from '../helpers/jwtFunction';
 import models from '../models';
@@ -67,8 +68,8 @@ export const isAbleToBook = async (req, res, next) => {
     const roomAvailable = checkRoomExist.isAvailable;
     if (roomAvailable === false) {
       throw new BaseError(
-        'Bad Request',
-        400,
+        'Conflict Error',
+        409,
         'This room is already booked try a different one',
       );
     }

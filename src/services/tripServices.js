@@ -1,6 +1,8 @@
 /* eslint-disable no-return-await */
 import { Op } from 'sequelize';
 import models from '../models';
+import { BaseError } from '../httpErrors/baseError';
+import { NotFoundError } from '../httpErrors/NotFoundError';
 
 export const checkRole = async (userid) => {
   const data = await models.User.findOne({
@@ -114,6 +116,22 @@ export const getAllRequests = async (userId, queryParams) => {
   return Data;
 };
 
+export const getAllRequestWhenNoQuery = async (userId) => {
+  const role = await checkRole(userId);
+  if (role === 'manager') {
+    const data = await models.tripRequest.findAll({
+      where: {
+        managerId: userId,
+      },
+    });
+    return data;
+  }
+  const Data = await models.tripRequest.findAll({
+    where: { userId },
+  });
+  return Data;
+};
+
 export const getOneRequest = async (userId, id) => {
   const role = await checkRole(userId);
   if (role === 'manager') {
@@ -145,9 +163,15 @@ export const updateMulticities = async (
   const exist = await models.tripRequest.findOne({
     where: {
       id: tripId,
+      status: 'pending',
     },
   });
 
+  const existId = await models.tripRequest.findOne({
+    where: {
+      id: tripId,
+    }
+  });
   await models.Profile.update(
     {
       passportNumber: updatePassportNumber,
@@ -199,8 +223,14 @@ export const updateMulticities = async (
 
     const updated = await exist.save();
     return updated;
-  }
-  return null;
+  }else if(!existId) {
+    throw new NotFoundError('Trip not found');
+  } 
+  throw new BaseError(
+    'Conflict Error',
+    409,
+    'You are not allowed to edit an already approved/rejected trip request',
+  );
 };
 
 export const deleteRequest = async (userId, id) => {

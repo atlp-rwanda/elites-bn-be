@@ -41,13 +41,14 @@ export class UserControllers {
       const userEmailExist = await userExist(req.body.email);
       if (userEmailExist) {
         throw new ConflictsError(
-          `User with this email: "${req.body.email}" already exist please a different email`
+          `User with this email: "${req.body.email}" already exist please a different email`,
         );
       } else {
         req.body.password = await hashPassword(req.body.password);
         const createdUser = await createUser(req.body);
-        const { password, createdAt, updatedAt, ...newcreatedUser } =
-          createdUser;
+        const {
+          password, createdAt, updatedAt, ...newcreatedUser
+        } = createdUser;
         const token = await generateAccessToken({ id: createdUser.id });
         const refreshToken = await generateRefreshToken({
           id: newcreatedUser.id,
@@ -75,16 +76,26 @@ export class UserControllers {
 
   // create verifyUser
   // eslint-disable-next-line class-methods-use-this
-  async verifyNewUser(req, res) {
+  async verifyNewUser(req, res, next) {
     try {
       const { token } = req.params;
       const userInfo = jwt.verify(token, process.env.JWT_SECRETE_KEY);
       const userId = userInfo.id;
+      const user = await models.User.findOne({ where: { id: userId } });
+
       const isVerified = true;
+      if (user.verified) {
+        return res.status(409)
+          .send({
+            status: 409,
+            message: 'Account is already verified!',
+          });
+        // throw new ConflictsError('The account is already verified');
+      }
       models.User.update({ verified: isVerified }, { where: { id: userId } });
       return res.status(200).send({ message: 'Account verified!' });
-    } catch (error) {
-      return res.status(500).send({ message: error.message });
+    } catch (err) {
+      next(err);
     }
   }
 
@@ -99,16 +110,19 @@ export class UserControllers {
       const valid = await comparePassword(req.body.password, userInfo.password);
       if (!valid) {
         throw new UnauthorizedError();
+      } else if (userInfo.verified) {
+        const userPayload = { id: userInfo.id };
+        const token = await generateAccessToken(userPayload);
+        const refreshToken = await generateRefreshToken(userPayload);
+        await models.refreshTokenTable.create({ refreshToken });
+        return res.status(200).json({
+          status: 200,
+          message: USER_LOGIN,
+          payload: { accesstoken: token, refreshToken },
+        });
+      } else {
+        throw new UnauthorizedError('Please verify your email');
       }
-      const userPayload = { id: userInfo.id };
-      const token = await generateAccessToken(userPayload);
-      const refreshToken = await generateRefreshToken(userPayload);
-      await models.refreshTokenTable.create({ refreshToken });
-      return res.status(200).json({
-        status: 200,
-        message: USER_LOGIN,
-        payload: { accesstoken: token, refreshToken },
-      });
     } catch (err) {
       next(err);
     }
@@ -211,7 +225,7 @@ export class UserControllers {
         throw new BaseError(
           'Not found',
           404,
-          'The account with provided email is not registered'
+          'The account with provided email is not registered',
         );
       }
       const payload = {
@@ -225,7 +239,7 @@ export class UserControllers {
         email,
         'ihonore01@gmail.com',
         'Barefoot Nomad password reset',
-        makeTemplate(link)
+        makeTemplate(link),
       );
       return res.status(200).send({
         status: 200,
@@ -245,7 +259,7 @@ export class UserControllers {
         throw new BaseError(
           'Bad request',
           400,
-          'Entered passwords do not match'
+          'Entered passwords do not match',
         );
       }
       const { token } = req.params;

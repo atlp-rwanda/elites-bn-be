@@ -24,6 +24,16 @@ describe('LOGING OUT A USER', () => {
     expect(res.body).to.have.property('status');
     expect(res.body).haveOwnProperty('payload');
   });
+
+  it('Should Verify the user ', async () => {
+    const res = await chai
+      .request(app)
+      .patch(`/api/v1/users/verifyEmail/${blackListedToken}`);
+    console.log(res.body);
+    expect(res).to.have.status([200]);
+    expect(res.body).to.have.property('message');
+  });
+
   it('it not should blacklist user token ', async () => {
     const res = await chai.request(app).post('/api/v1/auth/logout')
       .set('Authorization', 'Bearer blackListedT');

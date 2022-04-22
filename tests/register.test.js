@@ -6,7 +6,7 @@ import { decodeAcessToken } from '../src/helpers/jwtFunction';
 use(chaiHttp);
 
 describe('USER REGISTER A USER', () => {
-  let accessToken, refreshToken, userId, token, userToken;
+  let accessToken, refreshToken, userId, token, userToken, tok;
 
   before(async () => {
     await models.User.destroy({ where: { email: 'elites@gmail.com' } });
@@ -16,14 +16,23 @@ describe('USER REGISTER A USER', () => {
       names: 'elites',
       email: 'elites@gmail.com',
       password: 'Pass12515858',
-    });
+    }); 
     userToken = res.body.payload.accessToken;
-    const tok = await decodeAcessToken(userToken);
+    tok = await decodeAcessToken(userToken);
     userId = tok.id;
     expect(res).to.have.status([200]);
     expect(res.body).to.have.property('message');
     expect(res.body).to.have.property('status');
     expect(res.body).haveOwnProperty('payload');
+  });
+
+  it('Should Verify the user ', async () => {
+    const res = await chai
+      .request(app)
+      .patch(`/api/v1/users/verifyEmail/${userToken}`);
+    console.log(res.body);
+    expect(res).to.have.status([200]);
+    expect(res.body).to.have.property('message');
   });
 
   it('it should not register a user with existing email ', async () => {
@@ -71,18 +80,7 @@ describe('USER REGISTER A USER', () => {
     expect(res.body).to.have.property('message');
     expect(res).to.have.status([500]);
   });
-
-  // VERIFY a USER
-
-  it('Should Verify the user ', async () => {
-    const res = await chai
-      .request(app)
-      .patch(`/api/v1/users/verifyEmail/${userToken}`);
-    console.log(res.body);
-    expect(res).to.have.status([200]);
-    expect(res.body).to.have.property('message');
-  });
-
+  
   it('Should login a user ', async () => {
     const res = await chai.request(app).post(`/api/v1/users/login/`).send({
       email: 'elites@gmail.com',

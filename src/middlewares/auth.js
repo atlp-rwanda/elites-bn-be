@@ -56,13 +56,9 @@ passport.use(
         where: { email: profile.emails[0].value },
       });
       if (user) {
-        jwt.sign({ user }, process.env.JWT_SECRET_KEY, (err, token) => {
-          if (err) {
-            return err;
-          }
+        const userId = user.id;
 
-          return done(null, token);
-        });
+        return done(null, { id: userId });
       } else {
         const role = await models.Role.findOne({
           where: { name: 'requester' },
@@ -72,12 +68,13 @@ passport.use(
           names: profile.displayName,
           roleId: role.dataValues.id,
         });
-        jwt.sign({ newUser }, process.env.JWT_SECRET_KEY, (err, token) => {
-          if (err) {
-            return err;
-          }
-          return done(null, token);
+        const fetchUser = await models.User.findOne({
+          where: { email: newUser.email },
         });
+  
+        const fetchUserId = fetchUser.id;
+  
+        return done(null, { id: fetchUserId });
       }
     },
   ),

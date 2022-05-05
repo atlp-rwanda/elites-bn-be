@@ -1,6 +1,8 @@
 /* eslint-disable no-return-await */
 import { Op } from 'sequelize';
 import models from '../models';
+import { BaseError } from '../httpErrors/baseError';
+import { NotFoundError } from '../httpErrors/NotFoundError';
 
 export const checkRole = async (userid) => {
   const data = await models.User.findOne({
@@ -39,12 +41,13 @@ export const getManagerId = async (userid) => {
   return managerId;
 };
 
-export const tripExist = async (userId, departDate) => await models.tripRequest.findOne({
-  where: {
-    userId,
-    departDate,
-  },
-});
+export const tripExist = async (userId, departDate) =>
+  await models.tripRequest.findOne({
+    where: {
+      userId,
+      departDate,
+    },
+  });
 
 export const findAtrip = async (id) => {
   const dataExist = await models.tripRequest.findOne({
@@ -100,6 +103,22 @@ export const getAllRequests = async (userId, queryParams) => {
 
     return data;
   }
+  if (role === 'admin') {
+    const data = await models.tripRequest.findAll({
+      where: {
+        [Op.and]: [{}],
+        [Op.or]: [
+          { tripReason: { [Op.substring]: queryParams.tripReason } },
+          { status: { [Op.substring]: queryParams.status } },
+          { departLocation: { [Op.eq]: queryParams.departLocation } },
+          { createdAt: { [Op.gte]: queryParams.createdAt } },
+        ],
+      },
+    });
+
+    return data;
+  }
+
   const Data = await models.tripRequest.findAll({
     where: {
       [Op.and]: [{ userId }],
@@ -110,6 +129,22 @@ export const getAllRequests = async (userId, queryParams) => {
         { createdAt: { [Op.gte]: queryParams.createdAt } },
       ],
     },
+  });
+  return Data;
+};
+
+export const getAllRequestWhenNoQuery = async (userId) => {
+  const role = await checkRole(userId);
+  if (role === 'manager') {
+    const data = await models.tripRequest.findAll({
+      where: {
+        managerId: userId,
+      },
+    });
+    return data;
+  }
+  const Data = await models.tripRequest.findAll({
+    where: { userId },
   });
   return Data;
 };
@@ -140,14 +175,20 @@ export const updateMulticities = async (
   tripId,
   data,
   updatePassportNumber,
-  updateNewAdress,
+  updateNewAdress
 ) => {
   const exist = await models.tripRequest.findOne({
     where: {
       id: tripId,
+      status: 'pending',
     },
   });
 
+  const existId = await models.tripRequest.findOne({
+    where: {
+      id: tripId,
+    },
+  });
   await models.Profile.update(
     {
       passportNumber: updatePassportNumber,
@@ -155,7 +196,7 @@ export const updateMulticities = async (
     },
     {
       where: { userId },
-    },
+    }
   );
 
   const updatedProfile = await models.Profile.findOne({
@@ -199,8 +240,14 @@ export const updateMulticities = async (
 
     const updated = await exist.save();
     return updated;
+  } else if (!existId) {
+    throw new NotFoundError('Trip not found');
   }
-  return null;
+  throw new BaseError(
+    'Conflict Error',
+    409,
+    'You are not allowed to edit an already approved/rejected trip request'
+  );
 };
 
 export const deleteRequest = async (userId, id) => {
@@ -298,4 +345,11 @@ export const findStatistcsByUser = async (userId, startDate, endDate) => {
       },
     });
   }
+};
+
+// For super-admin
+export const getAllRequestForDb = async (userId, queryParams) => {
+  const data = await models.tripRequest.findAll({});
+
+  return data;
 };

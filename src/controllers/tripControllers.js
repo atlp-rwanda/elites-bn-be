@@ -14,13 +14,14 @@ import {
   getAllRequests as fetchAllRequests,
   getManagerId,
   tripExist,
-  checkLocations,
   getOneRequest,
-  approveRequest,
   updateMulticities,
   findStatistcsByUser,
   findLocation,
+  getAllRequestWhenNoQuery,
   updateLocation,
+  getAllRequestForDb,
+  checkRole,
 } from '../services/tripServices';
 import { validateDate, validateDateTripStat } from '../helpers/dateComparison';
 import { UnauthorizedError } from '../httpErrors/unauthorizedError';
@@ -38,7 +39,7 @@ export class TripControllers {
       req.body.managerId = await getManagerId(id);
       const compareDates = validateDate(
         req.body.returnDate,
-        req.body.departDate,
+        req.body.departDate
       );
       const { rememberMe } = req.body;
       const exists = await tripExist(id, req.body.departDate);
@@ -54,9 +55,8 @@ export class TripControllers {
         const profile = await models.Profile.findOne({
           where: { userId: id },
         });
-
         if (profile === null) {
-          res.status(400).json({
+          return res.status(400).json({
             status: 400,
             message: 'You do not have a profile, create one to proceed',
           });
@@ -67,7 +67,7 @@ export class TripControllers {
           where: { id: role },
         });
         if (roleName.name !== 'requester') {
-          res.status(400).json({
+          return res.status(400).json({
             status: 400,
             message: 'Only requesters can be allowed to create a trip',
           });
@@ -91,21 +91,20 @@ export class TripControllers {
           if (newTrip) {
             // Emit event when trip request is created
             requestEventEmitter.emit('request-created', newTrip, req);
-            res
+            return res
               .status(201)
               .json({ status: 201, message: TRIP_CREATED, payload: newTrip });
-          } else {
-            res.status(403).json({
-              status: 403,
-              message: 'you are not allowed to create a request',
-            });
           }
-        } else {
-          res
-            .status(400)
-            .json({ status: 400, message: VALIDATION_ERROR_INPUT });
+          return res.status(403).json({
+            status: 403,
+            message: 'you are not allowed to create a request',
+          });
         }
-      } else if (compareDates) {
+        return res
+          .status(400)
+          .json({ status: 400, message: VALIDATION_ERROR_INPUT });
+      }
+      if (compareDates) {
         const newPassportNumber = req.body.passportNumber;
         const newAddress = req.body.address;
 
@@ -113,7 +112,7 @@ export class TripControllers {
           throw new BaseError(
             'Bad request',
             400,
-            'Please fill in your new passport and address',
+            'Please fill in your new passport and address'
           );
         }
         const profile = await models.Profile.findOne({
@@ -121,7 +120,7 @@ export class TripControllers {
         });
 
         if (profile === null) {
-          res.status(400).json({
+          return res.status(400).json({
             status: 400,
             message: 'You do not have a profile, create one to proceed',
           });
@@ -145,7 +144,7 @@ export class TripControllers {
           },
           {
             where: { userId: id },
-          },
+          }
         );
 
         const checkTripType = req.body.destinations.length;
@@ -157,21 +156,20 @@ export class TripControllers {
           // Emit event when trip request is created
           requestEventEmitter.emit('request-created', newTrip, req);
 
-          res
+          return res
             .status(201)
             .json({ status: 201, message: TRIP_CREATED, payload: newTrip });
-        } else {
-          res.status(403).json({
-            status: 403,
-            message: 'you are not allowed to create a request',
-          });
         }
-      } else {
-        res.status(400).json({ status: 400, message: VALIDATION_ERROR_INPUT });
+        return res.status(403).json({
+          status: 403,
+          message: 'you are not allowed to create a request',
+        });
       }
+      return res
+        .status(400)
+        .json({ status: 400, message: VALIDATION_ERROR_INPUT });
     } catch (err) {
-      console.log(err);
-      return res.status(500).json({ message: err.message });
+      next(err);
     }
   }
 
@@ -185,7 +183,7 @@ export class TripControllers {
         req.params.id,
         req.body,
         updatePassportNumber,
-        updateNewAdress,
+        updateNewAdress
       );
       if (multiCityTrips) {
         // Emit event when trip request is edited
@@ -208,12 +206,31 @@ export class TripControllers {
   // eslint-disable-next-line class-methods-use-this
   async getAllRequests(id, req, res, next) {
     try {
-      const getTripRequests = await fetchAllRequests(id, req.query);
-      res.status(200).json({
-        status: 200,
-        message: TRIP_FOUND_MESSAGE,
-        payload: getTripRequests,
-      });
+      if (!Object.keys(req.query).length) {
+        const role = await checkRole(id);
+        if (role === 'admin') {
+          const getTripRequests = await getAllRequestForDb();
+          res.status(200).json({
+            status: 200,
+            message: TRIP_FOUND_MESSAGE,
+            payload: getTripRequests,
+          });
+        }
+
+        const getTripRequests = await getAllRequestWhenNoQuery(id);
+        res.status(200).json({
+          status: 200,
+          message: TRIP_FOUND_MESSAGE,
+          payload: getTripRequests,
+        });
+      } else {
+        const getTripRequests = await fetchAllRequests(id, req.query);
+        res.status(200).json({
+          status: 200,
+          message: TRIP_FOUND_MESSAGE,
+          payload: getTripRequests,
+        });
+      }
     } catch (err) {
       next(err);
     }
@@ -301,7 +318,7 @@ export class TripControllers {
           throw new BaseError(
             'Bad request',
             400,
-            'Trip request is already Updated',
+            'Trip request is already Updated'
           );
         }
       } else {
@@ -319,14 +336,14 @@ export class TripControllers {
 
       const compareDates = validateDateTripStat(
         req.body.endDate,
-        req.body.startDate,
+        req.body.startDate
       );
 
       if (compareDates) {
         const result = await findStatistcsByUser(
           id,
           req.body.startDate,
-          req.body.endDate,
+          req.body.endDate
         );
 
         if (result) {
@@ -341,14 +358,14 @@ export class TripControllers {
           throw new BaseError('Not found', 404, 'information not found');
         } else {
           throw new UnauthorizedError(
-            'You are not a manager or requester of this user',
+            'You are not a manager or requester of this user'
           );
         }
       } else {
         throw new BaseError(
           'Bad request',
           400,
-          'Please, check your input data.',
+          'Please, check your input data.'
         );
       }
     } catch (err) {

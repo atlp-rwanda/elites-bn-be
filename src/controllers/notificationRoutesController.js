@@ -114,7 +114,6 @@ class NotificationControllers {
         return res.status(401).json({ message: DOES_NOT_EXIST });
       }
     } catch (error) {
-      console.log(error);
       return res.status(500).send({ message: FETCH_ERROR });
     }
   };

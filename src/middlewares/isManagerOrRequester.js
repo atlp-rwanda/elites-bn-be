@@ -8,7 +8,7 @@ export const isManagerOrRequester = async (req, res, next) => {
   try {
     const emptyToken = req.headers.authorization;
     if (emptyToken === null) {
-      return res.status(403).json({ message: 'user is note logged in' });
+      return res.status(401).json({ message: 'user is note logged in' });
     }
     const token = req.headers.authorization.split(' ')[1];
     const data = await decodeAcessToken(token);
@@ -17,13 +17,13 @@ export const isManagerOrRequester = async (req, res, next) => {
       include: 'Role',
     });
     if (user.roleId !== 3 || user.roleId !== 5) {
-      return res.status(401).json({
-        status: 401,
+      return res.status(403).json({
+        status: 403,
         message: 'Only manager and requester are allowed to perform this task',
       });
     }
   } catch (error) {
-    return res.status(403).json({ message: 'user is not logged in' });
+    return res.status(401).json({ message: 'user is not logged in' });
   }
 
   next();

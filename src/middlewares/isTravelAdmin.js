@@ -13,7 +13,7 @@ export const isTravelAdmin = async (id, req, res, next) => {
     if (role.name === 'travel-admin') {
       next();
     } else {
-      return res.status(401).json({ message: 'You are not a travel admin' });
+      return res.status(403).json({ message: 'You are not a travel admin' });
     }
   } catch (err) {
     next(err);

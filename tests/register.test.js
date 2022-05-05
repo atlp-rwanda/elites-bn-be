@@ -6,7 +6,7 @@ import { decodeAcessToken } from '../src/helpers/jwtFunction';
 use(chaiHttp);
 
 describe('USER REGISTER A USER', () => {
-  let accessToken, refreshToken, userId, token;
+  let accessToken, refreshToken, userId, token, userToken, tok;
 
   before(async () => {
     await models.User.destroy({ where: { email: 'elites@gmail.com' } });
@@ -16,14 +16,23 @@ describe('USER REGISTER A USER', () => {
       names: 'elites',
       email: 'elites@gmail.com',
       password: 'Pass12515858',
-    });
-     token = res.body.payload.accessToken;
-     const tok= await decodeAcessToken(token);
-    userId=tok.id;
+    }); 
+    userToken = res.body.payload.accessToken;
+    tok = await decodeAcessToken(userToken);
+    userId = tok.id;
     expect(res).to.have.status([200]);
     expect(res.body).to.have.property('message');
     expect(res.body).to.have.property('status');
     expect(res.body).haveOwnProperty('payload');
+  });
+
+  it('Should Verify the user ', async () => {
+    const res = await chai
+      .request(app)
+      .patch(`/api/v1/users/verifyEmail/${userToken}`);
+    console.log(res.body);
+    expect(res).to.have.status([200]);
+    expect(res.body).to.have.property('message');
   });
 
   it('it should not register a user with existing email ', async () => {
@@ -41,7 +50,7 @@ describe('USER REGISTER A USER', () => {
       email: 'yangeney@gmail.com',
       password: 'password',
     });
-    token= res.body.payload.accesstoken;
+    token = res.body.payload.accesstoken;
     expect(res).to.have.status([200]);
     expect(res.body).to.have.property('message');
     expect(res.body).to.have.property('payload');
@@ -50,28 +59,28 @@ describe('USER REGISTER A USER', () => {
 
   it('it should assign a manager to user ', async () => {
     const res = await chai
-    .request(app)
-    .patch(`/api/v1/users/${userId}`)
-    .set('Authorization', `Bearer ${token}`)
-    .send({
-      manager: 3, 
-    });
+      .request(app)
+      .patch(`/api/v1/users/${userId}`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        manager: 3,
+      });
     expect(res.body).to.have.property('message');
     expect(res).to.have.status([200]);
   });
 
   it('it should not assign a manager to user ', async () => {
     const res = await chai
-    .request(app)
-    .patch(`/api/v1/users/${userId}`)
-    .set('Authorization', `Bearer ${token}`)
-    .send({
-      manager: 3, 
-    });
+      .request(app)
+      .patch(`/api/v1/users/${userId}`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        manager: 3,
+      });
     expect(res.body).to.have.property('message');
     expect(res).to.have.status([500]);
   });
-
+  
   it('Should login a user ', async () => {
     const res = await chai.request(app).post(`/api/v1/users/login/`).send({
       email: 'elites@gmail.com',

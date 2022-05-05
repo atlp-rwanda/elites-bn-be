@@ -11,7 +11,7 @@ import {
 } from '../services/profileServices';
 import { ConflictsError } from '../httpErrors/conflictError';
 import { ForbbidenError } from '../httpErrors/forbidenError';
-import { PageNotFoundError } from '../httpErrors/pageNotFoundError';
+import { BaseError } from '../httpErrors/baseError';
 
 class ProfileController {
   async createController(id, req, res, next) {
@@ -76,7 +76,7 @@ class ProfileController {
           payload: getProfile,
         });
       }
-      throw new PageNotFoundError('Resource not found');
+      throw new BaseError('NOT FOUND', 404, 'Resource not found');
     } catch (err) {
       next(err);
     }
@@ -102,7 +102,7 @@ class ProfileController {
           payload: updated,
         });
       } else {
-        throw new PageNotFoundError('Resource to update not found');
+        throw new BaseError('Not found', 404, 'Resource to update not found');
       }
     } catch (err) {
       next(err);
@@ -115,7 +115,7 @@ class ProfileController {
       if (delTripRequests) {
         res.send({ status: 204, message: 'deleted successfully' });
       } else {
-        throw new PageNotFoundError('Not found');
+        throw new BaseError('Not found', 404, 'TRIP NOT FOUND');
       }
     } catch (err) {
       next(err);

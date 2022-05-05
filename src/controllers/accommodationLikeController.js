@@ -2,6 +2,7 @@
 import { AccommodationLikeService } from '../services/accommodationLikeServices';
 import AccommodationServices from '../services/accommodationServices';
 import { PageNotFoundError } from '../httpErrors/pageNotFoundError';
+import { BaseError } from '../httpErrors/baseError';
 
 export class AccommodationLikeController {
   static async dislike(id, req, res, next) {
@@ -26,8 +27,8 @@ export class AccommodationLikeController {
               payload: newAccommodationLike,
             });
           }
-          return res.status(200).json({
-            status: '200',
+          return res.status(409).json({
+            status: '409',
             message: 'Accommodation already disliked successfully',
             payload: accommodationLike,
           });
@@ -37,13 +38,13 @@ export class AccommodationLikeController {
           accommodationId: parseInt(req.params.id),
           isLike: false,
         });
-        return res.status(200).json({
-          status: '200',
+        return res.status(409).json({
+          status: '409',
           message: 'Accommodation already disliked successfully',
           payload: newAccommodationLike,
         });
       }
-      throw new PageNotFoundError('Accommodation not found');
+      throw new BaseError('Not found', 404, 'Accommodation not found');
     } catch (error) {
       next(error);
     }
@@ -71,8 +72,8 @@ export class AccommodationLikeController {
               payload: newAccommodationLike,
             });
           }
-          return res.status(200).json({
-            status: '200',
+          return res.status(409).json({
+            status: '409',
             message: 'Accommodation already liked successfully',
             payload: accommodationLike,
           });
@@ -88,7 +89,7 @@ export class AccommodationLikeController {
           payload: newAccommodationLike,
         });
       }
-      throw new PageNotFoundError('comment not found');
+      throw new BaseError('Not found', 404, 'comment not found');
     } catch (error) {
       next(error);
     }
@@ -115,7 +116,7 @@ export class AccommodationLikeController {
           },
         });
       }
-      throw new PageNotFoundError('comment not found');
+      throw new BaseError('Not found', 404, 'comment not found');
     } catch (error) {
       next(error);
     }

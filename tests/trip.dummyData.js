@@ -13,6 +13,22 @@ export const addRequest = {
   returnDate: '2023-03-04',
 };
 
+// PENDING REQUEST
+
+export const pendingRequest = {
+  departLocation: 1,
+  destinations: [
+    {
+      accommodationId: 3,
+      destinationId: 2,
+    },
+  ],
+  tripReason: 'Free Tours',
+  rememberMe: 'true',
+  departDate: '2025-04-07',
+  returnDate: '2026-05-04',
+};
+
 export const notRememberMe1 = {
   departLocation: 1,
   destinations: [

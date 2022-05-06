@@ -49,7 +49,7 @@ export class UserControllers {
         const {
           password, createdAt, updatedAt, ...newcreatedUser
         } = createdUser;
-        const token = await generateAccessToken({ id: createdUser.id });
+        const token = await generateAccessToken({ id: createdUser.id, role:createdUser.roleId});
         const refreshToken = await generateRefreshToken({
           id: newcreatedUser.id,
         });
@@ -111,7 +111,7 @@ export class UserControllers {
       if (!valid) {
         throw new UnauthorizedError();
       } else if (userInfo.verified) {
-        const userPayload = { id: userInfo.id };
+        const userPayload = { id: userInfo.id , role:userInfo.roleId};
         const token = await generateAccessToken(userPayload);
         const refreshToken = await generateRefreshToken(userPayload);
         await models.refreshTokenTable.create({ refreshToken });

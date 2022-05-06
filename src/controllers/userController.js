@@ -49,9 +49,9 @@ export class UserControllers {
         const {
           password, createdAt, updatedAt, ...newcreatedUser
         } = createdUser;
-        const token = await generateAccessToken({ id: createdUser.id, role:createdUser.roleId });
+        const token = await generateAccessToken({ id: createdUser.id, role: createdUser.roleId });
         const refreshToken = await generateRefreshToken({
-          id: newcreatedUser.id, role:newcreatedUser.roleId
+          id: newcreatedUser.id, role: newcreatedUser.roleId
         });
 
         const email = {
@@ -111,7 +111,7 @@ export class UserControllers {
       if (!valid) {
         throw new UnauthorizedError();
       } else if (userInfo.verified) {
-        const userPayload = { id: userInfo.id , role:userInfo.roleId };
+        const userPayload = { id: userInfo.id, role: userInfo.roleId };
         const token = await generateAccessToken(userPayload);
         const refreshToken = await generateRefreshToken(userPayload);
         await models.refreshTokenTable.create({ refreshToken });
@@ -187,8 +187,8 @@ export class UserControllers {
   // eslint-disable-next-line class-methods-use-this
   async authGoogleLogin(req, res, next) {
     try {
-      const token = await generateAccessToken({ id: req.user.id, role:req.user.role });
-      const refreshToken = await generateRefreshToken({ id: req.user.id,role:req.user.role });
+      const token = await generateAccessToken({ id: req.user.id, role: req.user.role });
+      const refreshToken = await generateRefreshToken({ id: req.user.id, role: req.user.role });
       await models.refreshTokenTable.create({ refreshToken });
       res.status(201).json({
         status: 201,
@@ -203,8 +203,8 @@ export class UserControllers {
   // eslint-disable-next-line class-methods-use-this
   async authFacebookLogin(req, res, next) {
     try {
-      const token = await generateAccessToken({ id: req.user.id, role:req.user.role });
-      const refreshToken = await generateRefreshToken({ id: req.user.id , role:req.user.role});
+      const token = await generateAccessToken({ id: req.user.id, role: req.user.role });
+      const refreshToken = await generateRefreshToken({ id: req.user.id, role: req.user.role });
       await models.refreshTokenTable.create({ refreshToken });
       res.status(201).json({
         status: 201,

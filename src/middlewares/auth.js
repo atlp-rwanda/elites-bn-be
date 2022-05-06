@@ -22,7 +22,7 @@ passport.use(
       if (user) {
         const userId = user.id;
 
-        return done(null, { id: userId, role:user.roleId });
+        return done(null, { id: userId, role: user.roleId });
       }
       const role = await models.Role.findOne({
         where: { name: 'requester' },
@@ -38,7 +38,7 @@ passport.use(
 
       const fetchUserId = fetchUser.id;
 
-      return done(null, { id: fetchUserId ,role: fetchUser.roleId });
+      return done(null, { id: fetchUserId, role: fetchUser.roleId });
     },
   ),
 );
@@ -58,7 +58,7 @@ passport.use(
       if (user) {
         const userId = user.id;
 
-        return done(null, { id: userId, role:user.roleId });
+        return done(null, { id: userId, role: user.roleId });
       } else {
         const role = await models.Role.findOne({
           where: { name: 'requester' },

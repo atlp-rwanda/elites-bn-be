@@ -204,7 +204,7 @@ export class UserControllers {
   async authFacebookLogin(req, res, next) {
     try {
       const token = await generateAccessToken({ id: req.user.id, role: req.user.role });
-      const refreshToken = await generateRefreshToken({ id: req.user.id, role: req.user.role});
+      const refreshToken = await generateRefreshToken({ id: req.user.id, role: req.user.role });
       await models.refreshTokenTable.create({ refreshToken });
       res.status(201).json({
         status: 201,

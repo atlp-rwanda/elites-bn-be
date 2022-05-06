@@ -111,7 +111,7 @@ export class UserControllers {
       if (!valid) {
         throw new UnauthorizedError();
       } else if (userInfo.verified) {
-        const userPayload = { id: userInfo.id , role: userInfo.roleId };
+        const userPayload = { id: userInfo.id, role: userInfo.roleId };
         const token = await generateAccessToken(userPayload);
         const refreshToken = await generateRefreshToken(userPayload);
         await models.refreshTokenTable.create({ refreshToken });
@@ -188,7 +188,7 @@ export class UserControllers {
   async authGoogleLogin(req, res, next) {
     try {
       const token = await generateAccessToken({ id: req.user.id, role: req.user.role });
-      const refreshToken = await generateRefreshToken({ id: req.user.id,role: req.user.role });
+      const refreshToken = await generateRefreshToken({ id: req.user.id, role: req.user.role });
       await models.refreshTokenTable.create({ refreshToken });
       res.status(201).json({
         status: 201,
@@ -204,7 +204,7 @@ export class UserControllers {
   async authFacebookLogin(req, res, next) {
     try {
       const token = await generateAccessToken({ id: req.user.id, role: req.user.role });
-      const refreshToken = await generateRefreshToken({ id: req.user.id , role: req.user.role});
+      const refreshToken = await generateRefreshToken({ id: req.user.id, role: req.user.role});
       await models.refreshTokenTable.create({ refreshToken });
       res.status(201).json({
         status: 201,

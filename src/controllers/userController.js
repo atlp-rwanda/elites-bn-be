@@ -190,15 +190,19 @@ export class UserControllers {
       const token = await generateAccessToken({ id: req.user.id, role: req.user.role });
       const refreshToken = await generateRefreshToken({ id: req.user.id, role: req.user.role });
       await models.refreshTokenTable.create({ refreshToken });
-      res.status(201).json({
-        status: 201,
-        message: 'Succesfully logged in with Google!',
-        payload: { accesstoken: token, refreshToken },
-      });
+      // res.status(201).json({
+      //   status: 201,
+      //   message: 'Succesfully logged in with Google!',
+      //   payload: { accesstoken: token, refreshToken },
+      // });
+      res.status(201).send(
+        `<script> window.location = 'http://localhost:4000/google/success/${token.replace(/\.+/gi,'|')}'</script>`
+        )
     } catch (err) {
       next(err);
     }
   }
+  // {token.replace(/\|+/gi,'.')}
 
   // eslint-disable-next-line class-methods-use-this
   async authFacebookLogin(req, res, next) {

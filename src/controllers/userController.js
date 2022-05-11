@@ -200,13 +200,11 @@ export class UserControllers {
   // eslint-disable-next-line class-methods-use-this
   async authGoogleLogin(req, res, next) {
     try {
-      const token = await generateAccessToken
-      ({
+      const token = await generateAccessToken({
         id: req.user.id,
         role: req.user.role,
       });
-      const refreshToken = await generateRefreshToken
-      ({
+      const refreshToken = await generateRefreshToken({
         id: req.user.id,
         role: req.user.role,
       });

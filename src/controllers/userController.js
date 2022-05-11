@@ -41,17 +41,20 @@ export class UserControllers {
       const userEmailExist = await userExist(req.body.email);
       if (userEmailExist) {
         throw new ConflictsError(
-          `User with this email: "${req.body.email}" already exist please a different email`,
+          `User with this email: "${req.body.email}" already exist please a different email`
         );
       } else {
         req.body.password = await hashPassword(req.body.password);
         const createdUser = await createUser(req.body);
-        const {
-          password, createdAt, updatedAt, ...newcreatedUser
-        } = createdUser;
-        const token = await generateAccessToken({ id: createdUser.id, role: createdUser.roleId });
+        const { password, createdAt, updatedAt, ...newcreatedUser } =
+          createdUser;
+        const token = await generateAccessToken({
+          id: createdUser.id,
+          role: createdUser.roleId,
+        });
         const refreshToken = await generateRefreshToken({
-          id: newcreatedUser.id, role: newcreatedUser.roleId
+          id: newcreatedUser.id,
+          role: newcreatedUser.roleId,
         });
 
         const email = {
@@ -85,11 +88,10 @@ export class UserControllers {
 
       const isVerified = true;
       if (user.verified) {
-        return res.status(409)
-          .send({
-            status: 409,
-            message: 'Account is already verified!',
-          });
+        return res.status(409).send({
+          status: 409,
+          message: 'Account is already verified!',
+        });
         // throw new ConflictsError('The account is already verified');
       }
       models.User.update({ verified: isVerified }, { where: { id: userId } });
@@ -187,17 +189,28 @@ export class UserControllers {
   // eslint-disable-next-line class-methods-use-this
   async authGoogleLogin(req, res, next) {
     try {
-      const token = await generateAccessToken({ id: req.user.id, role: req.user.role });
-      const refreshToken = await generateRefreshToken({ id: req.user.id, role: req.user.role });
+      const token = await generateAccessToken({
+        id: req.user.id,
+        role: req.user.role,
+      });
+      const refreshToken = await generateRefreshToken({
+        id: req.user.id,
+        role: req.user.role,
+      });
       await models.refreshTokenTable.create({ refreshToken });
       // res.status(201).json({
       //   status: 201,
       //   message: 'Succesfully logged in with Google!',
       //   payload: { accesstoken: token, refreshToken },
       // });
-      res.status(201).send(
-        `<script> window.location = 'http://localhost:4000/google/success/${token.replace(/\.+/gi,'|')}'</script>`
-        )
+      res
+        .status(201)
+        .send(
+          `<script> window.location = 'https://elites-bn-muutyv707-elites-team.vercel.app/google/success/${token.replace(
+            /\.+/gi,
+            '|'
+          )}'</script>`
+        );
     } catch (err) {
       next(err);
     }
@@ -207,8 +220,14 @@ export class UserControllers {
   // eslint-disable-next-line class-methods-use-this
   async authFacebookLogin(req, res, next) {
     try {
-      const token = await generateAccessToken({ id: req.user.id, role: req.user.role });
-      const refreshToken = await generateRefreshToken({ id: req.user.id, role: req.user.role });
+      const token = await generateAccessToken({
+        id: req.user.id,
+        role: req.user.role,
+      });
+      const refreshToken = await generateRefreshToken({
+        id: req.user.id,
+        role: req.user.role,
+      });
       await models.refreshTokenTable.create({ refreshToken });
       res.status(201).json({
         status: 201,
@@ -229,7 +248,7 @@ export class UserControllers {
         throw new BaseError(
           'Not found',
           404,
-          'The account with provided email is not registered',
+          'The account with provided email is not registered'
         );
       }
       const payload = {
@@ -243,7 +262,7 @@ export class UserControllers {
         email,
         'ihonore01@gmail.com',
         'Barefoot Nomad password reset',
-        makeTemplate(link),
+        makeTemplate(link)
       );
       return res.status(200).send({
         status: 200,
@@ -263,7 +282,7 @@ export class UserControllers {
         throw new BaseError(
           'Bad request',
           400,
-          'Entered passwords do not match',
+          'Entered passwords do not match'
         );
       }
       const { token } = req.params;

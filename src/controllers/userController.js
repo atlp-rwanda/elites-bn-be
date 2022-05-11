@@ -131,12 +131,13 @@ export class UserControllers {
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
   async fetchAllUsers(req, res, next) {
     try {
       const users = await getAllUser(); 
-      return res.status(200).json({status:200, message: 'users retrieved successfully' , payload: users})
+      return res.status(200).json({ status: 200, message: 'users retrieved successfully', payload: users })
     } catch (err) {
-      next(err)
+      next(err);
     }
   }
 
@@ -199,11 +200,13 @@ export class UserControllers {
   // eslint-disable-next-line class-methods-use-this
   async authGoogleLogin(req, res, next) {
     try {
-      const token = await generateAccessToken({
+      const token = await generateAccessToken
+      ({
         id: req.user.id,
         role: req.user.role,
       });
-      const refreshToken = await generateRefreshToken({
+      const refreshToken = await generateRefreshToken
+      ({
         id: req.user.id,
         role: req.user.role,
       });

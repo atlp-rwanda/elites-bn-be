@@ -109,4 +109,6 @@ router.get('/auth/facebook/failed', (req, res) => {
   res.send('oops!failed to login with Facebook');
 });
 
+router.get('/', isAdmin, userControllers.fetchAllUsers);
+
 export default router;

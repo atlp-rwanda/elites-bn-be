@@ -96,3 +96,7 @@ export const notificationsOptIn = async (id) => {
   }
   return false;
 };
+
+export const getAllUser = async() =>{
+  return models.User.findAll();
+}

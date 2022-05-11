@@ -290,6 +290,32 @@ export const users = {
       }],
     },
   },
+
+  '/api/v1/users/': {
+    get: {
+      tags: ['Users'],
+      summary: 'This will fetch all users',
+      description: ' ',
+      produces: ['application/json'],
+      responses: {
+        200: {
+          description: 'Users retrieved successfully ',
+        },
+
+        401: {
+          description: 'Unauthorized access',
+        },
+        500: {
+          description: 'Internal server error',
+        },
+      },
+      security: [
+        {
+          Bearer: [],
+        },
+      ],
+    },
+  },
 };
 
 export const userDefinition = {

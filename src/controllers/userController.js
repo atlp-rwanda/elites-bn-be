@@ -18,6 +18,7 @@ import {
   updateUserPassword,
   notificationsOptOut,
   notificationsOptIn,
+  getAllUser,
 } from '../services/userServices';
 
 import { sendEmail } from '../services/send-email-service';
@@ -127,6 +128,15 @@ export class UserControllers {
       }
     } catch (err) {
       next(err);
+    }
+  }
+
+  async fetchAllUsers(req, res, next) {
+    try {
+      const users = await getAllUser(); 
+      return res.status(200).json({status:200, message: 'users retrieved successfully' , payload: users})
+    } catch (err) {
+      next(err)
     }
   }
 
@@ -338,4 +348,5 @@ export class UserControllers {
       next(err);
     }
   }
+
 }

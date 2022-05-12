@@ -111,6 +111,15 @@ export const getAllUser = async () => {
         as: 'Role',
         attributes: { exclude: ['createdAt', 'updatedAt'] },
       },
-    ]
+    ],
+
+    attributes: {
+      exclude: [
+        'createdAt',
+        'updatedAt',
+        'roleId',
+        'managerId',
+      ],
+    },
   });
 };

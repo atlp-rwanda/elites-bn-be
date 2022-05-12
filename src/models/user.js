@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'roleId',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
+        as: 'Role',
       });
       User.belongsTo(User, {
         foreignKey: 'managerId',

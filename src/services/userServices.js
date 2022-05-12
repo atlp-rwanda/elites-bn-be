@@ -105,7 +105,12 @@ export const getAllUser = async () => {
         model: models.User,
         as: 'ManagerId',
         attributes: { exclude: ['createdAt', 'updatedAt', 'password'] },
-      }
+      },
+      {
+        model: models.Role,
+        as: 'Role',
+        attributes: { exclude: ['createdAt', 'updatedAt'] },
+      },
     ]
   });
 };

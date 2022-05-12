@@ -140,6 +140,13 @@ export const getAllRequestWhenNoQuery = async (userId) => {
       where: {
         managerId: userId,
       },
+      include: [
+        {
+          model: models.User,
+          as: 'User',
+          attributes: { exclude: ['createdAt', 'updatedAt', 'password'] },
+        },
+      ],
     });
     return data;
   }

@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import models, { Role } from '../models';
+import { getManagerId } from './tripServices';
 
 dotenv.config();
 
@@ -98,5 +99,13 @@ export const notificationsOptIn = async (id) => {
 };
 
 export const getAllUser = async () => {
-  return models.User.findAll();
+  return models.User.findAll({
+    include: [
+      {
+        model: models.User,
+        as: 'ManagerId',
+        attributes: { exclude: ['createdAt', 'updatedAt', 'password'] },
+      }
+    ]
+  });
 };

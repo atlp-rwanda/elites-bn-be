@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE',
         constraints: false,
+        as: 'ManagerId',
       });
 
       User.hasMany(User, {

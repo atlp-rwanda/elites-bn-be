@@ -43,6 +43,23 @@ export const createUser = async (user) => {
   return userCreated;
 };
 
+// get all user roles
+
+export const fetchRole = async (newRoleId, email) => {
+  const roles = await Role.findAll({
+    attributes: {
+      exclude: [
+        'createdAt',
+        'updatedAt',
+      ],
+    },
+  });
+  if (roles == null) {
+    return null;
+  }
+  return roles;
+};
+
 export const updatedRole = async (newRoleId, email) => {
   const user = await models.User.findOne({ where: { email } });
   const newRole = await Role.findOne({ where: { id: newRoleId } });

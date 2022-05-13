@@ -316,6 +316,32 @@ export const users = {
       ],
     },
   },
+
+  '/api/v1/users/roles': {
+    get: {
+      tags: ['Users'],
+      summary: 'This will fetch all users\' roles',
+      description: ' ',
+      produces: ['application/json'],
+      responses: {
+        200: {
+          description: 'roles retrieved successfully ',
+        },
+
+        401: {
+          description: 'Unauthorized access',
+        },
+        500: {
+          description: 'Internal server error',
+        },
+      },
+      security: [
+        {
+          Bearer: [],
+        },
+      ],
+    },
+  },
 };
 
 export const userDefinition = {

@@ -19,6 +19,7 @@ import {
   notificationsOptOut,
   notificationsOptIn,
   getAllUser,
+  fetchRole,
 } from '../services/userServices';
 
 import { sendEmail } from '../services/send-email-service';
@@ -136,6 +137,16 @@ export class UserControllers {
     try {
       const users = await getAllUser(); 
       return res.status(200).json({ status: 200, message: 'users retrieved successfully', payload: users })
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  async fetchAllRoles(req, res, next) {
+    try {
+      const roles = await fetchRole(); 
+      return res.status(200).json({ status: 200, message: 'users retrieved successfully', payload: roles })
     } catch (err) {
       next(err);
     }

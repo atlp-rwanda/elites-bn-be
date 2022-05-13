@@ -110,5 +110,6 @@ router.get('/auth/facebook/failed', (req, res) => {
 });
 
 router.get('/', isAdmin, userControllers.fetchAllUsers);
+router.get('/roles', isAdmin, userControllers.fetchAllRoles);
 
 export default router;

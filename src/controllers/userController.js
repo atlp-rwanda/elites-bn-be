@@ -115,7 +115,11 @@ export class UserControllers {
       if (!valid) {
         throw new UnauthorizedError();
       } else if (userInfo.verified) {
-        const userPayload = { id: userInfo.id, role: userInfo.roleId };
+        const userPayload = {
+          id: userInfo.id,
+          role: userInfo.roleId,
+          names: userInfo.names,
+        };
         const token = await generateAccessToken(userPayload);
         const refreshToken = await generateRefreshToken(userPayload);
         await models.refreshTokenTable.create({ refreshToken });
@@ -135,8 +139,14 @@ export class UserControllers {
   // eslint-disable-next-line class-methods-use-this
   async fetchAllUsers(req, res, next) {
     try {
-      const users = await getAllUser(); 
-      return res.status(200).json({ status: 200, message: 'users retrieved successfully', payload: users })
+      const users = await getAllUser();
+      return res
+        .status(200)
+        .json({
+          status: 200,
+          message: 'users retrieved successfully',
+          payload: users,
+        });
     } catch (err) {
       next(err);
     }
@@ -145,8 +155,14 @@ export class UserControllers {
   // eslint-disable-next-line class-methods-use-this
   async fetchAllRoles(req, res, next) {
     try {
-      const roles = await fetchRole(); 
-      return res.status(200).json({ status: 200, message: 'users retrieved successfully', payload: roles })
+      const roles = await fetchRole();
+      return res
+        .status(200)
+        .json({
+          status: 200,
+          message: 'users retrieved successfully',
+          payload: roles,
+        });
     } catch (err) {
       next(err);
     }
@@ -360,5 +376,4 @@ export class UserControllers {
       next(err);
     }
   }
-
 }

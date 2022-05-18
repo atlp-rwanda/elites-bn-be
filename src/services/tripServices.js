@@ -99,6 +99,7 @@ export const getAllRequests = async (userId, queryParams) => {
           { createdAt: { [Op.gte]: queryParams.createdAt } },
         ],
       },
+      order: [['id', 'DESC']],
     });
 
     return data;
@@ -114,6 +115,7 @@ export const getAllRequests = async (userId, queryParams) => {
           { createdAt: { [Op.gte]: queryParams.createdAt } },
         ],
       },
+      order: [['id', 'DESC']],
     });
 
     return data;
@@ -129,6 +131,7 @@ export const getAllRequests = async (userId, queryParams) => {
         { createdAt: { [Op.gte]: queryParams.createdAt } },
       ],
     },
+    order: [['id', 'DESC']],
   });
   return Data;
 };
@@ -147,11 +150,13 @@ export const getAllRequestWhenNoQuery = async (userId) => {
           attributes: { exclude: ['createdAt', 'updatedAt', 'password'] },
         },
       ],
+      order: [['id', 'DESC']],
     });
     return data;
   }
   const Data = await models.tripRequest.findAll({
     where: { userId },
+    order: [['id', 'DESC']],
   });
   return Data;
 };

@@ -26,7 +26,7 @@ export const userById = async (id) => {
 export const updateUser = async (userId) => {
   const user = await models.User.update(
     { verified: true },
-    { where: { id: userId } },
+    { where: { id: userId } }
   );
   return user;
 };
@@ -48,10 +48,7 @@ export const createUser = async (user) => {
 export const fetchRole = async (newRoleId, email) => {
   const roles = await Role.findAll({
     attributes: {
-      exclude: [
-        'createdAt',
-        'updatedAt',
-      ],
+      exclude: ['createdAt', 'updatedAt'],
     },
   });
   if (roles == null) {
@@ -92,7 +89,7 @@ export const notificationsOptOut = async (id) => {
         where: { id },
         returning: true,
         raw: true,
-      },
+      }
     );
     return updatedUser;
   }
@@ -108,7 +105,7 @@ export const notificationsOptIn = async (id) => {
         where: { id },
         returning: true,
         raw: true,
-      },
+      }
     );
     return updatedUser;
   }
@@ -131,12 +128,8 @@ export const getAllUser = async () => {
     ],
 
     attributes: {
-      exclude: [
-        'createdAt',
-        'updatedAt',
-        'roleId',
-        'managerId',
-      ],
+      exclude: ['createdAt', 'updatedAt', 'roleId', 'managerId'],
     },
+    order: [['id', 'DESC']],
   });
 };

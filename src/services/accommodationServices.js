@@ -1,4 +1,4 @@
-import { Accommodation, Room } from '../models';
+import { Accommodation, Room, Location } from '../models';
 
 class AccommodationServices {
   createAccommodation = async (data) => {
@@ -15,6 +15,11 @@ class AccommodationServices {
           as: 'Rooms',
           attributes: { exclude: ['createdAt', 'updatedAt'] },
         },
+        {
+          model: Location,
+          as: 'location',
+          attributes: { exclude: ['createdAt', 'updatedAt'] },
+        },
       ],
       attributes: { exclude: ['createdAt', 'updatedAt'] },
     });
@@ -25,6 +30,19 @@ class AccommodationServices {
     const accommodations = await Accommodation.findAll({
       where: { locationId: locationId },
       attributes: { exclude: ['createdAt', 'updatedAt'] },
+      include: [
+        {
+          model: Room,
+          as: 'Rooms',
+          attributes: { exclude: ['createdAt', 'updatedAt'] },
+        },
+        {
+          model: Location,
+          as: 'location',
+          attributes: { exclude: ['createdAt', 'updatedAt'] },
+        },
+      ],
+      order: [['id', 'DESC']],
     });
     return accommodations;
   };
@@ -39,7 +57,21 @@ class AccommodationServices {
   };
 
   getAllAccommodations = async () => {
-    const accommodations = await Accommodation.findAll({});
+    const accommodations = await Accommodation.findAll({
+      include: [
+        {
+          model: Room,
+          as: 'Rooms',
+          attributes: { exclude: ['createdAt', 'updatedAt'] },
+        },
+        {
+          model: Location,
+          as: 'location',
+          attributes: { exclude: ['createdAt', 'updatedAt'] },
+        },
+      ],
+      order: [['id', 'DESC']],
+    });
     return accommodations;
   };
 

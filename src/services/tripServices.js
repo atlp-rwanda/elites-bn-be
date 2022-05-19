@@ -352,6 +352,34 @@ export const findStatistcsByUser = async (userId, startDate, endDate) => {
       },
     });
   }
+
+  if (role === 'admin') {
+    return await models.tripRequest.findAndCountAll({
+      where: {
+        [Op.and]: [{ createdAt: { [Op.between]: [startDate, endDate] } }],
+      },
+    });
+  }
+};
+
+export const GetStatistcsByUser = async (userId, startDate, endDate) => {
+  const role = await checkRole(userId);
+  if (role === 'requester') {
+    return await models.tripRequest.findAndCountAll({
+      where: {
+        [Op.and]: [
+          { userId },
+        ],
+      },
+    });
+  }
+  if (role === 'manager') {
+    return await models.tripRequest.findAndCountAll({
+      where: {
+        [Op.and]: [{ createdAt: { [Op.between]: [startDate, endDate] } }],
+      },
+    });
+  }
 };
 
 // For super-admin

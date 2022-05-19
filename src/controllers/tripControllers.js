@@ -39,7 +39,7 @@ export class TripControllers {
       req.body.managerId = await getManagerId(id);
       const compareDates = validateDate(
         req.body.returnDate,
-        req.body.departDate
+        req.body.departDate,
       );
       const { rememberMe } = req.body;
       const exists = await tripExist(id, req.body.departDate);
@@ -112,7 +112,7 @@ export class TripControllers {
           throw new BaseError(
             'Bad request',
             400,
-            'Please fill in your new passport and address'
+            'Please fill in your new passport and address',
           );
         }
         const profile = await models.Profile.findOne({
@@ -144,7 +144,7 @@ export class TripControllers {
           },
           {
             where: { userId: id },
-          }
+          },
         );
 
         const checkTripType = req.body.destinations.length;
@@ -183,7 +183,7 @@ export class TripControllers {
         req.params.id,
         req.body,
         updatePassportNumber,
-        updateNewAdress
+        updateNewAdress,
       );
       if (multiCityTrips) {
         // Emit event when trip request is edited
@@ -318,7 +318,7 @@ export class TripControllers {
           throw new BaseError(
             'Bad request',
             400,
-            'Trip request is already Updated'
+            'Trip request is already Updated',
           );
         }
       } else {
@@ -336,36 +336,46 @@ export class TripControllers {
 
       const compareDates = validateDateTripStat(
         req.body.endDate,
-        req.body.startDate
+        req.body.startDate,
       );
 
       if (compareDates) {
         const result = await findStatistcsByUser(
           id,
           req.body.startDate,
-          req.body.endDate
+          req.body.endDate,
         );
 
         if (result) {
-          res.status(200).json({
-            status: 200,
-            message: 'Information successfully found',
-            payload: result,
-          });
+          const role = await checkRole(id);
+          if (role === 'admin') {
+            const getTripRequests = await getAllRequestForDb();
+            res.status(200).json({
+              status: 200,
+              message: 'Information successfully found',
+              payload: getTripRequests,
+            });
+          } else {
+            res.status(200).json({
+              status: 200,
+              message: 'Information successfully found',
+              payload: result,
+            });
+          }
         }
 
         if (!result) {
           throw new BaseError('Not found', 404, 'information not found');
         } else {
           throw new UnauthorizedError(
-            'You are not a manager or requester of this user'
+            'You are not a manager or requester of this user',
           );
         }
       } else {
         throw new BaseError(
           'Bad request',
           400,
-          'Please, check your input data.'
+          'Please, check your input data.',
         );
       }
     } catch (err) {

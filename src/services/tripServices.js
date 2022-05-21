@@ -146,6 +146,33 @@ export const getAllRequestWhenNoQuery = async (userId) => {
       include: [
         {
           model: models.User,
+          include: [
+            {
+              model: models.Profile,
+              as: 'Profile',
+              attributes: { exclude: ['createdAt', 'updatedAt'] },
+            },
+          ],
+          as: 'User',
+          attributes: { exclude: ['createdAt', 'updatedAt', 'password'] },
+        },
+      ],
+      order: [['id', 'DESC']],
+    });
+    return data;
+  }
+  if (role === 'admin') {
+    const data = await models.tripRequest.findAll({
+      include: [
+        {
+          model: models.User,
+          include: [
+            {
+              model: models.Profile,
+              as: 'Profile',
+              attributes: { exclude: ['createdAt', 'updatedAt'] },
+            },
+          ],
           as: 'User',
           attributes: { exclude: ['createdAt', 'updatedAt', 'password'] },
         },
@@ -370,9 +397,7 @@ export const GetStatistcsByUser = async (userId, startDate, endDate) => {
   if (role === 'requester') {
     return await models.tripRequest.findAndCountAll({
       where: {
-        [Op.and]: [
-          { userId },
-        ],
+        [Op.and]: [{ userId }],
       },
     });
   }

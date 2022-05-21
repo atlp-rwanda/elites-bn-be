@@ -1,6 +1,4 @@
-const {
-  Model,
-} = require('sequelize');
+const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class Profile extends Model {
@@ -16,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
         constraints: false,
+        as: 'Profile',
       });
 
       Profile.belongsTo(models.Location, {
@@ -26,24 +25,27 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
   }
-  Profile.init({
-    userId: DataTypes.INTEGER,
-    name: DataTypes.STRING,
-    email: DataTypes.STRING,
-    gender: DataTypes.STRING,
-    birthdate: DataTypes.DATE,
-    language: DataTypes.STRING,
-    currency: DataTypes.STRING,
-    residence: DataTypes.INTEGER,
-    role: DataTypes.INTEGER,
-    department: DataTypes.STRING,
-    manager: DataTypes.INTEGER,
-    address: DataTypes.STRING,
-    passportNumber: DataTypes.STRING,
-    picture: DataTypes.STRING,
-  }, {
-    sequelize,
-    modelName: 'Profile',
-  });
+  Profile.init(
+    {
+      userId: DataTypes.INTEGER,
+      name: DataTypes.STRING,
+      email: DataTypes.STRING,
+      gender: DataTypes.STRING,
+      birthdate: DataTypes.DATE,
+      language: DataTypes.STRING,
+      currency: DataTypes.STRING,
+      residence: DataTypes.INTEGER,
+      role: DataTypes.INTEGER,
+      department: DataTypes.STRING,
+      manager: DataTypes.INTEGER,
+      address: DataTypes.STRING,
+      passportNumber: DataTypes.STRING,
+      picture: DataTypes.STRING,
+    },
+    {
+      sequelize,
+      modelName: 'Profile',
+    }
+  );
   return Profile;
 };

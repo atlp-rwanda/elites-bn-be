@@ -181,8 +181,23 @@ export const getAllRequestWhenNoQuery = async (userId) => {
     });
     return data;
   }
+
   const Data = await models.tripRequest.findAll({
     where: { userId },
+    include: [
+      {
+        model: models.User,
+        include: [
+          {
+            model: models.Profile,
+            as: 'Profile',
+            attributes: { exclude: ['createdAt', 'updatedAt'] },
+          },
+        ],
+        as: 'User',
+        attributes: { exclude: ['createdAt', 'updatedAt', 'password'] },
+      },
+    ],
     order: [['id', 'DESC']],
   });
   return Data;
@@ -279,7 +294,8 @@ export const updateMulticities = async (
 
     const updated = await exist.save();
     return updated;
-  } else if (!existId) {
+  }
+  if (!existId) {
     throw new NotFoundError('Trip not found');
   }
   throw new BaseError(
@@ -300,9 +316,8 @@ export const deleteRequest = async (userId, id) => {
   });
   if (Data) {
     return true;
-  } else {
-    return false;
   }
+  return false;
 };
 export const checkStatus = async (userid, status) => {
   const data = await models.tripRequest.findOne({

@@ -28,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
 
       User.hasOne(models.Profile, {
         foreignKey: 'userId',
+        as: 'Profile',
       });
       User.hasMany(models.Booking, {
         foreignKey: 'userId',
@@ -57,7 +58,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'User',
-    },
+    }
   );
   return User;
 };

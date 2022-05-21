@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
         constraints: false,
-        as: 'Profile',
+        as: 'User',
       });
 
       Profile.belongsTo(models.Location, {

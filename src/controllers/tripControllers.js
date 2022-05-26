@@ -349,7 +349,11 @@ export class TripControllers {
         if (result) {
           const role = await checkRole(id);
           if (role === 'admin') {
-            const getTripRequests = await getAllRequestForDb();
+            const getTripRequests = await findStatistcsByUser(
+              id,
+              req.body.startDate,
+              req.body.endDate,
+            );
             res.status(200).json({
               status: 200,
               message: 'Information successfully found',

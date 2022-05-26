@@ -77,7 +77,7 @@
         if (response.status === 200) {
           const result = await response.json();
           token = result.payload.accesstoken;
-          localStorage.setItem('accesstoken', JSON.stringify(token));
+          localStorage.setItem('accesstoken', token);
           window.location.replace('/chat.html');
         } else {
           alert('invalid credential,Try again');

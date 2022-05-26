@@ -12,7 +12,8 @@ let decodedToken;
 io.use(async (socket, next) => {
   const { token } = socket.handshake.auth;
   if (token) {
-    const accesstoken = JSON.parse(token);
+    const accesstoken = token;
+    console.log(token);
     decodedToken = await decodeAcessToken(accesstoken);
     return next();
   }
@@ -28,7 +29,7 @@ io.on('connection', async (socket) => {
     io.emit('register', onlineUsers);
   }
   const { token } = socket.handshake.auth;
-  const accesstoken = JSON.parse(token);
+  const accesstoken = token;
   decodedToken = await decodeAcessToken(accesstoken);
   const findUser = await models.User.findOne({
     where: {

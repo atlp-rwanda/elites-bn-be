@@ -214,6 +214,14 @@ export const getOneRequest = async (userId, id) => {
     });
     return data;
   }
+  if (role === 'admin') {
+    const data = await models.tripRequest.findOne({
+      where: {
+        id,
+      },
+    });
+    return data;
+  }
   const Data = await models.tripRequest.findOne({
     where: {
       userId,

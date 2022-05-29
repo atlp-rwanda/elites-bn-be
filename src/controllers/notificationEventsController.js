@@ -16,7 +16,7 @@ function removeTags(body) {
 }
 
 // Listener to the event when trip request is created
-requestEventEmitter.on('request-created', async (createdTrip, req) => {
+requestEventEmitter.once('request-created', async (createdTrip, req) => {
   try {
     const user = await userById(createdTrip.userId);
     const manager = await userById(createdTrip.managerId);
@@ -28,7 +28,11 @@ requestEventEmitter.on('request-created', async (createdTrip, req) => {
       body: removeTags(body),
       requestId: createdTrip.id,
     });
-
+    requestEventEmitter.emit(
+      'sendToastNotification',
+      manager.id,
+      removeTags(body)
+    );
     if (manager.notifyByEmail) {
       const payload = {
         body,
@@ -39,7 +43,7 @@ requestEventEmitter.on('request-created', async (createdTrip, req) => {
         manager.email,
         'ihonore01@gmail.com',
         'New Trip Request - Barefoot Nomad',
-        makeEmailNotificationTemplate(payload),
+        makeEmailNotificationTemplate(payload)
       );
     }
   } catch (err) {
@@ -61,7 +65,11 @@ requestEventEmitter.on('request-updated', async (updatedTrip) => {
       body: removeTags(body),
       requestId: updatedTrip.id,
     });
-
+    requestEventEmitter.emit(
+      'sendToastNotification',
+      manager.id,
+      removeTags(body)
+    );
     if (manager.notifyByEmail) {
       const payload = {
         body,
@@ -72,7 +80,7 @@ requestEventEmitter.on('request-updated', async (updatedTrip) => {
         manager.email,
         'ihonore01@gmail.com',
         'Updated Trip Request - Barefoot Nomad',
-        makeEmailNotificationTemplate(payload),
+        makeEmailNotificationTemplate(payload)
       );
     }
   } catch (err) {
@@ -95,6 +103,11 @@ requestEventEmitter.on('request-approved-or-rejected', async (updatedTrip) => {
       body: removeTags(body),
       requestId: updatedTrip.id,
     });
+    requestEventEmitter.emit(
+      'sendToastNotification',
+      user.id,
+      removeTags(body)
+    );
     if (user.notifyByEmail) {
       const payload = {
         body,
@@ -105,7 +118,7 @@ requestEventEmitter.on('request-approved-or-rejected', async (updatedTrip) => {
         user.email,
         'ihonore01@gmail.com',
         `${status} Trip Request - Barefoot Nomad`,
-        makeEmailNotificationTemplate(payload),
+        makeEmailNotificationTemplate(payload)
       );
     }
   } catch (err) {
@@ -151,7 +164,11 @@ requestEventEmitter.on('commented-on-request', async (comment, req) => {
       body: removeTags(body),
       requestId: trip.id,
     });
-
+    requestEventEmitter.emit(
+      'sendToastNotification',
+      userToNotify,
+      removeTags(body)
+    );
     if (emailToNotify) {
       const payload = {
         body,
@@ -162,7 +179,7 @@ requestEventEmitter.on('commented-on-request', async (comment, req) => {
         emailToNotify,
         'ihonore01@gmail.com',
         'New comment on Trip Request - Barefoot Nomad',
-        makeEmailNotificationTemplate(payload),
+        makeEmailNotificationTemplate(payload)
       );
     }
   } catch (err) {

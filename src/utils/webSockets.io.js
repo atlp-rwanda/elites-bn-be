@@ -1,11 +1,16 @@
+/* eslint-disable */
 import { Server } from 'socket.io';
 import { addMessage, getMessages } from '../services/chatServices';
-import models, { Notification } from '../models';
+import models from '../models';
 import { decodeAcessToken } from '../helpers/jwtFunction';
+import requestEventEmitter from '../controllers/notificationEventsController';
 
 const io = new Server({
   cors: {
-    origin: 'http://localhost:3000',
+    origin: [
+      'http://localhost:3000',
+      'https://elites-bn-fe-git-ft-181339606-notifications-elites-team.vercel.app',
+    ],
   },
 });
 let decodedToken;
@@ -13,15 +18,40 @@ io.use(async (socket, next) => {
   const { token } = socket.handshake.auth;
   if (token) {
     const accesstoken = token;
-    console.log(token);
     decodedToken = await decodeAcessToken(accesstoken);
     return next();
   }
   return next(new Error('unable to access token'));
 });
+
+//onlines users for notification
+
+let onlineUsersToNotify = [];
+
+const addNewUser = (userId, socketId) => {
+  !onlineUsersToNotify.some((user) => user.userId === userId) &&
+    onlineUsersToNotify.push({ userId, socketId });
+};
+
+const removeUser = (socketId) => {
+  onlineUsersToNotify = onlineUsersToNotify.filter(
+    (user) => user.socketId !== socketId
+  );
+};
+
+const getUser = (userId) => {
+  return onlineUsersToNotify.find((user) => user.userId === userId);
+};
+
+//online users for chat
 let onlineUsers = 0;
 const ipsconnected = [];
+
+///////////////////
 io.on('connection', async (socket) => {
+  console.log('a user connected');
+  io.emit('onconnectTesting1');
+
   const connectedUser = socket.id;
   if (!ipsconnected.hasOwnProperty(connectedUser)) {
     ipsconnected[connectedUser] = 1;
@@ -49,11 +79,16 @@ io.on('connection', async (socket) => {
       ],
     },
   });
-  const { names } = findUser;
+  const { names, id } = findUser;
+  addNewUser(id, socket.id);
+  console.log('usersToNofify', onlineUsersToNotify);
+
   io.to(socket.id).emit('subscribe', names);
   const getData = await getMessages();
   io.to(socket.id).emit('message', getData);
   socket.on('disconnect', () => {
+    console.log('a user disconnected');
+    removeUser(socket.id);
     if (ipsconnected.hasOwnProperty(connectedUser)) {
       delete ipsconnected[connectedUser];
       onlineUsers -= 1;
@@ -72,13 +107,16 @@ io.on('connection', async (socket) => {
   socket.on('typing', (data) => {
     socket.broadcast.emit('typing', data);
   });
-  socket.emit(
-    'initialize',
-    JSON.stringify({
-      notif: await Notification.findAll({
-        where: { userId: decodedToken.id },
-      }),
-    }),
-  );
+
+  //Notification Events
+
+  requestEventEmitter.on('sendToastNotification', (userId, body) => {
+    const receiver = getUser(userId);
+    io.to(receiver.socketId).emit('getNotification', body);
+    console.log(
+      `Notification event triggered and is being sent to user ID: ${userId} socket ID: ${receiver.socketId}`
+    );
+  });
 });
+
 export default io;

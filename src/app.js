@@ -14,7 +14,7 @@ import io from './utils/webSockets.io';
 
 const app = express();
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8000;
 const mode = process.env.NODE_ENV || 'development';
 
 try {
@@ -61,8 +61,12 @@ try {
   app.get('/verify', (req, res) => {
     res.render('index');
   });
-  app.use('/public/notification', (req, res) => res.sendFile(`${__dirname}/public/notification.html`));
-  app.use('/public/chat', (req, res) => res.sendFile(`${__dirname}/public/login.html`));
+  app.use('/public/notification', (req, res) =>
+    res.sendFile(`${__dirname}/public/notification.html`)
+  );
+  app.use('/public/chat', (req, res) =>
+    res.sendFile(`${__dirname}/public/login.html`)
+  );
   app.use(
     '/docs/swagger-ui/',
     swaggerUi.serve,
@@ -71,7 +75,7 @@ try {
         docExpansions: 'none',
         persistAuthorization: true,
       },
-    }),
+    })
   );
 
   app.use((err, req, res, next) => {
@@ -91,7 +95,7 @@ try {
   io.attach(server);
 
   server.listen(port, () => {
-    console.log('server is running');
+    console.log('server is running on port', port);
   });
 
   app.use((req, res, next) => {

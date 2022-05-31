@@ -8,8 +8,9 @@ import requestEventEmitter from '../controllers/notificationEventsController';
 const io = new Server({
   cors: {
     origin: [
-      'http://localhost:3000',
-      'https://elites-bn-fe-git-ft-181339606-notifications-elites-team.vercel.app',
+      'https://elites-bn-fe-git-ft-181339606-notifications-elites-team.vercel.app:*',
+      'https://elites-bn-fe.vercel.app:*',
+      'https://elites-bn-asgwqvk2i-elites-team.vercel.app:*',
     ],
   },
 });
@@ -107,16 +108,15 @@ io.on('connection', async (socket) => {
   socket.on('typing', (data) => {
     socket.broadcast.emit('typing', data);
   });
+});
 
-  //Notification Events
-
-  requestEventEmitter.on('sendToastNotification', (userId, body) => {
-    const receiver = getUser(userId);
-    io.to(receiver.socketId).emit('getNotification', body);
-    console.log(
-      `Notification event triggered and is being sent to user ID: ${userId} socket ID: ${receiver.socketId}`
-    );
-  });
+//Notification Events
+requestEventEmitter.on('sendToastNotification', (userId, body) => {
+  const receiver = getUser(userId);
+  receiver && io.to(receiver.socketId).emit('getNotification', body);
+  console.log(
+    `Notification event triggered and is being sent to user ID: ${userId} socket ID: ${receiver?.socketId}`
+  );
 });
 
 export default io;

@@ -7,15 +7,7 @@ import requestEventEmitter from '../controllers/notificationEventsController';
 
 const io = new Server({
   cors: {
-    origin: [
-      'https://elites-bn-gf39mmc5l-elites-team.vercel.app:*',
-      'https://elites-bn-fe-git-ft-181339606-notifications-elites-team.vercel.app:*',
-      'https://elites-bn-fe.vercel.app:*',
-      'https://elites-bn-asgwqvk2i-elites-team.vercel.app:*',
-    ],
-    methods: ['GET', 'POST'],
-    allowedHeaders: ['my-custom-header'],
-    credentials: true,
+    origin: '*',
   },
 });
 let decodedToken;

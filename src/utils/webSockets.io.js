@@ -12,6 +12,9 @@ const io = new Server({
       'https://elites-bn-fe.vercel.app:*',
       'https://elites-bn-asgwqvk2i-elites-team.vercel.app:*',
     ],
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['my-custom-header'],
+    credentials: true,
   },
 });
 let decodedToken;

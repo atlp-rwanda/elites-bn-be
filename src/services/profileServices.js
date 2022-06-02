@@ -50,6 +50,7 @@ export const createProfile = async (userid, data) => {
 
 export const getAllProfiles = async (userid) => {
   const role = await checkRole(userid);
+  if (role === 'admin' || role === 'travel-admin' || role === 'accommodation-supplier'|| role === 'requester') {
     const data = await models.Profile.findAll({
       include: [
         {
@@ -80,7 +81,7 @@ export const getAllProfiles = async (userid) => {
     });
 
     return data;
-  
+  }
 
   if (role === 'manager') {
     const managerProfile = await models.Profile.findOne({

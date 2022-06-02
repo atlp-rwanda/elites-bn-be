@@ -48,9 +48,7 @@ export const createProfile = async (userid, data) => {
   }
 };
 
-export const getAllProfiles = async (userid) => {
-  const role = await checkRole(userid);
-  if (role === 'admin' || role === 'travel-admin' || role === 'accommodation-supplier'|| role === 'requester') {
+export const getAllProfiles = async (userid) => { 
     const data = await models.Profile.findAll({
       include: [
         {
@@ -81,70 +79,9 @@ export const getAllProfiles = async (userid) => {
     });
 
     return data;
-  }
+  
 
-  if (role === 'manager') {
-    const managerProfile = await models.Profile.findOne({
-      where: { userId: userid },
-      include: [
-        {
-          model: models.User,
-          as: 'User',
-          attributes: { exclude: ['createdAt', 'updatedAt', 'password'] },
-        },
-        {
-          model: models.Location,
-          as: 'Location',
-          attributes: {
-            exclude: ['createdAt', 'updatedAt', 'locationName', 'description'],
-          },
-        },
-      ],
-      attributes: {
-        exclude: [
-          'createdAt',
-          'updatedAt',
-          'userId',
-          'name',
-          'email',
-          'manager',
-          'role',
-          'residence',
-        ],
-      },
-    });
-    const data = await models.Profile.findAll({
-      where: { manager: userid },
-      include: [
-        {
-          model: models.User,
-          as: 'User',
-          attributes: { exclude: ['createdAt', 'updatedAt', 'password'] },
-        },
-        {
-          model: models.Location,
-          as: 'Location',
-          attributes: {
-            exclude: ['createdAt', 'updatedAt', 'locationName', 'description'],
-          },
-        },
-      ],
-      attributes: {
-        exclude: [
-          'createdAt',
-          'updatedAt',
-          'userId',
-          'name',
-          'email',
-          'manager',
-          'role',
-          'residence',
-        ],
-      },
-    });
-
-    return { data, managerProfile };
-  }
+  
 };
 
 export const getSingleProfile = async (id) => {

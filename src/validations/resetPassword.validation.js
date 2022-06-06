@@ -8,7 +8,7 @@ export const passwordValidation = (req, res, next) => {
       password: Joi.string()
         .required()
         .empty()
-        .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
+        .pattern(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/)
         .messages({
           'any.required': '{{#label}} field is required',
           'string.base': '{{#label}} must be of type string',

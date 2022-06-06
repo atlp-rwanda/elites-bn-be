@@ -244,7 +244,7 @@ export class UserControllers {
       res
         .status(201)
         .send(
-          `<script> window.location = 'https://elites-bn-muutyv707-elites-team.vercel.app/google/success/${token.replace(
+          `<script> window.location = 'https://elites-barefoot-fe-git-dev-elites-team.vercel.app/google/success/${token.replace(
             /\.+/gi,
             '|'
           )}'</script>`

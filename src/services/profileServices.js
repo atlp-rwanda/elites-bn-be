@@ -86,7 +86,7 @@ export const getAllProfiles = async (userid) => {
 
 export const getSingleProfile = async (id) => {
   const profile = await models.Profile.findOne({
-    where: { id },
+    where: { userId : id },
     include: [
       {
         model: models.User,

@@ -14,7 +14,7 @@ export const passwordValidation = (req, res, next) => {
           'string.base': '{{#label}} must be of type string',
           'string.empty': '{{#label}} can not be empty',
           'string.pattern.base':
-            '{{#label}} must contain at least a number, upper-case letter and longer than 8 characters',
+            '{{#label}} must contain at least a number, upper-case letter, special character and not less than 8 characters',
         }),
 
       confirmPassword: Joi.string().empty().required(),

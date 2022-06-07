@@ -18,8 +18,6 @@ import {
   updateUserPassword,
   notificationsOptOut,
   notificationsOptIn,
-  getAllUser,
-  fetchRole,
 } from '../services/userServices';
 
 import { sendEmail } from '../services/send-email-service';
@@ -43,20 +41,17 @@ export class UserControllers {
       const userEmailExist = await userExist(req.body.email);
       if (userEmailExist) {
         throw new ConflictsError(
-          `User with this email: "${req.body.email}" already exist please a different email`
+          `User with this email: "${req.body.email}" already exist please a different email`,
         );
       } else {
         req.body.password = await hashPassword(req.body.password);
         const createdUser = await createUser(req.body);
-        const { password, createdAt, updatedAt, ...newcreatedUser } =
-          createdUser;
-        const token = await generateAccessToken({
-          id: createdUser.id,
-          role: createdUser.roleId,
-        });
+        const {
+          password, createdAt, updatedAt, ...newcreatedUser
+        } = createdUser;
+        const token = await generateAccessToken({ id: createdUser.id });
         const refreshToken = await generateRefreshToken({
           id: newcreatedUser.id,
-          role: newcreatedUser.roleId,
         });
 
         const email = {
@@ -90,10 +85,11 @@ export class UserControllers {
 
       const isVerified = true;
       if (user.verified) {
-        return res.status(409).send({
-          status: 409,
-          message: 'Account is already verified!',
-        });
+        return res.status(409)
+          .send({
+            status: 409,
+            message: 'Account is already verified!',
+          });
         // throw new ConflictsError('The account is already verified');
       }
       models.User.update({ verified: isVerified }, { where: { id: userId } });
@@ -115,11 +111,7 @@ export class UserControllers {
       if (!valid) {
         throw new UnauthorizedError();
       } else if (userInfo.verified) {
-        const userPayload = {
-          id: userInfo.id,
-          role: userInfo.roleId,
-          names: userInfo.names,
-        };
+        const userPayload = { id: userInfo.id };
         const token = await generateAccessToken(userPayload);
         const refreshToken = await generateRefreshToken(userPayload);
         await models.refreshTokenTable.create({ refreshToken });
@@ -131,38 +123,6 @@ export class UserControllers {
       } else {
         throw new UnauthorizedError('Please verify your email');
       }
-    } catch (err) {
-      next(err);
-    }
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  async fetchAllUsers(req, res, next) {
-    try {
-      const users = await getAllUser();
-      return res
-        .status(200)
-        .json({
-          status: 200,
-          message: 'users retrieved successfully',
-          payload: users,
-        });
-    } catch (err) {
-      next(err);
-    }
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  async fetchAllRoles(req, res, next) {
-    try {
-      const roles = await fetchRole();
-      return res
-        .status(200)
-        .json({
-          status: 200,
-          message: 'users retrieved successfully',
-          payload: roles,
-        });
     } catch (err) {
       next(err);
     }
@@ -227,45 +187,24 @@ export class UserControllers {
   // eslint-disable-next-line class-methods-use-this
   async authGoogleLogin(req, res, next) {
     try {
-      const token = await generateAccessToken({
-        id: req.user.id,
-        role: req.user.role,
-      });
-      const refreshToken = await generateRefreshToken({
-        id: req.user.id,
-        role: req.user.role,
-      });
+      const token = await generateAccessToken({ id: req.user.id });
+      const refreshToken = await generateRefreshToken({ id: req.user.id });
       await models.refreshTokenTable.create({ refreshToken });
-      // res.status(201).json({
-      //   status: 201,
-      //   message: 'Succesfully logged in with Google!',
-      //   payload: { accesstoken: token, refreshToken },
-      // });
-      res
-        .status(201)
-        .send(
-          `<script> window.location = 'https://elites-barefoot-fe-git-dev-elites-team.vercel.app/google/success/${token.replace(
-            /\.+/gi,
-            '|'
-          )}'</script>`
-        );
+      res.status(201).json({
+        status: 201,
+        message: 'Succesfully logged in with Google!',
+        payload: { accesstoken: token, refreshToken },
+      });
     } catch (err) {
       next(err);
     }
   }
-  // {token.replace(/\|+/gi,'.')}
 
   // eslint-disable-next-line class-methods-use-this
   async authFacebookLogin(req, res, next) {
     try {
-      const token = await generateAccessToken({
-        id: req.user.id,
-        role: req.user.role,
-      });
-      const refreshToken = await generateRefreshToken({
-        id: req.user.id,
-        role: req.user.role,
-      });
+      const token = await generateAccessToken({ id: req.user.id });
+      const refreshToken = await generateRefreshToken({ id: req.user.id });
       await models.refreshTokenTable.create({ refreshToken });
       res.status(201).json({
         status: 201,
@@ -286,7 +225,7 @@ export class UserControllers {
         throw new BaseError(
           'Not found',
           404,
-          'The account with provided email is not registered'
+          'The account with provided email is not registered',
         );
       }
       const payload = {
@@ -300,7 +239,7 @@ export class UserControllers {
         email,
         'ihonore01@gmail.com',
         'Barefoot Nomad password reset',
-        makeTemplate(link)
+        makeTemplate(link),
       );
       return res.status(200).send({
         status: 200,
@@ -320,7 +259,7 @@ export class UserControllers {
         throw new BaseError(
           'Bad request',
           400,
-          'Entered passwords do not match'
+          'Entered passwords do not match',
         );
       }
       const { token } = req.params;

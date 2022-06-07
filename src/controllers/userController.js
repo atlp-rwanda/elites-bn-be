@@ -295,7 +295,7 @@ export class UserControllers {
       const secret = process.env.JWT_SECRET_KEY;
 
       const token = await generateResetPasswordToken(payload, secret);
-      const link = `${req.protocol}://https://elites-barefoot-fe-git-dev-elites-team.vercel.app/api/v1/users/reset-password/${token}`;
+      const link = `${req.protocol}://elites-barefoot-fe-git-dev-elites-team.vercel.app/api/v1/users/reset-password/${token}`;
       await sendResetEmail(
         email,
         'ihonore01@gmail.com',

@@ -7,7 +7,6 @@ import models from '../src/models';
 chai.use(chaiHttp);
 let token;
 describe('verifying a user who is registered ', () => {
-
   before(async () => {
     await models.User.destroy({ where: { email: 'hirwa@gmail.com' } });
   });
@@ -15,7 +14,7 @@ describe('verifying a user who is registered ', () => {
     const res = await chai.request(app).post('/api/v1/users/register').send({
       names: 'Hirwa Claude',
       email: 'hirwa@gmail.com',
-      password: 'Password123',
+      password: 'Password123!',
     });
     token = res.body.payload.accessToken;
     expect(res).to.have.status([200]);

@@ -140,13 +140,11 @@ export class UserControllers {
   async fetchAllUsers(req, res, next) {
     try {
       const users = await getAllUser();
-      return res
-        .status(200)
-        .json({
-          status: 200,
-          message: 'users retrieved successfully',
-          payload: users,
-        });
+      return res.status(200).json({
+        status: 200,
+        message: 'users retrieved successfully',
+        payload: users,
+      });
     } catch (err) {
       next(err);
     }
@@ -156,13 +154,11 @@ export class UserControllers {
   async fetchAllRoles(req, res, next) {
     try {
       const roles = await fetchRole();
-      return res
-        .status(200)
-        .json({
-          status: 200,
-          message: 'users retrieved successfully',
-          payload: roles,
-        });
+      return res.status(200).json({
+        status: 200,
+        message: 'users retrieved successfully',
+        payload: roles,
+      });
     } catch (err) {
       next(err);
     }
@@ -230,6 +226,7 @@ export class UserControllers {
       const token = await generateAccessToken({
         id: req.user.id,
         role: req.user.role,
+        names: req.user.names,
       });
       const refreshToken = await generateRefreshToken({
         id: req.user.id,
@@ -295,7 +292,9 @@ export class UserControllers {
       const secret = process.env.JWT_SECRET_KEY;
 
       const token = await generateResetPasswordToken(payload, secret);
-      const link = `${req.protocol}://elites-barefoot-fe-git-dev-elites-team.vercel.app/reset-password/${token.replace(
+      const link = `${
+        req.protocol
+      }://elites-barefoot-fe-git-dev-elites-team.vercel.app/reset-password/${token.replace(
         /\.+/gi,
         '|'
       )}`;

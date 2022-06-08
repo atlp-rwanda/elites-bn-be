@@ -39,7 +39,11 @@ passport.use(
 
       const fetchUserId = fetchUser.id;
 
-      return done(null, { id: fetchUserId, role: fetchUser.roleId });
+      return done(null, {
+        id: fetchUserId,
+        role: fetchUser.roleId,
+        names: fetchUser.names,
+      });
     }
   )
 );

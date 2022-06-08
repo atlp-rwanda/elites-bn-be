@@ -22,7 +22,7 @@ passport.use(
       if (user) {
         const userId = user.id;
 
-        return done(null, { id: userId, role: user.roleId });
+        return done(null, { id: userId, role: user.roleId, names: user.names });
       }
       const role = await models.Role.findOne({
         where: { name: 'requester' },

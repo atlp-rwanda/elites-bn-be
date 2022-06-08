@@ -42,7 +42,7 @@ passport.use(
       return done(null, {
         id: fetchUserId,
         role: fetchUser.roleId,
-        names: fetchUser.names,
+        names: fetchUser?.names || undefined,
       });
     }
   )

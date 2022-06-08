@@ -76,11 +76,11 @@ io.on('connection', async (socket) => {
       ],
     },
   });
-  const { names, id } = findUser;
-  addNewUser(id, socket.id);
+  // const { names, id } = findUser;
+  addNewUser(findUser?.id, socket.id);
   console.log('usersToNofify', onlineUsersToNotify);
 
-  io.to(socket.id).emit('subscribe', names);
+  io.to(socket.id).emit('subscribe', findUser?.names);
   const getData = await getMessages();
   io.to(socket.id).emit('message', getData);
   socket.on('disconnect', () => {
@@ -94,9 +94,9 @@ io.on('connection', async (socket) => {
   });
   socket.on('chat', (data) => {
     const message = {
-      postedBy: findUser.id,
-      sender: findUser.names,
-      message: data.message,
+      postedBy: findUser?.id,
+      sender: findUser?.names,
+      message: data?.message,
     };
     const addData = addMessage(message);
     io.emit('chat', data);

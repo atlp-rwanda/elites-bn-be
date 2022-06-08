@@ -218,8 +218,11 @@ export const verificationEmail = async (token) => `
           <!-- start copy -->
           <tr>
             <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
-              <p style="margin: 0;">If that doesn't work, copy and paste the following link in your browser:</p>
-              <p style="margin: 0;"><a href="https://elites-barefoot-nomad.herokuapp.com/verify" target="_blank" rel="noopener noreferrer">www.barefoot-nomad.com/email-confirmation</a></p>
+              <p style="margin: 0;">If the above doesn't work, copy and paste the following link in your browser:</p>
+              <p style="margin: 0;"><a href="https://elites-barefoot-fe-git-dev-elites-team.vercel.app/verify-email/${token.replace(
+                /\.+/gi,
+                '|'
+              )}" target="_blank" rel="noopener noreferrer">www.barefoot-nomad.com/email-confirmation</a></p>
             </td>
           </tr>
           <!-- end copy -->

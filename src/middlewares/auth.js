@@ -31,6 +31,7 @@ passport.use(
         email: profile.emails[0].value,
         names: profile.displayName,
         roleId: role.dataValues.id,
+        verified: true,
       });
       const fetchUser = await models.User.findOne({
         where: { email: newUser.email },
@@ -39,8 +40,8 @@ passport.use(
       const fetchUserId = fetchUser.id;
 
       return done(null, { id: fetchUserId, role: fetchUser.roleId });
-    },
-  ),
+    }
+  )
 );
 passport.use(
   new FacebookStrategy(
@@ -71,12 +72,12 @@ passport.use(
         const fetchUser = await models.User.findOne({
           where: { email: newUser.email },
         });
-  
+
         const fetchUserId = fetchUser.id;
-  
+
         return done(null, { id: fetchUserId, role: fetchUser.roleId });
       }
-    },
-  ),
+    }
+  )
 );
 export default passport;

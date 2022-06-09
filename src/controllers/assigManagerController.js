@@ -1,7 +1,7 @@
 import { assignManager } from '../services/asignManager';
 
 class ManagerContoller {
-  assignManager = async (req, res, next) => {
+  assignAmanager = async (req, res, next) => {
     try {
       const updatedUser = await assignManager(req.params.id, req.body.manager);
       if (updatedUser) {

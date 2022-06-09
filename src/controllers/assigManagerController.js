@@ -13,7 +13,7 @@ class ManagerContoller {
             payload: updatedUser,
           });
       } else {
-        throw new Error('user has manager');
+        throw new Error('unable to assign a manager');
       }
     } catch (err) {
       next(err);

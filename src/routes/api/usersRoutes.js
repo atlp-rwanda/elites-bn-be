@@ -29,7 +29,7 @@ router.patch(
 router.patch(
   '/:id',
   isAdmin,
-  managerController.assignManager,
+  managerController.assignAmanager,
 );
 
 router.post('/forgot-password', emailValidation, userControllers.sendResetLink);

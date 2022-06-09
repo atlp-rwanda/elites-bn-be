@@ -222,10 +222,10 @@ export const verificationEmail = async (token) => `
               <p style="margin: 0;"><a href="https://elites-barefoot-fe-git-dev-elites-team.vercel.app/verify-email/${token.replace(
                 /\.+/gi,
                 '|'
-              )}" target="_blank" rel="noopener noreferrer">href="https://elites-barefoot-fe-git-dev-elites-team.vercel.app/verify-email/${token.replace(
+              )}" target="_blank" rel="noopener noreferrer">https://elites-barefoot-fe-git-dev-elites-team.vercel.app/verify-email/${token.replace(
   /\.+/gi,
   '|'
-)}"</a></p>
+)}</a></p>
             </td>
           </tr>
           <!-- end copy -->

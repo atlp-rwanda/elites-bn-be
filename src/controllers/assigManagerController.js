@@ -1,7 +1,7 @@
 import { assignManager } from '../services/asignManager';
 
 class ManagerContoller {
-  assignManager = async (req, res, next) => {
+  assignAmanager = async (req, res, next) => {
     try {
       const updatedUser = await assignManager(req.params.id, req.body.manager);
       if (updatedUser) {
@@ -13,7 +13,7 @@ class ManagerContoller {
             payload: updatedUser,
           });
       } else {
-        throw new Error('user has manager');
+        throw new Error('unable to assign a manager');
       }
     } catch (err) {
       next(err);

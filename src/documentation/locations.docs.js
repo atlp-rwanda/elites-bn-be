@@ -29,6 +29,19 @@ export const location = {
         },
       ],
     },
+    get: {
+      tags: ['Locations'],
+      summary: 'Get all Locations',
+      description: 'Get all locations',
+      responses: {
+        200: {
+          description: 'All locations retrieved successfuly!',
+        },
+        404: {
+          description: 'No locations found!',
+        },
+      },
+    },
   },
   '/api/v1/locations/mostTravelled/all': {
     get: {

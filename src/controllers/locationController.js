@@ -42,7 +42,20 @@ class LocationControllers {
       next(err);
     }
   };
-
+  getAllLocations = async (req, res, next) => {
+    try {
+      const foundLocations = await locationService.getAllLocations();
+      if (foundLocations) {
+        return res.status(200).json({
+          status: '200',
+          message: 'These are all the locations',
+          payload: foundLocations,
+        });
+      } else throw new BaseError('Not found', 404, 'No locations found');
+    } catch (err) {
+      next(err);
+    }
+  };
   updateLocation = async (req, res, next) => {
     try {
       const locationUpdate = {

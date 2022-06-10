@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import models, { Role } from '../models';
+import { getManagerId } from './tripServices';
 
 dotenv.config();
 
@@ -25,7 +26,7 @@ export const userById = async (id) => {
 export const updateUser = async (userId) => {
   const user = await models.User.update(
     { verified: true },
-    { where: { id: userId } },
+    { where: { id: userId } }
   );
   return user;
 };
@@ -40,6 +41,20 @@ export const createUser = async (user) => {
   const verificationLink = `${process.env.APP_URL}/api/v1/auth/verify`;
 
   return userCreated;
+};
+
+// get all user roles
+
+export const fetchRole = async (newRoleId, email) => {
+  const roles = await Role.findAll({
+    attributes: {
+      exclude: ['createdAt', 'updatedAt'],
+    },
+  });
+  if (roles == null) {
+    return null;
+  }
+  return roles;
 };
 
 export const updatedRole = async (newRoleId, email) => {
@@ -74,7 +89,7 @@ export const notificationsOptOut = async (id) => {
         where: { id },
         returning: true,
         raw: true,
-      },
+      }
     );
     return updatedUser;
   }
@@ -90,9 +105,31 @@ export const notificationsOptIn = async (id) => {
         where: { id },
         returning: true,
         raw: true,
-      },
+      }
     );
     return updatedUser;
   }
   return false;
+};
+
+export const getAllUser = async () => {
+  return models.User.findAll({
+    include: [
+      {
+        model: models.User,
+        as: 'ManagerId',
+        attributes: { exclude: ['createdAt', 'updatedAt', 'password'] },
+      },
+      {
+        model: models.Role,
+        as: 'Role',
+        attributes: { exclude: ['createdAt', 'updatedAt'] },
+      },
+    ],
+
+    attributes: {
+      exclude: ['createdAt', 'updatedAt', 'roleId', 'managerId'],
+    },
+    order: [['id', 'DESC']],
+  });
 };

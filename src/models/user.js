@@ -8,12 +8,14 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'roleId',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
+        as: 'Role',
       });
       User.belongsTo(User, {
         foreignKey: 'managerId',
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE',
         constraints: false,
+        as: 'ManagerId',
       });
 
       User.hasMany(User, {
@@ -26,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
 
       User.hasOne(models.Profile, {
         foreignKey: 'userId',
+        as: 'Profile',
       });
       User.hasMany(models.Booking, {
         foreignKey: 'userId',
@@ -55,7 +58,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'User',
-    },
+    }
   );
   return User;
 };

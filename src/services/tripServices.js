@@ -99,6 +99,7 @@ export const getAllRequests = async (userId, queryParams) => {
           { createdAt: { [Op.gte]: queryParams.createdAt } },
         ],
       },
+      order: [['id', 'DESC']],
     });
 
     return data;
@@ -114,6 +115,7 @@ export const getAllRequests = async (userId, queryParams) => {
           { createdAt: { [Op.gte]: queryParams.createdAt } },
         ],
       },
+      order: [['id', 'DESC']],
     });
 
     return data;
@@ -129,6 +131,7 @@ export const getAllRequests = async (userId, queryParams) => {
         { createdAt: { [Op.gte]: queryParams.createdAt } },
       ],
     },
+    order: [['id', 'DESC']],
   });
   return Data;
 };
@@ -140,11 +143,62 @@ export const getAllRequestWhenNoQuery = async (userId) => {
       where: {
         managerId: userId,
       },
+      include: [
+        {
+          model: models.User,
+          include: [
+            {
+              model: models.Profile,
+              as: 'Profile',
+              attributes: { exclude: ['createdAt', 'updatedAt'] },
+            },
+          ],
+          as: 'User',
+          attributes: { exclude: ['createdAt', 'updatedAt', 'password'] },
+        },
+      ],
+      order: [['id', 'DESC']],
     });
     return data;
   }
+  if (role === 'admin') {
+    const data = await models.tripRequest.findAll({
+      include: [
+        {
+          model: models.User,
+          include: [
+            {
+              model: models.Profile,
+              as: 'Profile',
+              attributes: { exclude: ['createdAt', 'updatedAt'] },
+            },
+          ],
+          as: 'User',
+          attributes: { exclude: ['createdAt', 'updatedAt', 'password'] },
+        },
+      ],
+      order: [['id', 'DESC']],
+    });
+    return data;
+  }
+
   const Data = await models.tripRequest.findAll({
     where: { userId },
+    include: [
+      {
+        model: models.User,
+        include: [
+          {
+            model: models.Profile,
+            as: 'Profile',
+            attributes: { exclude: ['createdAt', 'updatedAt'] },
+          },
+        ],
+        as: 'User',
+        attributes: { exclude: ['createdAt', 'updatedAt', 'password'] },
+      },
+    ],
+    order: [['id', 'DESC']],
   });
   return Data;
 };
@@ -155,6 +209,14 @@ export const getOneRequest = async (userId, id) => {
     const data = await models.tripRequest.findOne({
       where: {
         managerId: userId,
+        id,
+      },
+    });
+    return data;
+  }
+  if (role === 'admin') {
+    const data = await models.tripRequest.findOne({
+      where: {
         id,
       },
     });
@@ -240,7 +302,8 @@ export const updateMulticities = async (
 
     const updated = await exist.save();
     return updated;
-  } else if (!existId) {
+  }
+  if (!existId) {
     throw new NotFoundError('Trip not found');
   }
   throw new BaseError(
@@ -251,21 +314,18 @@ export const updateMulticities = async (
 };
 
 export const deleteRequest = async (userId, id) => {
-  const checkExist = await tripExist(userId, id);
-
-  if (checkExist) {
-    // eslint-disable-next-line no-unused-vars
-    const Data = await models.tripRequest.destroy({
-      where: {
-        status: 'pending',
-        userId,
-        id,
-      },
-    });
+  // eslint-disable-next-line no-unused-vars
+  const Data = await models.tripRequest.destroy({
+    where: {
+      status: 'pending',
+      userId,
+      id,
+    },
+  });
+  if (Data) {
     return true;
   }
-
-  return null;
+  return false;
 };
 export const checkStatus = async (userid, status) => {
   const data = await models.tripRequest.findOne({
@@ -335,6 +395,32 @@ export const findStatistcsByUser = async (userId, startDate, endDate) => {
           { userId },
           { createdAt: { [Op.between]: [startDate, endDate] } },
         ],
+      },
+    });
+  }
+  if (role === 'manager') {
+    return await models.tripRequest.findAndCountAll({
+      where: {
+        [Op.and]: [{ createdAt: { [Op.between]: [startDate, endDate] } }],
+      },
+    });
+  }
+
+  if (role === 'admin') {
+    return await models.tripRequest.findAndCountAll({
+      where: {
+        [Op.and]: [{ createdAt: { [Op.between]: [startDate, endDate] } }],
+      },
+    });
+  }
+};
+
+export const GetStatistcsByUser = async (userId, startDate, endDate) => {
+  const role = await checkRole(userId);
+  if (role === 'requester') {
+    return await models.tripRequest.findAndCountAll({
+      where: {
+        [Op.and]: [{ userId }],
       },
     });
   }

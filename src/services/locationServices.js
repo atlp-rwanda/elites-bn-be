@@ -19,6 +19,11 @@ class locationServices {
     return foundLocation;
   };
 
+  getAllLocations = async () => {
+    const foundLocations = await Location.findAll({});
+    return foundLocations;
+  };
+
   updateLocation = async (id, locationUpdate) => {
     const updatedLocation = await Location.update(locationUpdate, {
       where: { id },

@@ -29,7 +29,10 @@ class notificationServices {
   };
 
   getAllNotificationsOfUser = async (userId) => {
-    const notifications = await Notification.findAll({ where: { userId } });
+    const notifications = await Notification.findAll({
+      where: { userId },
+      order: [['id', 'DESC']],
+    });
     return notifications;
   };
 

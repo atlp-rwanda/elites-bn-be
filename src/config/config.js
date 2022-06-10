@@ -10,7 +10,12 @@ module.exports = {
     host: process.env.DB_HOST_DEV,
     port: process.env.DB_PORT_DEV,
     dialect: 'postgres',
-    dialectOptions: {},
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
     seederStorage: 'sequelize',
     seederStorageTableName: 'sequelize_data',
     logging: false,

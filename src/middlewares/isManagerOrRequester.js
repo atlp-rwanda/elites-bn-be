@@ -16,7 +16,7 @@ export const isManagerOrRequester = async (req, res, next) => {
       where: { id: data.id },
       include: 'Role',
     });
-    if (user.roleId !== 3 || user.roleId !== 5) {
+    if (user.roleId !== 3 || user.roleId !== 5 || user.reoleId !== 1) {
       return res.status(403).json({
         status: 403,
         message: 'Only manager and requester are allowed to perform this task',

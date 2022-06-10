@@ -29,7 +29,7 @@ router.patch(
 router.patch(
   '/:id',
   isAdmin,
-  managerController.assignManager,
+  managerController.assignAmanager,
 );
 
 router.post('/forgot-password', emailValidation, userControllers.sendResetLink);
@@ -108,5 +108,8 @@ router.get(
 router.get('/auth/facebook/failed', (req, res) => {
   res.send('oops!failed to login with Facebook');
 });
+
+router.get('/', isAdmin, userControllers.fetchAllUsers);
+router.get('/roles', isAdmin, userControllers.fetchAllRoles);
 
 export default router;

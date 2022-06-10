@@ -15,8 +15,8 @@ describe('USER REGISTER A USER', () => {
     const res = await chai.request(app).post('/api/v1/users/register').send({
       names: 'elites',
       email: 'elites@gmail.com',
-      password: 'Pass12515858',
-    }); 
+      password: 'Pass12515858!',
+    });
     userToken = res.body.payload.accessToken;
     tok = await decodeAcessToken(userToken);
     userId = tok.id;
@@ -80,7 +80,7 @@ describe('USER REGISTER A USER', () => {
     expect(res.body).to.have.property('message');
     expect(res).to.have.status([500]);
   });
-  
+
   it('Should login a user ', async () => {
     const res = await chai.request(app).post(`/api/v1/users/login/`).send({
       email: 'elites@gmail.com',

@@ -22,7 +22,7 @@ passport.use(
       if (user) {
         const userId = user.id;
 
-        return done(null, { id: userId });
+        return done(null, { id: userId, role: user.roleId, names: user.names });
       }
       const role = await models.Role.findOne({
         where: { name: 'requester' },
@@ -31,6 +31,7 @@ passport.use(
         email: profile.emails[0].value,
         names: profile.displayName,
         roleId: role.dataValues.id,
+        verified: true,
       });
       const fetchUser = await models.User.findOne({
         where: { email: newUser.email },
@@ -38,9 +39,13 @@ passport.use(
 
       const fetchUserId = fetchUser.id;
 
-      return done(null, { id: fetchUserId });
-    },
-  ),
+      return done(null, {
+        id: fetchUserId,
+        role: fetchUser.roleId,
+        names: fetchUser?.names || undefined,
+      });
+    }
+  )
 );
 passport.use(
   new FacebookStrategy(
@@ -58,7 +63,7 @@ passport.use(
       if (user) {
         const userId = user.id;
 
-        return done(null, { id: userId });
+        return done(null, { id: userId, role: user.roleId });
       } else {
         const role = await models.Role.findOne({
           where: { name: 'requester' },
@@ -71,12 +76,12 @@ passport.use(
         const fetchUser = await models.User.findOne({
           where: { email: newUser.email },
         });
-  
+
         const fetchUserId = fetchUser.id;
-  
-        return done(null, { id: fetchUserId });
+
+        return done(null, { id: fetchUserId, role: fetchUser.roleId });
       }
-    },
-  ),
+    }
+  )
 );
 export default passport;
